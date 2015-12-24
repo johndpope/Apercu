@@ -11,35 +11,31 @@
       <sourceFolder url="file://$MODULE_DIR$/Apercu/Base.lproj/Main.storyboard" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApercuUITests/ApercuUITests.swift" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/ApercuUITests/Info.plist" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/ApercuTests/ApercuTests.swift" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/ApercuTests/Info.plist" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Podfile" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/TestResources/CorePlotProbes.d" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTPlatformSpecificFunctions.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTPlatformSpecificCategories.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTPlatformSpecificDefines.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTTextStylePlatformSpecific.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTPlatformSpecificCategories.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTTextStylePlatformSpecific.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTImagePlatformSpecific.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTPlatformSpecificCategories.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTGraphHostingView.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTPlatformSpecificFunctions.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTGraphHostingView.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTPlatformSpecificDefines.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTImagePlatformSpecific.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTGraphHostingView.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTTextStylePlatformSpecific.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/iPhoneOnly/CPTPlatformSpecificFunctions.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/CorePlot-CocoaTouch.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/CocoaPods/CorePlot.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLineStyle.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableNumericData.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAnimation.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLegendEntry.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLineStyle.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTTradingRangePlot.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableNumericData.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTGradient.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTTradingRangePlot.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLegendEntry.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTDefinitions.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTBorderedLayer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTDefinitions.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAxis.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPathExtensions.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTGridLines.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTBarPlot.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTGridLines.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTPlainWhiteTheme.m" isTestSource="false" />
@@ -62,58 +58,56 @@
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTShadow.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTXYAxisSet.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTShadow.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTGridLines.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTMaskLayer.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTXYAxisSet.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTBarPlot.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTGraph.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutablePlotRange.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableNumericData+TypeConversion.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableTextStyle.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTXYTheme.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTTheme.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTGraph.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlot.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableTextStyle.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableLineStyle.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/NSCoderExtensions.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlot.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTXYPlotSpace.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTXYPlotSpace.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPieChart.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotAreaFrame.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTFunctionDataSource.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotAreaFrame.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTRangePlot.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTRangePlot.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTBorderLayer.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTFunctionDataSource.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLegendEntry.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLegendEntry.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTConstraintsFixed.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTConstraintsFixed.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTDebugQuickLook.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLineStyle.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTTradingRangePlot.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLayer.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTXYAxis.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLineCap.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotSpaceAnnotation.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/NSNumberExtensions.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTAnimationTimingFunctions.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotSpace.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLineCap.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotSpaceAnnotation.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/NSNumberExtensions.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTXYPlotSpace.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAnimationPeriod.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTXYPlotSpace.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTMaskLayer.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTExceptions.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAnimationPeriod.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTFunctionDataSource.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTMaskLayer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPathExtensions.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTExceptions.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableShadow.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAnimationPeriod.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutablePlotRange.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTConstraints.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLimitBand.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutablePlotRange.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAxisLabel.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAnnotationHostLayer.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotRange.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTGridLineGroup.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAxisLabel.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTImage.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAnnotationHostLayer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotGroup.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTFill.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTGridLineGroup.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTImage.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTNumericDataType.m" isTestSource="false" />
@@ -121,6 +115,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLayer.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTNumericDataType.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotArea.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTRangePlot.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTTimeFormatter.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotArea.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTStocksTheme.m" isTestSource="false" />
@@ -128,20 +123,18 @@
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTTimeFormatter.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTFillGradient.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTStocksTheme.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTTheme.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAxisLabel.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableLineStyle.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTFillGradient.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTRangePlot.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableLineStyle.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTXYAxis.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTAnimationCGRectPeriod.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAxis.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableNumericData+TypeConversion.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTBorderedLayer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotSymbol.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLayerAnnotation.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTConstraintsRelative.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTConstraintsRelative.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotSymbol.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTConstraints.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTConstraintsRelative.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTExceptions.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTAnimationCGPointPeriod.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/NSCoderExtensions.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAxisLabelGroup.m" isTestSource="false" />
@@ -149,31 +142,34 @@
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTBorderLayer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTAnimationCGPointPeriod.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAxisLabelGroup.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTConstraintsFixed.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/NSDecimalNumberExtensions.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLayer.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/NSDecimalNumberExtensions.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTXYGraph.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTAnimationCGRectPeriod.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTDerivedXYGraph.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTXYGraph.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTTextStyle.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTColor.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAnimation.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTDerivedXYGraph.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTTextStyle.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTAnimationCGRectPeriod.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableShadow.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTFillImage.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableShadow.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTFillImage.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTAnimationPlotRangePeriod.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTDebugQuickLook.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTPlainBlackTheme.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAxisSet.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTPlainBlackTheme.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTAnimationCGFloatPeriod.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTFill.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTAnimationTimingFunctions.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTAnimationCGFloatPeriod.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTSlateTheme.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTFill.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTXYTheme.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableNumericData+TypeConversion.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTConstraints.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTXYTheme.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTSlateTheme.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTResponder.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPieChart.m" isTestSource="false" />
@@ -184,16 +180,16 @@
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLimitBand.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTAnimationCGSizePeriod.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTScatterPlot.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTColor.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLimitBand.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTCalendarFormatter.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAxisSet.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTScatterPlot.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTColor.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTCalendarFormatter.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAxisSet.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotRange.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableTextStyle.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTTheme.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotRange.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTXYTheme.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTDarkGradientTheme.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTColorSpace.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAnimationOperation.m" isTestSource="false" />
@@ -202,44 +198,45 @@
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAnimationOperation.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLegend.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTLegend.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPathExtensions.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotSpace.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAxis.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/_CPTAnimationNSDecimalPeriod.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTPlotSpace.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTAnimation.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRColorInfoView.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRBrightnessSlider.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRBrightnessCursor.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/CorePlot/framework/Source/CPTMutableNumericData+TypeConversion.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/UIImage+CoreGraphics.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRColorInfoView.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRColorInfoView.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRBrightnessCursor.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/UIImage+CoreGraphics.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRColorPickerView.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRColorPickerView.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRBrightnessCursor.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRColorMapView.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/UIImage+CoreGraphics.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRBrightnessSlider.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRColorMapView.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRHSVColorUtil.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRColorCursor.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRBrightnessSlider.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRHSVColorUtil.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRColorCursor.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRColorMapView.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/Color-Picker-for-iOS/ColorPicker/HRColorInfoView.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/CorePlot/CorePlot-dummy.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/CorePlot/CorePlot-umbrella.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/CorePlot/CorePlot.xcconfig" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/CorePlot/CorePlot.modulemap" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/CorePlot/Info.plist" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/CorePlot/CorePlot-prefix.pch" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/CorePlot/CorePlot-dummy.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Color-Picker-for-iOS/Color-Picker-for-iOS-dummy.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Color-Picker-for-iOS/Color-Picker-for-iOS-prefix.pch" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Color-Picker-for-iOS/Info.plist" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Color-Picker-for-iOS/Color-Picker-for-iOS.modulemap" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Color-Picker-for-iOS/Color-Picker-for-iOS.xcconfig" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Color-Picker-for-iOS/Color-Picker-for-iOS-umbrella.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/MagicalRecord/MagicalRecord-dummy.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/MagicalRecord/MagicalRecord-umbrella.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/MagicalRecord/MagicalRecord.modulemap" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/MagicalRecord/Info.plist" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/MagicalRecord/MagicalRecord.xcconfig" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/MagicalRecord/MagicalRecord-prefix.pch" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Color-Picker-for-iOS/Color-Picker-for-iOS-dummy.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Color-Picker-for-iOS/Color-Picker-for-iOS-prefix.pch" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Color-Picker-for-iOS/Color-Picker-for-iOS.xcconfig" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Color-Picker-for-iOS/Info.plist" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Color-Picker-for-iOS/Color-Picker-for-iOS.modulemap" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Color-Picker-for-iOS/Color-Picker-for-iOS-umbrella.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Pods/Pods-acknowledgements.plist" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Pods/Pods.modulemap" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/Target Support Files/Pods/Pods-frameworks.sh" isTestSource="false" />
@@ -269,30 +266,29 @@
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Core/MagicalRecord+Options.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/MagicalRecord.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSPersistentStoreCoordinator+MagicalRecord.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectModel+MagicalRecord.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalChainSave.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectModel+MagicalRecord.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalSaves.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalObserving.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalChainSave.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalRecord.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalObserving.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalThreading.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalRecord.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalSaves.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalThreading.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalSaves.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalThreading.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectContext/NSManagedObjectContext+MagicalChainSave.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSPersistentStore+MagicalRecord.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSPersistentStoreCoordinator+MagicalRecord.h" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectModel+MagicalRecord.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSPersistentStore+MagicalRecord.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObject/NSManagedObject+MagicalRecord.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObject/NSManagedObject+MagicalFinders.m" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObject/NSManagedObject+MagicalRequests.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObject/NSManagedObject+MagicalAggregation.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObject/NSManagedObject+MagicalDataImport.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObject/NSManagedObject+MagicalFinders.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObject/NSManagedObject+MagicalRequests.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObject/NSManagedObject+MagicalDataImport.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObject/NSManagedObject+MagicalRecord.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObject/NSManagedObject+MagicalRequests.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObject/NSManagedObject+MagicalAggregation.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/DataImport/NSEntityDescription+MagicalDataImport.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/DataImport/NSObject+MagicalDataImport.h" isTestSource="false" />
@@ -308,6 +304,10 @@
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/DataImport/MagicalImportFunctions.m" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/DataImport/NSString+MagicalDataImport.h" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/DataImport/NSEntityDescription+MagicalDataImport.m" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Pods/MagicalRecord/MagicalRecord/Categories/NSManagedObjectModel+MagicalRecord.h" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApercuTests/ApercuTests.swift" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/ApercuTests/Info.plist" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Podfile" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
