@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		3BEA68C2AC9E2A9BDC6C4136 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E0FBFC3ABBE44CC5C1E9D6 /* Pods.framework */; };
+		66D922BD695B3D5F1A6A0031 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
+		66D92F16487AF0F7322B45B4 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
+		66D92FBC1A70FD594DBD8028 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
 		8B6573391C2A1F2F00B9B1E9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6573381C2A1F2F00B9B1E9 /* AppDelegate.swift */; };
 		8B65733B1C2A1F2F00B9B1E9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65733A1C2A1F2F00B9B1E9 /* ViewController.swift */; };
 		8B65733E1C2A1F2F00B9B1E9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B65733C1C2A1F2F00B9B1E9 /* Main.storyboard */; };
@@ -16,6 +19,10 @@
 		8B6573461C2A1F2F00B9B1E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B6573441C2A1F2F00B9B1E9 /* LaunchScreen.storyboard */; };
 		8B6573511C2A1F2F00B9B1E9 /* ApercuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6573501C2A1F2F00B9B1E9 /* ApercuTests.swift */; };
 		8B65735C1C2A1F2F00B9B1E9 /* ApercuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65735B1C2A1F2F00B9B1E9 /* ApercuUITests.swift */; };
+		8BD54DDE1C2C189A0013B35A /* HealthKitSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD54DDD1C2C189A0013B35A /* HealthKitSetup.swift */; };
+		8BD54DE01C2C2F2D0013B35A /* QueryHealthKitWorkouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD54DDF1C2C2F2D0013B35A /* QueryHealthKitWorkouts.swift */; };
+		8BDA8EE71C2C4F93000D0630 /* CategorySetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDA8EE61C2C4F93000D0630 /* CategorySetup.swift */; };
+		8BDA8EE91C2C9B05000D0630 /* WorkoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDA8EE81C2C9B05000D0630 /* WorkoutCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +46,9 @@
 		0E82362FF6F1C9F2FE1A2438 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		46E0FBFC3ABBE44CC5C1E9D6 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BD13D29264AAFFE9CA3BA73 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewController.swift; sourceTree = "<group>"; };
 		8B6573351C2A1F2F00B9B1E9 /* Apercu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Apercu.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		8B6573381C2A1F2F00B9B1E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8B6573381C2A1F2F00B9B1E9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = /Users/davidlantrip/ios/Apercu/Apercu/AppDelegate.swift; sourceTree = "<absolute>"; };
 		8B65733A1C2A1F2F00B9B1E9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8B65733D1C2A1F2F00B9B1E9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8B6573401C2A1F2F00B9B1E9 /* Apercu.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Apercu.xcdatamodel; sourceTree = "<group>"; };
@@ -53,6 +61,10 @@
 		8B6573571C2A1F2F00B9B1E9 /* ApercuUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApercuUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B65735B1C2A1F2F00B9B1E9 /* ApercuUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApercuUITests.swift; sourceTree = "<group>"; };
 		8B65735D1C2A1F2F00B9B1E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8BD54DDD1C2C189A0013B35A /* HealthKitSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthKitSetup.swift; path = Apercu/Misc/HealthKitSetup.swift; sourceTree = SOURCE_ROOT; };
+		8BD54DDF1C2C2F2D0013B35A /* QueryHealthKitWorkouts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QueryHealthKitWorkouts.swift; path = ../Misc/QueryHealthKitWorkouts.swift; sourceTree = "<group>"; };
+		8BDA8EE61C2C4F93000D0630 /* CategorySetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategorySetup.swift; path = ../Misc/CategorySetup.swift; sourceTree = "<group>"; };
+		8BDA8EE81C2C9B05000D0630 /* WorkoutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkoutCell.swift; path = Cells/WorkoutCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +105,7 @@
 		66D92FB1FA360AC76BE2D5A2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -129,6 +142,9 @@
 				8B6573441C2A1F2F00B9B1E9 /* LaunchScreen.storyboard */,
 				8B6573471C2A1F2F00B9B1E9 /* Info.plist */,
 				8B65733F1C2A1F2F00B9B1E9 /* Apercu.xcdatamodeld */,
+				8BD54DDC1C2C18840013B35A /* Cells */,
+				8BD54DDB1C2C18730013B35A /* Core Data */,
+				8BD54DD81C2C17080013B35A /* Misc */,
 				66D92FB1FA360AC76BE2D5A2 /* ViewControllers */,
 			);
 			path = Apercu;
@@ -150,6 +166,33 @@
 				8B65735D1C2A1F2F00B9B1E9 /* Info.plist */,
 			);
 			path = ApercuUITests;
+			sourceTree = "<group>";
+		};
+		8BD54DD81C2C17080013B35A /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				8BD54DDD1C2C189A0013B35A /* HealthKitSetup.swift */,
+				8BD54DDF1C2C2F2D0013B35A /* QueryHealthKitWorkouts.swift */,
+				8BDA8EE61C2C4F93000D0630 /* CategorySetup.swift */,
+			);
+			name = Misc;
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		8BD54DDB1C2C18730013B35A /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "Core Data";
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		8BD54DDC1C2C18840013B35A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				8BDA8EE81C2C9B05000D0630 /* WorkoutCell.swift */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		B76AB3F10B99AA55084BE8DE /* Frameworks */ = {
@@ -343,8 +386,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B6573411C2A1F2F00B9B1E9 /* Apercu.xcdatamodeld in Sources */,
+				8BDA8EE71C2C4F93000D0630 /* CategorySetup.swift in Sources */,
 				8B65733B1C2A1F2F00B9B1E9 /* ViewController.swift in Sources */,
 				8B6573391C2A1F2F00B9B1E9 /* AppDelegate.swift in Sources */,
+				8BD54DE01C2C2F2D0013B35A /* QueryHealthKitWorkouts.swift in Sources */,
+				8BD54DDE1C2C189A0013B35A /* HealthKitSetup.swift in Sources */,
+				66D92FBC1A70FD594DBD8028 /* WorkoutTableViewController.swift in Sources */,
+				8BDA8EE91C2C9B05000D0630 /* WorkoutCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +401,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B6573511C2A1F2F00B9B1E9 /* ApercuTests.swift in Sources */,
+				66D922BD695B3D5F1A6A0031 /* WorkoutTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +410,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B65735C1C2A1F2F00B9B1E9 /* ApercuUITests.swift in Sources */,
+				66D92F16487AF0F7322B45B4 /* WorkoutTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
