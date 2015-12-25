@@ -13,9 +13,7 @@ import UIKit
 
 class HealthKitSetup {
     
-    func setupAuthorization() -> Bool{
-        var didSucceed  = false
-        
+    func setupAuthorization(completion: (didSucceed : Bool) -> Void) {
         if HKHealthStore.isHealthDataAvailable() {
             let typesToRead = healthKitDataTypesToRead()
             let typesToShare = healthKitTypesToShare()
@@ -25,29 +23,25 @@ class HealthKitSetup {
             
             healthStore.requestAuthorizationToShareTypes(typesToShare, readTypes: typesToRead, completion: { (success, error) -> Void in
                 if success {
-                    didSucceed = true
-                    
-//                    Update birthday
                     let birthday: NSDate? = try? healthStore.dateOfBirth()
                     
                     if birthday != nil {
                         let ageComponents = NSCalendar.currentCalendar().components(.Year, fromDate: birthday!, toDate: NSDate(), options: [])
                         let age = ageComponents.year
-                        NSUserDefaults.standardUserDefaults().setInteger(age, forKey: "hkage")
+                        NSUserDefaults.init(suiteName: "group.com.apercu.apercu")!.setInteger(age, forKey: "hkage")
                     } else {
-                        NSUserDefaults.standardUserDefaults().setInteger(25, forKey: "hkage")
+                        NSUserDefaults.init(suiteName: "group.com.apercu.apercu")!.setInteger(25, forKey: "hkage")
                     }
                     
-
+                    completion(didSucceed: true)
+                    
                 } else {
-                    didSucceed = false
+                    completion(didSucceed: false)
                     NSLog("Apercu unable to reach HealthKit")
                 }
             })
             
         }
-        
-        return didSucceed
     }
     
     func healthKitDataTypesToRead() -> Set <HKObjectType> {

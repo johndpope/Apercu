@@ -14,7 +14,7 @@ class WorkoutTableViewController: UIKit.UITableViewController {
     @IBOutlet weak private var workoutButton: UIKit.UIBarButtonItem!
 
     var workoutArray: [HKSample]!
-    let defs = NSUserDefaults.standardUserDefaults()
+    let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     let dateFormatter = NSDateFormatter()
     
     var isFirstLoad = true
@@ -32,13 +32,14 @@ class WorkoutTableViewController: UIKit.UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
-        let didGetHealthKitAuthorization = HealthKitSetup().setupAuthorization()
-        
-        if !didGetHealthKitAuthorization {
-            let alert = UIAlertController(title: "Error", message: "Unable to access HealthKit", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
-            return
+        let didGetHealthKitAuthorization = HealthKitSetup().setupAuthorization { (didSucceed) -> Void in
+            
+            if !didSucceed {
+                let alert = UIAlertController(title: "Error", message: "Unable to access HealthKit", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+                return
+            }
         }
         
         QueryHealthKitWorkouts().getAllWorkouts { (result, success) -> Void in
@@ -61,7 +62,7 @@ class WorkoutTableViewController: UIKit.UITableViewController {
         
     }
 
-    // MARK: - TableView Delegates
+    // MARK: - TableView Stuff
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1

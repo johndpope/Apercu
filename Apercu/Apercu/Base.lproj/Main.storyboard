@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Do-b1-u2x">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Do-b1-u2x">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="951"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CYf-Gk-4FX">
@@ -622,7 +622,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JsI-Hz-ERJ">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JsI-Hz-ERJ">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="951"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Copyright (c) 2014, Drew McCormack, Brad Larson, Eric Skroch, Barry Wark, Dirkjan Krijnders, Rick Maddy, Vijay Kalusani, Caleb Cannon, Jeff Buck, Thomas Elstner, Jeroen Leenarts, Craig Hockenberry, Hartwig Wiesmann, Koen van der Drift, Nino Ag, Mike Lischke, Trevor Harmon, Travis Fischer, Graham Mueller, Rafał Wójcik, Mike Rossetti, Michael Merickel, Ingmar Stein, and Victor Martin Garcia.
@@ -3458,16 +3458,16 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="colorView" destination="uYO-Dd-aFi" id="Ha0-xg-5cf"/>
-                                    <outlet property="detailLabel" destination="Q88-ma-x4v" id="NML-CV-iCl"/>
-                                    <outlet property="titleLabel" destination="LKh-kl-i97" id="y7H-2v-Zoy"/>
+                                    <outlet property="colorView" destination="uYO-Dd-aFi" id="jG0-p1-dN0"/>
+                                    <outlet property="detailLabel" destination="Q88-ma-x4v" id="s27-sP-REM"/>
+                                    <outlet property="titleLabel" destination="LKh-kl-i97" id="G1a-GZ-mKw"/>
                                     <segue destination="urD-Ty-FIU" kind="push" identifier="toDetailView" id="e6p-vE-psS"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
-                            <outlet property="dataSource" destination="Xua-Xs-FS2" id="Aw4-NB-Lez"/>
-                            <outlet property="delegate" destination="Xua-Xs-FS2" id="WGm-1v-gBV"/>
+                            <outlet property="dataSource" destination="Xua-Xs-FS2" id="8Ko-J2-2zA"/>
+                            <outlet property="delegate" destination="Xua-Xs-FS2" id="qbz-6a-69a"/>
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Workouts" id="L7c-y5-Hcp">
@@ -3485,12 +3485,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="Gyg-Db-Ydh">
                         <autoresizingMask key="autoresizingMask"/>
                         <connections>
-                            <action selector="refresh:" destination="Xua-Xs-FS2" eventType="valueChanged" id="0qj-fJ-FuU"/>
+                            <action selector="refresh:" destination="Xua-Xs-FS2" eventType="valueChanged" id="T9O-v2-lUn"/>
                         </connections>
                     </refreshControl>
                     <connections>
-                        <outlet property="workoutButton" destination="4VR-fN-k50" id="DXj-a1-SZL"/>
-                        <outlet property="workoutTableView" destination="EQL-Ch-Ilx" id="dNp-1q-vFe"/>
+                        <outlet property="workoutButton" destination="4VR-fN-k50" id="ZzP-qG-vdE"/>
+                        <outlet property="workoutTableView" destination="EQL-Ch-Ilx" id="dcm-el-WS5"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xra-rK-AaG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4029,11 +4029,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <viewControllerLayoutGuide type="bottom" id="PQh-GA-66W"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fhY-0s-Rh7">
-                        <rect key="frame" x="0.0" y="64" width="320" height="892"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YzN-9z-gxz" customClass="CPTGraphHostingView">
-                                <rect key="frame" x="15" y="0.0" width="305" height="877"/>
+                                <rect key="frame" x="15" y="0.0" width="305" height="941"/>
                                 <color key="backgroundColor" cyan="0.27000000000000002" magenta="0.0" yellow="0.63" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                             </view>
                         </subviews>
@@ -4067,7 +4067,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <rect key="frame" x="0.0" y="0.0" width="320" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LXV-kJ-h6T">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LXV-kJ-h6T">
                                 <rect key="frame" x="0.0" y="64" width="320" height="892"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hzN-kE-kdg">
@@ -4257,7 +4257,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <!--Compare-->
         <scene sceneID="eZ0-X0-dNI">
             <objects>
-                <viewController extendedLayoutIncludesOpaqueBars="YES" id="Mtj-JM-Gan" customClass="FilterView" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="Mtj-JM-Gan" customClass="FilteredTableViewController" customModule="Apercu" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dvT-Ik-nWx"/>
                         <viewControllerLayoutGuide type="bottom" id="DP0-vo-RhI"/>
@@ -4280,7 +4280,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 </constraints>
                                                 <color key="separatorColor" cyan="0.27000000000000002" magenta="0.0" yellow="0.63" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                                                 <prototypes>
-                                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReuseIdentifier" id="z4z-8m-7bz" customClass="CompareCell">
+                                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CompareCell" id="z4z-8m-7bz" customClass="CompareCell" customModule="Apercu" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="22" width="600" height="164"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z4z-8m-7bz" id="bS2-3g-wgK">
@@ -4321,16 +4321,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                         <connections>
-                                                            <outlet property="colorView" destination="CkU-Rw-9hg" id="T1D-eZ-Pj9"/>
-                                                            <outlet property="detailLabel" destination="hBw-OH-UPt" id="l31-ya-eCA"/>
-                                                            <outlet property="mainLabel" destination="JJQ-DA-QgK" id="rJ2-gs-uFU"/>
+                                                            <outlet property="colorView" destination="CkU-Rw-9hg" id="X2I-8U-yrw"/>
+                                                            <outlet property="detailLabel" destination="hBw-OH-UPt" id="gZq-PQ-0Ei"/>
+                                                            <outlet property="mainLabel" destination="JJQ-DA-QgK" id="1Ge-JB-Y6f"/>
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
-                                                <connections>
-                                                    <outlet property="dataSource" destination="Mtj-JM-Gan" id="G1J-ww-yVR"/>
-                                                    <outlet property="delegate" destination="Mtj-JM-Gan" id="4v8-6F-65i"/>
-                                                </connections>
                                             </tableView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Filter:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="Vl3-aN-xRN">
                                                 <rect key="frame" x="15" y="110" width="585" height="20"/>
@@ -4345,7 +4341,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="selectWorkouts:" destination="Mtj-JM-Gan" eventType="touchUpInside" id="p39-Dd-rMR"/>
+                                                    <action selector="selectWorkouts:" destination="Mtj-JM-Gan" eventType="touchUpInside" id="wat-4Y-VmZ"/>
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Workouts to be included:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fb5-4q-1dT">
@@ -4361,7 +4357,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                     <segment title="Manual"/>
                                                 </segments>
                                                 <connections>
-                                                    <action selector="filterSwitchChanged:" destination="Mtj-JM-Gan" eventType="valueChanged" id="vQg-wQ-lIx"/>
+                                                    <action selector="filterSwitchChanged:" destination="Mtj-JM-Gan" eventType="valueChanged" id="E37-jA-iiY"/>
                                                 </connections>
                                             </segmentedControl>
                                         </subviews>
@@ -4417,12 +4413,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="button" destination="o4q-ct-Zxr" id="OAY-R9-sbM"/>
-                        <outlet property="colorFilterLabel" destination="Vl3-aN-xRN" id="mxF-H3-gQr"/>
-                        <outlet property="filterSwitch" destination="gVB-HM-yFK" id="wbA-X3-T34"/>
-                        <outlet property="scrollView" destination="m1u-qK-2vH" id="ABc-x9-OgV"/>
-                        <outlet property="tableView" destination="OQj-KE-bkf" id="IDL-Ri-VO0"/>
-                        <outlet property="tableViewHeight" destination="TZB-W7-OeH" id="6mL-jS-RCU"/>
+                        <outlet property="button" destination="o4q-ct-Zxr" id="aVv-us-Kck"/>
+                        <outlet property="filterLabel" destination="Vl3-aN-xRN" id="omn-Bd-zr0"/>
+                        <outlet property="filterSwitch" destination="gVB-HM-yFK" id="Nag-QU-U8C"/>
+                        <outlet property="scrollView" destination="m1u-qK-2vH" id="pZM-Vb-lM4"/>
+                        <outlet property="tableView" destination="OQj-KE-bkf" id="Y0S-Fr-SqM"/>
+                        <outlet property="tableViewHeight" destination="TZB-W7-OeH" id="edi-w1-12h"/>
                         <segue destination="urD-Ty-FIU" kind="push" identifier="toDetailView" id="qvD-uY-O5S"/>
                         <segue destination="4YM-YD-ylz" kind="push" identifier="toCategoryFilter" id="7da-yw-rgs"/>
                         <segue destination="vDj-Tq-Bgl" kind="push" identifier="toManualSelection" id="bye-3c-OgP"/>
@@ -4841,7 +4837,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pH1-BT-LKb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="401" y="1741"/>
+            <point key="canvasLocation" x="261" y="1741"/>
         </scene>
         <!--Manual Selection-->
         <scene sceneID="nMN-4u-jDG">
@@ -4954,7 +4950,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tPa-9U-erk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="923" y="1741"/>
+            <point key="canvasLocation" x="925" y="1931"/>
         </scene>
         <!--Compare-->
         <scene sceneID="64g-fo-xkU">
@@ -4973,7 +4969,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ppk-8E-wPE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-201" y="997"/>
+            <point key="canvasLocation" x="-445" y="997"/>
         </scene>
         <!--Update Template Sets-->
         <scene sceneID="q8A-fB-mXe">
@@ -5547,8 +5543,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <image name="singleTabBar3.png" width="70" height="35"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="e6p-vE-psS"/>
-        <segue reference="c5j-j5-e5s"/>
+        <segue reference="hBj-EI-suy"/>
+        <segue reference="qvD-uY-O5S"/>
         <segue reference="BQA-YE-PQn"/>
         <segue reference="f2V-th-zY7"/>
         <segue reference="lV2-Wb-bA2"/>
