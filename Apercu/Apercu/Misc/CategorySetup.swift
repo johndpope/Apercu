@@ -20,7 +20,7 @@ class CategorySetup {
         managedContext = appDelegate.managedObjectContext
 
         if categoryTableIsEmpty() {
-            let color0: UIColor = UIColor.whiteColor()
+            let color0: UIColor = UIColor.clearColor()
             let color1: UIColor = UIColor(red: 0.0 / 255.0, green: 67.0 / 255.0, blue: 88.0 / 255.0, alpha: 1)
             let color2: UIColor = UIColor(red: 0.0 / 255.0, green: 183.0 / 255.0, blue: 241.0 / 255.0, alpha: 1)
             let color3: UIColor = UIColor(red: 31.0 / 255.0, green: 138.0 / 255.0, blue: 112.0 / 255.0, alpha: 1)

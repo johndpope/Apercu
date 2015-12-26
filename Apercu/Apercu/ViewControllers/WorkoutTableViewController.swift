@@ -9,29 +9,29 @@ import UIKit
 //import WorkoutCell
 
 class WorkoutTableViewController: UIKit.UITableViewController {
-
+    
     @IBOutlet weak private var workoutTableView: UIKit.UITableView!
     @IBOutlet weak private var workoutButton: UIKit.UIBarButtonItem!
-
-    var workoutArray: [HKSample]!
+    
+    var workoutArray: [ApercuWorkout]!
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     let dateFormatter = NSDateFormatter()
     
     var isFirstLoad = true
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
         dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
-
+        
         workoutTableView.estimatedRowHeight = 44.0
         workoutTableView.rowHeight = UITableViewAutomaticDimension
     }
-
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-
+        
         let didGetHealthKitAuthorization = HealthKitSetup().setupAuthorization { (didSucceed) -> Void in
             
             if !didSucceed {
@@ -42,26 +42,25 @@ class WorkoutTableViewController: UIKit.UITableViewController {
             }
         }
         
-        QueryHealthKitWorkouts().getAllWorkouts { (result, success) -> Void in
-            if success {
-                self.workoutArray = result
-                self.tableView.allowsMultipleSelection = true
+        QueryHealthKitWorkouts().getAllWorkouts { (result) -> Void in
+            self.workoutArray = result
+            self.tableView.allowsMultipleSelection = true
+            self.tableView.reloadData()
+            
+            if self.isFirstLoad {
+                self.tableView.setNeedsLayout()
+                self.tableView.layoutIfNeeded()
                 self.tableView.reloadData()
-                
-                if self.isFirstLoad {
-                    self.tableView.setNeedsLayout()
-                    self.tableView.layoutIfNeeded()
-                    self.tableView.reloadData()
-                    self.isFirstLoad = false
-                }
+                self.isFirstLoad = false
             }
         }
     }
     
+    
     @IBAction func refresh(sender: UIKit.UIRefreshControl) {
         
     }
-
+    
     // MARK: - TableView Stuff
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -85,13 +84,13 @@ class WorkoutTableViewController: UIKit.UITableViewController {
         let row = indexPath.row
         
         if workoutArray != nil && workoutArray.count != 0 {
-
+            
             cell.colorView.hidden = false
             cell.accessoryType = .DisclosureIndicator
             
-            let rowWorkout = workoutArray[row] as! HKWorkout
-            let startDate = rowWorkout.startDate
-            let titleString = dateFormatter.stringFromDate(startDate)
+            let rowWorkout = workoutArray[row] 
+            let startDate = rowWorkout.getStartDate()
+            let titleString = dateFormatter.stringFromDate(startDate!)
             
             cell.titleLabel.text = titleString
             
@@ -114,7 +113,7 @@ class WorkoutTableViewController: UIKit.UITableViewController {
         return cell
     }
     
-
-  
-
+    
+    
+    
 }
