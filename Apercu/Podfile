@@ -3,4 +3,3 @@ platform :ios, '8.0'
 use_frameworks!
 pod 'CorePlot'
 pod "Color-Picker-for-iOS", "~> 2.0"
-pod "MagicalRecord"

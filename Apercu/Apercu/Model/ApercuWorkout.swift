@@ -7,3 +7,8 @@
 //
 
 import Foundation
+import HealthKit
+
+class ApercuWorkout {
+    
+}

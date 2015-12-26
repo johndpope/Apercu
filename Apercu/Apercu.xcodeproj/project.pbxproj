@@ -11,6 +11,7 @@
 		66D922BD695B3D5F1A6A0031 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
 		66D92F16487AF0F7322B45B4 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
 		66D92FBC1A70FD594DBD8028 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
+		8B52700B1C2E3AB000391950 /* ApercuWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B52700A1C2E3AB000391950 /* ApercuWorkout.swift */; };
 		8B5C0C4B1C2D6FC6000B236A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5C0C4A1C2D6FC6000B236A /* HealthKit.framework */; };
 		8B5C0C4F1C2D7329000B236A /* singleTabBar3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B5C0C4D1C2D7329000B236A /* singleTabBar3.png */; };
 		8B5C0C501C2D7329000B236A /* singleTabBar3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B5C0C4E1C2D7329000B236A /* singleTabBar3@2x.png */; };
@@ -65,6 +66,7 @@
 		46E0FBFC3ABBE44CC5C1E9D6 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BD13D29264AAFFE9CA3BA73 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewController.swift; sourceTree = "<group>"; };
+		8B52700A1C2E3AB000391950 /* ApercuWorkout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApercuWorkout.swift; path = Model/ApercuWorkout.swift; sourceTree = "<group>"; };
 		8B5C0C491C2D6F42000B236A /* Apercu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Apercu.entitlements; sourceTree = "<group>"; };
 		8B5C0C4A1C2D6FC6000B236A /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		8B5C0C4D1C2D7329000B236A /* singleTabBar3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = singleTabBar3.png; path = Images/singleTabBar3.png; sourceTree = "<group>"; };
@@ -149,6 +151,14 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		8B5270091C2E3A4E00391950 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8B52700A1C2E3AB000391950 /* ApercuWorkout.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		8B5C0C4C1C2D7269000B236A /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +206,7 @@
 				8BD54DDC1C2C18840013B35A /* Cells */,
 				8BD54DDB1C2C18730013B35A /* Core Data */,
 				8B5C0C4C1C2D7269000B236A /* Images */,
+				8B5270091C2E3A4E00391950 /* Model */,
 				8BD54DD81C2C17080013B35A /* Misc */,
 				66D92FB1FA360AC76BE2D5A2 /* ViewControllers */,
 			);
@@ -472,6 +483,7 @@
 				8B5C0C601C2D877A000B236A /* Template.swift in Sources */,
 				8BDA8EE71C2C4F93000D0630 /* CategorySetup.swift in Sources */,
 				8B65733B1C2A1F2F00B9B1E9 /* ViewController.swift in Sources */,
+				8B52700B1C2E3AB000391950 /* ApercuWorkout.swift in Sources */,
 				8B6573391C2A1F2F00B9B1E9 /* AppDelegate.swift in Sources */,
 				8BD54DE01C2C2F2D0013B35A /* QueryHealthKitWorkouts.swift in Sources */,
 				8BD54DDE1C2C189A0013B35A /* HealthKitSetup.swift in Sources */,

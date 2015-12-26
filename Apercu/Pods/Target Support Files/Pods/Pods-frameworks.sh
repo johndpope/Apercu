@@ -86,10 +86,8 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/Color_Picker_for_iOS.framework"
   install_framework "Pods/CorePlot.framework"
-  install_framework "Pods/MagicalRecord.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/Color_Picker_for_iOS.framework"
   install_framework "Pods/CorePlot.framework"
-  install_framework "Pods/MagicalRecord.framework"
 fi
