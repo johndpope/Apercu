@@ -4272,7 +4272,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GEP-LD-mf4" userLabel="Content View">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="480"/>
                                         <subviews>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="164" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="OQj-KE-bkf">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="164" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="OQj-KE-bkf">
                                                 <rect key="frame" x="0.0" y="179" width="600" height="300"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
@@ -4328,23 +4328,23 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Filter:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="Vl3-aN-xRN">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Current Filter:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="Vl3-aN-xRN">
                                                 <rect key="frame" x="15" y="110" width="585" height="20"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4q-ct-Zxr">
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4q-ct-Zxr">
                                                 <rect key="frame" x="15" y="63" width="189" height="32"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <state key="normal" title="Manually Select Workouts">
+                                                    <color key="titleColor" red="0.0" green="0.49019607840000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="selectWorkouts:" destination="Mtj-JM-Gan" eventType="touchUpInside" id="wat-4Y-VmZ"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Workouts to be included:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fb5-4q-1dT">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Workouts to be included:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fb5-4q-1dT">
                                                 <rect key="frame" x="15" y="144" width="585" height="20"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -4413,7 +4413,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="button" destination="o4q-ct-Zxr" id="aVv-us-Kck"/>
+                        <outlet property="button" destination="o4q-ct-Zxr" id="gpx-Ji-y6u"/>
                         <outlet property="filterLabel" destination="Vl3-aN-xRN" id="omn-Bd-zr0"/>
                         <outlet property="filterSwitch" destination="gVB-HM-yFK" id="Nag-QU-U8C"/>
                         <outlet property="scrollView" destination="m1u-qK-2vH" id="pZM-Vb-lM4"/>
@@ -4744,7 +4744,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <!--Category Selection-->
         <scene sceneID="A3Q-pX-67W">
             <objects>
-                <viewController title="Category Selection" extendedLayoutIncludesOpaqueBars="YES" id="4YM-YD-ylz" customClass="ColorFilter" sceneMemberID="viewController">
+                <viewController title="Category Selection" extendedLayoutIncludesOpaqueBars="YES" id="4YM-YD-ylz" customClass="CategoryFilterViewController" customModule="Apercu" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8FR-Wa-tM6"/>
                         <viewControllerLayoutGuide type="bottom" id="K4X-yv-P5W"/>
@@ -4753,16 +4753,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PIR-gs-XDb">
-                                <rect key="frame" x="20" y="79" width="83" height="32"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                <state key="normal" title="Remove All">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="removeAll:" destination="4YM-YD-ylz" eventType="touchUpInside" id="PxL-dC-BeJ"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hDc-yb-du3">
                                 <rect key="frame" x="512" y="79" width="68" height="32"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -4770,14 +4760,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="selectAll:" destination="4YM-YD-ylz" eventType="touchUpInside" id="krv-6t-J0B"/>
+                                    <action selector="selectAllCategories:" destination="4YM-YD-ylz" eventType="touchUpInside" id="SNG-MQ-iJU"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Di1-bP-sVA">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Di1-bP-sVA">
                                 <rect key="frame" x="0.0" y="117" width="600" height="402"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReuseIdentifier" id="vOI-rf-pql" customClass="ColorCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="CategoryCell" id="vOI-rf-pql" customClass="CategoryCell" customModule="Apercu" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vOI-rf-pql" id="ueX-4A-QDy">
@@ -4808,12 +4798,22 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="colorView" destination="Za7-Jr-6cc" id="5co-np-o2S"/>
-                                            <outlet property="label" destination="xs8-Kp-Ef0" id="sf4-cK-VkP"/>
+                                            <outlet property="colorView" destination="Za7-Jr-6cc" id="G8g-cn-AbH"/>
+                                            <outlet property="label" destination="xs8-Kp-Ef0" id="vQV-nJ-Oqm"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PIR-gs-XDb">
+                                <rect key="frame" x="20" y="79" width="83" height="32"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <state key="normal" title="Remove All">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="removeAllCategories:" destination="4YM-YD-ylz" eventType="touchUpInside" id="6QS-6g-XQ1"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -4830,9 +4830,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                     </view>
                     <navigationItem key="navigationItem" id="JLM-sM-VZK"/>
                     <connections>
-                        <outlet property="removeAllButton" destination="PIR-gs-XDb" id="vXu-Tz-80G"/>
-                        <outlet property="selectAllButton" destination="hDc-yb-du3" id="mRK-Ss-JpN"/>
-                        <outlet property="tableView" destination="Di1-bP-sVA" id="0fZ-qb-yiH"/>
+                        <outlet property="removeAllButton" destination="PIR-gs-XDb" id="tf6-WL-Gyu"/>
+                        <outlet property="selectAllButton" destination="hDc-yb-du3" id="WXv-ba-Zfy"/>
+                        <outlet property="tableView" destination="Di1-bP-sVA" id="BD0-jw-x7k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pH1-BT-LKb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4859,7 +4859,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                 </state>
                                 <connections>
                                     <action selector="selectAll:" destination="vDj-Tq-Bgl" eventType="touchUpInside" id="4pL-iI-MsK"/>
-                                    <action selector="selectAll:" destination="4YM-YD-ylz" eventType="touchUpInside" id="Ccv-6k-I4a"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="147" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="vhc-Xo-QyN">
@@ -4922,7 +4921,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="removeAll:" destination="4YM-YD-ylz" eventType="touchUpInside" id="mK3-ih-wV8"/>
                                     <action selector="removeAll:" destination="vDj-Tq-Bgl" eventType="touchUpInside" id="t70-kb-3jn"/>
                                 </connections>
                             </button>
@@ -5535,12 +5533,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <image name="blackInc.png" width="70" height="35"/>
         <image name="blueArrow1.png" width="70" height="35"/>
         <image name="bluePlus.png" width="70" height="35"/>
-        <image name="compareTabBar2.png" width="70" height="35"/>
+        <image name="compareTabBar2.png" width="30" height="30"/>
         <image name="decrement.png" width="70" height="35"/>
         <image name="grayDown2.png" width="70" height="35"/>
         <image name="increment3.png" width="70" height="35"/>
         <image name="refreshData4.png" width="70" height="35"/>
-        <image name="singleTabBar3.png" width="70" height="35"/>
+        <image name="singleTabBar3.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="hBj-EI-suy"/>

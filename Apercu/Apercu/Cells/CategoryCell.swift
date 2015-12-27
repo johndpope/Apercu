@@ -1,19 +1,18 @@
 //
-//  WorkoutCell.swift
+//  CategoryCell.swift
 //  Apercu
 //
-//  Created by David Lantrip on 12/24/15.
+//  Created by David Lantrip on 12/26/15.
 //  Copyright © 2015 Apercu. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class WorkoutCell: UIKit.UITableViewCell {
+class CategoryCell: UIKit.UITableViewCell {
     
-    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var label: UILabel!
     @IBOutlet var colorView: UIView!
-    @IBOutlet var detailLabel: UILabel!
     
     override func awakeFromNib() {
         

@@ -28,10 +28,10 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     let workoutDescription: WorkoutDescription = WorkoutDescription()
     var dateFormatter = NSDateFormatter()
     
-    var workoutArray: [HKSample]!
-    var filteredWorkoutsByColor = [HKSample]()
-    var filteredWorkoutsManual = [HKSample]()
-    var filteredWorkouts = [HKSample]()
+    var workoutArray: [ApercuWorkout]!
+    var filteredWorkoutsByColor = [ApercuWorkout]()
+    var filteredWorkoutsManual = [ApercuWorkout]()
+    var filteredWorkouts = [ApercuWorkout]()
     
     var isFirstLoad = true
     var filterType: FilterType!
@@ -57,17 +57,24 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         } else {
             filterType = .Manual
         }
+        updateButtonTitle()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
         labelSetup()
-        getFilteredWorkotus()
+        // Get workouts based on filter stored in NSUserDefaults
+//        filteredWorkouts = getFilteredWorkouts()
     }
     
-    func getFilteredWorkotus() {
+    func getFilteredWorkouts() -> [ApercuWorkout] {
+        if filterType == .Color {
+
+        } else {
         
+        }
+        return [ApercuWorkout]()
     }
     
     func labelSetup() {
@@ -97,11 +104,23 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
             filterType = .Manual
             defs?.setInteger(filterType.rawValue, forKey: "filterType")
         }
-        
+        updateButtonTitle()
     }
     
     @IBAction func selectWorkouts(sender: AnyObject) {
-        
+        if filterType == .Color {
+            performSegueWithIdentifier("toCategoryFilter", sender: self)
+        } else {
+            
+        }
+    }
+    
+    func updateButtonTitle() {
+        if filterType == .Color {
+            button.titleLabel?.text = "Choose Categories"
+        } else {
+           button.titleLabel?.text = "Select Workouts"
+        }
     }
     
     // MARK: - TableView Stuff
@@ -151,11 +170,11 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         if filteredWorkouts.count != 0 {
             cell.detailLabel.hidden = false
             
-            let rowWorkout = filteredWorkouts[row] as! HKWorkout
+            let rowWorkout = filteredWorkouts[row]
             
-            let dateString = dateFormatter.stringFromDate(rowWorkout.startDate)
+            let dateString = dateFormatter.stringFromDate(rowWorkout.getStartDate()!)
             
-            let detailBottom = workoutDescription.geWorkoutDescription(rowWorkout.workoutActivityType.rawValue)
+            let detailBottom = workoutDescription.geWorkoutDescription(rowWorkout.healthKitWorkout!.workoutActivityType.rawValue)
             
             // if title show title not date
             cell.mainLabel.text = dateString
@@ -200,13 +219,13 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 //        switch segue.identifier {
 //            Need clases to cast as
 //            case "toCategoryFilter": {
 //                let destination = segue.destinationViewController as!
 //            }
 //        }
-//    }
+    }
 }
 
