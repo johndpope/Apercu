@@ -6,7 +6,6 @@
 import Foundation
 import HealthKit
 import UIKit
-//import WorkoutCell
 
 class WorkoutTableViewController: UIKit.UITableViewController {
     
@@ -22,8 +21,8 @@ class WorkoutTableViewController: UIKit.UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        dateFormatter.dateStyle = NSDateFormatterStyle.MediumStyle
-        dateFormatter.timeStyle = NSDateFormatterStyle.ShortStyle
+        dateFormatter.dateStyle = .MediumStyle
+        dateFormatter.timeStyle = .ShortStyle
         
         workoutTableView.estimatedRowHeight = 44.0
         workoutTableView.rowHeight = UITableViewAutomaticDimension
@@ -81,14 +80,12 @@ class WorkoutTableViewController: UIKit.UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("WorkoutCell", forIndexPath: indexPath) as! WorkoutCell
         cell.layoutIfNeeded()
         
-        let row = indexPath.row
-        
         if workoutArray != nil && workoutArray.count != 0 {
             
             cell.colorView.hidden = false
             cell.accessoryType = .DisclosureIndicator
             
-            let rowWorkout = workoutArray[row] 
+            let rowWorkout = workoutArray[indexPath.row]
             let startDate = rowWorkout.getStartDate()
             let titleString = dateFormatter.stringFromDate(startDate!)
             
@@ -99,6 +96,12 @@ class WorkoutTableViewController: UIKit.UITableViewController {
             cell.colorView.frame = newColorViewFrame
             cell.colorView.layer.cornerRadius = 12.5
             cell.colorView.center = colorViewCenter
+            
+            if let color = CategoriesSingleton.sharedInstance.getColorForIdentifier(rowWorkout.workout?.category) {
+                cell.colorView.backgroundColor = color
+            } else {
+                cell.colorView.hidden = true
+            }
             
             cell.detailLabel.text = "Detail Text"
             

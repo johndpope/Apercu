@@ -18,11 +18,11 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     @IBOutlet private var filterLabel: UILabel!
-    @IBOutlet private var tableView: UIKit.UITableView!
-    @IBOutlet private var filterSwitch: UIKit.UISegmentedControl!
-    @IBOutlet private var scrollView: UIKit.UIScrollView!
-    @IBOutlet private var tableViewHeight: UIKit.NSLayoutConstraint!
-    @IBOutlet private var button: UIKit.UIButton!
+    @IBOutlet private var tableView: UITableView!
+    @IBOutlet private var filterSwitch: UISegmentedControl!
+    @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private var tableViewHeight: NSLayoutConstraint!
+    @IBOutlet private var button: UIButton!
     
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     let workoutDescription: WorkoutDescription = WorkoutDescription()
@@ -47,15 +47,17 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.rowHeight = UITableViewAutomaticDimension
         tableViewHeight.constant = tableView.contentSize.height
         
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
+//        button.titleLabel?.adjustsFontSizeToFitWidth = true
         
         dateFormatter.dateStyle = .MediumStyle
         dateFormatter.timeStyle = .ShortStyle
         
         if defs?.integerForKey("filterType") == nil || defs?.integerForKey("filterType") == 0 {
             filterType = .Color
+            filterSwitch.selectedSegmentIndex = 0
         } else {
             filterType = .Manual
+            filterSwitch.selectedSegmentIndex = 1
         }
         updateButtonTitle()
     }
@@ -111,16 +113,19 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         if filterType == .Color {
             performSegueWithIdentifier("toCategoryFilter", sender: self)
         } else {
-            
+            performSegueWithIdentifier("toManualSelection", sender: self)
         }
     }
     
     func updateButtonTitle() {
         if filterType == .Color {
-            button.titleLabel?.text = "Choose Categories"
+            button.setTitle("Choose Categories", forState: .Normal)
+//            button.titleLabel?.text = "Choose Categories"
         } else {
-           button.titleLabel?.text = "Select Workouts"
+            button.setTitle("Select Workouts", forState: .Normal)
+//           button.titleLabel?.text = "Select Workouts"
         }
+        button.sizeToFit()
     }
     
     // MARK: - TableView Stuff

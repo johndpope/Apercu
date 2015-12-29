@@ -31,37 +31,16 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
         tableView.dataSource = self
         tableView.delegate = self
         tableView.allowsMultipleSelection = true
-        
-        //  find the current selected from user defs and set them
-        // load table and if in selected array show as selected
-        // on select add or remove ffrom selected list and restore in defs
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if defs?.objectForKey("selectedCategories") != nil {                selectedCategories = defs?.objectForKey("selectedCategories") as! [NSNumber]
+        if defs?.objectForKey("selectedCategories") != nil {
+            selectedCategories = defs?.objectForKey("selectedCategories") as! [NSNumber]
         }
         
-        categories = getAllCategories()
-    }
-    
-    func getAllCategories() -> [Category] {
-        categories.removeAll()
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-        
-        let fetchRequest = NSFetchRequest(entityName: "Category")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "identifier", ascending: true)]
-        
-        do {
-            let fetchedCategories = try managedContext.executeFetchRequest(fetchRequest) as! [Category]
-            return fetchedCategories
-        } catch {
-            NSLog("Error loading categories")
-            return [Category]()
-        }
+        categories = CategoryLookup().getAllCategories()
     }
     
     @IBAction func selectAllCategories(sender: UIButton) {

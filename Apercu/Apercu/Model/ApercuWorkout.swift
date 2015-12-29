@@ -23,7 +23,7 @@ class ApercuWorkout {
         if let healthKitStart = healthKitWorkout?.startDate {
             return healthKitStart
         }
-        5
+        
         if let apercuStart = workout?.start {
             return apercuStart
         }

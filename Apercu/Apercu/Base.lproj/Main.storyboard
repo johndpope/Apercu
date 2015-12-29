@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Do-b1-u2x">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Do-b1-u2x">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="951"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CYf-Gk-4FX">
@@ -622,7 +622,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JsI-Hz-ERJ">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JsI-Hz-ERJ">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="951"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <string key="text">Copyright (c) 2014, Drew McCormack, Brad Larson, Eric Skroch, Barry Wark, Dirkjan Krijnders, Rick Maddy, Vijay Kalusani, Caleb Cannon, Jeff Buck, Thomas Elstner, Jeroen Leenarts, Craig Hockenberry, Hartwig Wiesmann, Koen van der Drift, Nino Ag, Mike Lischke, Trevor Harmon, Travis Fischer, Graham Mueller, Rafał Wójcik, Mike Rossetti, Michael Merickel, Ingmar Stein, and Victor Martin Garcia.
@@ -3435,7 +3435,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uYO-Dd-aFi">
+                                        <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uYO-Dd-aFi">
                                             <rect key="frame" x="254" y="82" width="25" height="25"/>
                                             <color key="backgroundColor" red="0.75686274509999996" green="0.85490196080000003" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
@@ -4029,11 +4029,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <viewControllerLayoutGuide type="bottom" id="PQh-GA-66W"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="fhY-0s-Rh7">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="956"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="892"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YzN-9z-gxz" customClass="CPTGraphHostingView">
-                                <rect key="frame" x="15" y="0.0" width="305" height="941"/>
+                                <rect key="frame" x="15" y="0.0" width="305" height="877"/>
                                 <color key="backgroundColor" cyan="0.27000000000000002" magenta="0.0" yellow="0.63" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                             </view>
                         </subviews>
@@ -4067,7 +4067,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <rect key="frame" x="0.0" y="0.0" width="320" height="956"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LXV-kJ-h6T">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LXV-kJ-h6T">
                                 <rect key="frame" x="0.0" y="64" width="320" height="892"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hzN-kE-kdg">
@@ -4334,16 +4334,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4q-ct-Zxr">
-                                                <rect key="frame" x="15" y="63" width="189" height="32"/>
-                                                <state key="normal" title="Manually Select Workouts">
-                                                    <color key="titleColor" red="0.0" green="0.49019607840000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="selectWorkouts:" destination="Mtj-JM-Gan" eventType="touchUpInside" id="wat-4Y-VmZ"/>
-                                                </connections>
-                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Workouts to be included:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fb5-4q-1dT">
                                                 <rect key="frame" x="15" y="144" width="585" height="20"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
@@ -4360,13 +4350,30 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                     <action selector="filterSwitchChanged:" destination="Mtj-JM-Gan" eventType="valueChanged" id="E37-jA-iiY"/>
                                                 </connections>
                                             </segmentedControl>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o4q-ct-Zxr">
+                                                <rect key="frame" x="15" y="63" width="189" height="32"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="220" id="O6K-h6-prD"/>
+                                                </constraints>
+                                                <state key="normal" title="Select Workouts">
+                                                    <color key="titleColor" red="0.0" green="0.49019607840000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="O6K-h6-prD"/>
+                                                    </mask>
+                                                </variation>
+                                                <connections>
+                                                    <action selector="selectWorkouts:" destination="Mtj-JM-Gan" eventType="touchUpInside" id="wat-4Y-VmZ"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="gVB-HM-yFK" firstAttribute="top" secondItem="GEP-LD-mf4" secondAttribute="top" constant="20" id="2gM-Bh-F93"/>
                                             <constraint firstItem="o4q-ct-Zxr" firstAttribute="leading" secondItem="GEP-LD-mf4" secondAttribute="leading" constant="15" id="8RY-tW-kyO"/>
                                             <constraint firstItem="o4q-ct-Zxr" firstAttribute="top" secondItem="gVB-HM-yFK" secondAttribute="bottom" constant="15" id="9kO-Ci-OKk"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="o4q-ct-Zxr" secondAttribute="trailing" id="E3v-9c-Wh4"/>
                                             <constraint firstItem="Vl3-aN-xRN" firstAttribute="top" secondItem="o4q-ct-Zxr" secondAttribute="bottom" constant="15" id="M7Q-vN-muv"/>
                                             <constraint firstAttribute="trailing" secondItem="fb5-4q-1dT" secondAttribute="trailing" id="P1Z-1M-PRH"/>
                                             <constraint firstItem="OQj-KE-bkf" firstAttribute="leading" secondItem="GEP-LD-mf4" secondAttribute="leading" id="PrM-Cw-18a"/>
@@ -4842,7 +4849,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <!--Manual Selection-->
         <scene sceneID="nMN-4u-jDG">
             <objects>
-                <viewController title="Manual Selection" extendedLayoutIncludesOpaqueBars="YES" id="vDj-Tq-Bgl" customClass="ManualSelection" sceneMemberID="viewController">
+                <viewController title="Manual Selection" extendedLayoutIncludesOpaqueBars="YES" id="vDj-Tq-Bgl" customClass="ManualFilterViewController" customModule="Apercu" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wpD-63-QbT"/>
                         <viewControllerLayoutGuide type="bottom" id="jki-wC-IJM"/>
@@ -4858,14 +4865,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="selectAll:" destination="vDj-Tq-Bgl" eventType="touchUpInside" id="4pL-iI-MsK"/>
+                                    <action selector="selectAllWorkouts:" destination="vDj-Tq-Bgl" eventType="touchUpInside" id="V8i-lw-vyO"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="147" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="vhc-Xo-QyN">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="147" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="vhc-Xo-QyN">
                                 <rect key="frame" x="0.0" y="117" width="600" height="402"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="WorkoutCell" id="a9c-By-s8t" customClass="WorkoutCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="WorkoutCell" id="a9c-By-s8t" customClass="WorkoutCell" customModule="Apercu">
                                         <rect key="frame" x="0.0" y="22" width="600" height="147"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a9c-By-s8t" id="Ec5-ot-O1y">
@@ -4907,9 +4914,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="colorView" destination="2rF-NV-gzt" id="irT-CI-Kcu"/>
-                                            <outlet property="detailLabel" destination="s6V-rv-GDc" id="Edi-au-TP0"/>
-                                            <outlet property="titleLabel" destination="dZ2-xa-buq" id="A3h-j1-I20"/>
+                                            <outlet property="colorView" destination="2rF-NV-gzt" id="Iyz-7d-uIe"/>
+                                            <outlet property="detailLabel" destination="s6V-rv-GDc" id="gSj-2h-QRB"/>
+                                            <outlet property="titleLabel" destination="dZ2-xa-buq" id="vf3-Gd-vDZ"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -4921,7 +4928,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="removeAll:" destination="vDj-Tq-Bgl" eventType="touchUpInside" id="t70-kb-3jn"/>
+                                    <action selector="removeAllWorkouts:" destination="vDj-Tq-Bgl" eventType="touchUpInside" id="Kpg-OB-aG9"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -4941,9 +4948,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                     </view>
                     <navigationItem key="navigationItem" id="jMr-rr-76d"/>
                     <connections>
-                        <outlet property="removeAllButton" destination="OaP-8z-X8r" id="fYU-Dm-oEx"/>
-                        <outlet property="selectAllButton" destination="OfO-dy-hRg" id="D4x-yN-vJc"/>
-                        <outlet property="tableView" destination="vhc-Xo-QyN" id="36e-Sb-Ch4"/>
+                        <outlet property="removeAllButton" destination="OaP-8z-X8r" id="eBS-di-gPt"/>
+                        <outlet property="selectAllButton" destination="OfO-dy-hRg" id="1pi-X1-pt0"/>
+                        <outlet property="tableView" destination="vhc-Xo-QyN" id="41w-Y7-Oif"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tPa-9U-erk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -5541,10 +5548,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <image name="singleTabBar3.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hBj-EI-suy"/>
-        <segue reference="qvD-uY-O5S"/>
-        <segue reference="BQA-YE-PQn"/>
+        <segue reference="e6p-vE-psS"/>
+        <segue reference="c5j-j5-e5s"/>
         <segue reference="f2V-th-zY7"/>
+        <segue reference="BQA-YE-PQn"/>
         <segue reference="lV2-Wb-bA2"/>
         <segue reference="goZ-7M-4CC"/>
     </inferredMetricsTieBreakers>
