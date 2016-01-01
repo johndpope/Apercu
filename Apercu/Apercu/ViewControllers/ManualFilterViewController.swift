@@ -95,6 +95,12 @@ class ManualFilterViewController: UIViewController, UITableViewDataSource, UITab
             cell.colorView.layer.cornerRadius = 12.5
             cell.colorView.center = colorViewCenter
             
+            if let color = CategoriesSingleton.sharedInstance.getColorForIdentifier(rowWorkout.workout?.category) {
+                cell.colorView.backgroundColor = color
+            } else {
+                cell.colorView.hidden = true
+            }
+            
             cell.detailLabel.text = "Detail Text"
             
         } else {

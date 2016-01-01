@@ -7,10 +7,10 @@ import Foundation
 import HealthKit
 import UIKit
 
-class WorkoutTableViewController: UIKit.UITableViewController {
+class WorkoutTableViewController: UITableViewController {
     
-    @IBOutlet weak private var workoutTableView: UIKit.UITableView!
-    @IBOutlet weak private var workoutButton: UIKit.UIBarButtonItem!
+    @IBOutlet weak private var workoutTableView: UITableView!
+    @IBOutlet weak private var workoutButton: UIBarButtonItem!
     
     var workoutArray: [ApercuWorkout]!
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")

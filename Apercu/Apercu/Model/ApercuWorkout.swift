@@ -14,6 +14,10 @@ class ApercuWorkout {
     var workout: Workout?
     var healthKitWorkout: HKWorkout?
     
+    var bpmValues: [Double]?
+    var times: [Double]?
+    var deltaTimes: [Double]?
+    
     init (healthKitWorkout: HKWorkout?, workout: Workout?) {
         self.healthKitWorkout = healthKitWorkout
         self.workout = workout
@@ -42,5 +46,7 @@ class ApercuWorkout {
         
         return nil
     }
+    
+    
     
 }
