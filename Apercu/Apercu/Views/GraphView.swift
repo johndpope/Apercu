@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 import CorePlot
-
-class GraphView: UIView, CPTPlotDataSource, CPTPlotSpaceDelegate {
+//, CPTPlotDataSource, CPTPlotSpaceDelegate
+class GraphView: UIView {
     
     @IBOutlet weak var graphHostingView: CPTGraphHostingView!
     
@@ -34,9 +34,9 @@ class GraphView: UIView, CPTPlotDataSource, CPTPlotSpaceDelegate {
         graph.applyTheme(CPTTheme.init(named: kCPTPlainWhiteTheme))
         graphHostingView.hostedGraph = graph
         
-        var plotSpace = graph.defaultPlotSpace
-        plotSpace?.allowsUserInteraction = true
-        plotSpace!.delegate = self
+//        var plotSpace = graph.defaultPlotSpace
+//        plotSpace?.allowsUserInteraction = true
+//        plotSpace!.delegate = self
         
         
     }
@@ -57,8 +57,8 @@ class GraphView: UIView, CPTPlotDataSource, CPTPlotSpaceDelegate {
         gridLineStyle.dashPattern = [5, 5]
         gridLineStyle.lineWidth = 0.7
         
-        let axisSet: CPTXYAxisSet = graph.axisSet
-        axisSet.
+//        let axisSet: CPTXYAxisSet = graph.axisSet
+//        axisSet.
         
     }
     

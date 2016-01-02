@@ -33,11 +33,14 @@ class HealthKitSetup {
                         NSUserDefaults.init(suiteName: "group.com.apercu.apercu")!.setInteger(25, forKey: "hkage")
                     }
                     
-                    completion(didSucceed: true)
-                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        completion(didSucceed: true)
+                    })
                 } else {
-                    completion(didSucceed: false)
-                    NSLog("Apercu unable to reach HealthKit")
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        completion(didSucceed: false)
+                        NSLog("Apercu unable to reach HealthKit")
+                    })
                 }
             })
             

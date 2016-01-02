@@ -18,7 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        healthStore = HealthKit.HKHealthStore()
+        if HKHealthStore.isHealthDataAvailable() {
+            healthStore = HealthKit.HKHealthStore()
+        } else {
+            healthStore = nil
+        }
 
         CategorySetup().initializeCategoryData()
         
@@ -114,6 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: - Health Kit
+    
     
     
 }

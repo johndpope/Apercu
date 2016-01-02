@@ -15,14 +15,13 @@ class QueryHealthKitWorkouts {
     var healthStore: HealthKit.HKHealthStore!
     let sampleType = HKSampleType.workoutType()
     let descendingSort = NSSortDescriptor.init(key: HKSampleSortIdentifierStartDate, ascending: false)
-    
-    func setupHealthStore() {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        healthStore = appDelegate.healthStore
-    }
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     func getAllWorkouts(completion: (result: [ApercuWorkout]?) -> Void) {
-        if healthStore == nil { setupHealthStore() }
+        guard let healthStore = appDelegate.healthStore else {
+            return
+        }
+        
         let predicate = HKQuery.predicateForSamplesWithStartDate(nil, endDate: nil, options: .None)
         
         let workoutQuery = HKSampleQuery.init(sampleType: sampleType, predicate: predicate, limit: 0, sortDescriptors:[descendingSort]) { (query, workoutResults, error) -> Void in
@@ -94,13 +93,14 @@ class QueryHealthKitWorkouts {
             })
         }
         
-        if healthStore != nil {
-            healthStore.executeQuery(workoutQuery);
-        }
+        healthStore.executeQuery(workoutQuery);
     }
     
     func getCategoryFilteredWorkouts(categoryIdentifiers: [NSNumber]?, completion: (result: [ApercuWorkout]?) -> Void) {
-        if healthStore == nil { setupHealthStore() }
+        guard let healthStore = appDelegate.healthStore else {
+            return
+        }
+        
         let predicate = HKQuery.predicateForSamplesWithStartDate(nil, endDate: nil, options: .None)
         
         let workoutQuery = HKSampleQuery.init(sampleType: sampleType, predicate: predicate, limit: 0, sortDescriptors: [descendingSort]) { (query, workoutResults, error) -> Void in
@@ -186,14 +186,11 @@ class QueryHealthKitWorkouts {
             })
         }
         
-        if healthStore != nil {
-            healthStore.executeQuery(workoutQuery);
-        }
+        healthStore.executeQuery(workoutQuery);
     }
     
     
     func getAllCoreDataWorkouts() -> [Workout]? {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let managedContext = appDelegate.managedObjectContext
         
         let fetchRequest = NSFetchRequest(entityName: "Workout")
