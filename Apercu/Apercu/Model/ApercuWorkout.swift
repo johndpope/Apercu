@@ -49,7 +49,7 @@ class ApercuWorkout {
         return nil
     }
     
-    func heartRatePlotDate(includeRaw: Bool, completion: (results: [String: AnyObject]!) -> Void) {
+    func heartRatePlotDate(includeRaw: Bool, statsCompleted: (stats: [String: AnyObject]) -> Void, completion: (results: [String: AnyObject]!) -> Void) {
         QuerySamples().getSampleData(getStartDate()!, end: getEndDate()!) { (bpmValues, timeValues) -> Void in
             
             guard bpmValues != nil else {
@@ -74,6 +74,16 @@ class ApercuWorkout {
             vDSP_maxvD(bpmValues!, 1, &maximum, length)
             vDSP_minvD(bpmValues!, 1, &minimum, length)
             vDSP_meanvD(bpmValues!, 1, &average, length)
+            
+            var statsDict: [String: AnyObject] = ["max": maximum, "min": minimum, "duration": duration, "avg": average]
+            if includeRaw {
+                statsDict["bpm"] = bpmValues!
+                statsDict["time"] = timeValues!
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                statsCompleted(stats: statsDict)
+            })
             
             var highIntensityThreshold = Double(IntensityThresholdSingleton.sharedInstance.highIntensityThreshold)
             var moderateIntensityThreshold = Double(IntensityThresholdSingleton.sharedInstance.moderateIntensityThreshold)
@@ -111,17 +121,8 @@ class ApercuWorkout {
             
             var responseDict = [String: AnyObject]()
             
-            responseDict["max"] = maximum
-            responseDict["min"] = minimum
-            responseDict["avg"] = average
-            responseDict["duration"] = duration
             responseDict["mod"] = secondsOfModerate
             responseDict["high"] = secondsOfHigh
-            
-            if includeRaw {
-                responseDict["bpm"] = bpmValues!
-                responseDict["time"] = timeValues!
-            }
             
             completion(results: responseDict)
         }

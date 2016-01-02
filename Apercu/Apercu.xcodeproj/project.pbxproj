@@ -11,8 +11,7 @@
 		66D922BD695B3D5F1A6A0031 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
 		66D92F16487AF0F7322B45B4 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
 		66D92FBC1A70FD594DBD8028 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
-		8B1F79841C3367FF00B92116 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F79831C3367FF00B92116 /* GraphView.swift */; };
-		8B1F79861C336BAF00B92116 /* GraphViewXib.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B1F79851C336BAF00B92116 /* GraphViewXib.xib */; };
+		8B1F79841C3367FF00B92116 /* GraphAxisSetUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F79831C3367FF00B92116 /* GraphAxisSetUp.swift */; };
 		8B1F79881C336E1400B92116 /* WorkoutDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F79871C336E1400B92116 /* WorkoutDetailViewController.swift */; };
 		8B2D5F511C3220A900F7A369 /* CategoriesSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D5F501C3220A900F7A369 /* CategoriesSingleton.swift */; };
 		8B52700B1C2E3AB000391950 /* ApercuWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B52700A1C2E3AB000391950 /* ApercuWorkout.swift */; };
@@ -44,6 +43,7 @@
 		8B86038A1C2F80F000923013 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8603891C2F80F000923013 /* CategoryCell.swift */; };
 		8BC314EA1C37187D00F2B774 /* GraphHeatmap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC314E91C37187D00F2B774 /* GraphHeatmap.swift */; };
 		8BC314EC1C3718D000F2B774 /* GraphMostActive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC314EB1C3718D000F2B774 /* GraphMostActive.swift */; };
+		8BC314EE1C37622800F2B774 /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC314ED1C37622800F2B774 /* CustomScrollView.swift */; };
 		8BD54DDE1C2C189A0013B35A /* HealthKitSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD54DDD1C2C189A0013B35A /* HealthKitSetup.swift */; };
 		8BD54DE01C2C2F2D0013B35A /* QueryWorkouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD54DDF1C2C2F2D0013B35A /* QueryWorkouts.swift */; };
 		8BDA8EE71C2C4F93000D0630 /* CategorySetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDA8EE61C2C4F93000D0630 /* CategorySetup.swift */; };
@@ -78,8 +78,7 @@
 		46E0FBFC3ABBE44CC5C1E9D6 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BD13D29264AAFFE9CA3BA73 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewController.swift; sourceTree = "<group>"; };
-		8B1F79831C3367FF00B92116 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphView.swift; path = Apercu/Views/GraphView.swift; sourceTree = SOURCE_ROOT; };
-		8B1F79851C336BAF00B92116 /* GraphViewXib.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GraphViewXib.xib; path = Apercu/Views/GraphViewXib.xib; sourceTree = SOURCE_ROOT; };
+		8B1F79831C3367FF00B92116 /* GraphAxisSetUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphAxisSetUp.swift; path = Apercu/Graph/GraphAxisSetUp.swift; sourceTree = SOURCE_ROOT; };
 		8B1F79871C336E1400B92116 /* WorkoutDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutDetailViewController.swift; sourceTree = "<group>"; };
 		8B2D5F501C3220A900F7A369 /* CategoriesSingleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoriesSingleton.swift; path = ../Misc/CategoriesSingleton.swift; sourceTree = "<group>"; };
 		8B52700A1C2E3AB000391950 /* ApercuWorkout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApercuWorkout.swift; path = Model/ApercuWorkout.swift; sourceTree = "<group>"; };
@@ -116,8 +115,9 @@
 		8B76F9611C36DF82009BE714 /* IntensityThresholdSingleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntensityThresholdSingleton.swift; sourceTree = "<group>"; };
 		8B8603871C2F789300923013 /* CategoryFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryFilterViewController.swift; sourceTree = "<group>"; };
 		8B8603891C2F80F000923013 /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoryCell.swift; path = Cells/CategoryCell.swift; sourceTree = "<group>"; };
-		8BC314E91C37187D00F2B774 /* GraphHeatmap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphHeatmap.swift; path = Apercu/Views/GraphHeatmap.swift; sourceTree = SOURCE_ROOT; };
-		8BC314EB1C3718D000F2B774 /* GraphMostActive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphMostActive.swift; path = Apercu/Views/GraphMostActive.swift; sourceTree = SOURCE_ROOT; };
+		8BC314E91C37187D00F2B774 /* GraphHeatmap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphHeatmap.swift; path = Apercu/Graph/GraphHeatmap.swift; sourceTree = SOURCE_ROOT; };
+		8BC314EB1C3718D000F2B774 /* GraphMostActive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphMostActive.swift; path = Apercu/Graph/GraphMostActive.swift; sourceTree = SOURCE_ROOT; };
+		8BC314ED1C37622800F2B774 /* CustomScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
 		8BD54DDD1C2C189A0013B35A /* HealthKitSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthKitSetup.swift; path = Apercu/Misc/HealthKitSetup.swift; sourceTree = SOURCE_ROOT; };
 		8BD54DDF1C2C2F2D0013B35A /* QueryWorkouts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QueryWorkouts.swift; path = Misc/QueryWorkouts.swift; sourceTree = "<group>"; };
 		8BDA8EE61C2C4F93000D0630 /* CategorySetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategorySetup.swift; path = ../Misc/CategorySetup.swift; sourceTree = "<group>"; };
@@ -178,15 +178,14 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		8B1F79821C3367DB00B92116 /* View */ = {
+		8B1F79821C3367DB00B92116 /* Graph */ = {
 			isa = PBXGroup;
 			children = (
-				8B1F79831C3367FF00B92116 /* GraphView.swift */,
-				8B1F79851C336BAF00B92116 /* GraphViewXib.xib */,
+				8B1F79831C3367FF00B92116 /* GraphAxisSetUp.swift */,
 				8BC314E91C37187D00F2B774 /* GraphHeatmap.swift */,
 				8BC314EB1C3718D000F2B774 /* GraphMostActive.swift */,
 			);
-			name = View;
+			name = Graph;
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
@@ -248,7 +247,7 @@
 				8B5270091C2E3A4E00391950 /* Model */,
 				8BE81CB31C36C4E500CD79BC /* HealthKit */,
 				8BD54DD81C2C17080013B35A /* Misc */,
-				8B1F79821C3367DB00B92116 /* View */,
+				8B1F79821C3367DB00B92116 /* Graph */,
 				66D92FB1FA360AC76BE2D5A2 /* ViewControllers */,
 			);
 			path = Apercu;
@@ -280,6 +279,7 @@
 				8BE5CE281C32068D00FB7CE9 /* CategoryLookup.swift */,
 				8B2D5F501C3220A900F7A369 /* CategoriesSingleton.swift */,
 				8B76F9611C36DF82009BE714 /* IntensityThresholdSingleton.swift */,
+				8BC314ED1C37622800F2B774 /* CustomScrollView.swift */,
 			);
 			name = Misc;
 			path = ViewControllers;
@@ -449,7 +449,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B5C0C501C2D7329000B236A /* singleTabBar3@2x.png in Resources */,
-				8B1F79861C336BAF00B92116 /* GraphViewXib.xib in Resources */,
 				8B6573461C2A1F2F00B9B1E9 /* LaunchScreen.storyboard in Resources */,
 				8B5C0C4F1C2D7329000B236A /* singleTabBar3.png in Resources */,
 				8B6573431C2A1F2F00B9B1E9 /* Assets.xcassets in Resources */,
@@ -538,6 +537,7 @@
 				8BC314EC1C3718D000F2B774 /* GraphMostActive.swift in Sources */,
 				8B5C0C601C2D877A000B236A /* Template.swift in Sources */,
 				8BDA8EE71C2C4F93000D0630 /* CategorySetup.swift in Sources */,
+				8BC314EE1C37622800F2B774 /* CustomScrollView.swift in Sources */,
 				8B76F9621C36DF82009BE714 /* IntensityThresholdSingleton.swift in Sources */,
 				8B65733B1C2A1F2F00B9B1E9 /* ViewController.swift in Sources */,
 				8BE81CB51C36C58200CD79BC /* QuerySamples.swift in Sources */,
@@ -555,7 +555,7 @@
 				8B5C0C621C2D877A000B236A /* WorkoutSet.swift in Sources */,
 				8BFE0BE71C2D593800E2CF8A /* CompareCell.swift in Sources */,
 				8BFE0BE51C2CBA1C00E2CF8A /* FilteredTableViewController.swift in Sources */,
-				8B1F79841C3367FF00B92116 /* GraphView.swift in Sources */,
+				8B1F79841C3367FF00B92116 /* GraphAxisSetUp.swift in Sources */,
 				8B5C0C611C2D877A000B236A /* WorkoutSet+CoreDataProperties.swift in Sources */,
 				8B5C0C671C2D877A000B236A /* Exercise+CoreDataProperties.swift in Sources */,
 				8B5C0C641C2D877A000B236A /* Workout.swift in Sources */,

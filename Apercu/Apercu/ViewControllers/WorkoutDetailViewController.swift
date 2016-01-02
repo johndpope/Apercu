@@ -8,11 +8,15 @@
 
 import Foundation
 import UIKit
+import CorePlot
 
 class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet private var graphView: GraphView!
-    @IBOutlet private var scrollView: UIScrollView!
+    
+    @IBOutlet var hostView: CPTGraphHostingView!
+    
+    @IBOutlet var scrollView: CustomScrollView!
+//    @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var backgroundView: UIView!
     @IBOutlet private var colorView: UIView!
@@ -29,7 +33,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private var textViewHeight: NSLayoutConstraint!
     
     @IBOutlet private var graphConstraintBottom: NSLayoutConstraint!
-    @IBOutlet private var graphConstraintTop: NSLayoutConstraint!
+    @IBOutlet private var graphConstraintHeight: NSLayoutConstraint!
     @IBOutlet private var graphConstraintLeading: NSLayoutConstraint!
     @IBOutlet private var graphConstraintTrailing: NSLayoutConstraint!
     
