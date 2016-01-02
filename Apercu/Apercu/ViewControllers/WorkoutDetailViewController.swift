@@ -37,8 +37,11 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private var graphConstraintTrailing: NSLayoutConstraint!
     
     var plotData = [String: [CPTScatterPlotField: Double]]()
+    var workoutStats: [String: AnyObject]!
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     var graph: CPTXYGraph!
+    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,13 +58,34 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         graph = CPTXYGraph(frame: self.view.bounds)
         graph.applyTheme(CPTTheme(named: kCPTPlainWhiteTheme))
+        graph.plotAreaFrame?.borderLineStyle = nil
+        graph.plotAreaFrame?.masksToBorder = false
+        graph.drawsAsynchronously = true
+        
         hostView.hostedGraph = graph
+        hostView.userInteractionEnabled = true
+        hostView.allowPinchScaling = true
         
         let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
         plotSpace.allowsUserInteraction = true
         plotSpace.allowsMomentum = true
         
+        let initialXrange = CPTPlotRange(location: 0, length: 10)
+        plotSpace.xRange = initialXrange
+        plotSpace.globalXRange = initialXrange
+//        plotSpace.delegate = self
         
+        
+        ProcessWorkout().heartRatePlotDate(currentWorkout.getStartDate()!, end: currentWorkout.getEndDate()!, includeRaw: true, statsCompleted: { (stats) -> Void in
+            // Stats for graph completed (min, max, avg, duration)
+            // update graph
+            
+            
+            }, completion: { (results) -> Void in
+            // Stats for min and moderate time completed
+            // update table view
+                
+        })
     }
     
     override func viewWillAppear(animated: Bool) {
