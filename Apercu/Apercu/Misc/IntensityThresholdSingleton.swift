@@ -15,6 +15,7 @@ class IntensityThresholdSingleton {
     
     var highIntensityThreshold: Double!
     var moderateIntensityThreshold: Double!
+    var maximumHeatRate: Double!
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     
     private init() {
@@ -50,8 +51,9 @@ class IntensityThresholdSingleton {
             
         }
         
-        highIntensityThreshold = (220 - age) * 0.7
-        moderateIntensityThreshold = (220 - age) * 0.5
+        maximumHeatRate = (220 - age)
+        highIntensityThreshold = maximumHeatRate * 0.7
+        moderateIntensityThreshold = maximumHeatRate * 0.5
     }
     
 }

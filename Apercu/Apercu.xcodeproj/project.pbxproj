@@ -45,6 +45,7 @@
 		8BC314EC1C3718D000F2B774 /* GraphMostActive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC314EB1C3718D000F2B774 /* GraphMostActive.swift */; };
 		8BC314EE1C37622800F2B774 /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC314ED1C37622800F2B774 /* CustomScrollView.swift */; };
 		8BC314F01C3772AB00F2B774 /* GraphAxisNumberFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC314EF1C3772AB00F2B774 /* GraphAxisNumberFormatter.swift */; };
+		8BC314F41C37F2EC00F2B774 /* ProcessWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC314F31C37F2EC00F2B774 /* ProcessWorkout.swift */; };
 		8BD54DDE1C2C189A0013B35A /* HealthKitSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD54DDD1C2C189A0013B35A /* HealthKitSetup.swift */; };
 		8BD54DE01C2C2F2D0013B35A /* QueryWorkouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD54DDF1C2C2F2D0013B35A /* QueryWorkouts.swift */; };
 		8BDA8EE71C2C4F93000D0630 /* CategorySetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDA8EE61C2C4F93000D0630 /* CategorySetup.swift */; };
@@ -113,13 +114,14 @@
 		8B6573571C2A1F2F00B9B1E9 /* ApercuUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApercuUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B65735B1C2A1F2F00B9B1E9 /* ApercuUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApercuUITests.swift; sourceTree = "<group>"; };
 		8B65735D1C2A1F2F00B9B1E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8B76F9611C36DF82009BE714 /* IntensityThresholdSingleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntensityThresholdSingleton.swift; sourceTree = "<group>"; };
+		8B76F9611C36DF82009BE714 /* IntensityThresholdSingleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntensityThresholdSingleton.swift; path = ../Misc/IntensityThresholdSingleton.swift; sourceTree = "<group>"; };
 		8B8603871C2F789300923013 /* CategoryFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryFilterViewController.swift; sourceTree = "<group>"; };
 		8B8603891C2F80F000923013 /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoryCell.swift; path = Cells/CategoryCell.swift; sourceTree = "<group>"; };
 		8BC314E91C37187D00F2B774 /* GraphHeatmap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphHeatmap.swift; path = Apercu/Graph/GraphHeatmap.swift; sourceTree = SOURCE_ROOT; };
 		8BC314EB1C3718D000F2B774 /* GraphMostActive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphMostActive.swift; path = Apercu/Graph/GraphMostActive.swift; sourceTree = SOURCE_ROOT; };
-		8BC314ED1C37622800F2B774 /* CustomScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
-		8BC314EF1C3772AB00F2B774 /* GraphAxisNumberFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphAxisNumberFormatter.swift; sourceTree = "<group>"; };
+		8BC314ED1C37622800F2B774 /* CustomScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomScrollView.swift; path = ../Misc/CustomScrollView.swift; sourceTree = "<group>"; };
+		8BC314EF1C3772AB00F2B774 /* GraphAxisNumberFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphAxisNumberFormatter.swift; path = ../Graph/GraphAxisNumberFormatter.swift; sourceTree = "<group>"; };
+		8BC314F31C37F2EC00F2B774 /* ProcessWorkout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProcessWorkout.swift; path = Model/ProcessWorkout.swift; sourceTree = "<group>"; };
 		8BD54DDD1C2C189A0013B35A /* HealthKitSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthKitSetup.swift; path = Apercu/Misc/HealthKitSetup.swift; sourceTree = SOURCE_ROOT; };
 		8BD54DDF1C2C2F2D0013B35A /* QueryWorkouts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QueryWorkouts.swift; path = Misc/QueryWorkouts.swift; sourceTree = "<group>"; };
 		8BDA8EE61C2C4F93000D0630 /* CategorySetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategorySetup.swift; path = ../Misc/CategorySetup.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				8B52700A1C2E3AB000391950 /* ApercuWorkout.swift */,
+				8BC314F31C37F2EC00F2B774 /* ProcessWorkout.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -543,6 +546,7 @@
 				8BDA8EE71C2C4F93000D0630 /* CategorySetup.swift in Sources */,
 				8BC314EE1C37622800F2B774 /* CustomScrollView.swift in Sources */,
 				8B76F9621C36DF82009BE714 /* IntensityThresholdSingleton.swift in Sources */,
+				8BC314F41C37F2EC00F2B774 /* ProcessWorkout.swift in Sources */,
 				8B65733B1C2A1F2F00B9B1E9 /* ViewController.swift in Sources */,
 				8BE81CB51C36C58200CD79BC /* QuerySamples.swift in Sources */,
 				8B52700B1C2E3AB000391950 /* ApercuWorkout.swift in Sources */,

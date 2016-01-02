@@ -12,11 +12,10 @@ import CorePlot
 
 class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    var currentWorkout: ApercuWorkout!
     
     @IBOutlet var hostView: CPTGraphHostingView!
-    
     @IBOutlet var scrollView: CustomScrollView!
-//    @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var backgroundView: UIView!
     @IBOutlet private var colorView: UIView!
@@ -37,7 +36,9 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private var graphConstraintLeading: NSLayoutConstraint!
     @IBOutlet private var graphConstraintTrailing: NSLayoutConstraint!
     
+    var plotData = [String: [CPTScatterPlotField: Double]]()
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
+    var graph: CPTXYGraph!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,12 +53,26 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
         
+        graph = CPTXYGraph(frame: self.view.bounds)
+        graph.applyTheme(CPTTheme(named: kCPTPlainWhiteTheme))
+        hostView.hostedGraph = graph
+        
+        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
+        plotSpace.allowsUserInteraction = true
+        plotSpace.allowsMomentum = true
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
     }
+    
+    
+    // Mark: - Graph View
+    
+    // Mark: - Text View
     
     // Mark: - IBActions for Button Presses
     
