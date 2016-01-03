@@ -36,12 +36,17 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private var graphConstraintLeading: NSLayoutConstraint!
     @IBOutlet private var graphConstraintTrailing: NSLayoutConstraint!
     
-    var plotData = [String: [CPTScatterPlotField: Double]]()
+    var plots = [String: ApercuPlot]()
     var workoutStats: [String: AnyObject]!
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     var graph: CPTXYGraph!
     
-
+    var min: Double!
+    var max: Double!
+    var duration: Double!
+    var avg: Double!
+    var bpm: [Double]!
+    var time: [Double]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,7 +83,24 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         ProcessWorkout().heartRatePlotDate(currentWorkout.getStartDate()!, end: currentWorkout.getEndDate()!, includeRaw: true, statsCompleted: { (stats) -> Void in
             // Stats for graph completed (min, max, avg, duration)
-            // update graph
+            // update graph]
+            self.min = stats["min"] as! Double
+            self.max = stats["max"] as! Double
+            self.avg = stats["avg"] as! Double
+            self.duration = stats["duration"] as! Double
+            self.bpm = stats["bpm"] as! [Double]
+            self.time = stats["time"] as! [Double]
+            
+            let scatterPlots = GraphPlotSetup().detailPlotSetup()
+            let plotDataCreator = GraphDataSetup()
+            
+            self.plots["Main"] = ApercuPlot(plot: scatterPlots[0], data: plotDataCreator.createMainPlotData(self.bpm, time: self.time))
+            self.plots["Average"] = ApercuPlot(plot: scatterPlots[1], data: plotDataCreator.createAveragePlotData(self.avg, duration: self.duration))
+            self.plots["Top Fill"] = ApercuPlot(plot: scatterPlots[2], data: plotDataCreator.createTopFillPlotData(self.duration))
+            self.plots["Bottom Fill"] = ApercuPlot(plot: scatterPlots[3], data: plotDataCreator.createBottomFillPlotData(self.duration))
+            self.plots["Zero Line"] = ApercuPlot(plot: scatterPlots[4], data: plotDataCreator.createZeroLineData(self.duration))
+            
+            
             
             
             }, completion: { (results) -> Void in
@@ -86,6 +108,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             // update table view
                 
         })
+        
     }
     
     override func viewWillAppear(animated: Bool) {

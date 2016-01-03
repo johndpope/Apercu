@@ -25,10 +25,13 @@ class GraphPlotSetup {
         plots.append(createAveragePlot())
         plots.append(createTopFillPlot())
         plots.append(createBottomFillPlot())
-        plots.append(createMostActivePlot())
         plots.append(createZeroPlot())
         
         return plots
+    }
+    
+    func mostActivePlotSetu() -> CPTScatterPlot {
+        return createMostActivePlot() 
     }
     
     func createMainPlot() -> CPTScatterPlot {

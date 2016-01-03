@@ -54,4 +54,14 @@ class GraphDataSetup {
         
         return [[CPTScatterPlotField.X: 0, CPTScatterPlotField.Y: 0], [CPTScatterPlotField.X: duration, CPTScatterPlotField.Y: 0]]
     }
+    
+    func createHeatmapPlotData(colorIndex: [Double], time: [Double]) -> [[CPTScatterPlotField: Double]] {
+        var plotData = [[CPTScatterPlotField: Double]]()
+        
+        for (index, element) in colorIndex.enumerate() {
+            plotData.append([CPTScatterPlotField.X: element, CPTScatterPlotField.Y: time[index]])
+        }
+        
+        return plotData
+    }
 }

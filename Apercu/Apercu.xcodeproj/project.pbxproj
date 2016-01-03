@@ -49,6 +49,7 @@
 		8BC314F81C381A3500F2B774 /* GraphTableStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC314F71C381A3500F2B774 /* GraphTableStrings.swift */; };
 		8BC314FA1C382F2700F2B774 /* GraphPlotSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC314F91C382F2700F2B774 /* GraphPlotSetup.swift */; };
 		8BC314FC1C384D5C00F2B774 /* GraphDataSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC314FB1C384D5C00F2B774 /* GraphDataSetup.swift */; };
+		8BC314FE1C394BFB00F2B774 /* ApercuPlot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC314FD1C394BFB00F2B774 /* ApercuPlot.swift */; };
 		8BD54DDE1C2C189A0013B35A /* HealthKitSetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD54DDD1C2C189A0013B35A /* HealthKitSetup.swift */; };
 		8BD54DE01C2C2F2D0013B35A /* QueryWorkouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD54DDF1C2C2F2D0013B35A /* QueryWorkouts.swift */; };
 		8BDA8EE71C2C4F93000D0630 /* CategorySetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDA8EE61C2C4F93000D0630 /* CategorySetup.swift */; };
@@ -128,6 +129,7 @@
 		8BC314F71C381A3500F2B774 /* GraphTableStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphTableStrings.swift; path = Apercu/Graph/GraphTableStrings.swift; sourceTree = SOURCE_ROOT; };
 		8BC314F91C382F2700F2B774 /* GraphPlotSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphPlotSetup.swift; path = Apercu/Graph/GraphPlotSetup.swift; sourceTree = SOURCE_ROOT; };
 		8BC314FB1C384D5C00F2B774 /* GraphDataSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphDataSetup.swift; sourceTree = "<group>"; };
+		8BC314FD1C394BFB00F2B774 /* ApercuPlot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApercuPlot.swift; path = Model/ApercuPlot.swift; sourceTree = "<group>"; };
 		8BD54DDD1C2C189A0013B35A /* HealthKitSetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HealthKitSetup.swift; path = Apercu/Misc/HealthKitSetup.swift; sourceTree = SOURCE_ROOT; };
 		8BD54DDF1C2C2F2D0013B35A /* QueryWorkouts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QueryWorkouts.swift; path = Misc/QueryWorkouts.swift; sourceTree = "<group>"; };
 		8BDA8EE61C2C4F93000D0630 /* CategorySetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategorySetup.swift; path = ../Misc/CategorySetup.swift; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 			children = (
 				8B52700A1C2E3AB000391950 /* ApercuWorkout.swift */,
 				8BC314F31C37F2EC00F2B774 /* ProcessWorkout.swift */,
+				8BC314FD1C394BFB00F2B774 /* ApercuPlot.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -576,6 +579,7 @@
 				8BFE0BE51C2CBA1C00E2CF8A /* FilteredTableViewController.swift in Sources */,
 				8B1F79841C3367FF00B92116 /* GraphAxisSetUp.swift in Sources */,
 				8B5C0C611C2D877A000B236A /* WorkoutSet+CoreDataProperties.swift in Sources */,
+				8BC314FE1C394BFB00F2B774 /* ApercuPlot.swift in Sources */,
 				8B5C0C671C2D877A000B236A /* Exercise+CoreDataProperties.swift in Sources */,
 				8B5C0C641C2D877A000B236A /* Workout.swift in Sources */,
 				8BDA8EE91C2C9B05000D0630 /* WorkoutCell.swift in Sources */,
