@@ -56,6 +56,7 @@ class GraphDataSetup {
     }
     
     func createHeatmapPlotData(colorIndex: [Double], time: [Double]) -> [[CPTScatterPlotField: Double]] {
+        
         var plotData = [[CPTScatterPlotField: Double]]()
         
         for (index, element) in colorIndex.enumerate() {

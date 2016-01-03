@@ -26,9 +26,7 @@ class GraphHeatmap {
             vDSP_vsmulD(heatmapVector, 1, &multiplier, &heatmapVector, 1, vDSP_Length(heatmapVector.count))
             vvfloor(&heatmapFloor, &heatmapVector, &heatmapCount)
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-              completion(colorNumber: heatmapVector)
-            })
+            completion(colorNumber: heatmapVector)
         }
     }
     

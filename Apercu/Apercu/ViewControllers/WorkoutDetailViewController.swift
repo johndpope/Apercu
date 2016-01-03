@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CorePlot
 
-class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CPTPlotDelegate, CPTPlotDataSource {
     
     var currentWorkout: ApercuWorkout!
     
@@ -37,12 +37,15 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private var graphConstraintTrailing: NSLayoutConstraint!
     
     var plots = [String: ApercuPlot]()
+    var heatmapPlots: [ApercuPlot]!
     var workoutStats: [String: AnyObject]!
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     var graph: CPTXYGraph!
     
     var min: Double!
+    var plotMin: Double!
     var max: Double!
+    var plotMax: Double!
     var duration: Double!
     var avg: Double!
     var bpm: [Double]!
@@ -55,6 +58,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         tabBarController!.tabBar.hidden = true
         categorizeButton.titleLabel?.adjustsFontSizeToFitWidth = true
         optionsButton.titleLabel?.adjustsFontSizeToFitWidth = true
+        segment.setEnabled(false, forSegmentAtIndex: 1)
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -78,14 +82,17 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let initialXrange = CPTPlotRange(location: 0, length: 10)
         plotSpace.xRange = initialXrange
         plotSpace.globalXRange = initialXrange
-//        plotSpace.delegate = self
+        plotSpace.delegate = self
+        
         
         
         ProcessWorkout().heartRatePlotDate(currentWorkout.getStartDate()!, end: currentWorkout.getEndDate()!, includeRaw: true, statsCompleted: { (stats) -> Void in
             // Stats for graph completed (min, max, avg, duration)
-            // update graph]
+            // update graph
             self.min = stats["min"] as! Double
+            self.plotMin = self.min - 3.0
             self.max = stats["max"] as! Double
+            self.plotMax = self.max + 3.0
             self.avg = stats["avg"] as! Double
             self.duration = stats["duration"] as! Double
             self.bpm = stats["bpm"] as! [Double]
@@ -100,16 +107,37 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.plots["Bottom Fill"] = ApercuPlot(plot: scatterPlots[3], data: plotDataCreator.createBottomFillPlotData(self.duration))
             self.plots["Zero Line"] = ApercuPlot(plot: scatterPlots[4], data: plotDataCreator.createZeroLineData(self.duration))
             
-            
+            // show plots
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                GraphAxisSetUp().initialSetup((self.graph.axisSet as? CPTXYAxisSet)!, duration: self.duration, min: self.min)
+                
+                for (_, plot) in self.plots {
+                    plot.plot.dataSource = self
+                }
+                
+                
+            })
             
             
             }, completion: { (results) -> Void in
             // Stats for min and moderate time completed
             // update table view
                 
+            GraphHeatmap().heatmapRawData(self.bpm, min: self.min, max: self.max, completion: { (colorNumber) -> Void in
+                
+                self.heatmapPlots = GraphPlotSetup().createHeatmapPlot(colorNumber, time: self.time, yMin: self.plotMin, yMax: self.plotMax)
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.segment.setEnabled(true, forSegmentAtIndex: 1)
+                })
+            })
         })
         
+        
+        
     }
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -117,7 +145,26 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     
-    // Mark: - Graph View
+    // Mark: - Graph Delegates
+    
+    func numberOfRecordsForPlot(plot: CPTPlot) -> UInt {
+        let identifier = plot.identifier as! String
+        
+        if identifier == "Main" {
+            return plots["Main"]!.dataCount()
+        } else if identifier == "Average" {
+            return plots["Average"]!.dataCount()
+        } else if identifier == "Top Fill" {
+            return plots["Top Fill"]!.dataCount()
+        } else if identifier == "Bottom Fill" {
+            return plots["Bottom Fill"]!.dataCount()
+        } else if identifier == "Zero Line" {
+            return plots["Zero Line"]!.dataCount()
+        } else {
+            return
+        }
+        
+    }
     
     // Mark: - Text View
     

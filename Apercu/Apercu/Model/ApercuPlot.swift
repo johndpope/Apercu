@@ -20,5 +20,7 @@ class ApercuPlot {
         self.data = data
     }
     
-    
+    func dataCount() -> UInt {
+        return UInt(data.count)
+    }
 }
