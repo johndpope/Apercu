@@ -22,7 +22,6 @@ class ProcessWorkout {
             var maximum: Double = 0
             var minimum: Double = 0
             var average: Double = 0
-            let duration: Double = (timeValues?.last)!
             var secondsOfModerate: Double = 0
             var secondsOfHigh: Double = 0
             var secondsAboveModerate: Double = 0
@@ -37,10 +36,15 @@ class ProcessWorkout {
             vDSP_minvD(bpmValues!, 1, &minimum, length)
             vDSP_meanvD(bpmValues!, 1, &average, length)
             
+            var timeSinceStart = [Double](count: (timeValues?.count)!, repeatedValue: 0.0)
+            var negatedStart = -1.0 * (timeValues?.first!)!
+            vDSP_vsaddD(timeValues!, 1, &negatedStart, &timeSinceStart, 1, length)
+            let duration: Double = timeSinceStart.last!
+            
             var statsDict: [String: AnyObject] = ["max": maximum, "min": minimum, "duration": duration, "avg": average]
             if includeRaw {
                 statsDict["bpm"] = bpmValues!
-                statsDict["time"] = timeValues!
+                statsDict["time"] = timeSinceStart
             }
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in

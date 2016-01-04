@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import CorePlot
 
-class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CPTPlotDelegate, CPTPlotDataSource {
+class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CPTPlotSpaceDelegate, CPTPlotDataSource {
     
     var currentWorkout: ApercuWorkout!
     
@@ -51,6 +51,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var bpm: [Double]!
     var time: [Double]!
     
+    var backgroundColor = CPTColor(componentRed: 89.0/255.0, green: 87.0/255.0, blue: 84.0/255.0, alpha: 1.0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -70,6 +72,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         graph.plotAreaFrame?.borderLineStyle = nil
         graph.plotAreaFrame?.masksToBorder = false
         graph.drawsAsynchronously = true
+        graph.plotAreaFrame?.plotArea?.fill = CPTFill(color: backgroundColor)
+        graph.backgroundColor = backgroundColor.cgColor
         
         hostView.hostedGraph = graph
         hostView.userInteractionEnabled = true
@@ -84,7 +88,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         plotSpace.globalXRange = initialXrange
         plotSpace.delegate = self
         
-        
+        GraphAxisSetUp().initialSetup((self.graph.axisSet as? CPTXYAxisSet)!, duration: 60, min: 50)
         
         ProcessWorkout().heartRatePlotDate(currentWorkout.getStartDate()!, end: currentWorkout.getEndDate()!, includeRaw: true, statsCompleted: { (stats) -> Void in
             // Stats for graph completed (min, max, avg, duration)
@@ -105,17 +109,28 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.plots["Average"] = ApercuPlot(plot: scatterPlots[1], data: plotDataCreator.createAveragePlotData(self.avg, duration: self.duration))
             self.plots["Top Fill"] = ApercuPlot(plot: scatterPlots[2], data: plotDataCreator.createTopFillPlotData(self.duration))
             self.plots["Bottom Fill"] = ApercuPlot(plot: scatterPlots[3], data: plotDataCreator.createBottomFillPlotData(self.duration))
-            self.plots["Zero Line"] = ApercuPlot(plot: scatterPlots[4], data: plotDataCreator.createZeroLineData(self.duration))
+            self.plots["Zero"] = ApercuPlot(plot: scatterPlots[4], data: plotDataCreator.createZeroLineData(self.duration))
             
             // show plots
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                GraphAxisSetUp().initialSetup((self.graph.axisSet as? CPTXYAxisSet)!, duration: self.duration, min: self.min)
+//                GraphAxisSetUp().initialSetup((self.graph.axisSet as? CPTXYAxisSet)!, duration: self.duration, min: self.min)
                 
-                for (_, plot) in self.plots {
-                    plot.plot.dataSource = self
-                }
+                self.addPlotsForNormalView()
                 
+                self.graph.reloadData()
+                self.setFullXRange()
+                self.setFullYRange()
                 
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+                    GraphHeatmap().heatmapRawData(self.bpm, min: self.min, max: self.max, completion: { (colorNumber) -> Void in
+                        
+                        self.heatmapPlots = GraphPlotSetup().createHeatmapPlot(colorNumber, time: self.time, yMin: self.plotMin, yMax: self.plotMax)
+                        
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.segment.setEnabled(true, forSegmentAtIndex: 1)
+                        })
+                    })
+                })
             })
             
             
@@ -123,14 +138,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             // Stats for min and moderate time completed
             // update table view
                 
-            GraphHeatmap().heatmapRawData(self.bpm, min: self.min, max: self.max, completion: { (colorNumber) -> Void in
-                
-                self.heatmapPlots = GraphPlotSetup().createHeatmapPlot(colorNumber, time: self.time, yMin: self.plotMin, yMax: self.plotMax)
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.segment.setEnabled(true, forSegmentAtIndex: 1)
-                })
-            })
+           
         })
         
         
@@ -142,8 +150,56 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        let screenRect = UIScreen.mainScreen().bounds
+        
+        if UIApplication.sharedApplication().statusBarOrientation == .Portrait {
+            graphConstraintBottom.constant = 10
+            graphConstraintLeading.constant = 20
+            graphConstraintTrailing.constant = 20
+            graphConstraintHeight.constant = 0.5 * screenRect.size.height
+        } else {
+            graphConstraintBottom.constant = 10
+            graphConstraintLeading.constant = 30
+            graphConstraintTrailing.constant = 30
+            graphConstraintHeight.constant = 0.7 * screenRect.size.height
+        }
+        
     }
     
+    // Mark - Graph Helpers
+    
+    func setFullXRange() {
+        let xMin = 0.0
+        let xMax = duration
+        
+        let xRange = CPTPlotRange(location: xMin, length: xMax)
+        
+        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
+        plotSpace.xRange = xRange
+        plotSpace.globalXRange = xRange
+    }
+    
+    func setFullYRange() {
+        let yMin = plotMin
+        
+        let yRangeToFitData = plotMax - plotMin
+        let yRangeForMaxHr = IntensityThresholdSingleton.sharedInstance.maximumHeatRate - plotMin
+        
+        let yRange = CPTPlotRange(location: yMin, length: fmax(yRangeToFitData, yRangeForMaxHr))
+        
+        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
+        plotSpace.yRange = yRange
+        plotSpace.globalYRange = yRange
+    }
+    
+    func addPlotsForNormalView() {
+        let plotList: [CPTScatterPlot] = [(plots["Bottom Fill"]?.plot)!, (plots["Top Fill"]?.plot)!, (plots["Zero"]?.plot)!, (plots["Average"]?.plot)!, (plots["Main"]?.plot)!]
+        
+        for plot in plotList {
+            plot.dataSource = self
+            graph.addPlot(plot)
+        }
+    }
     
     // Mark: - Graph Delegates
     
@@ -158,15 +214,36 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             return plots["Top Fill"]!.dataCount()
         } else if identifier == "Bottom Fill" {
             return plots["Bottom Fill"]!.dataCount()
-        } else if identifier == "Zero Line" {
-            return plots["Zero Line"]!.dataCount()
+        } else if identifier == "Zero" {
+            return plots["Zero"]!.dataCount()
         } else {
-            return
+            // for heatmap plots
+            return 4
         }
-        
     }
     
-    // Mark: - Text View
+    func numberForPlot(plot: CPTPlot, field fieldEnum: UInt, recordIndex idx: UInt) -> AnyObject? {
+        let identifier = plot.identifier as! String
+        
+        var fieldCoord: CPTScatterPlotField
+        
+        fieldCoord = fieldEnum == 0 ? CPTScatterPlotField.X : CPTScatterPlotField.Y
+        
+        if identifier == "Main" {
+            return plots["Main"]!.data[Int(idx)][fieldCoord]
+        } else if identifier == "Average" {
+            return plots["Average"]!.data[Int(idx)][fieldCoord]
+        } else if identifier == "Top Fill" {
+            return plots["Top Fill"]!.data[Int(idx)][fieldCoord]
+        } else if identifier == "Bottom Fill" {
+            return plots["Bottom Fill"]!.data[Int(idx)][fieldCoord]
+        } else if identifier == "Zero Line" {
+            return plots["Zero"]!.data[Int(idx)][fieldCoord]
+        } else {
+            // heatmap plots
+            return 1
+        }
+    }
     
     // Mark: - IBActions for Button Presses
     

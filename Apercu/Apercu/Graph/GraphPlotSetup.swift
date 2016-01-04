@@ -40,7 +40,7 @@ class GraphPlotSetup {
         mainLineStyle.lineColor = CPTColor.whiteColor()
         
         let mainPlot = CPTScatterPlot()
-        mainPlot.identifier = "Main Plot";
+        mainPlot.identifier = "Main";
         mainPlot.interpolation = .Curved
         mainPlot.dataLineStyle = mainLineStyle
         
@@ -56,7 +56,7 @@ class GraphPlotSetup {
         averageLineStyle.lineColor = averageLineColor
         
         let averagePlot = CPTScatterPlot()
-        averagePlot.identifier = "AvegPlot"
+        averagePlot.identifier = "Average"
         averagePlot.dataLineStyle = averageLineStyle
         
         return averagePlot
@@ -107,7 +107,7 @@ class GraphPlotSetup {
         zeroLineStyle.dashPattern = [5, 5]
         
         let zeroPlot = CPTScatterPlot()
-        zeroPlot.identifier = "Zero PLot"
+        zeroPlot.identifier = "Zero"
         zeroPlot.dataLineStyle = zeroLineStyle
         
         return zeroPlot
@@ -126,11 +126,13 @@ class GraphPlotSetup {
         let color5 = CPTColor(componentRed: 209.0/255.0, green: 95.0/255.0, blue: 102.0/255.0, alpha: 0.8)
         let colors = [color1, color2, color3, color4, color5, color5]
         
+        let lastIndex = colorNumber.count - 1
+        
         for (index, element) in colorNumber.enumerate() {
             let xMin = time[index]
             var xMax: Double!
             
-            if index != colorNumber.count {
+            if index < lastIndex {
                 xMax = time[index + 1]
             } else {
                 xMax = time.last
@@ -145,7 +147,6 @@ class GraphPlotSetup {
             
             heatmapPlots.append(ApercuPlot(plot: plot, data: plotData))
         }
-        
         
         return heatmapPlots
     }

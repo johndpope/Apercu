@@ -22,7 +22,7 @@ class GraphDataSetup {
         var plotData = [[CPTScatterPlotField: Double]]()
         
         for (index, element) in bpm.enumerate() {
-            plotData.append([CPTScatterPlotField.X: element, CPTScatterPlotField.Y: time[index]])
+            plotData.append([CPTScatterPlotField.X: time[index], CPTScatterPlotField.Y: element])
         }
         
         return plotData
@@ -60,7 +60,7 @@ class GraphDataSetup {
         var plotData = [[CPTScatterPlotField: Double]]()
         
         for (index, element) in colorIndex.enumerate() {
-            plotData.append([CPTScatterPlotField.X: element, CPTScatterPlotField.Y: time[index]])
+            plotData.append([CPTScatterPlotField.X: time[index], CPTScatterPlotField.Y: element])
         }
         
         return plotData

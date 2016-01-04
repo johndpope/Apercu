@@ -17,6 +17,7 @@ class WorkoutTableViewController: UITableViewController {
     let dateFormatter = NSDateFormatter()
     
     var isFirstLoad = true
+    var selectedIndex: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,7 +117,19 @@ class WorkoutTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        selectedIndex = indexPath.row
+        performSegueWithIdentifier("toDetailViewFromSingle", sender: self)
+    }
     
+    // Mark: - Segue & Transition
+    
+   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "toDetailViewFromSingle" {
+            let destinationVC = segue.destinationViewController as! WorkoutDetailViewController
+            destinationVC.currentWorkout = workoutArray[selectedIndex]
+        }
+    }
     
     
 }
