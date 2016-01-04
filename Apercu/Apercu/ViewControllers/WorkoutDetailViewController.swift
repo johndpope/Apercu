@@ -52,6 +52,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var time: [Double]!
     
     var backgroundColor = CPTColor(componentRed: 89.0/255.0, green: 87.0/255.0, blue: 84.0/255.0, alpha: 1.0)
+    var goingToNewYAxis = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,13 +114,13 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             // show plots
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                GraphAxisSetUp().initialSetup((self.graph.axisSet as? CPTXYAxisSet)!, duration: self.duration, min: self.min)
-                
                 self.addPlotsForNormalView()
                 
                 self.graph.reloadData()
                 self.setFullXRange()
+                self.goingToNewYAxis = true
                 self.setFullYRange()
+                self.goingToNewYAxis = false
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                     GraphHeatmap().heatmapRawData(self.bpm, min: self.min, max: self.max, completion: { (colorNumber) -> Void in
@@ -135,10 +136,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             
             }, completion: { (results) -> Void in
-            // Stats for min and moderate time completed
-            // update table view
+                // Stats for min and moderate time completed
+                // update table view
                 
-           
+                
         })
         
         
@@ -245,6 +246,33 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    func plotSpace(space: CPTPlotSpace, willChangePlotRangeTo newRange: CPTPlotRange, forCoordinate coordinate: CPTCoordinate) -> CPTPlotRange? {
+        var updatedRange: CPTPlotRange!
+        
+        switch coordinate {
+        case CPTCoordinate.X:
+            if newRange.location.isLessThan(NSNumber(double: 0.0)) {
+                var mutableRangeCopy: CPTMutablePlotRange!
+                mutableRangeCopy = newRange.mutableCopy() as! CPTMutablePlotRange
+                mutableRangeCopy.location = NSNumber(double: 0.0)
+                updatedRange = mutableRangeCopy
+            } else {
+                updatedRange = newRange
+            }
+        case CPTCoordinate.Y:
+            if goingToNewYAxis {
+                updatedRange = newRange
+            } else {
+                let plotSpace = space as! CPTXYPlotSpace
+                updatedRange = plotSpace.yRange
+            }
+        default:
+            break
+        }
+        
+        return updatedRange
+    }
+    
     // Mark: - IBActions for Button Presses
     
     @IBAction func segmentChanged(sender: UISegmentedControl) {
@@ -270,5 +298,5 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
     
-   
+    
 }
