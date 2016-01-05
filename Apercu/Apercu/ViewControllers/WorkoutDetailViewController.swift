@@ -38,6 +38,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     var plots = [String: ApercuPlot]()
     var heatmapPlots: [ApercuPlot]!
+    var heatmapColors: [Double] = []
+    var heatmapData = [[[CPTScatterPlotField: Double]]]()
     var workoutStats: [String: AnyObject]!
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     var graph: CPTXYGraph!
@@ -125,7 +127,9 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                     GraphHeatmap().heatmapRawData(self.bpm, min: self.min, max: self.max, completion: { (colorNumber) -> Void in
                         
-                        self.heatmapPlots = GraphPlotSetup().createHeatmapPlot(colorNumber, time: self.time, yMin: self.plotMin, yMax: self.plotMax)
+                        self.heatmapColors = colorNumber
+                        
+//                        self.heatmapPlots = GraphPlotSetup().createHeatmapPlot(colorNumber, time: self.time, yMin: self.plotMin, yMax: self.plotMax)
                         
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.segment.setEnabled(true, forSegmentAtIndex: 1)
@@ -202,6 +206,65 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    func addPlotsForHeatmap() {
+        let emptyLineStyle = CPTMutableLineStyle()
+        emptyLineStyle.lineWidth = 0.0
+        
+        let color1 = CPTColor(componentRed: 74.0/255.0, green: 170.0/255.0, blue: 214.0/155.0, alpha: 0.8)
+        let color2 = CPTColor(componentRed: 138.0/255.0, green: 188.0/255.0, blue: 209.0/255.0, alpha: 0.8)
+        let color3 = CPTColor(componentRed: 148.0/255.0, green: 158.0/255.0, blue: 163.0/255.0, alpha: 0.8)
+        let color4 = CPTColor(componentRed: 209.0/255.0, green: 148.0/255.0, blue: 158.0/255.0, alpha: 0.8)
+        let color5 = CPTColor(componentRed: 209.0/255.0, green: 95.0/255.0, blue: 102.0/255.0, alpha: 0.8)
+        let colors = [color1, color2, color3, color4, color5, color5]
+        
+        let lastIndex = heatmapColors.count - 1
+        
+        for (index, color) in heatmapColors.enumerate() {
+            let xMin = time[index]
+            var xMax: Double!
+            
+            if index < lastIndex {
+                xMax = time[index + 1]
+            } else {
+                xMax = time.last
+            }
+            
+            let plotData: [[CPTScatterPlotField: Double]] = [[CPTScatterPlotField.X: xMin, CPTScatterPlotField.Y: plotMin], [CPTScatterPlotField.X: xMin, CPTScatterPlotField.Y: plotMax], [CPTScatterPlotField.X: xMax, CPTScatterPlotField.Y: plotMax], [CPTScatterPlotField.X: xMax, CPTScatterPlotField.Y: plotMin]]
+            
+            heatmapData.append(plotData)
+            
+            var plot = CPTScatterPlot()
+            plot.dataSource = self
+            plot.identifier = String(format: "%lu", index)
+            plot.dataLineStyle = emptyLineStyle
+            plot.areaFill = CPTFill(color: colors[Int(color)])
+            plot.areaBaseValue = 0
+            
+            
+            graph.addPlot(plot)
+        }
+        
+//        for heatmapPlot in heatmapPlots {
+//            heatmapPlot.plot.dataSource = self
+//            graph.addPlot(heatmapPlot.plot)
+//        }
+        
+    }
+    
+    func removeAllPlots() {
+        for (_, element) in plots.enumerate() {
+            if element.1.plot.graph != nil {
+                graph.removePlot(element.1.plot)
+            }
+        }
+        
+//        for heatmapPlot in heatmapPlots {
+//            if heatmapPlot.plot.graph != nil {
+//                graph.removePlot(heatmapPlot.plot)
+//            }
+//        }
+    }
+    
     // Mark: - Graph Delegates
     
     func numberOfRecordsForPlot(plot: CPTPlot) -> UInt {
@@ -238,11 +301,18 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             return plots["Top Fill"]!.data[Int(idx)][fieldCoord]
         } else if identifier == "Bottom Fill" {
             return plots["Bottom Fill"]!.data[Int(idx)][fieldCoord]
-        } else if identifier == "Zero Line" {
+        } else if identifier == "Zero" {
             return plots["Zero"]!.data[Int(idx)][fieldCoord]
         } else {
-            // heatmap plots
-            return 1
+//            print(identifier)
+//            return 1
+//             heatmap plots
+            let index = Int(identifier)
+            return heatmapData[index!][Int(idx)][fieldCoord]
+            
+            
+//            print(heatmapPlots[index!].data[Int(idx)][fieldCoord])
+//            return heatmapPlots[index!].data[Int(idx)][fieldCoord]
         }
     }
     
@@ -276,7 +346,15 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     // Mark: - IBActions for Button Presses
     
     @IBAction func segmentChanged(sender: UISegmentedControl) {
-        
+        if segment.selectedSegmentIndex == 0 {
+            // Normal Graph
+            removeAllPlots()
+            addPlotsForNormalView()
+        } else {
+            // Heatmap
+            removeAllPlots()
+            addPlotsForHeatmap()
+        }
     }
     
     @IBAction func activeSwitchChanged(sender: UISwitch) {

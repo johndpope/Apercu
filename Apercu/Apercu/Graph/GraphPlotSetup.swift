@@ -138,9 +138,9 @@ class GraphPlotSetup {
                 xMax = time.last
             }
             
-            let plotData = [[CPTScatterPlotField.X: xMin, CPTScatterPlotField.Y: yMin], [CPTScatterPlotField.X: xMin, CPTScatterPlotField.Y: yMax], [CPTScatterPlotField.X: xMax, CPTScatterPlotField.Y: yMax], [CPTScatterPlotField.X: xMax, CPTScatterPlotField.Y: yMin]]
+            var plotData = [[CPTScatterPlotField.X: xMin, CPTScatterPlotField.Y: yMin], [CPTScatterPlotField.X: xMin, CPTScatterPlotField.Y: yMax], [CPTScatterPlotField.X: xMax, CPTScatterPlotField.Y: yMax], [CPTScatterPlotField.X: xMax, CPTScatterPlotField.Y: yMin]]
             
-            let plot = CPTScatterPlot()
+            var plot = CPTScatterPlot()
             plot.identifier = String(format: "%lu", index)
             plot.areaBaseValue = 0
             plot.areaFill = CPTFill(color: colors[Int(element)])
