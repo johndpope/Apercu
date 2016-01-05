@@ -151,4 +151,44 @@ class GraphPlotSetup {
         return heatmapPlots
     }
     
+    func createHeatmapLimitBands(colorNumber: [Double], time: [Double], yMin: Double, yMax: Double) -> CPTLimitBandArray {
+        let color1 = CPTColor(componentRed: 74.0/255.0, green: 170.0/255.0, blue: 214.0/155.0, alpha: 0.8)
+        let color2 = CPTColor(componentRed: 138.0/255.0, green: 188.0/255.0, blue: 209.0/255.0, alpha: 0.8)
+        let color3 = CPTColor(componentRed: 148.0/255.0, green: 158.0/255.0, blue: 163.0/255.0, alpha: 0.8)
+        let color4 = CPTColor(componentRed: 209.0/255.0, green: 148.0/255.0, blue: 158.0/255.0, alpha: 0.8)
+        let color5 = CPTColor(componentRed: 209.0/255.0, green: 95.0/255.0, blue: 102.0/255.0, alpha: 0.8)
+        let colors = [color1, color2, color3, color4, color5, color5]
+        
+
+        var startIndex: Int = 0
+//        var length: Double = 0
+        var previousColor = colorNumber[0]
+        var limitBands = [CPTLimitBand]()
+        
+        for var i = 1; i < colorNumber.count - 1; ++i {
+            if colorNumber[i] != previousColor {
+                let length = time[i] - time[Int(startIndex)]
+                let range = CPTPlotRange(location: time[Int(startIndex)], length: length)
+                let color = Int(colorNumber[i])
+                
+                let newBand = CPTLimitBand(range: range, fill: CPTFill(color: colors[color]))
+                
+                limitBands.append(newBand)
+                
+                startIndex = i
+                previousColor = colorNumber[i]
+            }
+        }
+        
+        let length = time[colorNumber.count - 1] - time[Int(startIndex)]
+        let range = CPTPlotRange(location: time[Int(startIndex)], length: length)
+        let color = colorNumber[colorNumber.count - 1]
+        
+        let newBand = CPTLimitBand(range: range, fill: CPTFill(color: colors[Int(color)]))
+        
+        limitBands.append(newBand)
+        
+        return limitBands
+    }
+    
 }
