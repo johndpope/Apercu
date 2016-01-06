@@ -112,45 +112,7 @@ class GraphPlotSetup {
         
         return zeroPlot
     }
-    
-    func createHeatmapPlot(colorNumber: [Double], time: [Double], yMin: Double, yMax: Double) -> [ApercuPlot] {
-        var heatmapPlots = [ApercuPlot]()
-        
-        let emptyLineStyle = CPTMutableLineStyle()
-        emptyLineStyle.lineWidth = 0.0
-        
-        let color1 = CPTColor(componentRed: 74.0/255.0, green: 170.0/255.0, blue: 214.0/155.0, alpha: 0.8)
-        let color2 = CPTColor(componentRed: 138.0/255.0, green: 188.0/255.0, blue: 209.0/255.0, alpha: 0.8)
-        let color3 = CPTColor(componentRed: 148.0/255.0, green: 158.0/255.0, blue: 163.0/255.0, alpha: 0.8)
-        let color4 = CPTColor(componentRed: 209.0/255.0, green: 148.0/255.0, blue: 158.0/255.0, alpha: 0.8)
-        let color5 = CPTColor(componentRed: 209.0/255.0, green: 95.0/255.0, blue: 102.0/255.0, alpha: 0.8)
-        let colors = [color1, color2, color3, color4, color5, color5]
-        
-        let lastIndex = colorNumber.count - 1
-        
-        for (index, element) in colorNumber.enumerate() {
-            let xMin = time[index]
-            var xMax: Double!
-            
-            if index < lastIndex {
-                xMax = time[index + 1]
-            } else {
-                xMax = time.last
-            }
-            
-            var plotData = [[CPTScatterPlotField.X: xMin, CPTScatterPlotField.Y: yMin], [CPTScatterPlotField.X: xMin, CPTScatterPlotField.Y: yMax], [CPTScatterPlotField.X: xMax, CPTScatterPlotField.Y: yMax], [CPTScatterPlotField.X: xMax, CPTScatterPlotField.Y: yMin]]
-            
-            var plot = CPTScatterPlot()
-            plot.identifier = String(format: "%lu", index)
-            plot.areaBaseValue = 0
-            plot.areaFill = CPTFill(color: colors[Int(element)])
-            
-            heatmapPlots.append(ApercuPlot(plot: plot, data: plotData))
-        }
-        
-        return heatmapPlots
-    }
-    
+
     func createHeatmapLimitBands(colorNumber: [Double], time: [Double], yMin: Double, yMax: Double) -> CPTLimitBandArray {
         let color1 = CPTColor(componentRed: 74.0/255.0, green: 170.0/255.0, blue: 214.0/155.0, alpha: 0.8)
         let color2 = CPTColor(componentRed: 138.0/255.0, green: 188.0/255.0, blue: 209.0/255.0, alpha: 0.8)
@@ -159,9 +121,7 @@ class GraphPlotSetup {
         let color5 = CPTColor(componentRed: 209.0/255.0, green: 95.0/255.0, blue: 102.0/255.0, alpha: 0.8)
         let colors = [color1, color2, color3, color4, color5, color5]
         
-
         var startIndex: Int = 0
-//        var length: Double = 0
         var previousColor = colorNumber[0]
         var limitBands = [CPTLimitBand]()
         

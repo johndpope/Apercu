@@ -37,13 +37,11 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private var graphConstraintTrailing: NSLayoutConstraint!
     
     var plots = [String: ApercuPlot]()
-    var heatmapPlots: [ApercuPlot]!
-    var heatmapColors: [Double] = []
     var limitBands: [CPTLimitBand]!
-    var heatmapData = [[[CPTScatterPlotField: Double]]]()
     var workoutStats: [String: AnyObject]!
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     var graph: CPTXYGraph!
+    var axisSet: CPTXYAxisSet!
     
     var min: Double!
     var plotMin: Double!
@@ -78,6 +76,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         graph.drawsAsynchronously = true
         graph.plotAreaFrame?.plotArea?.fill = CPTFill(color: backgroundColor)
         graph.backgroundColor = backgroundColor.cgColor
+        axisSet = graph.axisSet as? CPTXYAxisSet
         
         hostView.hostedGraph = graph
         hostView.userInteractionEnabled = true
@@ -130,10 +129,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         
                         self.limitBands = GraphPlotSetup().createHeatmapLimitBands(colorNumber, time: self.time, yMin: self.plotMin, yMax: self.plotMax) as! [CPTLimitBand]
                         
-                        self.heatmapColors = colorNumber
-                        
-//                        self.heatmapPlots = GraphPlotSetup().createHeatmapPlot(colorNumber, time: self.time, yMin: self.plotMin, yMax: self.plotMax)
-                        
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.segment.setEnabled(true, forSegmentAtIndex: 1)
                         })
@@ -148,12 +143,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 
         })
-        
-        
-        
+
     }
-    
-    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -201,17 +192,18 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func addPlotsForNormalView() {
-//        let plotList: [CPTScatterPlot] = [(plots["Bottom Fill"]?.plot)!, (plots["Top Fill"]?.plot)!, (plots["Zero"]?.plot)!, (plots["Average"]?.plot)!, (plots["Main"]?.plot)!]
-        let range = CPTPlotRange(location: IntensityThresholdSingleton.sharedInstance.moderateIntensityThreshold, length: IntensityThresholdSingleton.sharedInstance.highIntensityThreshold - IntensityThresholdSingleton.sharedInstance.moderateIntensityThreshold)
-        let band = CPTLimitBand(range: range, fill: CPTFill(color: CPTColor(componentRed: 250.0/255.0, green: 10.0/255.0, blue: 10.0/255.0, alpha: 0.35)))
-        let axisSet = graph.axisSet as? CPTXYAxisSet
-        
-        let range2 = CPTPlotRange(location: 0.9 * IntensityThresholdSingleton.sharedInstance.maximumHeatRate, length: -((0.9 * IntensityThresholdSingleton.sharedInstance.maximumHeatRate) - IntensityThresholdSingleton.sharedInstance.highIntensityThreshold))
-        let band2 = CPTLimitBand(range: range2, fill: CPTFill(color: CPTColor(componentRed: 250.0/255.0, green: 0.0, blue: 0.0, alpha: 0.6)))
-        
-        axisSet?.yAxis?.addBackgroundLimitBand(band)
-        axisSet?.yAxis?.addBackgroundLimitBand(band2)
-        
+        addIntensityLimitBands()
+        addMainPlots()
+    }
+    
+    func addPlotsForHeatmap() {
+        for band in limitBands {
+            axisSet?.xAxis?.addBackgroundLimitBand(band)
+        }
+        addMainPlots()
+    }
+    
+    func addMainPlots() {
         let plotList: [CPTScatterPlot] = [(plots["Average"]?.plot)!, (plots["Main"]?.plot)!]
         
         for plot in plotList {
@@ -220,63 +212,21 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-    func addPlotsForHeatmap() {
+    func addIntensityLimitBands() {
+        let intensityThresholds = IntensityThresholdSingleton.sharedInstance
         
-        let axisSet = graph.axisSet as? CPTXYAxisSet
-    
-        for band in limitBands {
-            axisSet?.xAxis?.addBackgroundLimitBand(band)
-        }
+        let maxHighIntensity = intensityThresholds.maximumHeatRate * 0.9
+        let highIntensityThreshold = intensityThresholds.highIntensityThreshold
+        let moderateIntensityTreshold = intensityThresholds.moderateIntensityThreshold
         
-        let plotList: [CPTScatterPlot] = [(plots["Average"]?.plot)!, (plots["Main"]?.plot)!]
+        let modThresholdRange = CPTPlotRange(location: moderateIntensityTreshold, length: highIntensityThreshold - moderateIntensityTreshold)
+        let highThresholdRange = CPTPlotRange(location: maxHighIntensity, length: -(maxHighIntensity - highIntensityThreshold))
         
-        for plot in plotList {
-            plot.dataSource = self
-            graph.addPlot(plot)
-        }
+        let modBand = CPTLimitBand(range: modThresholdRange, fill: CPTFill(color: CPTColor(componentRed: 250.0/255.0, green: 10.0/255.0, blue: 10.0/255.0, alpha: 0.35)))
+        let highBand = CPTLimitBand(range: highThresholdRange, fill: CPTFill(color: CPTColor(componentRed: 250.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 0.6)))
         
-//        let emptyLineStyle = CPTMutableLineStyle()
-//        emptyLineStyle.lineWidth = 0.0
-//        
-//        let color1 = CPTColor(componentRed: 74.0/255.0, green: 170.0/255.0, blue: 214.0/155.0, alpha: 0.8)
-//        let color2 = CPTColor(componentRed: 138.0/255.0, green: 188.0/255.0, blue: 209.0/255.0, alpha: 0.8)
-//        let color3 = CPTColor(componentRed: 148.0/255.0, green: 158.0/255.0, blue: 163.0/255.0, alpha: 0.8)
-//        let color4 = CPTColor(componentRed: 209.0/255.0, green: 148.0/255.0, blue: 158.0/255.0, alpha: 0.8)
-//        let color5 = CPTColor(componentRed: 209.0/255.0, green: 95.0/255.0, blue: 102.0/255.0, alpha: 0.8)
-//        let colors = [color1, color2, color3, color4, color5, color5]
-//        
-//        let lastIndex = heatmapColors.count - 1
-//        
-//        for (index, color) in heatmapColors.enumerate() {
-//            let xMin = time[index]
-//            var xMax: Double!
-//            
-//            if index < lastIndex {
-//                xMax = time[index + 1]
-//            } else {
-//                xMax = time.last
-//            }
-//            
-//            let plotData: [[CPTScatterPlotField: Double]] = [[CPTScatterPlotField.X: xMin, CPTScatterPlotField.Y: plotMin], [CPTScatterPlotField.X: xMin, CPTScatterPlotField.Y: plotMax], [CPTScatterPlotField.X: xMax, CPTScatterPlotField.Y: plotMax], [CPTScatterPlotField.X: xMax, CPTScatterPlotField.Y: plotMin]]
-//            
-//            heatmapData.append(plotData)
-//            
-//            var plot = CPTScatterPlot()
-//            plot.dataSource = self
-//            plot.identifier = String(format: "%lu", index)
-//            plot.dataLineStyle = emptyLineStyle
-//            plot.areaFill = CPTFill(color: colors[Int(color)])
-//            plot.areaBaseValue = 0
-//            
-//            
-//            graph.addPlot(plot)
-//        }
-        
-//        for heatmapPlot in heatmapPlots {
-//            heatmapPlot.plot.dataSource = self
-//            graph.addPlot(heatmapPlot.plot)
-//        }
-        
+        axisSet.yAxis?.addBackgroundLimitBand(modBand)
+        axisSet.yAxis?.addBackgroundLimitBand(highBand)
     }
     
     func removeAllPlots() {
@@ -289,11 +239,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let axisSet = graph.axisSet as? CPTXYAxisSet
         axisSet?.yAxis?.removeAllBackgroundLimitBands()
         axisSet?.xAxis?.removeAllBackgroundLimitBands()
-//        for heatmapPlot in heatmapPlots {
-//            if heatmapPlot.plot.graph != nil {
-//                graph.removePlot(heatmapPlot.plot)
-//            }
-//        }
     }
     
     // Mark: - Graph Delegates
@@ -305,12 +250,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             return plots["Main"]!.dataCount()
         } else if identifier == "Average" {
             return plots["Average"]!.dataCount()
-        } else if identifier == "Top Fill" {
-            return plots["Top Fill"]!.dataCount()
-        } else if identifier == "Bottom Fill" {
-            return plots["Bottom Fill"]!.dataCount()
-        } else if identifier == "Zero" {
-            return plots["Zero"]!.dataCount()
         } else {
             // for heatmap plots
             return 4
@@ -328,22 +267,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             return plots["Main"]!.data[Int(idx)][fieldCoord]
         } else if identifier == "Average" {
             return plots["Average"]!.data[Int(idx)][fieldCoord]
-        } else if identifier == "Top Fill" {
-            return plots["Top Fill"]!.data[Int(idx)][fieldCoord]
-        } else if identifier == "Bottom Fill" {
-            return plots["Bottom Fill"]!.data[Int(idx)][fieldCoord]
         } else if identifier == "Zero" {
             return plots["Zero"]!.data[Int(idx)][fieldCoord]
         } else {
-//            print(identifier)
-//            return 1
-//             heatmap plots
-            let index = Int(identifier)
-            return heatmapData[index!][Int(idx)][fieldCoord]
-            
-            
-//            print(heatmapPlots[index!].data[Int(idx)][fieldCoord])
-//            return heatmapPlots[index!].data[Int(idx)][fieldCoord]
+            return 1
         }
     }
     
