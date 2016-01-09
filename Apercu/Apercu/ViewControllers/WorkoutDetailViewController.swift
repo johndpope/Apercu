@@ -61,6 +61,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var tableValues: [NSAttributedString]?
     
     var backgroundColor = CPTColor(componentRed: 89.0/255.0, green: 87.0/255.0, blue: 84.0/255.0, alpha: 1.0)
+    var alternateCellColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 244.0/255.0, alpha: 1.0)
     var goingToNewYAxis = false
     
     override func viewDidLoad() {
@@ -74,7 +75,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.estimatedRowHeight = 60.0
+        tableView.estimatedRowHeight = 30.0
         tableView.rowHeight = UITableViewAutomaticDimension
         updateTableHeight()
         
@@ -166,6 +167,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 self.tableValues = GraphTableStrings().allValueStrings(rawValues)
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.reloadData()
+                    self.view.layoutIfNeeded()
+                    self.updateTableHeight()
+
                     self.tableView.reloadData()
                     self.updateTableHeight()
                 })
@@ -362,32 +367,28 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("StatReuse", forIndexPath: indexPath) as! StatCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("StatReuse", forIndexPath: indexPath) as! SingleLineStatCell
         
-        cell.topLeftLabel.adjustsFontSizeToFitWidth = true
-        cell.topRightLabel.adjustsFontSizeToFitWidth = true
-        cell.bottomLeftLabel.adjustsFontSizeToFitWidth = true
-        cell.bottomRightLabel.adjustsFontSizeToFitWidth = true
+        if indexPath.row % 2 == 0 {
+            cell.backgroundColor = alternateCellColor
+        } else {
+            cell.backgroundColor = UIColor.clearColor()
+        }
         
         if tableValues == nil {
-            cell.topLeftLabel.text = "Loading stats..."
-            cell.topRightLabel.text = ""
+            cell.stringLabel.text = "Loading stats..."
+            cell.valueLabel.text = ""
         } else {
-            cell.topLeftLabel.attributedText = tableStrings[indexPath.row]
-            cell.topRightLabel.attributedText = tableValues![indexPath.row]
+            cell.stringLabel.attributedText = tableStrings[indexPath.row]
+            cell.valueLabel.attributedText = tableValues![indexPath.row]
         }
-
-        cell.bottomLeftHeight.constant = 0
-        cell.bottomRightHeight.constant = 0
-        cell.bottomPadding.constant = 0
         
         return cell
     }
     
     func updateTableHeight() {
-        tableView.sizeToFit()
+        view.layoutIfNeeded()
         tableViewHeight.constant = tableView.contentSize.height
-//        tableViewHeight.constant = tableView.contentSize.height
     }
     
 }

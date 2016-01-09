@@ -3595,15 +3595,21 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                     <constraint firstAttribute="height" constant="300" id="Hvv-VU-J7d"/>
                                                 </constraints>
                                                 <prototypes>
-                                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StatReuse" id="xjG-iu-tbW" customClass="StatCell" customModule="Apercu" customModuleProvider="target">
+                                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StatReuse" id="xjG-iu-tbW" customClass="SingleLineStatCell" customModule="Apercu" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="22" width="320" height="126"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xjG-iu-tbW" id="y8X-Da-WKx">
                                                             <rect key="frame" x="0.0" y="0.0" width="320" height="125.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxe-8W-HE8">
+                                                                    <rect key="frame" x="8" y="52.5" width="42" height="20.5"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2P9-wO-ftc">
-                                                                    <rect key="frame" x="270" y="13" width="42" height="20"/>
+                                                                    <rect key="frame" x="270" y="53" width="42" height="20"/>
                                                                     <attributedString key="attributedText">
                                                                         <fragment content="Label">
                                                                             <attributes>
@@ -3615,56 +3621,34 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                                     </attributedString>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oTU-uH-Yyd">
-                                                                    <rect key="frame" x="8" y="66" width="42" height="20.5"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="TDJ-ct-zKl"/>
-                                                                    </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EyC-TT-OpP">
-                                                                    <rect key="frame" x="270" y="66" width="42" height="20.5"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="d2P-P4-QPv"/>
-                                                                    </constraints>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxe-8W-HE8">
-                                                                    <rect key="frame" x="8" y="13" width="42" height="21"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="EyC-TT-OpP" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="oTU-uH-Yyd" secondAttribute="trailing" constant="5" id="1q5-q6-jrs"/>
-                                                                <constraint firstItem="oTU-uH-Yyd" firstAttribute="leading" secondItem="y8X-Da-WKx" secondAttribute="leadingMargin" id="2If-Fg-8Uf"/>
+                                                                <constraint firstItem="2P9-wO-ftc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bxe-8W-HE8" secondAttribute="trailing" constant="50" id="0ti-14-PMh"/>
+                                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="bxe-8W-HE8" secondAttribute="bottom" constant="5" id="1MW-BT-VB2"/>
+                                                                <constraint firstItem="bxe-8W-HE8" firstAttribute="centerX" relation="greaterThanOrEqual" secondItem="y8X-Da-WKx" secondAttribute="centerX" constant="5" id="6Il-vU-MkY"/>
                                                                 <constraint firstItem="2P9-wO-ftc" firstAttribute="top" secondItem="y8X-Da-WKx" secondAttribute="topMargin" constant="5" id="83B-BI-9tV"/>
-                                                                <constraint firstItem="oTU-uH-Yyd" firstAttribute="top" relation="greaterThanOrEqual" secondItem="bxe-8W-HE8" secondAttribute="bottom" constant="5" id="Gm7-Es-qu9"/>
-                                                                <constraint firstItem="2P9-wO-ftc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bxe-8W-HE8" secondAttribute="trailing" constant="10" id="JpT-yE-RD4"/>
+                                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="2P9-wO-ftc" secondAttribute="bottom" constant="5" id="DBP-bX-3vE"/>
+                                                                <constraint firstItem="bxe-8W-HE8" firstAttribute="centerY" secondItem="y8X-Da-WKx" secondAttribute="centerY" id="G19-cL-BGg"/>
+                                                                <constraint firstAttribute="leadingMargin" secondItem="bxe-8W-HE8" secondAttribute="leading" id="KY8-ws-m0N"/>
+                                                                <constraint firstItem="bxe-8W-HE8" firstAttribute="top" relation="greaterThanOrEqual" secondItem="y8X-Da-WKx" secondAttribute="topMargin" constant="5" id="N3E-3A-MC6"/>
+                                                                <constraint firstItem="2P9-wO-ftc" firstAttribute="centerY" secondItem="y8X-Da-WKx" secondAttribute="centerY" id="Olg-kd-mwA"/>
                                                                 <constraint firstItem="bxe-8W-HE8" firstAttribute="centerY" secondItem="2P9-wO-ftc" secondAttribute="centerY" id="SYM-QR-Pty"/>
-                                                                <constraint firstItem="oTU-uH-Yyd" firstAttribute="bottom" secondItem="y8X-Da-WKx" secondAttribute="bottomMargin" id="YUy-fN-TVz"/>
-                                                                <constraint firstItem="EyC-TT-OpP" firstAttribute="trailing" secondItem="y8X-Da-WKx" secondAttribute="trailingMargin" id="hzO-Cl-P3v"/>
+                                                                <constraint firstItem="2P9-wO-ftc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="y8X-Da-WKx" secondAttribute="topMargin" constant="5" id="gSk-qP-QEU"/>
                                                                 <constraint firstItem="bxe-8W-HE8" firstAttribute="top" secondItem="y8X-Da-WKx" secondAttribute="topMargin" constant="5" id="iOL-GP-E4Z"/>
-                                                                <constraint firstItem="oTU-uH-Yyd" firstAttribute="top" relation="greaterThanOrEqual" secondItem="2P9-wO-ftc" secondAttribute="bottom" constant="5" id="iaK-H4-zrG"/>
-                                                                <constraint firstItem="2P9-wO-ftc" firstAttribute="trailing" secondItem="y8X-Da-WKx" secondAttribute="trailingMargin" id="kdO-sF-asi"/>
-                                                                <constraint firstItem="bxe-8W-HE8" firstAttribute="leading" secondItem="y8X-Da-WKx" secondAttribute="leadingMargin" id="r8f-4f-EjR"/>
-                                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="bxe-8W-HE8" secondAttribute="bottom" constant="5" id="rbP-bT-c9E"/>
-                                                                <constraint firstItem="EyC-TT-OpP" firstAttribute="centerY" secondItem="oTU-uH-Yyd" secondAttribute="centerY" id="zEH-eH-pMr"/>
+                                                                <constraint firstAttribute="trailingMargin" secondItem="2P9-wO-ftc" secondAttribute="trailing" id="zNA-jh-jN6"/>
                                                             </constraints>
+                                                            <variation key="default">
+                                                                <mask key="constraints">
+                                                                    <exclude reference="6Il-vU-MkY"/>
+                                                                    <exclude reference="SYM-QR-Pty"/>
+                                                                    <exclude reference="iOL-GP-E4Z"/>
+                                                                    <exclude reference="83B-BI-9tV"/>
+                                                                </mask>
+                                                            </variation>
                                                         </tableViewCellContentView>
                                                         <connections>
-                                                            <outlet property="bottomLeftHeight" destination="TDJ-ct-zKl" id="mTX-CJ-zIN"/>
-                                                            <outlet property="bottomLeftLabel" destination="oTU-uH-Yyd" id="pKo-h1-jEA"/>
-                                                            <outlet property="bottomPadding" destination="iaK-H4-zrG" id="Xoz-x2-EDT"/>
-                                                            <outlet property="bottomRightHeight" destination="d2P-P4-QPv" id="MNa-vm-mRx"/>
-                                                            <outlet property="bottomRightLabel" destination="EyC-TT-OpP" id="V8y-rH-Yh9"/>
-                                                            <outlet property="topLeftLabel" destination="bxe-8W-HE8" id="Yf1-Up-70h"/>
-                                                            <outlet property="topRightLabel" destination="2P9-wO-ftc" id="n2o-po-RqI"/>
+                                                            <outlet property="stringLabel" destination="bxe-8W-HE8" id="pog-PL-ajb"/>
+                                                            <outlet property="valueLabel" destination="2P9-wO-ftc" id="wtW-SF-xYd"/>
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>
@@ -5558,4 +5542,5 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <segue reference="lV2-Wb-bA2"/>
         <segue reference="goZ-7M-4CC"/>
     </inferredMetricsTieBreakers>
+    <color key="tintColor" red="0.0" green="0.49019607843137253" blue="0.64313725490196072" alpha="1" colorSpace="calibratedRGB"/>
 </document>
