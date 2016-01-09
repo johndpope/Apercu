@@ -11,13 +11,6 @@ import CorePlot
 
 class GraphDataSetup {
     
-    func detailDataSetup() -> [[CPTScatterPlotField: Double]] {
-        var plotData = [[CPTScatterPlotField: Double]]()
-        
-        
-        return plotData
-    }
-    
     func createMainPlotData(bpm: [Double], time: [Double]) -> [[CPTScatterPlotField: Double]] {
         var plotData = [[CPTScatterPlotField: Double]]()
         
@@ -31,18 +24,6 @@ class GraphDataSetup {
     func createAveragePlotData(averageBpm: Double, duration: Double) -> [[CPTScatterPlotField: Double]] {
         
         return [[CPTScatterPlotField.X: 0, CPTScatterPlotField.Y: averageBpm], [CPTScatterPlotField.X: duration, CPTScatterPlotField.Y: averageBpm]]
-    }
-    
-    func createTopFillPlotData(duration: Double) -> [[CPTScatterPlotField: Double]] {
-        let highIntensityMax = IntensityThresholdSingleton.sharedInstance.maximumHeatRate * 0.9
-        
-        return [[CPTScatterPlotField.X: 0, CPTScatterPlotField.Y: highIntensityMax], [CPTScatterPlotField.X: duration, CPTScatterPlotField.Y: highIntensityMax]]
-    }
-    
-    func createBottomFillPlotData(duration: Double) -> [[CPTScatterPlotField: Double]] {
-        let moderateIntensityMin = IntensityThresholdSingleton.sharedInstance.moderateIntensityThreshold
-        
-        return [[CPTScatterPlotField.X: 0, CPTScatterPlotField.Y: moderateIntensityMin], [CPTScatterPlotField.X: duration, CPTScatterPlotField.Y: moderateIntensityMin]]
     }
     
     func createMostActivePlotData(start: Double, end: Double, max: Double, min: Double) -> [[CPTScatterPlotField: Double]] {

@@ -89,6 +89,7 @@ class ProcessWorkout {
             
             responseDict["mod"] = secondsOfModerate
             responseDict["high"] = secondsOfHigh
+            responseDict["duration"] = duration
             
             completion(results: responseDict)
         }

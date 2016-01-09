@@ -41,7 +41,7 @@ class GraphPlotSetup {
         
         let mainPlot = CPTScatterPlot()
         mainPlot.identifier = "Main";
-        mainPlot.interpolation = .Curved
+        mainPlot.interpolation = .Linear
         mainPlot.dataLineStyle = mainLineStyle
         
         return mainPlot

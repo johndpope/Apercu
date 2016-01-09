@@ -3588,26 +3588,20 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                     <action selector="activeSwitchChanged:" destination="urD-Ty-FIU" eventType="valueChanged" id="7UZ-qS-6QD"/>
                                                 </connections>
                                             </switch>
-                                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="126" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9W9-Ce-ORB">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="126" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9W9-Ce-ORB">
                                                 <rect key="frame" x="0.0" y="414.5" width="320" height="300"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="300" id="Hvv-VU-J7d"/>
                                                 </constraints>
                                                 <prototypes>
-                                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ReuseIdentifier" rowHeight="95" id="xjG-iu-tbW" customClass="StatCell">
-                                                        <rect key="frame" x="0.0" y="22" width="320" height="95"/>
+                                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="StatReuse" id="xjG-iu-tbW" customClass="StatCell" customModule="Apercu" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="22" width="320" height="126"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xjG-iu-tbW" id="y8X-Da-WKx">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="94.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="125.5"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxe-8W-HE8">
-                                                                    <rect key="frame" x="8" y="13" width="42" height="21"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2P9-wO-ftc">
                                                                     <rect key="frame" x="270" y="13" width="42" height="20"/>
                                                                     <attributedString key="attributedText">
@@ -3621,7 +3615,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                                     </attributedString>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oTU-uH-Yyd">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oTU-uH-Yyd">
                                                                     <rect key="frame" x="8" y="66" width="42" height="20.5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="TDJ-ct-zKl"/>
@@ -3630,11 +3624,17 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EyC-TT-OpP">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EyC-TT-OpP">
                                                                     <rect key="frame" x="270" y="66" width="42" height="20.5"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="d2P-P4-QPv"/>
                                                                     </constraints>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxe-8W-HE8">
+                                                                    <rect key="frame" x="8" y="13" width="42" height="21"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -3658,13 +3658,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                             </constraints>
                                                         </tableViewCellContentView>
                                                         <connections>
-                                                            <outlet property="bottomLeft" destination="oTU-uH-Yyd" id="BrP-Jv-bNt"/>
-                                                            <outlet property="bottomPadding" destination="YUy-fN-TVz" id="ho9-yz-9Ht"/>
-                                                            <outlet property="bottomRight" destination="EyC-TT-OpP" id="6Da-dT-9XO"/>
-                                                            <outlet property="leftHeight" destination="TDJ-ct-zKl" id="fa1-iL-LHw"/>
-                                                            <outlet property="leftLabel" destination="bxe-8W-HE8" id="oAM-XF-WMi"/>
-                                                            <outlet property="rightHeight" destination="d2P-P4-QPv" id="71M-XB-Y7L"/>
-                                                            <outlet property="rightLabel" destination="2P9-wO-ftc" id="vOy-qT-N7V"/>
+                                                            <outlet property="bottomLeftHeight" destination="TDJ-ct-zKl" id="mTX-CJ-zIN"/>
+                                                            <outlet property="bottomLeftLabel" destination="oTU-uH-Yyd" id="pKo-h1-jEA"/>
+                                                            <outlet property="bottomPadding" destination="iaK-H4-zrG" id="Xoz-x2-EDT"/>
+                                                            <outlet property="bottomRightHeight" destination="d2P-P4-QPv" id="MNa-vm-mRx"/>
+                                                            <outlet property="bottomRightLabel" destination="EyC-TT-OpP" id="V8y-rH-Yh9"/>
+                                                            <outlet property="topLeftLabel" destination="bxe-8W-HE8" id="Yf1-Up-70h"/>
+                                                            <outlet property="topRightLabel" destination="2P9-wO-ftc" id="n2o-po-RqI"/>
                                                         </connections>
                                                     </tableViewCell>
                                                 </prototypes>

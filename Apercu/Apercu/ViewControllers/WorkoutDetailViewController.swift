@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CorePlot
+import HealthKit
 
 class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CPTPlotSpaceDelegate, CPTPlotDataSource {
     
@@ -51,6 +52,13 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var avg: Double!
     var bpm: [Double]!
     var time: [Double]!
+    var distance: Double!
+    var calories: Double!
+    var moderateIntensityTime: Double!
+    var highIntensityTime: Double!
+    
+    var tableStrings: [NSAttributedString]!
+    var tableValues: [NSAttributedString]?
     
     var backgroundColor = CPTColor(componentRed: 89.0/255.0, green: 87.0/255.0, blue: 84.0/255.0, alpha: 1.0)
     var goingToNewYAxis = false
@@ -66,8 +74,9 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.estimatedRowHeight = 44.0
+        tableView.estimatedRowHeight = 60.0
         tableView.rowHeight = UITableViewAutomaticDimension
+        updateTableHeight()
         
         graph = CPTXYGraph(frame: self.view.bounds)
         graph.applyTheme(CPTTheme(named: kCPTPlainWhiteTheme))
@@ -91,9 +100,13 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         plotSpace.globalXRange = initialXrange
         plotSpace.delegate = self
         
+        tableStrings = GraphTableStrings().allHeaderStrings()
+        
         GraphAxisSetUp().initialSetup((self.graph.axisSet as? CPTXYAxisSet)!, duration: 60, min: 50)
         
-        ProcessWorkout().heartRatePlotDate(currentWorkout.getStartDate()!, end: currentWorkout.getEndDate()!, includeRaw: true, statsCompleted: { (stats) -> Void in
+        ProcessWorkout().heartRatePlotDate(currentWorkout.getStartDate()!, end: currentWorkout.getEndDate()!, includeRaw: true, statsCompleted: {
+            (stats) -> Void in
+            
             // Stats for graph completed (min, max, avg, duration)
             // update graph
             self.min = stats["min"] as! Double
@@ -110,8 +123,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.plots["Main"] = ApercuPlot(plot: scatterPlots[0], data: plotDataCreator.createMainPlotData(self.bpm, time: self.time))
             self.plots["Average"] = ApercuPlot(plot: scatterPlots[1], data: plotDataCreator.createAveragePlotData(self.avg, duration: self.duration))
-            self.plots["Top Fill"] = ApercuPlot(plot: scatterPlots[2], data: plotDataCreator.createTopFillPlotData(self.duration))
-            self.plots["Bottom Fill"] = ApercuPlot(plot: scatterPlots[3], data: plotDataCreator.createBottomFillPlotData(self.duration))
             self.plots["Zero"] = ApercuPlot(plot: scatterPlots[4], data: plotDataCreator.createZeroLineData(self.duration))
             
             // show plots
@@ -138,10 +149,27 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             
             }, completion: { (results) -> Void in
-                // Stats for min and moderate time completed
-                // update table view
+                self.moderateIntensityTime = results["mod"] as! Double
+                self.highIntensityTime = results["high"] as! Double
+                let duration = results["duration"] as! Double
                 
+                let milesUnit = HKUnit.mileUnit()
+                self.distance = self.currentWorkout.healthKitWorkout?.totalDistance?.doubleValueForUnit(milesUnit)
                 
+                let caloriesUnit = HKUnit.kilocalorieUnit()
+                self.calories = self.currentWorkout.healthKitWorkout?.totalEnergyBurned?.doubleValueForUnit(caloriesUnit)
+                
+                let description: Double = Double((self.currentWorkout.healthKitWorkout?.workoutActivityType.rawValue)!)
+                
+                let rawValues: [Double] = [duration, self.moderateIntensityTime, self.highIntensityTime, self.distance, self.calories, description]
+                
+                self.tableValues = GraphTableStrings().allValueStrings(rawValues)
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.reloadData()
+                    self.updateTableHeight()
+                })
+           
         })
 
     }
@@ -326,13 +354,40 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if tableValues == nil {
+            return 1
+        } else {
+            return tableValues!.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCellWithIdentifier("StatReuse", forIndexPath: indexPath) as! StatCell
+        
+        cell.topLeftLabel.adjustsFontSizeToFitWidth = true
+        cell.topRightLabel.adjustsFontSizeToFitWidth = true
+        cell.bottomLeftLabel.adjustsFontSizeToFitWidth = true
+        cell.bottomRightLabel.adjustsFontSizeToFitWidth = true
+        
+        if tableValues == nil {
+            cell.topLeftLabel.text = "Loading stats..."
+            cell.topRightLabel.text = ""
+        } else {
+            cell.topLeftLabel.attributedText = tableStrings[indexPath.row]
+            cell.topRightLabel.attributedText = tableValues![indexPath.row]
+        }
+
+        cell.bottomLeftHeight.constant = 0
+        cell.bottomRightHeight.constant = 0
+        cell.bottomPadding.constant = 0
+        
         return cell
     }
     
+    func updateTableHeight() {
+        tableView.sizeToFit()
+        tableViewHeight.constant = tableView.contentSize.height
+//        tableViewHeight.constant = tableView.contentSize.height
+    }
     
 }
