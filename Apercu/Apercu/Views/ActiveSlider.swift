@@ -11,24 +11,113 @@ import UIKit
 
 @IBDesignable
 
-class ActiveSlider: UIView {
+class ActiveSlider: UIView, UIGestureRecognizerDelegate {
     var rect1: CGRect!
     var touchBoundingRect: CGRect!
-//    touchBoundingRect = CGRectMake(10.0, 35.0, frameWidth - 20.0, 24)
+    var fillWidth: CGFloat = 20
+    let sidePadding: CGFloat = 20.0
+    var timeValue: Double = 0
+    var intervalOriginValues = [CGFloat]()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        //        let tapRecognizer = UITapGestureRecognizer(target: self, action: "onTouch:")
+        //        addGestureRecognizer(tapRecognizer)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        let gestureRecognizer = UIGestureRecognizer(target: self, action: nil)
+        gestureRecognizer.delegate = self
+        //        let tapRecognizer = UITapGestureRecognizer(target: self, action: "onTouch:")
+        //        addGestureRecognizer(tapRecognizer)
+    }
     
     override func drawRect(rect: CGRect) {
         rect1 = rect
-        drawCanvas1()
+        drawCanvas1(fillWidth: fillWidth, frameWidth: rect.width)
     }
     
-    func onTouch(sender: UITapGestureRecognizer) {
-
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let location = touches.first?.locationInView(self) {
+            wasTouched(location,roundValue: false)
+        }
     }
     
-    func drawCanvas1(fillWidth fillWidth: CGFloat = 123) {
-        let onClick = UITapGestureRecognizer(target: self, action: Selector("onTouch:"))
-        self.addGestureRecognizer(onClick)
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let location = touches.first?.locationInView(self) {
+            wasTouched(location, roundValue: true)
+        }
+    }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let location = touches.first?.locationInView(self) {
+            wasTouched(location, roundValue: false)
+        }
+    }
+    
+    override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
+        if let location = touches?.first?.locationInView(self) {
+            wasTouched(location, roundValue: true)
+        }
+    }
+    
+    func wasTouched(location: CGPoint, roundValue: Bool) {
+        if isInBounds(location) {
+            calculateFillWidth(location, roundValue: roundValue)
+        }
+    }
+    
+    func isInBounds(touchPoint: CGPoint) -> Bool {
+        if touchBoundingRect.contains(touchPoint) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func nearestValue(value: CGFloat) -> Int {
+        var index = 0
+        var difference: CGFloat!
         
+        for var i = 0; i < intervalOriginValues.count; ++i {
+            let sampleDiff = fabs(value - intervalOriginValues[i])
+            if difference == nil || sampleDiff < difference {
+                difference = sampleDiff
+                index = i
+            }
+        }
+        
+        return index
+    }
+    
+    func calculateFillWidth(point: CGPoint, roundValue: Bool) {
+        let bottomThreshold: CGFloat = 20.0
+        let upperThreshold: CGFloat = rect1.width - 38
+        
+        var width = (point.x / (rect1.width - (2 * sidePadding))) * rect1.width - (2 * sidePadding)
+        width = fmin(upperThreshold, width)
+        width = fmax(bottomThreshold, width)
+        
+        if roundValue {
+            width = intervalOriginValues[nearestValue(width)]
+        }
+        
+        fillWidth = width
+        setNeedsDisplay()
+    }
+    
+    func closestValueForWidth(value: CGFloat) -> Int {
+        let unrounded = (value / (rect1.width - 2 * sidePadding)) * 4
+        var rounded = Int(unrounded)
+        rounded = max(0, rounded)
+        rounded = min(4, rounded)
+        
+        return rounded
+    }
+    
+    func drawCanvas1(fillWidth fillWidth: CGFloat = 123, frameWidth: CGFloat = 240) {
         //// General Declarations
         let context = UIGraphicsGetCurrentContext()
         
@@ -53,17 +142,16 @@ class ActiveSlider: UIView {
         
         //// Variable Declarations
         let circleOrigin: CGFloat = fillWidth + 10 - 11
-        let frameWidth: CGFloat = rect1.width
-        let barWidth: CGFloat = frameWidth - 20
-        touchBoundingRect = CGRectMake(10.0, 35.0, frameWidth - 20.0, 24)
+        let barWidth: CGFloat = frameWidth - 40
         
         //// Frames
         let frame = CGRectMake(0, 0, frameWidth, 79)
+        touchBoundingRect = CGRectMake(10.0, 25.0, frameWidth - 20.0, 56)
         
         
         //// Group
         //// Fill Rectangle Drawing
-        let fillRectangleRect = CGRectMake(10, 37, fillWidth, 18)
+        let fillRectangleRect = CGRectMake(20, 37, fillWidth, 18)
         let fillRectanglePath = UIBezierPath(roundedRect: fillRectangleRect, cornerRadius: 8)
         CGContextSaveGState(context)
         fillRectanglePath.addClip()
@@ -75,7 +163,7 @@ class ActiveSlider: UIView {
         
         
         //// Main Rectangle 2 Drawing
-        let mainRectangle2Path = UIBezierPath(roundedRect: CGRectMake(10, 37, barWidth, 18), cornerRadius: 8)
+        let mainRectangle2Path = UIBezierPath(roundedRect: CGRectMake(20, 37, barWidth, 18), cornerRadius: 8)
         UIColor.grayColor().setStroke()
         mainRectangle2Path.lineWidth = 2
         mainRectangle2Path.stroke()
@@ -97,7 +185,7 @@ class ActiveSlider: UIView {
         
         
         //// Text Drawing
-        let textRect = CGRectMake(frame.minX + 10, frame.minY + 62, 37, 17)
+        let textRect = CGRectMake(frame.minX + 20, frame.minY + 62, 37, 17)
         let textTextContent = NSString(string: "None")
         let textStyle = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         textStyle.alignment = .Left
@@ -112,10 +200,10 @@ class ActiveSlider: UIView {
         
         
         //// Text 2 Drawing
-        let text2Rect = CGRectMake(frame.minX + floor((frame.width - 25) * 0.24419) + 0.5, frame.minY + 62, 25, 17)
+        let text2Rect = CGRectMake(frame.minX + floor((frame.width - 25) * 0.27881 + 0.25) + 0.25, frame.minY + 62, 25, 17)
         let text2TextContent = NSString(string: "1m")
         let text2Style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
-        text2Style.alignment = .Left
+        text2Style.alignment = .Center
         
         let text2FontAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(15), NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: text2Style]
         
@@ -127,7 +215,7 @@ class ActiveSlider: UIView {
         
         
         //// Text 3 Drawing
-        let text3Rect = CGRectMake(frame.minX + floor((frame.width - 25) * 0.48140) + 0.5, frame.minY + 62, 25, 17)
+        let text3Rect = CGRectMake(frame.minX + floor((frame.width - 25) * 0.50000) + 0.5, frame.minY + 62, 25, 17)
         let text3TextContent = NSString(string: "2m")
         let text3Style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         text3Style.alignment = .Center
@@ -142,7 +230,7 @@ class ActiveSlider: UIView {
         
         
         //// Text 4 Drawing
-        let text4Rect = CGRectMake(frame.minX + floor((frame.width - 25) * 0.72442 - 0.25) + 0.75, frame.minY + 62, 25, 17)
+        let text4Rect = CGRectMake(frame.minX + floor((frame.width - 25) * 0.70763 - 0.25) + 0.75, frame.minY + 62, 25, 17)
         let text4TextContent = NSString(string: "5m")
         let text4Style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         text4Style.alignment = .Center
@@ -157,7 +245,7 @@ class ActiveSlider: UIView {
         
         
         //// Text 5 Drawing
-        let text5Rect = CGRectMake(frame.minX + frame.width - 40, frame.minY + 62, 30, 17)
+        let text5Rect = CGRectMake(frame.minX + frame.width - 50, frame.minY + 62, 30, 17)
         let text5TextContent = NSString(string: "10m")
         let text5Style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         text5Style.alignment = .Right
@@ -184,7 +272,9 @@ class ActiveSlider: UIView {
         CGContextClipToRect(context, text6Rect);
         text6TextContent.drawInRect(CGRectMake(text6Rect.minX, text6Rect.minY + (text6Rect.height - text6TextHeight) / 2, text6Rect.width, text6TextHeight), withAttributes: text6FontAttributes)
         CGContextRestoreGState(context)
+        
+        intervalOriginValues = [textRect.origin.x, text2Rect.origin.x + (text2Rect.width / 2) - 11, text3Rect.origin.x + (text3Rect.width / 2) - 11, text4Rect.origin.x + (text4Rect.width / 2) - 11, text5Rect.origin.x + text5Rect.width - 18]
     }
-
-
+    
+    
 }
