@@ -16,6 +16,8 @@
 		8B2D5F511C3220A900F7A369 /* CategoriesSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D5F501C3220A900F7A369 /* CategoriesSingleton.swift */; };
 		8B33F0821C3F3FFA0011CDBE /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B33F0811C3F3FFA0011CDBE /* StringHelpers.swift */; };
 		8B33F0841C41790D0011CDBE /* SingleLineStatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B33F0831C41790D0011CDBE /* SingleLineStatCell.swift */; };
+		8B33F0871C41C8A70011CDBE /* ActiveSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B33F0861C41C8A70011CDBE /* ActiveSlider.swift */; };
+		8B33F0891C41C96F0011CDBE /* ApercuStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B33F0881C41C96F0011CDBE /* ApercuStyleKit.swift */; };
 		8B52700B1C2E3AB000391950 /* ApercuWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B52700A1C2E3AB000391950 /* ApercuWorkout.swift */; };
 		8B5C0C4B1C2D6FC6000B236A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5C0C4A1C2D6FC6000B236A /* HealthKit.framework */; };
 		8B5C0C4F1C2D7329000B236A /* singleTabBar3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B5C0C4D1C2D7329000B236A /* singleTabBar3.png */; };
@@ -92,6 +94,8 @@
 		8B2D5F501C3220A900F7A369 /* CategoriesSingleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoriesSingleton.swift; path = ../Misc/CategoriesSingleton.swift; sourceTree = "<group>"; };
 		8B33F0811C3F3FFA0011CDBE /* StringHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringHelpers.swift; path = Apercu/Misc/StringHelpers.swift; sourceTree = SOURCE_ROOT; };
 		8B33F0831C41790D0011CDBE /* SingleLineStatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleLineStatCell.swift; path = Cells/SingleLineStatCell.swift; sourceTree = "<group>"; };
+		8B33F0861C41C8A70011CDBE /* ActiveSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActiveSlider.swift; path = Apercu/Views/ActiveSlider.swift; sourceTree = SOURCE_ROOT; };
+		8B33F0881C41C96F0011CDBE /* ApercuStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApercuStyleKit.swift; sourceTree = "<group>"; };
 		8B52700A1C2E3AB000391950 /* ApercuWorkout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApercuWorkout.swift; path = Model/ApercuWorkout.swift; sourceTree = "<group>"; };
 		8B5C0C491C2D6F42000B236A /* Apercu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Apercu.entitlements; sourceTree = "<group>"; };
 		8B5C0C4A1C2D6FC6000B236A /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
@@ -211,6 +215,16 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		8B33F0851C41C87F0011CDBE /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8B33F0881C41C96F0011CDBE /* ApercuStyleKit.swift */,
+				8B33F0861C41C8A70011CDBE /* ActiveSlider.swift */,
+			);
+			name = Views;
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		8B5270091C2E3A4E00391950 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +286,7 @@
 				8BE81CB31C36C4E500CD79BC /* HealthKit */,
 				8BD54DD81C2C17080013B35A /* Misc */,
 				8B1F79821C3367DB00B92116 /* Graph */,
+				8B33F0851C41C87F0011CDBE /* Views */,
 				66D92FB1FA360AC76BE2D5A2 /* ViewControllers */,
 			);
 			path = Apercu;
@@ -576,12 +591,14 @@
 				8BE81CB51C36C58200CD79BC /* QuerySamples.swift in Sources */,
 				8B52700B1C2E3AB000391950 /* ApercuWorkout.swift in Sources */,
 				8B6573391C2A1F2F00B9B1E9 /* AppDelegate.swift in Sources */,
+				8B33F0891C41C96F0011CDBE /* ApercuStyleKit.swift in Sources */,
 				8BE5CE291C32068D00FB7CE9 /* CategoryLookup.swift in Sources */,
 				8B86038A1C2F80F000923013 /* CategoryCell.swift in Sources */,
 				8BD54DE01C2C2F2D0013B35A /* QueryWorkouts.swift in Sources */,
 				8BD54DDE1C2C189A0013B35A /* HealthKitSetup.swift in Sources */,
 				66D92FBC1A70FD594DBD8028 /* WorkoutTableViewController.swift in Sources */,
 				8B8603881C2F789300923013 /* CategoryFilterViewController.swift in Sources */,
+				8B33F0871C41C8A70011CDBE /* ActiveSlider.swift in Sources */,
 				8B2D5F511C3220A900F7A369 /* CategoriesSingleton.swift in Sources */,
 				8BFE0BE91C2D5D1500E2CF8A /* WorkoutDescription.swift in Sources */,
 				8BE5CE271C30C9A000FB7CE9 /* ManualFilterViewController.swift in Sources */,

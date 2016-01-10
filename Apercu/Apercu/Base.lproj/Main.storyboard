@@ -3513,7 +3513,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="956"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4th-Yp-K6t" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="967.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1004"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o5j-Bj-eMA" userLabel="Background View">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="310"/>
@@ -3537,7 +3537,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 </connections>
                                             </segmentedControl>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Add workout notes." translatesAutoresizingMaskIntoConstraints="NO" id="Wuk-7b-Qhz">
-                                                <rect key="frame" x="10" y="774" width="300" height="50"/>
+                                                <rect key="frame" x="10" y="810" width="300" height="50"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="5QM-hV-Bfx"/>
@@ -3546,7 +3546,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E4M-pN-yu4">
-                                                <rect key="frame" x="10" y="873.5" width="179" height="32"/>
+                                                <rect key="frame" x="10" y="910" width="179" height="32"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <state key="normal" title="Categorize This Workout">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3556,7 +3556,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QWd-YO-3lV">
-                                                <rect key="frame" x="10" y="836" width="25" height="25"/>
+                                                <rect key="frame" x="10" y="872" width="25" height="25"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="25" id="OSN-Pu-eCh"/>
@@ -3564,7 +3564,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Oi-4O-xSa">
-                                                <rect key="frame" x="10" y="920.5" width="106" height="32"/>
+                                                <rect key="frame" x="10" y="957" width="106" height="32"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <state key="normal" title="Graph Options">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3573,23 +3573,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                     <segue destination="IWt-XB-ba5" kind="push" identifier="toGraphOptions" id="u6a-3n-B5r"/>
                                                 </connections>
                                             </button>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Show most active period:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="s6K-wD-1AZ">
-                                                <rect key="frame" x="55" y="377" width="191" height="19.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7DF-im-PfV">
-                                                <rect key="frame" x="251" y="372" width="51" height="31"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="49" id="W4e-x5-N1i"/>
-                                                </constraints>
-                                                <connections>
-                                                    <action selector="activeSwitchChanged:" destination="urD-Ty-FIU" eventType="valueChanged" id="7UZ-qS-6QD"/>
-                                                </connections>
-                                            </switch>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="126" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9W9-Ce-ORB">
-                                                <rect key="frame" x="0.0" y="414.5" width="320" height="300"/>
+                                                <rect key="frame" x="0.0" y="451" width="320" height="300"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="300" id="Hvv-VU-J7d"/>
@@ -3603,7 +3588,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxe-8W-HE8">
-                                                                    <rect key="frame" x="8" y="52.5" width="42" height="20.5"/>
+                                                                    <rect key="frame" x="8" y="52" width="42" height="20.5"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -3654,31 +3639,38 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 </prototypes>
                                             </tableView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NR6-hW-Dwh">
-                                                <rect key="frame" x="10" y="744.5" width="50" height="19.5"/>
+                                                <rect key="frame" x="10" y="781" width="50" height="19.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GjJ-w0-X8y">
-                                                <rect key="frame" x="0.0" y="714.5" width="320" height="2"/>
+                                                <rect key="frame" x="0.0" y="751" width="320" height="2"/>
                                                 <color key="backgroundColor" cyan="0.27000000000000002" magenta="0.0" yellow="0.63" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="2" id="VPE-Q3-1UV"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jBO-YV-GHd">
-                                                <rect key="frame" x="0.0" y="412.5" width="320" height="2"/>
+                                                <rect key="frame" x="0.0" y="449" width="320" height="2"/>
                                                 <color key="backgroundColor" cyan="0.27000000000000002" magenta="0.0" yellow="0.63" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="2" id="QLS-hb-EXV"/>
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Category Selected" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sGx-zM-aQX">
-                                                <rect key="frame" x="45" y="839" width="275" height="19.5"/>
+                                                <rect key="frame" x="45" y="875" width="275" height="19.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z1q-Rm-5BJ" userLabel="Active View" customClass="ActiveSlider" customModule="Apercu" customModuleProvider="target">
+                                                <rect key="frame" x="10" y="363" width="300" height="78"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="78" id="sGd-Dk-u7n"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="9W9-Ce-ORB" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" id="0Jn-dg-crD"/>
@@ -3686,7 +3678,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                             <constraint firstAttribute="trailing" secondItem="jBO-YV-GHd" secondAttribute="trailing" id="2tb-qz-R6V"/>
                                             <constraint firstItem="o5j-Bj-eMA" firstAttribute="top" secondItem="4th-Yp-K6t" secondAttribute="top" id="4GF-Vg-tqF"/>
                                             <constraint firstItem="9W9-Ce-ORB" firstAttribute="top" secondItem="jBO-YV-GHd" secondAttribute="bottom" id="4Qp-2j-Cmq"/>
-                                            <constraint firstAttribute="trailing" secondItem="7DF-im-PfV" secondAttribute="trailing" constant="20" id="4Rz-Mn-HG0"/>
                                             <constraint firstItem="aDM-Vz-sAY" firstAttribute="top" secondItem="o5j-Bj-eMA" secondAttribute="top" id="6FZ-Un-MRh"/>
                                             <constraint firstItem="E4M-pN-yu4" firstAttribute="leading" secondItem="3Oi-4O-xSa" secondAttribute="leading" id="8b5-yL-2le"/>
                                             <constraint firstItem="GjJ-w0-X8y" firstAttribute="top" secondItem="9W9-Ce-ORB" secondAttribute="bottom" id="8k7-jr-Opi"/>
@@ -3697,21 +3688,22 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                             <constraint firstItem="NR6-hW-Dwh" firstAttribute="leading" secondItem="Wuk-7b-Qhz" secondAttribute="leading" id="CsO-Ng-F0u"/>
                                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3Oi-4O-xSa" secondAttribute="trailing" id="DVC-t0-blX"/>
                                             <constraint firstItem="NR6-hW-Dwh" firstAttribute="top" secondItem="9W9-Ce-ORB" secondAttribute="bottom" constant="30" id="FUJ-Jp-TBA"/>
-                                            <constraint firstItem="s6K-wD-1AZ" firstAttribute="top" secondItem="XSf-ig-EW1" secondAttribute="bottom" constant="24" id="Fb6-OL-DBA"/>
                                             <constraint firstItem="sGx-zM-aQX" firstAttribute="leading" secondItem="QWd-YO-3lV" secondAttribute="trailing" constant="10" id="Ged-yX-6jB"/>
                                             <constraint firstAttribute="trailing" secondItem="Wuk-7b-Qhz" secondAttribute="trailing" constant="10" id="HaB-6g-tCR"/>
                                             <constraint firstItem="XSf-ig-EW1" firstAttribute="top" secondItem="o5j-Bj-eMA" secondAttribute="bottom" constant="15" id="KUs-pD-xN9"/>
+                                            <constraint firstItem="z1q-Rm-5BJ" firstAttribute="bottom" secondItem="jBO-YV-GHd" secondAttribute="bottom" constant="-10" id="KWN-c4-iqI"/>
+                                            <constraint firstItem="z1q-Rm-5BJ" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" constant="10" id="Lrj-lF-eg7"/>
                                             <constraint firstItem="GjJ-w0-X8y" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" id="Ltw-78-tUG"/>
                                             <constraint firstItem="E4M-pN-yu4" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" constant="10" id="P9q-w1-aEs"/>
                                             <constraint firstAttribute="centerX" secondItem="o5j-Bj-eMA" secondAttribute="centerX" id="PCn-c8-YAE"/>
-                                            <constraint firstItem="7DF-im-PfV" firstAttribute="leading" secondItem="s6K-wD-1AZ" secondAttribute="trailing" constant="5" id="Rn7-qw-GPf"/>
                                             <constraint firstItem="o5j-Bj-eMA" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" id="S5m-Wp-Frq"/>
                                             <constraint firstAttribute="centerX" secondItem="XSf-ig-EW1" secondAttribute="centerX" id="SGQ-M9-4yn"/>
                                             <constraint firstAttribute="trailing" secondItem="GjJ-w0-X8y" secondAttribute="trailing" id="SNp-mj-fQn"/>
                                             <constraint firstAttribute="trailing" secondItem="sGx-zM-aQX" secondAttribute="trailing" id="Ueg-Ow-o4a"/>
                                             <constraint firstItem="o5j-Bj-eMA" firstAttribute="bottom" secondItem="aDM-Vz-sAY" secondAttribute="bottom" constant="10" id="Uu9-Q4-9iG"/>
-                                            <constraint firstItem="7DF-im-PfV" firstAttribute="centerY" secondItem="s6K-wD-1AZ" secondAttribute="centerY" id="VvN-vh-tFh"/>
+                                            <constraint firstItem="z1q-Rm-5BJ" firstAttribute="top" secondItem="XSf-ig-EW1" secondAttribute="bottom" constant="10" id="ZLh-We-XFt"/>
                                             <constraint firstItem="sGx-zM-aQX" firstAttribute="top" secondItem="Wuk-7b-Qhz" secondAttribute="bottom" constant="15" id="bWx-Qx-Cft"/>
+                                            <constraint firstAttribute="trailing" secondItem="z1q-Rm-5BJ" secondAttribute="trailing" constant="10" id="cao-y4-Afi"/>
                                             <constraint firstAttribute="trailing" secondItem="o5j-Bj-eMA" secondAttribute="trailing" id="coq-wC-CnB"/>
                                             <constraint firstItem="3Oi-4O-xSa" firstAttribute="top" secondItem="E4M-pN-yu4" secondAttribute="bottom" constant="15" id="cxi-ue-oin"/>
                                             <constraint firstItem="aDM-Vz-sAY" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" constant="20" id="eho-hs-jyz"/>
@@ -3719,7 +3711,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                             <constraint firstItem="o5j-Bj-eMA" firstAttribute="width" secondItem="4th-Yp-K6t" secondAttribute="width" id="m6k-Ve-wGv"/>
                                             <constraint firstItem="Wuk-7b-Qhz" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" constant="10" id="mTq-f5-6J2"/>
                                             <constraint firstItem="aDM-Vz-sAY" firstAttribute="top" secondItem="4th-Yp-K6t" secondAttribute="top" id="p0q-uF-CDf"/>
-                                            <constraint firstItem="9W9-Ce-ORB" firstAttribute="top" secondItem="s6K-wD-1AZ" secondAttribute="bottom" constant="18" id="s2A-4p-dQM"/>
                                             <constraint firstAttribute="trailing" secondItem="aDM-Vz-sAY" secondAttribute="trailing" constant="20" id="snM-SX-a3K"/>
                                             <constraint firstItem="E4M-pN-yu4" firstAttribute="top" secondItem="sGx-zM-aQX" secondAttribute="bottom" constant="15" id="vWT-Tl-QMx"/>
                                             <constraint firstItem="jBO-YV-GHd" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" id="w7I-QM-eoq"/>
@@ -3765,7 +3756,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <outlet property="graphConstraintLeading" destination="eho-hs-jyz" id="hzi-bq-H2F"/>
                         <outlet property="graphConstraintTrailing" destination="snM-SX-a3K" id="3ly-Mt-tH9"/>
                         <outlet property="hostView" destination="aDM-Vz-sAY" id="BOJ-HV-WLa"/>
-                        <outlet property="mostActiveSwitch" destination="7DF-im-PfV" id="w0s-yY-ZoC"/>
                         <outlet property="optionsButton" destination="3Oi-4O-xSa" id="KWZ-Ci-e8F"/>
                         <outlet property="scrollView" destination="CLB-bf-Jpt" id="Mxd-Hf-rmL"/>
                         <outlet property="segment" destination="XSf-ig-EW1" id="zVr-8h-eIl"/>
