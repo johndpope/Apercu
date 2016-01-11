@@ -274,13 +274,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func removeAllPlots() {
-        if let activePlot = plots["Active"] {
-            graph.removePlotWithIdentifier("Active")
-            if activePlot.plot.graph != nil {
-                graph.removePlotWithIdentifier("Active")
-                graph.removePlot(activePlot.plot)
-            }
-        }
+        removeActivePlot()
         
         for (_, element) in plots.enumerate() {
             if element.1.plot.graph != nil {
@@ -291,6 +285,13 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let axisSet = graph.axisSet as? CPTXYAxisSet
         axisSet?.yAxis?.removeAllBackgroundLimitBands()
         axisSet?.xAxis?.removeAllBackgroundLimitBands()
+    }
+    
+    func removeActivePlot() {
+        if plots["Active"] != nil {
+            graph.removePlotWithIdentifier("Active")
+        }
+//        plots["Active"] = nil
     }
     
     // MARK: - Graph Delegates
@@ -424,9 +425,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 let activeData = GraphDataSetup().createMostActivePlotData(timeOne, end: timeTwo, max: self.plotMax, min: self.plotMin)
                 let activePlot = GraphPlotSetup().createMostActivePlot(self.plotMin)
-//                let activeApercuPlot = ApercuPlot(plot: activePlot, data: activeData)
-                
-               
+
                 self.plots["Active"] = ApercuPlot(plot: activePlot, data: activeData)
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -440,7 +439,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 })
             })
         } else {
-            
+            removeActivePlot()
         }
     }
 }
