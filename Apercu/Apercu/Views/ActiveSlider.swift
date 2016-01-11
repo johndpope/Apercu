@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+protocol ActiveSliderChanged {
+    func sliderChanged(activeDuration: Int)
+}
+
 @IBDesignable
 
 class ActiveSlider: UIView, UIGestureRecognizerDelegate {
@@ -18,6 +22,7 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
     let sidePadding: CGFloat = 20.0
     var timeValue: Double = 0
     var intervalOriginValues = [CGFloat]()
+    var delegate: ActiveSliderChanged!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,6 +35,7 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
         super.init(coder: aDecoder)
         let gestureRecognizer = UIGestureRecognizer(target: self, action: nil)
         gestureRecognizer.delegate = self
+        
         //        let tapRecognizer = UITapGestureRecognizer(target: self, action: "onTouch:")
         //        addGestureRecognizer(tapRecognizer)
     }
@@ -101,7 +107,28 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
         width = fmax(bottomThreshold, width)
         
         if roundValue {
-            width = intervalOriginValues[nearestValue(width)]
+            let nearestInterval = nearestValue(width)
+            width = intervalOriginValues[nearestInterval]
+            
+            if delegate != nil {
+                var activeTime = 0
+                switch nearestInterval {
+                case 0:
+                    activeTime = 0
+                case 1:
+                    activeTime = 60
+                case 2:
+                    activeTime = 120
+                case 3:
+                    activeTime = 300
+                case 4:
+                    activeTime = 600
+                default:
+                    activeTime = 0
+                }
+                
+                delegate.sliderChanged(activeTime)
+            }
         }
         
         fillWidth = width
@@ -146,7 +173,7 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
         
         //// Frames
         let frame = CGRectMake(0, 0, frameWidth, 79)
-        touchBoundingRect = CGRectMake(10.0, 25.0, frameWidth - 20.0, 56)
+        touchBoundingRect = CGRectMake(10.0, 20.0, frameWidth - 20.0, 58)
         
         
         //// Group

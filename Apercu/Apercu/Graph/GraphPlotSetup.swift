@@ -23,15 +23,9 @@ class GraphPlotSetup {
         var plots = [CPTScatterPlot]()
         plots.append(createMainPlot())
         plots.append(createAveragePlot())
-        plots.append(createTopFillPlot())
-        plots.append(createBottomFillPlot())
         plots.append(createZeroPlot())
         
         return plots
-    }
-    
-    func mostActivePlotSetu() -> CPTScatterPlot {
-        return createMostActivePlot() 
     }
     
     func createMainPlot() -> CPTScatterPlot {
@@ -62,31 +56,7 @@ class GraphPlotSetup {
         return averagePlot
     }
     
-    func createTopFillPlot() -> CPTScatterPlot {
-        let topFillColor = CPTColor(componentRed: 250.0/255.0, green: 0.0, blue: 0.0, alpha: 0.6)
-        
-        let topFillPlot = CPTScatterPlot()
-        topFillPlot.identifier = "Top Fill"
-        topFillPlot.dataLineStyle = emptyLineStyle
-        topFillPlot.areaBaseValue = IntensityThresholdSingleton.sharedInstance.highIntensityThreshold
-        topFillPlot.areaFill = CPTFill(color: topFillColor)
-        
-        return topFillPlot
-    }
-    
-    func createBottomFillPlot() -> CPTScatterPlot {
-        let bottomFillColor = CPTColor(componentRed: 250.0/255.0, green: 10.0/255.0, blue: 10.0/255.0, alpha: 0.35)
-        
-        let bottomFillPlot = CPTScatterPlot()
-        bottomFillPlot.identifier = "Bottom Fill"
-        bottomFillPlot.dataLineStyle = emptyLineStyle
-        bottomFillPlot.areaBaseValue = IntensityThresholdSingleton.sharedInstance.highIntensityThreshold
-        bottomFillPlot.areaFill = CPTFill(color: bottomFillColor)
-        
-        return bottomFillPlot
-    }
-    
-    func createMostActivePlot() -> CPTScatterPlot {
+    func createMostActivePlot(min: Double) -> CPTScatterPlot {
         let activeLineColor = CPTColor(componentRed: 249.0/255.0, green: 228.0/255.0, blue: 127.0/255.0, alpha: 0.6)
         
         let activeLineStyle = CPTMutableLineStyle()
@@ -95,7 +65,9 @@ class GraphPlotSetup {
         
         let mostActivePlot = CPTScatterPlot()
         mostActivePlot.identifier = "Active"
-        mostActivePlot.dataLineStyle = emptyLineStyle
+        mostActivePlot.areaFill = CPTFill(color: activeLineColor)
+        mostActivePlot.areaBaseValue = min
+        mostActivePlot.dataLineStyle = activeLineStyle
         
         return mostActivePlot
     }

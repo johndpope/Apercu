@@ -11,7 +11,7 @@ import Accelerate
 
 class GraphMostActive {
     
-    func mostActivePeriod(bpm: [Double], times: [Double], duration: Double, completion: (timeOne: Int, timeTwo: Int) -> Void) {
+    func mostActivePeriod(bpm: [Double], times: [Double], duration: Double, completion: (timeOne: Double, timeTwo: Double) -> Void) {
         
         var currentMax: Double = 0
         var index = 0
@@ -28,6 +28,7 @@ class GraphMostActive {
                 currentTotal += bpm[index + subIndex]
                 ++subIndex
             }
+            --subIndex
             
             if currentTotal > currentMax {
                 currentMax = currentTotal
@@ -38,6 +39,12 @@ class GraphMostActive {
             ++index
         }
         
-        completion(timeOne: maxIndexStart, timeTwo: maxIndexEnd)
+//        if maxIndexEnd == bpm.count {
+//            --maxIndexEnd
+//        }
+        
+        print(duration)
+        print(times[maxIndexEnd] - times[maxIndexStart])
+        completion(timeOne: times[maxIndexStart], timeTwo: times[maxIndexEnd])
     }
 }

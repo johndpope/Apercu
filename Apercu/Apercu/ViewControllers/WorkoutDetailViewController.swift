@@ -11,7 +11,7 @@ import UIKit
 import CorePlot
 import HealthKit
 
-class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CPTPlotSpaceDelegate, CPTPlotDataSource {
+class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CPTPlotSpaceDelegate, CPTPlotDataSource, ActiveSliderChanged {
     
     var currentWorkout: ApercuWorkout!
     
@@ -22,6 +22,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private var colorView: UIView!
     @IBOutlet private var segment: UISegmentedControl!
     @IBOutlet private var mostActiveSwitch: UISwitch!
+    @IBOutlet private var activeView: ActiveSlider!
     @IBOutlet private var textView: UITextView!
     @IBOutlet private var colorLabel: UILabel!
     
@@ -72,6 +73,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         categorizeButton.titleLabel?.adjustsFontSizeToFitWidth = true
         optionsButton.titleLabel?.adjustsFontSizeToFitWidth = true
         segment.setEnabled(false, forSegmentAtIndex: 1)
+        activeView.delegate = self
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -113,7 +115,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.min = stats["min"] as! Double
             self.plotMin = self.min - 3.0
             self.max = stats["max"] as! Double
-            self.plotMax = self.max + 3.0
+            self.plotMax =  self.max + 3.0
             self.avg = stats["avg"] as! Double
             self.duration = stats["duration"] as! Double
             self.bpm = stats["bpm"] as! [Double]
@@ -124,7 +126,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             self.plots["Main"] = ApercuPlot(plot: scatterPlots[0], data: plotDataCreator.createMainPlotData(self.bpm, time: self.time))
             self.plots["Average"] = ApercuPlot(plot: scatterPlots[1], data: plotDataCreator.createAveragePlotData(self.avg, duration: self.duration))
-            self.plots["Zero"] = ApercuPlot(plot: scatterPlots[4], data: plotDataCreator.createZeroLineData(self.duration))
             
             // show plots
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -198,7 +199,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
     }
     
-    // Mark - Graph Helpers
+    // MARK: - Graph Helpers
     
     func setFullXRange() {
         let xMin = 0.0
@@ -216,8 +217,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         let yRangeToFitData = plotMax - plotMin
         let yRangeForMaxHr = IntensityThresholdSingleton.sharedInstance.maximumHeatRate - plotMin
+        let yLengthMax = fmax(yRangeToFitData, yRangeForMaxHr)
         
-        let yRange = CPTPlotRange(location: yMin, length: fmax(yRangeToFitData, yRangeForMaxHr))
+        let yRange = CPTPlotRange(location: yMin, length: yLengthMax)
+        plotMax = yMin + yLengthMax
         
         let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
         plotSpace.yRange = yRange
@@ -237,11 +240,19 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func addMainPlots() {
-        let plotList: [CPTScatterPlot] = [(plots["Average"]?.plot)!, (plots["Main"]?.plot)!]
+        if let activePlot = plots["Active"]?.plot {
+            activePlot.dataSource = self
+            graph.addPlot(activePlot)
+        }
         
-        for plot in plotList {
-            plot.dataSource = self
-            graph.addPlot(plot)
+        if let averagePlot = plots["Average"]?.plot  {
+            averagePlot.dataSource = self
+            graph.addPlot(averagePlot)
+        }
+        
+        if let mainPlot = plots["Main"]?.plot {
+            mainPlot.dataSource = self
+            graph.addPlot(mainPlot)
         }
     }
     
@@ -263,6 +274,14 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func removeAllPlots() {
+        if let activePlot = plots["Active"] {
+            graph.removePlotWithIdentifier("Active")
+            if activePlot.plot.graph != nil {
+                graph.removePlotWithIdentifier("Active")
+                graph.removePlot(activePlot.plot)
+            }
+        }
+        
         for (_, element) in plots.enumerate() {
             if element.1.plot.graph != nil {
                 graph.removePlot(element.1.plot)
@@ -274,7 +293,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         axisSet?.xAxis?.removeAllBackgroundLimitBands()
     }
     
-    // Mark: - Graph Delegates
+    // MARK: - Graph Delegates
     
     func numberOfRecordsForPlot(plot: CPTPlot) -> UInt {
         let identifier = plot.identifier as! String
@@ -283,6 +302,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             return plots["Main"]!.dataCount()
         } else if identifier == "Average" {
             return plots["Average"]!.dataCount()
+        } else if identifier == "Active" {
+            return plots["Active"]!.dataCount()
         } else {
             // for heatmap plots
             return 4
@@ -300,8 +321,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             return plots["Main"]!.data[Int(idx)][fieldCoord]
         } else if identifier == "Average" {
             return plots["Average"]!.data[Int(idx)][fieldCoord]
-        } else if identifier == "Zero" {
-            return plots["Zero"]!.data[Int(idx)][fieldCoord]
+        } else if identifier == "Active" {
+            return plots["Active"]!.data[Int(idx)][fieldCoord]
         } else {
             return 1
         }
@@ -334,7 +355,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         return updatedRange
     }
     
-    // Mark: - IBActions for Button Presses
+    // MARK: - IBActions for Button Presses
     
     @IBAction func segmentChanged(sender: UISegmentedControl) {
         if segment.selectedSegmentIndex == 0 {
@@ -352,7 +373,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
     }
     
-    // Mark: UITableView Methods
+    // MARK: UITableView Methods
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -391,4 +412,35 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         tableViewHeight.constant = tableView.contentSize.height
     }
     
+    // MARK: Active Duration Changed
+
+    func sliderChanged(activeDuration: Int) {
+        if activeDuration != 0 {
+            plots["Active"] = nil
+            self.plots["Active"]?.plot = nil
+            self.plots["Active"]?.data.removeAll()
+            
+            GraphMostActive().mostActivePeriod(bpm, times: time, duration: Double(activeDuration), completion: { (timeOne, timeTwo) -> Void in
+                
+                let activeData = GraphDataSetup().createMostActivePlotData(timeOne, end: timeTwo, max: self.plotMax, min: self.plotMin)
+                let activePlot = GraphPlotSetup().createMostActivePlot(self.plotMin)
+//                let activeApercuPlot = ApercuPlot(plot: activePlot, data: activeData)
+                
+               
+                self.plots["Active"] = ApercuPlot(plot: activePlot, data: activeData)
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.removeAllPlots()
+                    
+                    if self.segment.selectedSegmentIndex == 0 {
+                        self.addPlotsForNormalView()
+                    } else {
+                        self.addPlotsForHeatmap()
+                    }
+                })
+            })
+        } else {
+            
+        }
+    }
 }
