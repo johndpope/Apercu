@@ -94,6 +94,12 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         hostView.userInteractionEnabled = true
         hostView.allowPinchScaling = true
         
+        if currentWorkout.workout?.title != nil {
+            
+        } else {
+            
+        }
+        
         let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
         plotSpace.allowsUserInteraction = true
         plotSpace.allowsMomentum = true
@@ -185,6 +191,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        setTitle()
         
         let screenRect = UIScreen.mainScreen().bounds
         
@@ -426,7 +433,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.plots["Active"]?.data.removeAll()
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                GraphMostActive().mostActivePeriod(bpm, times: time, duration: Double(activeDuration), completion: { (timeOne, timeTwo) -> Void in
+                GraphMostActive().mostActivePeriod(self.bpm, times: self.time, duration: Double(activeDuration), completion: { (timeOne, timeTwo) -> Void in
                     
                     let activeData = GraphDataSetup().createMostActivePlotData(timeOne, end: timeTwo, max: self.plotMax, min: self.plotMin)
                     let activePlot = GraphPlotSetup().createMostActivePlot(self.plotMin)
@@ -453,5 +460,36 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func screenRotated(sender: AnyObject) {
         self.activeView.setNeedsDisplay()
+    }
+    
+    
+    // MARK: - Core Data Related Updaters
+    
+    func setTitle() {
+        if currentWorkout.workout?.title != nil {
+            title = currentWorkout.workout?.title
+        } else {
+            title = stringFromDate(currentWorkout.getStartDate()!)
+        }
+    }
+    
+    func setDescriptionTextView() {
+        if currentWorkout.workout?.desc != nil {
+            setToDescription()
+        } else {
+            setToPlaceholder()
+        }
+    }
+    
+    // Mark: - Text View 
+    
+    func setToPlaceholder() {
+        textView.text = "Add workout notes..."
+        textView.textColor = UIColor.lightGrayColor()
+    }
+    
+    func setToDescription() {
+        textView.text = currentWorkout.workout?.desc
+        textView.textColor = UIColor.blackColor()
     }
 }

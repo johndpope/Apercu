@@ -42,3 +42,14 @@ func stringWithWholeNumber(input: Double) -> String {
     
     return numberFormatter.stringFromNumber(input)!
 }
+
+func stringFromDate(input: NSDate) -> String {
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.dateFormat = "MMM dd hh:mm a"
+    
+    if input.timeIntervalSinceNow > 31536000 {
+        dateFormatter.dateFormat = "MMM dd yyyy hh:mm a"
+    }
+    
+    return dateFormatter.stringFromDate(input)
+}
