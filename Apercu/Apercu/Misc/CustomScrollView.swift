@@ -16,7 +16,9 @@ class CustomScrollView: UIScrollView {
         
         if view.isKindOfClass(CPTGraphHostingView) {
             return false
-        } else if view.isKindOfClass(UISegmentedControl){
+        } else if view.isKindOfClass(ActiveSlider) {
+            return false
+        }else if view.isKindOfClass(UISegmentedControl){
             return true
         } else if view.isKindOfClass(UISwitch) {
             return true

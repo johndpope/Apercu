@@ -103,6 +103,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         plotSpace.globalXRange = initialXrange
         plotSpace.delegate = self
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "screenRotated:", name: UIDeviceOrientationDidChangeNotification, object: nil)
+        
         tableStrings = GraphTableStrings().allHeaderStrings()
         
         GraphAxisSetUp().initialSetup((self.graph.axisSet as? CPTXYAxisSet)!, duration: 60, min: 50)
@@ -163,7 +165,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 let description: Double = Double((self.currentWorkout.healthKitWorkout?.workoutActivityType.rawValue)!)
                 
-                let rawValues: [Double] = [duration, self.moderateIntensityTime, self.highIntensityTime, self.distance, self.calories, description]
+//                let rawValues: [Double] = [duration, self.moderateIntensityTime, self.highIntensityTime, self.distance, self.calories, description]
+                let rawValues: [Double] = [duration, self.moderateIntensityTime, self.highIntensityTime, 0, 0, description]
                 
                 self.tableValues = GraphTableStrings().allValueStrings(rawValues)
                 
@@ -191,10 +194,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             graphConstraintTrailing.constant = 20
             graphConstraintHeight.constant = 0.5 * screenRect.size.height
         } else {
-            graphConstraintBottom.constant = 10
-            graphConstraintLeading.constant = 30
-            graphConstraintTrailing.constant = 30
-            graphConstraintHeight.constant = 0.7 * screenRect.size.height
+//            graphConstraintBottom.constant = 10
+//            graphConstraintLeading.constant = 30
+//            graphConstraintTrailing.constant = 30
+//            graphConstraintHeight.constant = 0.7 * screenRect.size.height
         }
         
     }
@@ -441,5 +444,11 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         } else {
             removeActivePlot()
         }
+    }
+    
+    // MARK: - On rotate
+    
+    func screenRotated(sender: AnyObject) {
+        self.activeView.setNeedsDisplay()
     }
 }

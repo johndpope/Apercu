@@ -35,10 +35,6 @@ class GraphMostActive {
         // Average of the two samples multiplied by the duration 
         vDSP_vmulD(bpmAverageVector, 1, deltaTime, 1, &bpmXtime, 1, vDSP_Length(bpmVector1.count))
         
-        print(bpmXtime)
-        print(deltaTime)
-        print(bpm)
-        
         while index < bpmXtime.count {
             var currentTotal = bpmXtime[index]
             var timeTotal = deltaTime[index]
@@ -62,37 +58,7 @@ class GraphMostActive {
             
             ++index
         }
-        
-//        print(bpmAverageVector)
-//        print(deltaTime)
-//        
-//        print(bpmXtime)
-//        
-//        
-//        while index < bpm.count {
-//            var currentTotal = bpm[index]
-//            let startTime = times[index]
-//            var subIndex = 1
-//            
-//            while (index + subIndex) < bpm.count && (times[index + subIndex] - startTime) < duration {
-//                currentTotal += bpm[index + subIndex]
-//                ++subIndex
-//            }
-//            --subIndex
-//            
-//            if currentTotal > currentMax {
-//                currentMax = currentTotal
-//                maxIndexStart = index
-//                maxIndexEnd = index + subIndex
-//            }
-//            
-//            ++index
-//        }
-        
-//        if maxIndexEnd == bpm.count {
-//            --maxIndexEnd
-//        }
-        
+            
         completion(timeOne: times[maxIndexStart], timeTwo: times[maxIndexEnd])
     }
 }

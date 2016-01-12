@@ -27,15 +27,23 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        //        let tapRecognizer = UITapGestureRecognizer(target: self, action: "onTouch:")
-        //        addGestureRecognizer(tapRecognizer)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: "onTouch:")
+        tapRecognizer.numberOfTapsRequired = 1
+        addGestureRecognizer(tapRecognizer)
+        
         let gestureRecognizer = UIGestureRecognizer(target: self, action: nil)
         gestureRecognizer.delegate = self
-        
+        gestureRecognizer.requireGestureRecognizerToFail(tapRecognizer)
+
+
         //        let tapRecognizer = UITapGestureRecognizer(target: self, action: "onTouch:")
         //        addGestureRecognizer(tapRecognizer)
     }
@@ -43,6 +51,10 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
     override func drawRect(rect: CGRect) {
         rect1 = rect
         drawCanvas1(fillWidth: fillWidth, frameWidth: rect.width)
+    }
+    
+    func onTouch(sender: UITapGestureRecognizer) {
+        wasTouched(sender.locationInView(self), roundValue: true)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -53,7 +65,7 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let location = touches.first?.locationInView(self) {
-            wasTouched(location, roundValue: true)
+            wasTouched(location, roundValue: false)
         }
     }
     
@@ -64,9 +76,9 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
     }
     
     override func touchesCancelled(touches: Set<UITouch>?, withEvent event: UIEvent?) {
-        if let location = touches?.first?.locationInView(self) {
-            wasTouched(location, roundValue: true)
-        }
+//        if let location = touches?.first?.locationInView(self) {
+//            wasTouched(location, roundValue: false)
+//        }
     }
     
     func wasTouched(location: CGPoint, roundValue: Bool) {
@@ -116,19 +128,21 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
                 case 0:
                     activeTime = 0
                 case 1:
-                    activeTime = 60
-                case 2:
-                    activeTime = 120
-                case 3:
                     activeTime = 300
-                case 4:
+                case 2:
                     activeTime = 600
+                case 3:
+                    activeTime = 900
+                case 4:
+                    activeTime = 1200
                 default:
                     activeTime = 0
                 }
                 
                 delegate.sliderChanged(activeTime)
             }
+        } else {
+            delegate.sliderChanged(Int((width / rect1.width) * 1200))
         }
         
         fillWidth = width
@@ -172,8 +186,8 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
         let barWidth: CGFloat = frameWidth - 40
         
         //// Frames
-        let frame = CGRectMake(0, 0, frameWidth, 79)
-        touchBoundingRect = CGRectMake(10.0, 20.0, frameWidth - 20.0, 58)
+        let frame = CGRectMake(0, 0, frameWidth, 88)
+        touchBoundingRect = CGRectMake(10.0, 0.0, frameWidth - 10.0, 78)
         
         
         //// Group
@@ -227,8 +241,8 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
         
         
         //// Text 2 Drawing
-        let text2Rect = CGRectMake(frame.minX + floor((frame.width - 25) * 0.27881 + 0.25) + 0.25, frame.minY + 62, 25, 17)
-        let text2TextContent = NSString(string: "1m")
+        let text2Rect = CGRectMake(frame.minX + floor((frame.width - 32) * 0.29340) + 0.5, frame.minY + 62, 32, 17)
+        let text2TextContent = NSString(string: "5m")
         let text2Style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         text2Style.alignment = .Center
         
@@ -242,8 +256,8 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
         
         
         //// Text 3 Drawing
-        let text3Rect = CGRectMake(frame.minX + floor((frame.width - 25) * 0.50000) + 0.5, frame.minY + 62, 25, 17)
-        let text3TextContent = NSString(string: "2m")
+        let text3Rect = CGRectMake(frame.minX + floor((frame.width - 32) * 0.50000 + 0.5), frame.minY + 62, 32, 17)
+        let text3TextContent = NSString(string: "10m")
         let text3Style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         text3Style.alignment = .Center
         
@@ -257,8 +271,8 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
         
         
         //// Text 4 Drawing
-        let text4Rect = CGRectMake(frame.minX + floor((frame.width - 25) * 0.70763 - 0.25) + 0.75, frame.minY + 62, 25, 17)
-        let text4TextContent = NSString(string: "5m")
+        let text4Rect = CGRectMake(frame.minX + floor((frame.width - 32) * 0.71875 + 0.5), frame.minY + 62, 32, 17)
+        let text4TextContent = NSString(string: "15m")
         let text4Style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         text4Style.alignment = .Center
         
@@ -272,8 +286,8 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
         
         
         //// Text 5 Drawing
-        let text5Rect = CGRectMake(frame.minX + frame.width - 50, frame.minY + 62, 30, 17)
-        let text5TextContent = NSString(string: "10m")
+        let text5Rect = CGRectMake(frame.minX + frame.width - 55, frame.minY + 62, 35, 17)
+        let text5TextContent = NSString(string: "20m")
         let text5Style = NSParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         text5Style.alignment = .Right
         
