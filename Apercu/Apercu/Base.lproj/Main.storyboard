@@ -3717,6 +3717,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="4GF-Vg-tqF"/>
                                                 <exclude reference="PCn-c8-YAE"/>
                                                 <exclude reference="S5m-Wp-Frq"/>
                                                 <exclude reference="coq-wC-CnB"/>
@@ -5526,11 +5527,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <image name="singleTabBar3.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="f2V-th-zY7"/>
         <segue reference="k4U-7I-xmT"/>
         <segue reference="c5j-j5-e5s"/>
-        <segue reference="f2V-th-zY7"/>
-        <segue reference="BQA-YE-PQn"/>
         <segue reference="lV2-Wb-bA2"/>
+        <segue reference="BQA-YE-PQn"/>
         <segue reference="goZ-7M-4CC"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.49019607843137253" blue="0.64313725490196072" alpha="1" colorSpace="calibratedRGB"/>

@@ -419,26 +419,29 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: Active Duration Changed
 
     func sliderChanged(activeDuration: Int) {
+        
         if activeDuration != 0 {
             plots["Active"] = nil
             self.plots["Active"]?.plot = nil
             self.plots["Active"]?.data.removeAll()
             
-            GraphMostActive().mostActivePeriod(bpm, times: time, duration: Double(activeDuration), completion: { (timeOne, timeTwo) -> Void in
-                
-                let activeData = GraphDataSetup().createMostActivePlotData(timeOne, end: timeTwo, max: self.plotMax, min: self.plotMin)
-                let activePlot = GraphPlotSetup().createMostActivePlot(self.plotMin)
-
-                self.plots["Active"] = ApercuPlot(plot: activePlot, data: activeData)
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.removeAllPlots()
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                GraphMostActive().mostActivePeriod(bpm, times: time, duration: Double(activeDuration), completion: { (timeOne, timeTwo) -> Void in
                     
-                    if self.segment.selectedSegmentIndex == 0 {
-                        self.addPlotsForNormalView()
-                    } else {
-                        self.addPlotsForHeatmap()
-                    }
+                    let activeData = GraphDataSetup().createMostActivePlotData(timeOne, end: timeTwo, max: self.plotMax, min: self.plotMin)
+                    let activePlot = GraphPlotSetup().createMostActivePlot(self.plotMin)
+                    
+                    self.plots["Active"] = ApercuPlot(plot: activePlot, data: activeData)
+                    
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.removeAllPlots()
+                        
+                        if self.segment.selectedSegmentIndex == 0 {
+                            self.addPlotsForNormalView()
+                        } else {
+                            self.addPlotsForHeatmap()
+                        }
+                    })
                 })
             })
         } else {
