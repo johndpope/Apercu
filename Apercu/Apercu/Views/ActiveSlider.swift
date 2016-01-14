@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol ActiveSliderChanged {
-    func sliderChanged(activeDuration: Int)
+    func sliderChanged(activeDuration: Int, forced: Bool)
 }
 
 @IBDesignable
@@ -54,24 +54,24 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
     }
     
     func onTouch(sender: UITapGestureRecognizer) {
-        wasTouched(sender.locationInView(self), roundValue: true)
+        wasTouched(sender.locationInView(self), roundValue: true, forceReload: true)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let location = touches.first?.locationInView(self) {
-            wasTouched(location,roundValue: false)
+            wasTouched(location,roundValue: false, forceReload: true)
         }
     }
     
     override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let location = touches.first?.locationInView(self) {
-            wasTouched(location, roundValue: false)
+            wasTouched(location, roundValue: false, forceReload: true)
         }
     }
     
     override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         if let location = touches.first?.locationInView(self) {
-            wasTouched(location, roundValue: false)
+            wasTouched(location, roundValue: false, forceReload: false)
         }
     }
     
@@ -81,9 +81,9 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
 //        }
     }
     
-    func wasTouched(location: CGPoint, roundValue: Bool) {
+    func wasTouched(location: CGPoint, roundValue: Bool, forceReload: Bool) {
         if isInBounds(location) {
-            calculateFillWidth(location, roundValue: roundValue)
+            calculateFillWidth(location, roundValue: roundValue, forceReload: forceReload)
         }
     }
     
@@ -110,7 +110,7 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
         return index
     }
     
-    func calculateFillWidth(point: CGPoint, roundValue: Bool) {
+    func calculateFillWidth(point: CGPoint, roundValue: Bool, forceReload: Bool) {
         let bottomThreshold: CGFloat = 20.0
         let upperThreshold: CGFloat = rect1.width - 38
         
@@ -139,10 +139,10 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
                     activeTime = 0
                 }
                 
-                delegate.sliderChanged(activeTime)
+                delegate.sliderChanged(activeTime, forced: forceReload)
             }
         } else {
-            delegate.sliderChanged(Int((width / rect1.width) * 1200))
+            delegate.sliderChanged(Int((width / rect1.width) * 1200), forced: forceReload)
         }
         
         fillWidth = width

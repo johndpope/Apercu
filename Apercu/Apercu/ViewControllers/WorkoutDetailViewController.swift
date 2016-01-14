@@ -64,6 +64,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var backgroundColor = CPTColor(componentRed: 89.0/255.0, green: 87.0/255.0, blue: 84.0/255.0, alpha: 1.0)
     var alternateCellColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 244.0/255.0, alpha: 1.0)
     var goingToNewYAxis = false
+    var graphMostActive = GraphMostActive()
+    var mostActiveInProgress = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -425,14 +427,16 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     // MARK: Active Duration Changed
 
-    func sliderChanged(activeDuration: Int) {
+    func sliderChanged(activeDuration: Int, forced: Bool) {
         
-        if activeDuration != 0 {
+        if activeDuration != 0 && (self.mostActiveInProgress == false || forced == true) {
             plots["Active"] = nil
             self.plots["Active"]?.plot = nil
             self.plots["Active"]?.data.removeAll()
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            mostActiveInProgress = true
+            
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                 GraphMostActive().mostActivePeriod(self.bpm, times: self.time, duration: Double(activeDuration), completion: { (timeOne, timeTwo) -> Void in
                     
                     let activeData = GraphDataSetup().createMostActivePlotData(timeOne, end: timeTwo, max: self.plotMax, min: self.plotMin)
@@ -448,6 +452,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         } else {
                             self.addPlotsForHeatmap()
                         }
+                        
+                        self.mostActiveInProgress = false;
                     })
                 })
             })
