@@ -34,7 +34,7 @@ class GraphAxisSetUp {
         let yAxisLabelFormatter = NSNumberFormatter()
         yAxisLabelFormatter.generatesDecimalNumbers = false
         
-        axisSet.xAxis?.majorIntervalLength = duration / 4
+        updateLabelingPolicy(duration, axisSet: axisSet)
         axisSet.xAxis?.minorTicksPerInterval = 0
         axisSet.xAxis?.majorTickLineStyle = lineStyle
         axisSet.xAxis?.minorTickLineStyle = lineStyle
@@ -43,7 +43,7 @@ class GraphAxisSetUp {
         axisSet.xAxis?.minorTickLength = 5.0
         axisSet.xAxis?.majorTickLength = 7.0
         axisSet.xAxis?.labelOffset = 3.0
-        axisSet.xAxis?.labelingPolicy = CPTAxisLabelingPolicy.Automatic
+        axisSet.xAxis?.labelingPolicy = .FixedInterval
         axisSet.xAxis?.labelTextStyle = axisTextStyle
         axisSet.xAxis?.labelFormatter = xAxisLabelFormatter
         
@@ -63,8 +63,22 @@ class GraphAxisSetUp {
         axisSet.xAxis?.axisConstraints = CPTConstraints.constraintWithLowerOffset(0.0)
         axisSet.yAxis?.axisConstraints = CPTConstraints.constraintWithLowerOffset(0.0)
         axisSet.xAxis?.orthogonalPosition = min
+    }
+    
+    func updateLabelingPolicy(duration: Double, axisSet: CPTXYAxisSet) {
+        var interval: Int = 0;
         
+        if duration > 60 * 60 {
+            interval = 15 * 60
+        } else if duration > 30 * 60 {
+            interval = 10 * 60
+        } else if duration > 10 * 60 {
+            interval = 5 * 60
+        } else {
+            interval = 2 * 60
+        }
         
+        axisSet.xAxis?.majorIntervalLength = interval
     }
 
     

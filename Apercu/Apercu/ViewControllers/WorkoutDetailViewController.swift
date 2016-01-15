@@ -146,6 +146,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 self.goingToNewYAxis = true
                 self.setFullYRange()
                 self.goingToNewYAxis = false
+                GraphAxisSetUp().updateLabelingPolicy(self.duration, axisSet: self.axisSet)
                 
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                     GraphHeatmap().heatmapRawData(self.bpm, min: self.min, max: self.max, completion: { (colorNumber) -> Void in
@@ -353,6 +354,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 updatedRange = mutableRangeCopy
             } else {
                 updatedRange = newRange
+                GraphAxisSetUp().updateLabelingPolicy(newRange.length.doubleValue, axisSet: axisSet)
             }
         case CPTCoordinate.Y:
             if goingToNewYAxis {
@@ -382,11 +384,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-    @IBAction func activeSwitchChanged(sender: UISwitch) {
-        
-    }
-    
-    // MARK: UITableView Methods
+    // MARK: - UITableView Methods
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -425,7 +423,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         tableViewHeight.constant = tableView.contentSize.height
     }
     
-    // MARK: Active Duration Changed
+    // MARK: - Active Duration Changed
 
     func sliderChanged(activeDuration: Int, forced: Bool) {
         
