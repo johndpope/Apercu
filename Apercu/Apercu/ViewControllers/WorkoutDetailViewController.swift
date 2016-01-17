@@ -11,7 +11,7 @@ import UIKit
 import CorePlot
 import HealthKit
 
-class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CPTPlotSpaceDelegate, CPTPlotDataSource, ActiveSliderChanged {
+class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CPTPlotSpaceDelegate, CPTPlotDataSource, ActiveSliderChanged, UITextViewDelegate {
     
     var currentWorkout: ApercuWorkout!
     
@@ -44,6 +44,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     var graph: CPTXYGraph!
     var axisSet: CPTXYAxisSet!
+    var toolbar: UIToolbar!
     
     var min: Double!
     var plotMin: Double!
@@ -65,9 +66,12 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var alternateCellColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 244.0/255.0, alpha: 1.0)
     var goingToNewYAxis = false
     let plotDataCreator = GraphDataSetup()
-    var graphMostActive = GraphMostActive()
+    let graphMostActive = GraphMostActive()
+    let coreDataHelper = CoreDataHelper()
     var mostActiveInProgress = false
     var averagingInProgress = false
+    
+    var placeHolderText = "Add workout notes..."
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,6 +101,12 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         hostView.hostedGraph = graph
         hostView.userInteractionEnabled = true
         hostView.allowPinchScaling = true
+
+        textView.delegate = self
+        textView.layer.cornerRadius = 6.0
+        setDescriptionTextView()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideKeyboard:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showKeyboard:", name: UIKeyboardDidShowNotification, object: nil)
         
         if currentWorkout.workout?.title != nil {
             
@@ -507,13 +517,63 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     // Mark: - Text View
     
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        showToolbar(textView)
+        return true
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        if textView.text == placeHolderText {
+            textView.text = ""
+            textView.textColor = UIColor.blackColor()
+        }
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        coreDataHelper.updateTextDescription(textView.text, startDate: currentWorkout.getStartDate()!, endDate: currentWorkout.getEndDate()!)
+        
+        if textView.text == "" {
+            setToPlaceholder()
+        }
+    }
+    
     func setToPlaceholder() {
-        textView.text = "Add workout notes..."
+        textView.text = placeHolderText
         textView.textColor = UIColor.lightGrayColor()
     }
     
     func setToDescription() {
         textView.text = currentWorkout.workout?.desc
         textView.textColor = UIColor.blackColor()
+    }
+    
+    // Mark: - Toolbar 
+    
+    func showToolbar(sender: AnyObject) {
+        if toolbar == nil {
+            toolbar = UIToolbar()
+            toolbar.sizeToFit()
+            let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+            let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "hideKeyboard:")
+            
+            toolbar.setItems([spacer, doneButton], animated: false)
+            toolbar.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin]
+            toolbar.tintColor = UIColor.redColor()
+        }
+        
+        if sender.isKindOfClass(UITextView) {
+            textView.inputAccessoryView = toolbar
+        }
+    }
+    
+    func hideKeyboard(sender: AnyObject) {
+        if textView.isFirstResponder() {
+            textView.resignFirstResponder()
+        }
+    }
+    
+    func showKeyboard(sender: AnyObject) {
+//        textView.becomeFirstResponder()
+//        showToolbar()
     }
 }

@@ -18,6 +18,7 @@
 		8B33F0841C41790D0011CDBE /* SingleLineStatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B33F0831C41790D0011CDBE /* SingleLineStatCell.swift */; };
 		8B33F0871C41C8A70011CDBE /* ActiveSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B33F0861C41C8A70011CDBE /* ActiveSlider.swift */; };
 		8B33F0891C41C96F0011CDBE /* ApercuStyleKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B33F0881C41C96F0011CDBE /* ApercuStyleKit.swift */; };
+		8B35AE1E1C4BFFC70001A968 /* CoreDataHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B35AE1D1C4BFFC70001A968 /* CoreDataHelper.swift */; };
 		8B52700B1C2E3AB000391950 /* ApercuWorkout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B52700A1C2E3AB000391950 /* ApercuWorkout.swift */; };
 		8B5C0C4B1C2D6FC6000B236A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5C0C4A1C2D6FC6000B236A /* HealthKit.framework */; };
 		8B5C0C4F1C2D7329000B236A /* singleTabBar3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8B5C0C4D1C2D7329000B236A /* singleTabBar3.png */; };
@@ -97,6 +98,7 @@
 		8B33F0831C41790D0011CDBE /* SingleLineStatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleLineStatCell.swift; path = Cells/SingleLineStatCell.swift; sourceTree = "<group>"; };
 		8B33F0861C41C8A70011CDBE /* ActiveSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActiveSlider.swift; path = Apercu/Views/ActiveSlider.swift; sourceTree = SOURCE_ROOT; };
 		8B33F0881C41C96F0011CDBE /* ApercuStyleKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApercuStyleKit.swift; sourceTree = "<group>"; };
+		8B35AE1D1C4BFFC70001A968 /* CoreDataHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CoreDataHelper.swift; path = "Apercu/Core Data/CoreDataHelper.swift"; sourceTree = SOURCE_ROOT; };
 		8B52700A1C2E3AB000391950 /* ApercuWorkout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApercuWorkout.swift; path = Model/ApercuWorkout.swift; sourceTree = "<group>"; };
 		8B5C0C491C2D6F42000B236A /* Apercu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Apercu.entitlements; sourceTree = "<group>"; };
 		8B5C0C4A1C2D6FC6000B236A /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
@@ -341,6 +343,7 @@
 				8B5C0C5C1C2D877A000B236A /* Category.swift */,
 				8B5C0C5D1C2D877A000B236A /* Exercise+CoreDataProperties.swift */,
 				8B5C0C5E1C2D877A000B236A /* Exercise.swift */,
+				8B35AE1D1C4BFFC70001A968 /* CoreDataHelper.swift */,
 			);
 			name = "Core Data";
 			path = ViewControllers;
@@ -589,6 +592,7 @@
 				8BC314EE1C37622800F2B774 /* CustomScrollView.swift in Sources */,
 				8B76F9621C36DF82009BE714 /* IntensityThresholdSingleton.swift in Sources */,
 				8BC314F41C37F2EC00F2B774 /* ProcessWorkout.swift in Sources */,
+				8B35AE1E1C4BFFC70001A968 /* CoreDataHelper.swift in Sources */,
 				8B65733B1C2A1F2F00B9B1E9 /* ViewController.swift in Sources */,
 				8BD961CF1C3C9189004B7F72 /* StatCell.swift in Sources */,
 				8BC314FC1C384D5C00F2B774 /* GraphDataSetup.swift in Sources */,

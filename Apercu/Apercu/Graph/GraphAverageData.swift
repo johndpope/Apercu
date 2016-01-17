@@ -11,7 +11,7 @@ import Accelerate
 
 func averageRawData(bpm: [Double], time: [Double], minTime: Double, maxTime: Double) -> [[Double]] {
 
-    var finalTime = time
+    let finalTime = time
     var temporaryTime = time
     var compressedVector = [Double](count: time.count, repeatedValue: 0.0)
     var minimum = minTime - 1.0
@@ -32,13 +32,13 @@ func averageRawData(bpm: [Double], time: [Double], minTime: Double, maxTime: Dou
     }
     
     //    if countInRange < 750 {
-    if countInRange < 100 {
+    if countInRange < 500 {
         return [bpm, time]
     } else {
         var numberOfIterations = 1
 
 //        while countInRange > 750 {
-        while countInRange / Int(pow(Double(2), Double(numberOfIterations))) > 100 {
+        while countInRange / Int(pow(Double(2), Double(numberOfIterations))) > 500 {
             ++numberOfIterations
         }
 
