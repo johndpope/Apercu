@@ -13,24 +13,32 @@ func averageRawData(bpm: [Double], time: [Double], minTime: Double, maxTime: Dou
 
     var finalTime = time
     var temporaryTime = time
-    var minimum = minTime
-    var negatedMaximum = -1 * maxTime
+    var compressedVector = [Double](count: time.count, repeatedValue: 0.0)
+    var minimum = minTime - 1.0
+    var negatedMaximum = (-1 * maxTime) - 1.0
     let length = vDSP_Length(temporaryTime.count)
     vDSP_vthresD(temporaryTime, 1, &minimum, &temporaryTime, 1, length)
     vDSP_vnegD(temporaryTime, 1, &temporaryTime, 1, length)
     vDSP_vthresD(temporaryTime, 1, &negatedMaximum, &temporaryTime, 1, length)
-    vDSP_vcmprsD(finalTime, 1, temporaryTime, 1, &finalTime, 1, length)
-    var countInRange = finalTime.count;
-    print(countInRange)
-
-//    if countInRange < 750 {
-    if countInRange < 20 {
+    vDSP_vcmprsD(finalTime, 1, temporaryTime, 1, &compressedVector, 1, length)
+    
+    var countInRange = 0
+    
+    for var i = 0; i < compressedVector.count; ++i {
+        if compressedVector[i] == 0.0 {
+            countInRange = i
+            break;
+        }
+    }
+    
+    //    if countInRange < 750 {
+    if countInRange < 100 {
         return [bpm, time]
     } else {
         var numberOfIterations = 1
 
 //        while countInRange > 750 {
-        while countInRange / (2 * numberOfIterations) > 20 {
+        while countInRange / Int(pow(Double(2), Double(numberOfIterations))) > 100 {
             ++numberOfIterations
         }
 
