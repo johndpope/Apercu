@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '3E22E83D63E13866672D2624'
-               BlueprintName = 'Color-Picker-for-iOS'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'Color_Picker_for_iOS.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D5C39A384113396D5D6A52DBD43367E5"
+               BlueprintName = "Color-Picker-for-iOS"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "Color_Picker_for_iOS.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

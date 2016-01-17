@@ -9,10 +9,13 @@
 /// @cond
 @interface CPTGraphHostingView()
 
+#if (TARGET_OS_SIMULATOR || TARGET_OS_IPHONE) && !TARGET_OS_TV
 @property (nonatomic, readwrite, cpt_weak_property) cpt_weak UIPinchGestureRecognizer *pinchGestureRecognizer;
 
--(void)graphNeedsRedraw:(NSNotification *)notification;
 -(void)handlePinchGesture:(UIPinchGestureRecognizer *)aPinchGestureRecognizer;
+#endif
+
+-(void)graphNeedsRedraw:(NSNotification *)notification;
 
 @end
 
@@ -44,11 +47,15 @@
 
 /// @cond
 
+#if (TARGET_OS_SIMULATOR || TARGET_OS_IPHONE) && !TARGET_OS_TV
+
 /** @internal
- *  @property cpt_weak id pinchGestureRecognizer
+ *  @property cpt_weak UIPinchGestureRecognizer *pinchGestureRecognizer
  *  @brief The pinch gesture recognizer for this view.
+ *  @since Not available on tvOS.
  **/
 @synthesize pinchGestureRecognizer;
+#endif
 
 /// @endcond
 
@@ -113,13 +120,26 @@
         [self commonInit];
 
         collapsesLayers  = [coder decodeBoolForKey:@"CPTGraphHostingView.collapsesLayers"];
-        self.hostedGraph = [coder decodeObjectForKey:@"CPTGraphHostingView.hostedGraph"]; // setup layers
+        self.hostedGraph = [coder decodeObjectOfClass:[CPTGraph class]
+                                               forKey:@"CPTGraphHostingView.hostedGraph"]; // setup layers
 
         if ( [coder containsValueForKey:@"CPTGraphHostingView.allowPinchScaling"] ) {
             self.allowPinchScaling = [coder decodeBoolForKey:@"CPTGraphHostingView.allowPinchScaling"]; // set gesture recognizer if needed
         }
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -134,7 +154,7 @@
     BOOL handled = NO;
 
     // Ignore pinch or other multitouch gestures
-    if ( [[event allTouches] count] == 1 ) {
+    if ( [event allTouches].count == 1 ) {
         CPTGraph *theHostedGraph = self.hostedGraph;
 
         theHostedGraph.frame = self.bounds;
@@ -216,6 +236,7 @@
 
 /// @cond
 
+#if (TARGET_OS_SIMULATOR || TARGET_OS_IPHONE) && !TARGET_OS_TV
 -(void)setAllowPinchScaling:(BOOL)allowScaling
 {
     if ( allowPinchScaling != allowScaling ) {
@@ -265,6 +286,22 @@
 
     pinchRecognizer.scale = 1.0;
 }
+#endif
+
+/// @endcond
+
+#pragma mark -
+#pragma mark TV Focus
+
+/// @cond
+
+#if TARGET_OS_TV
+
+-(BOOL)canBecomeFocused
+{
+    return YES;
+}
+#endif
 
 /// @endcond
 
@@ -374,7 +411,7 @@
 
 -(void)setFrame:(CGRect)newFrame
 {
-    [super setFrame:newFrame];
+    super.frame = newFrame;
 
     CPTGraph *theHostedGraph = self.hostedGraph;
     [theHostedGraph setNeedsLayout];
@@ -389,7 +426,7 @@
 
 -(void)setBounds:(CGRect)newBounds
 {
-    [super setBounds:newBounds];
+    super.bounds = newBounds;
 
     CPTGraph *theHostedGraph = self.hostedGraph;
     [theHostedGraph setNeedsLayout];

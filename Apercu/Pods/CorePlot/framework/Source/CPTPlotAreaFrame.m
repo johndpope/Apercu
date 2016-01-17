@@ -99,9 +99,22 @@
 -(instancetype)initWithCoder:(NSCoder *)coder
 {
     if ( (self = [super initWithCoder:coder]) ) {
-        plotArea = [coder decodeObjectForKey:@"CPTPlotAreaFrame.plotArea"];
+        plotArea = [coder decodeObjectOfClass:[CPTPlotArea class]
+                                       forKey:@"CPTPlotAreaFrame.plotArea"];
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -233,7 +246,7 @@
 -(void)setGraph:(CPTGraph *)newGraph
 {
     if ( newGraph != self.graph ) {
-        [super setGraph:newGraph];
+        super.graph = newGraph;
 
         self.plotArea.graph = newGraph;
     }

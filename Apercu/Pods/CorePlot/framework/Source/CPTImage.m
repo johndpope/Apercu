@@ -1,5 +1,6 @@
 #import "CPTImage.h"
 
+#import "CPTPlatformSpecificDefines.h"
 #import "CPTUtilities.h"
 #import "NSCoderExtensions.h"
 
@@ -215,7 +216,8 @@ CPTImageSlices;
 -(instancetype)initWithCoder:(NSCoder *)coder
 {
     if ( (self = [super init]) ) {
-        nativeImage           = [[coder decodeObjectForKey:@"CPTImage.nativeImage"] copy];
+        nativeImage = [[coder decodeObjectOfClass:[CPTNativeImage class]
+                                           forKey:@"CPTImage.nativeImage"] copy];
         image                 = [coder newCGImageDecodeForKey:@"CPTImage.image"];
         scale                 = [coder decodeCGFloatForKey:@"CPTImage.scale"];
         tiled                 = [coder decodeBoolForKey:@"CPTImage.tiled"];
@@ -229,6 +231,18 @@ CPTImageSlices;
     }
     return self;
 }
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+/// @endcond
 
 #pragma mark -
 #pragma mark NSCopying Methods
@@ -509,7 +523,7 @@ CPTImageSlices;
     if ( !nativeImage ) {
         CGImageRef imageRef = self.image;
 
-#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
+#if TARGET_OS_SIMULATOR || TARGET_OS_IPHONE
         CGFloat theScale = self.scale;
 
         if ( imageRef && ( theScale > CPTFloat(0.0) ) ) {
@@ -536,7 +550,7 @@ CPTImageSlices;
                                                                                bitsPerPixel:32];
 
             NSGraphicsContext *bitmapContext = [NSGraphicsContext graphicsContextWithBitmapImageRep:imageRep];
-            CGContextRef context             = (CGContextRef)[bitmapContext graphicsPort];
+            CGContextRef context             = (CGContextRef)bitmapContext.graphicsPort;
 
             CGContextDrawImage(context, CPTRectMake(0.0, 0.0, imageSize.width, imageSize.height), imageRef);
 
@@ -563,7 +577,7 @@ CPTImageSlices;
     if ( !CPTEdgeInsetsEqualToEdgeInsets(edgeInsets, newEdgeInsets) ) {
         edgeInsets = newEdgeInsets;
 
-        CPTImageSlices imageSlices;
+        CPTImageSlices imageSlices = {};
 
         for ( NSUInteger i = 0; i < 9; i++ ) {
             imageSlices.slice[i] = NULL;
@@ -607,7 +621,7 @@ CPTImageSlices;
     CGSize centerSize = CGSizeMake(width - capLeft - capRight,
                                    height - capTop - capBottom);
 
-    CPTImageSlices imageSlices;
+    CPTImageSlices imageSlices = {};
 
     for ( NSUInteger i = 0; i < 9; i++ ) {
         imageSlices.slice[i] = NULL;
@@ -719,7 +733,7 @@ CPTImageSlices;
         CPTNativeImage *theNativeImage = self.nativeImage;
 
         if ( theNativeImage ) {
-#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
+#if TARGET_OS_SIMULATOR || TARGET_OS_IPHONE
             theImage   = theNativeImage.CGImage;
             self.scale = theNativeImage.scale;
 #else

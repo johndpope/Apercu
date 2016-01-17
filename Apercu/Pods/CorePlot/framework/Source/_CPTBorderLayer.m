@@ -72,9 +72,22 @@
 -(instancetype)initWithCoder:(NSCoder *)coder
 {
     if ( (self = [super initWithCoder:coder]) ) {
-        maskedLayer = [coder decodeObjectForKey:@"CPTBorderLayer.maskedLayer"];
+        maskedLayer = [coder decodeObjectOfClass:[CPTBorderedLayer class]
+                                          forKey:@"CPTBorderLayer.maskedLayer"];
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -130,12 +143,12 @@
     }
 }
 
--(CPTSublayerSet)sublayersExcludedFromAutomaticLayout
+-(CPTSublayerSet *)sublayersExcludedFromAutomaticLayout
 {
     CPTBorderedLayer *excludedLayer = self.maskedLayer;
 
     if ( excludedLayer ) {
-        CPTMutableSublayerSet excludedSublayers = [[super sublayersExcludedFromAutomaticLayout] mutableCopy];
+        CPTMutableSublayerSet *excludedSublayers = [super.sublayersExcludedFromAutomaticLayout mutableCopy];
         if ( !excludedSublayers ) {
             excludedSublayers = [NSMutableSet set];
         }
@@ -143,7 +156,7 @@
         return excludedSublayers;
     }
     else {
-        return [super sublayersExcludedFromAutomaticLayout];
+        return super.sublayersExcludedFromAutomaticLayout;
     }
 }
 
@@ -165,7 +178,7 @@
 -(void)setBounds:(CGRect)newBounds
 {
     if ( !CGRectEqualToRect(newBounds, self.bounds) ) {
-        [super setBounds:newBounds];
+        super.bounds = newBounds;
         [self setNeedsLayout];
     }
 }

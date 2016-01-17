@@ -30,8 +30,8 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
 /// @cond
 @interface CPTGraph()
 
-@property (nonatomic, readwrite, strong, nonnull) CPTMutablePlotArray plots;
-@property (nonatomic, readwrite, strong, nonnull) CPTMutablePlotSpaceArray plotSpaces;
+@property (nonatomic, readwrite, strong, nonnull) CPTMutablePlotArray *plots;
+@property (nonatomic, readwrite, strong, nonnull) CPTMutablePlotSpaceArray *plotSpaces;
 @property (nonatomic, readwrite, strong) CPTLayerAnnotation *titleAnnotation;
 @property (nonatomic, readwrite, strong) CPTLayerAnnotation *legendAnnotation;
 @property (nonatomic, readwrite, assign) BOOL inTitleUpdate;
@@ -83,12 +83,12 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
 
 /// @cond
 
-/** @property CPTMutablePlotArray plots
+/** @property CPTMutablePlotArray *plots
  *  @brief An array of all plots associated with the graph.
  **/
 @synthesize plots;
 
-/** @property CPTMutablePlotSpaceArray plotSpaces
+/** @property CPTMutablePlotSpaceArray *plotSpaces
  *  @brief An array of all plot spaces associated with the graph.
  **/
 @synthesize plotSpaces;
@@ -100,7 +100,7 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
  **/
 @dynamic defaultPlotSpace;
 
-/** @property CPTNumberArray topDownLayerOrder
+/** @property CPTNumberArray *topDownLayerOrder
  *  @brief An array of graph layers to be drawn in an order other than the default.
  *  @see CPTPlotArea @link CPTPlotArea::topDownLayerOrder topDownLayerOrder @endlink property.
  **/
@@ -310,10 +310,13 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
 -(instancetype)initWithCoder:(NSCoder *)coder
 {
     if ( (self = [super initWithCoder:coder]) ) {
-        hostingView   = [coder decodeObjectForKey:@"CPTGraph.hostingView"];
-        plotAreaFrame = [coder decodeObjectForKey:@"CPTGraph.plotAreaFrame"];
+        hostingView = [coder decodeObjectOfClass:[CPTGraphHostingView class]
+                                          forKey:@"CPTGraph.hostingView"];
+        plotAreaFrame = [coder decodeObjectOfClass:[CPTPlotAreaFrame class]
+                                            forKey:@"CPTGraph.plotAreaFrame"];
 
-        CPTPlotArray plotArray = [coder decodeObjectForKey:@"CPTGraph.plots"];
+        CPTPlotArray *plotArray = [coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [CPTPlot class]]]
+                                                        forKey:@"CPTGraph.plots"];
         if ( plotArray ) {
             plots = [plotArray mutableCopy];
         }
@@ -321,7 +324,8 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
             plots = [[NSMutableArray alloc] init];
         }
 
-        CPTPlotSpaceArray plotSpaceArray = [coder decodeObjectForKey:@"CPTGraph.plotSpaces"];
+        CPTPlotSpaceArray *plotSpaceArray = [coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [CPTPlotSpace class]]]
+                                                                  forKey:@"CPTGraph.plotSpaces"];
         if ( plotSpaceArray ) {
             plotSpaces = [plotSpaceArray mutableCopy];
         }
@@ -329,20 +333,38 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
             plotSpaces = [[NSMutableArray alloc] init];
         }
 
-        title                    = [[coder decodeObjectForKey:@"CPTGraph.title"] copy];
-        attributedTitle          = [[coder decodeObjectForKey:@"CPTGraph.attributedTitle"] copy];
-        titleTextStyle           = [[coder decodeObjectForKey:@"CPTGraph.titleTextStyle"] copy];
+        title = [[coder decodeObjectOfClass:[NSString class]
+                                     forKey:@"CPTGraph.title"] copy];
+        attributedTitle = [[coder decodeObjectOfClass:[NSAttributedString class]
+                                               forKey:@"CPTGraph.attributedTitle"] copy];
+        titleTextStyle = [[coder decodeObjectOfClass:[CPTTextStyle class]
+                                              forKey:@"CPTGraph.titleTextStyle"] copy];
         titlePlotAreaFrameAnchor = (CPTRectAnchor)[coder decodeIntegerForKey : @"CPTGraph.titlePlotAreaFrameAnchor"];
         titleDisplacement        = [coder decodeCPTPointForKey:@"CPTGraph.titleDisplacement"];
-        titleAnnotation          = [coder decodeObjectForKey:@"CPTGraph.titleAnnotation"];
-        legend                   = [coder decodeObjectForKey:@"CPTGraph.legend"];
-        legendAnnotation         = [coder decodeObjectForKey:@"CPTGraph.legendAnnotation"];
-        legendAnchor             = (CPTRectAnchor)[coder decodeIntegerForKey : @"CPTGraph.legendAnchor"];
-        legendDisplacement       = [coder decodeCPTPointForKey:@"CPTGraph.legendDisplacement"];
+        titleAnnotation          = [coder decodeObjectOfClass:[CPTLayerAnnotation class]
+                                                       forKey:@"CPTGraph.titleAnnotation"];
+        legend = [coder decodeObjectOfClass:[CPTLegend class]
+                                     forKey:@"CPTGraph.legend"];
+        legendAnnotation = [coder decodeObjectOfClass:[CPTLayerAnnotation class]
+                                               forKey:@"CPTGraph.legendAnnotation"];
+        legendAnchor       = (CPTRectAnchor)[coder decodeIntegerForKey : @"CPTGraph.legendAnchor"];
+        legendDisplacement = [coder decodeCPTPointForKey:@"CPTGraph.legendDisplacement"];
 
         inTitleUpdate = NO;
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -409,7 +431,7 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
 /** @brief All plots associated with the graph.
  *  @return An array of all plots associated with the graph.
  **/
--(CPTPlotArray)allPlots
+-(CPTPlotArray *)allPlots
 {
     return [NSArray arrayWithArray:self.plots];
 }
@@ -435,7 +457,7 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
 -(CPTPlot *)plotWithIdentifier:(id<NSCopying>)identifier
 {
     for ( CPTPlot *plot in self.plots ) {
-        if ( [[plot identifier] isEqual:identifier] ) {
+        if ( [plot.identifier isEqual:identifier] ) {
             return plot;
         }
     }
@@ -533,7 +555,7 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
 /** @brief All plot spaces associated with the graph.
  *  @return An array of all plot spaces associated with the graph.
  **/
--(CPTPlotSpaceArray)allPlotSpaces
+-(CPTPlotSpaceArray *)allPlotSpaces
 {
     return [NSArray arrayWithArray:self.plotSpaces];
 }
@@ -554,7 +576,7 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
 -(CPTPlotSpace *)plotSpaceWithIdentifier:(id<NSCopying>)identifier
 {
     for ( CPTPlotSpace *plotSpace in self.plotSpaces ) {
-        if ( [[plotSpace identifier] isEqual:identifier] ) {
+        if ( [plotSpace.identifier isEqual:identifier] ) {
             return plotSpace;
         }
     }
@@ -805,7 +827,7 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
 -(void)setPaddingLeft:(CGFloat)newPadding
 {
     if ( newPadding != self.paddingLeft ) {
-        [super setPaddingLeft:newPadding];
+        super.paddingLeft = newPadding;
         [self.axisSet.axes makeObjectsPerformSelector:@selector(setNeedsDisplay)];
     }
 }
@@ -813,7 +835,7 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
 -(void)setPaddingRight:(CGFloat)newPadding
 {
     if ( newPadding != self.paddingRight ) {
-        [super setPaddingRight:newPadding];
+        super.paddingRight = newPadding;
         [self.axisSet.axes makeObjectsPerformSelector:@selector(setNeedsDisplay)];
     }
 }
@@ -821,7 +843,7 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
 -(void)setPaddingTop:(CGFloat)newPadding
 {
     if ( newPadding != self.paddingTop ) {
-        [super setPaddingTop:newPadding];
+        super.paddingTop = newPadding;
         [self.axisSet.axes makeObjectsPerformSelector:@selector(setNeedsDisplay)];
     }
 }
@@ -829,17 +851,17 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
 -(void)setPaddingBottom:(CGFloat)newPadding
 {
     if ( newPadding != self.paddingBottom ) {
-        [super setPaddingBottom:newPadding];
+        super.paddingBottom = newPadding;
         [self.axisSet.axes makeObjectsPerformSelector:@selector(setNeedsDisplay)];
     }
 }
 
--(CPTNumberArray)topDownLayerOrder
+-(CPTNumberArray *)topDownLayerOrder
 {
     return self.plotAreaFrame.plotArea.topDownLayerOrder;
 }
 
--(void)setTopDownLayerOrder:(CPTNumberArray)newArray
+-(void)setTopDownLayerOrder:(CPTNumberArray *)newArray
 {
     self.plotAreaFrame.plotArea.topDownLayerOrder = newArray;
 }
@@ -1225,7 +1247,7 @@ NSString *const CPTGraphPlotSpaceNotificationKey       = @"CPTGraphPlotSpaceNoti
     }
 }
 
-#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
+#if TARGET_OS_SIMULATOR || TARGET_OS_IPHONE
 #else
 
 /**

@@ -115,12 +115,26 @@
 -(instancetype)initWithCoder:(NSCoder *)coder
 {
     if ( (self = [super initWithCoder:coder]) ) {
-        borderLineStyle = [[coder decodeObjectForKey:@"CPTBorderedLayer.borderLineStyle"] copy];
-        fill            = [[coder decodeObjectForKey:@"CPTBorderedLayer.fill"] copy];
+        borderLineStyle = [[coder decodeObjectOfClass:[CPTLineStyle class]
+                                               forKey:@"CPTBorderedLayer.borderLineStyle"] copy];
+        fill = [[coder decodeObjectOfClass:[CPTFill class]
+                                    forKey:@"CPTBorderedLayer.fill"] copy];
 
         inLayout = NO;
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -365,7 +379,7 @@
 -(void)setMasksToBorder:(BOOL)newMasksToBorder
 {
     if ( newMasksToBorder != self.masksToBorder ) {
-        [super setMasksToBorder:newMasksToBorder];
+        super.masksToBorder = newMasksToBorder;
 
         if ( newMasksToBorder ) {
             CPTMaskLayer *maskLayer = [[CPTMaskLayer alloc] initWithFrame:self.bounds];
@@ -438,57 +452,57 @@
 -(void)setBounds:(CGRect)newBounds
 {
     if ( self.masksToBorder && !self.inLayout ) {
-        [self.borderLayer setBounds:newBounds];
+        self.borderLayer.bounds = newBounds;
     }
     else {
-        [super setBounds:newBounds];
+        super.bounds = newBounds;
     }
 }
 
 -(void)setPosition:(CGPoint)newPosition
 {
     if ( self.masksToBorder && !self.inLayout ) {
-        [self.borderLayer setPosition:newPosition];
+        self.borderLayer.position = newPosition;
     }
     else {
-        [super setPosition:newPosition];
+        super.position = newPosition;
     }
 }
 
 -(void)setAnchorPoint:(CGPoint)newAnchorPoint
 {
     if ( self.masksToBorder && !self.inLayout ) {
-        [self.borderLayer setAnchorPoint:newAnchorPoint];
+        self.borderLayer.anchorPoint = newAnchorPoint;
     }
     else {
-        [super setAnchorPoint:newAnchorPoint];
+        super.anchorPoint = newAnchorPoint;
     }
 }
 
 -(void)setHidden:(BOOL)newHidden
 {
     if ( self.masksToBorder ) {
-        [self.borderLayer setHidden:newHidden];
+        self.borderLayer.hidden = newHidden;
     }
     else {
-        [super setHidden:newHidden];
+        super.hidden = newHidden;
     }
 }
 
 -(void)setTransform:(CATransform3D)newTransform
 {
     if ( self.masksToBorder ) {
-        [self.borderLayer setTransform:newTransform];
+        self.borderLayer.transform = newTransform;
     }
     else {
-        [super setTransform:newTransform];
+        super.transform = newTransform;
     }
 }
 
 -(void)setShadow:(CPTShadow *)newShadow
 {
     if ( newShadow != self.shadow ) {
-        [super setShadow:newShadow];
+        super.shadow = newShadow;
 
         if ( self.masksToBorder ) {
             self.borderLayer.shadow = newShadow;
@@ -499,10 +513,10 @@
 -(void)setBackgroundColor:(CGColorRef)newColor
 {
     if ( self.masksToBorder ) {
-        [self.borderLayer setBackgroundColor:newColor];
+        self.borderLayer.backgroundColor = newColor;
     }
     else {
-        [super setBackgroundColor:newColor];
+        super.backgroundColor = newColor;
     }
 }
 

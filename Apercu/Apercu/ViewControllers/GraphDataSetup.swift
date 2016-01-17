@@ -11,11 +11,15 @@ import CorePlot
 
 class GraphDataSetup {
     
-    func createMainPlotData(bpm: [Double], time: [Double]) -> [[CPTScatterPlotField: Double]] {
+    func createMainPlotData(bpm: [Double], time: [Double], minTime: Double, maxTime: Double) -> [[CPTScatterPlotField: Double]] {
         var plotData = [[CPTScatterPlotField: Double]]()
+
+        var dataSet = averageRawData(bpm, time: time, minTime: minTime, maxTime: maxTime)
+        var modifiedBpm = dataSet[0]
+        var modifiedTime = dataSet[1]
         
-        for (index, element) in bpm.enumerate() {
-            plotData.append([CPTScatterPlotField.X: time[index], CPTScatterPlotField.Y: element])
+        for (index, element) in modifiedBpm.enumerate() {
+            plotData.append([CPTScatterPlotField.X: modifiedTime[index], CPTScatterPlotField.Y: element])
         }
         
         return plotData

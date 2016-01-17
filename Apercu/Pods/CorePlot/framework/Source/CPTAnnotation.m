@@ -84,13 +84,27 @@
 -(instancetype)initWithCoder:(NSCoder *)coder
 {
     if ( (self = [super init]) ) {
-        annotationHostLayer = [coder decodeObjectForKey:@"CPTAnnotation.annotationHostLayer"];
-        contentLayer        = [coder decodeObjectForKey:@"CPTAnnotation.contentLayer"];
-        contentAnchorPoint  = [coder decodeCPTPointForKey:@"CPTAnnotation.contentAnchorPoint"];
-        displacement        = [coder decodeCPTPointForKey:@"CPTAnnotation.displacement"];
-        rotation            = [coder decodeCGFloatForKey:@"CPTAnnotation.rotation"];
+        annotationHostLayer = [coder decodeObjectOfClass:[CPTAnnotationHostLayer class]
+                                                  forKey:@"CPTAnnotation.annotationHostLayer"];
+        contentLayer = [coder decodeObjectOfClass:[CPTLayer class]
+                                           forKey:@"CPTAnnotation.contentLayer"];
+        contentAnchorPoint = [coder decodeCPTPointForKey:@"CPTAnnotation.contentAnchorPoint"];
+        displacement       = [coder decodeCPTPointForKey:@"CPTAnnotation.displacement"];
+        rotation           = [coder decodeCGFloatForKey:@"CPTAnnotation.rotation"];
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -102,7 +116,7 @@
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@ {%@}>", [super description], self.contentLayer];
+    return [NSString stringWithFormat:@"<%@ {%@}>", super.description, self.contentLayer];
 }
 
 /// @endcond
@@ -141,7 +155,7 @@
 {
     if ( !CGPointEqualToPoint(newDisplacement, displacement) ) {
         displacement = newDisplacement;
-        [[self.contentLayer superlayer] setNeedsLayout];
+        [self.contentLayer.superlayer setNeedsLayout];
     }
 }
 
@@ -149,7 +163,7 @@
 {
     if ( !CGPointEqualToPoint(newAnchorPoint, contentAnchorPoint) ) {
         contentAnchorPoint = newAnchorPoint;
-        [[self.contentLayer superlayer] setNeedsLayout];
+        [self.contentLayer.superlayer setNeedsLayout];
     }
 }
 
@@ -157,7 +171,7 @@
 {
     if ( newRotation != rotation ) {
         rotation = newRotation;
-        [[self.contentLayer superlayer] setNeedsLayout];
+        [self.contentLayer.superlayer setNeedsLayout];
     }
 }
 

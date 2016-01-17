@@ -7,26 +7,27 @@
 
 static const CGFloat kCPTAnimationFrameRate = CPTFloat(1.0 / 60.0); // 60 frames per second
 
-static NSString *const CPTAnimationOperationKey = @"CPTAnimationOperationKey";
-static NSString *const CPTAnimationValueKey     = @"CPTAnimationValueKey";
-static NSString *const CPTAnimationStartedKey   = @"CPTAnimationStartedKey";
-static NSString *const CPTAnimationFinishedKey  = @"CPTAnimationFinishedKey";
+static NSString *const CPTAnimationOperationKey  = @"CPTAnimationOperationKey";
+static NSString *const CPTAnimationValueKey      = @"CPTAnimationValueKey";
+static NSString *const CPTAnimationValueClassKey = @"CPTAnimationValueClassKey";
+static NSString *const CPTAnimationStartedKey    = @"CPTAnimationStartedKey";
+static NSString *const CPTAnimationFinishedKey   = @"CPTAnimationFinishedKey";
 
 /// @cond
-typedef NSMutableArray<CPTAnimationOperation *> *CPTMutableAnimationArray;
+typedef NSMutableArray<CPTAnimationOperation *> CPTMutableAnimationArray;
 
 @interface CPTAnimation()
 
 @property (nonatomic, readwrite, assign) CGFloat timeOffset;
-@property (nonatomic, readwrite, strong, nonnull) CPTMutableAnimationArray animationOperations;
-@property (nonatomic, readwrite, strong, nonnull) CPTMutableAnimationArray runningAnimationOperations;
+@property (nonatomic, readwrite, strong, nonnull) CPTMutableAnimationArray *animationOperations;
+@property (nonatomic, readwrite, strong, nonnull) CPTMutableAnimationArray *runningAnimationOperations;
 @property (nonatomic, readwrite) dispatch_source_t timer;
 @property (nonatomic, readwrite) dispatch_queue_t animationQueue;
 
 +(nonnull SEL)setterFromProperty:(nonnull NSString *)property;
 
 -(CPTAnimationTimingFunction)timingFunctionForAnimationCurve:(CPTAnimationCurve)animationCurve;
--(void)updateOnMainThreadWithParameters:(nonnull CPTDictionary)parameters;
+-(void)updateOnMainThreadWithParameters:(nonnull CPTDictionary *)parameters;
 
 -(void)startTimer;
 -(void)cancelTimer;
@@ -61,14 +62,14 @@ dispatch_source_t CPTCreateDispatchTimer(CGFloat interval, dispatch_queue_t queu
 @synthesize defaultAnimationCurve;
 
 /** @internal
- *  @property CPTMutableAnimationArray animationOperations
+ *  @property CPTMutableAnimationArray *animationOperations
  *
  *  @brief The list of animation operations currently running or waiting to run.
  **/
 @synthesize animationOperations;
 
 /** @internal
- *  @property CPTMutableAnimationArray runningAnimationOperations
+ *  @property CPTMutableAnimationArray *runningAnimationOperations
  *  @brief The list of running animation operations.
  **/
 @synthesize runningAnimationOperations;
@@ -165,17 +166,14 @@ dispatch_source_t CPTCreateDispatchTimer(CGFloat interval, dispatch_queue_t queu
  **/
 +(CPTAnimationOperation *)animate:(id)object property:(NSString *)property period:(CPTAnimationPeriod *)period animationCurve:(CPTAnimationCurve)animationCurve delegate:(id<CPTAnimationDelegate>)delegate
 {
-    CPTAnimationOperation *animationOperation = [[CPTAnimationOperation alloc] init];
+    CPTAnimationOperation *animationOperation =
+        [[CPTAnimationOperation alloc] initWithAnimationPeriod:period
+                                                animationCurve:animationCurve
+                                                        object:object
+                                                        getter:NSSelectorFromString(property)
+                                                        setter:[CPTAnimation setterFromProperty:property]];
 
-    animationOperation.period         = period;
-    animationOperation.animationCurve = animationCurve;
-    animationOperation.delegate       = delegate;
-
-    if ( object ) {
-        animationOperation.boundObject = object;
-        animationOperation.boundGetter = NSSelectorFromString(property);
-        animationOperation.boundSetter = [CPTAnimation setterFromProperty:property];
-    }
+    animationOperation.delegate = delegate;
 
     [[CPTAnimation sharedInstance] addAnimationOperation:animationOperation];
 
@@ -187,7 +185,7 @@ dispatch_source_t CPTCreateDispatchTimer(CGFloat interval, dispatch_queue_t queu
 +(SEL)setterFromProperty:(NSString *)property
 {
     return NSSelectorFromString([NSString stringWithFormat:@"set%@:", [property stringByReplacingCharactersInRange:NSMakeRange(0, 1)
-                                                                                                        withString:[[property substringToIndex:1] capitalizedString]]]);
+                                                                                                        withString:[property substringToIndex:1].capitalizedString]]);
 }
 
 /// @endcond
@@ -247,7 +245,7 @@ dispatch_source_t CPTCreateDispatchTimer(CGFloat interval, dispatch_queue_t queu
 -(CPTAnimationOperation *)operationWithIdentifier:(id<NSCopying, NSObject>)identifier
 {
     for ( CPTAnimationOperation *operation in self.animationOperations ) {
-        if ( [[operation identifier] isEqual:identifier] ) {
+        if ( [operation.identifier isEqual:identifier] ) {
             return operation;
         }
     }
@@ -262,12 +260,12 @@ dispatch_source_t CPTCreateDispatchTimer(CGFloat interval, dispatch_queue_t queu
 {
     self.timeOffset += kCPTAnimationFrameRate;
 
-    CPTMutableAnimationArray theAnimationOperations = self.animationOperations;
-    CPTMutableAnimationArray runningOperations      = self.runningAnimationOperations;
-    CPTMutableAnimationArray expiredOperations      = [[NSMutableArray alloc] init];
+    CPTMutableAnimationArray *theAnimationOperations = self.animationOperations;
+    CPTMutableAnimationArray *runningOperations      = self.runningAnimationOperations;
+    CPTMutableAnimationArray *expiredOperations      = [[NSMutableArray alloc] init];
 
-    CGFloat currentTime     = self.timeOffset;
-    CPTStringArray runModes = @[NSRunLoopCommonModes];
+    CGFloat currentTime      = self.timeOffset;
+    CPTStringArray *runModes = @[NSRunLoopCommonModes];
 
     dispatch_queue_t mainQueue = dispatch_get_main_queue();
 
@@ -333,11 +331,13 @@ dispatch_source_t CPTCreateDispatchTimer(CGFloat interval, dispatch_queue_t queu
                         [period setStartValueFromObject:animationOperation.boundObject propertyGetter:animationOperation.boundGetter];
                     }
 
+                    Class valueClass = period.valueClass;
                     CGFloat progress = timingFunction(currentTime - startTime, duration);
 
-                    CPTDictionary parameters = @{
+                    CPTDictionary *parameters = @{
                         CPTAnimationOperationKey: animationOperation,
                         CPTAnimationValueKey: [period tweenedValueForProgress:progress],
+                        CPTAnimationValueClassKey: valueClass ? valueClass : [NSNull null],
                         CPTAnimationStartedKey: @(started),
                         CPTAnimationFinishedKey: @(currentTime >= endTime)
                     };
@@ -367,7 +367,7 @@ dispatch_source_t CPTCreateDispatchTimer(CGFloat interval, dispatch_queue_t queu
 }
 
 // This method must be called from the main thread.
--(void)updateOnMainThreadWithParameters:(CPTDictionary)parameters
+-(void)updateOnMainThreadWithParameters:(CPTDictionary *)parameters
 {
     CPTAnimationOperation *animationOperation = parameters[CPTAnimationOperationKey];
 
@@ -379,6 +379,11 @@ dispatch_source_t CPTCreateDispatchTimer(CGFloat interval, dispatch_queue_t queu
 
     if ( !canceled ) {
         @try {
+            Class valueClass = parameters[CPTAnimationValueClassKey];
+            if ( [valueClass isKindOfClass:[NSNull class]] ) {
+                valueClass = Nil;
+            }
+
             id<CPTAnimationDelegate> delegate = animationOperation.delegate;
 
             NSNumber *started = parameters[CPTAnimationStartedKey];
@@ -396,22 +401,32 @@ dispatch_source_t CPTCreateDispatchTimer(CGFloat interval, dispatch_queue_t queu
             id boundObject  = animationOperation.boundObject;
             id tweenedValue = parameters[CPTAnimationValueKey];
 
-            if ( [tweenedValue isKindOfClass:[NSDecimalNumber class]] ) {
-                NSDecimal buffer = [(NSDecimalNumber *)tweenedValue decimalValue];
+            if ( valueClass ) {
+                // object properties
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+                id<NSObject> theObject = boundObject;
+                [theObject performSelector:boundSetter withObject:tweenedValue];
+#pragma clang diagnostic pop
+            }
+            else if ( [tweenedValue isKindOfClass:[NSDecimalNumber class]] ) {
+                // NSDecimal properties
+                NSDecimal buffer = ( (NSDecimalNumber *)tweenedValue ).decimalValue;
 
                 typedef void (*SetterType)(id, SEL, NSDecimal);
                 SetterType setterMethod = (SetterType)[boundObject methodForSelector : boundSetter];
                 setterMethod(boundObject, boundSetter, buffer);
             }
-            else if ( [tweenedValue isKindOfClass:[NSValue class]] ) {
+            else {
+                // wrapped scalars and structs
                 NSValue *value = (NSValue *)tweenedValue;
 
                 NSUInteger bufferSize = 0;
                 NSGetSizeAndAlignment(value.objCType, &bufferSize, NULL);
 
                 NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[boundObject methodSignatureForSelector:boundSetter]];
-                [invocation setTarget:boundObject];
-                [invocation setSelector:boundSetter];
+                invocation.target   = boundObject;
+                invocation.selector = boundSetter;
 
                 void *buffer = malloc(bufferSize);
                 [value getValue:buffer];
@@ -419,13 +434,6 @@ dispatch_source_t CPTCreateDispatchTimer(CGFloat interval, dispatch_queue_t queu
                 free(buffer);
 
                 [invocation invoke];
-            }
-            else {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-                id<NSObject> theObject = boundObject;
-                [theObject performSelector:boundSetter withObject:tweenedValue];
-#pragma clang diagnostic pop
             }
 
             if ( [delegate respondsToSelector:@selector(animationDidUpdate:)] ) {
@@ -633,7 +641,7 @@ dispatch_source_t CPTCreateDispatchTimer(CGFloat interval, dispatch_queue_t queu
 -(NSString *)description
 {
     return [NSString stringWithFormat:@"<%@ timeOffset: %g; %lu active and %lu running operations>",
-            [super description],
+            super.description,
             self.timeOffset,
             (unsigned long)self.animationOperations.count,
             (unsigned long)self.runningAnimationOperations.count];

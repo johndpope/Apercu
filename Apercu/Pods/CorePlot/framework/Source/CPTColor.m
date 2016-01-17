@@ -448,6 +448,18 @@
 }
 
 #pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+/// @endcond
+
+#pragma mark -
 #pragma mark NSCopying Methods
 
 /// @cond
@@ -460,10 +472,13 @@
 
     if ( myColor ) {
         cgColorCopy = CGColorCreateCopy(myColor);
+        CPTColor *colorCopy = [[[self class] allocWithZone:zone] initWithCGColor:cgColorCopy];
+        CGColorRelease(cgColorCopy);
+        return colorCopy;
     }
-    CPTColor *colorCopy = [[[self class] allocWithZone:zone] initWithCGColor:cgColorCopy];
-    CGColorRelease(cgColorCopy);
-    return colorCopy;
+    else {
+        return nil;
+    }
 }
 
 /// @endcond
@@ -523,7 +538,7 @@
 
 -(id)debugQuickLookObject
 {
-#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
+#if TARGET_OS_SIMULATOR || TARGET_OS_IPHONE
     return self.uiColor;
 
 #else

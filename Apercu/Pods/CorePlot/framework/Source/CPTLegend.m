@@ -27,10 +27,10 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
 /// @cond
 @interface CPTLegend()
 
-@property (nonatomic, readwrite, strong) CPTMutablePlotArray plots;
-@property (nonatomic, readwrite, strong) CPTMutableLegendEntryArray legendEntries;
-@property (nonatomic, readwrite, strong) CPTNumberArray rowHeightsThatFit;
-@property (nonatomic, readwrite, strong) CPTNumberArray columnWidthsThatFit;
+@property (nonatomic, readwrite, strong) CPTMutablePlotArray *plots;
+@property (nonatomic, readwrite, strong) CPTMutableLegendEntryArray *legendEntries;
+@property (nonatomic, readwrite, strong) CPTNumberArray *rowHeightsThatFit;
+@property (nonatomic, readwrite, strong) CPTNumberArray *columnWidthsThatFit;
 @property (nonatomic, readwrite, assign) BOOL layoutChanged;
 @property (nonatomic, readwrite, cpt_weak_property) cpt_weak CPTLegendEntry *pointingDeviceDownEntry;
 
@@ -160,7 +160,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
  **/
 @synthesize equalColumns;
 
-/** @property CPTNumberArray rowHeights
+/** @property CPTNumberArray *rowHeights
  *  @brief The desired height of each row of legend entries, including the swatch and title.
  *  Each element in this array should be an NSNumber representing the height of the corresponding row in device units.
  *  Rows are numbered from top to bottom starting from zero (@num{0}). If @nil, all rows will be sized automatically.
@@ -169,14 +169,14 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
  **/
 @synthesize rowHeights;
 
-/** @property CPTNumberArray rowHeightsThatFit
+/** @property CPTNumberArray *rowHeightsThatFit
  *  @brief The computed best-fit height of each row of legend entries, including the swatch and title.
  *  Each element in this array is an NSNumber representing the height of the corresponding row in device units.
  *  Rows are numbered from top to bottom starting from zero (@num{0}).
  **/
 @synthesize rowHeightsThatFit;
 
-/** @property CPTNumberArray columnWidths
+/** @property CPTNumberArray *columnWidths
  *  @brief The desired width of each column of legend entries, including the swatch, title, and title offset.
  *  Each element in this array should be an NSNumber representing the width of the corresponding column in device units.
  *  Columns are numbered from left to right starting from zero (@num{0}). If @nil, all columns will be sized automatically.
@@ -185,7 +185,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
  **/
 @synthesize columnWidths;
 
-/** @property CPTNumberArray columnWidthsThatFit
+/** @property CPTNumberArray *columnWidthsThatFit
  *  @brief The computed best-fit width of each column of legend entries, including the swatch, title, and title offset.
  *  Each element in this array is an NSNumber representing the width of the corresponding column in device units.
  *  Columns are numbered from left to right starting from zero (@num{0}).
@@ -207,12 +207,12 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
  **/
 @synthesize titleOffset;
 
-/** @property CPTMutablePlotArray plots
+/** @property CPTMutablePlotArray *plots
  *  @brief An array of all plots associated with the legend.
  **/
 @synthesize plots;
 
-/** @property CPTMutableLegendEntryArray legendEntries
+/** @property CPTMutableLegendEntryArray *legendEntries
  *  @brief An array of all legend entries.
  **/
 @synthesize legendEntries;
@@ -235,7 +235,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
  *  @param newPlots An array of plots.
  *  @return A new CPTLegend instance.
  **/
-+(instancetype)legendWithPlots:(CPTPlotArray)newPlots
++(instancetype)legendWithPlots:(CPTPlotArray *)newPlots
 {
     return [[self alloc] initWithPlots:newPlots];
 }
@@ -339,7 +339,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
  *  @param newPlots An array of plots.
  *  @return The initialized CPTLegend object.
  **/
--(instancetype)initWithPlots:(CPTPlotArray)newPlots
+-(instancetype)initWithPlots:(CPTPlotArray *)newPlots
 {
     if ( (self = [self initWithFrame:CGRectZero]) ) {
         for ( CPTPlot *plot in newPlots ) {
@@ -452,36 +452,59 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
 -(instancetype)initWithCoder:(NSCoder *)coder
 {
     if ( (self = [super initWithCoder:coder]) ) {
-        plots                 = [[coder decodeObjectForKey:@"CPTLegend.plots"] mutableCopy];
-        legendEntries         = [[coder decodeObjectForKey:@"CPTLegend.legendEntries"] mutableCopy];
-        layoutChanged         = [coder decodeBoolForKey:@"CPTLegend.layoutChanged"];
-        textStyle             = [[coder decodeObjectForKey:@"CPTLegend.textStyle"] copy];
+        plots = [[coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [CPTPlot class]]]
+                                       forKey:@"CPTLegend.plots"] mutableCopy];
+        legendEntries = [[coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [CPTLegendEntry class]]]
+                                               forKey:@"CPTLegend.legendEntries"] mutableCopy];
+        layoutChanged = [coder decodeBoolForKey:@"CPTLegend.layoutChanged"];
+        textStyle     = [[coder decodeObjectOfClass:[CPTTextStyle class]
+                                             forKey:@"CPTLegend.textStyle"] copy];
         swatchSize            = [coder decodeCPTSizeForKey:@"CPTLegend.swatchSize"];
-        swatchBorderLineStyle = [[coder decodeObjectForKey:@"CPTLegend.swatchBorderLineStyle"] copy];
-        swatchCornerRadius    = [coder decodeCGFloatForKey:@"CPTLegend.swatchCornerRadius"];
-        swatchFill            = [[coder decodeObjectForKey:@"CPTLegend.swatchFill"] copy];
-        entryBorderLineStyle  = [[coder decodeObjectForKey:@"CPTLegend.entryBorderLineStyle"] copy];
-        entryCornerRadius     = [coder decodeCGFloatForKey:@"CPTLegend.entryCornerRadius"];
-        entryFill             = [[coder decodeObjectForKey:@"CPTLegend.entryFill"] copy];
-        entryPaddingLeft      = [coder decodeCGFloatForKey:@"CPTLegend.entryPaddingLeft"];
-        entryPaddingTop       = [coder decodeCGFloatForKey:@"CPTLegend.entryPaddingTop"];
-        entryPaddingRight     = [coder decodeCGFloatForKey:@"CPTLegend.entryPaddingRight"];
-        entryPaddingBottom    = [coder decodeCGFloatForKey:@"CPTLegend.entryPaddingBottom"];
-        numberOfRows          = (NSUInteger)[coder decodeIntegerForKey : @"CPTLegend.numberOfRows"];
-        numberOfColumns       = (NSUInteger)[coder decodeIntegerForKey : @"CPTLegend.numberOfColumns"];
-        equalRows             = [coder decodeBoolForKey:@"CPTLegend.equalRows"];
-        equalColumns          = [coder decodeBoolForKey:@"CPTLegend.equalColumns"];
-        rowHeights            = [[coder decodeObjectForKey:@"CPTLegend.rowHeights"] copy];
-        rowHeightsThatFit     = [coder decodeObjectForKey:@"CPTLegend.rowHeightsThatFit"];
-        columnWidths          = [[coder decodeObjectForKey:@"CPTLegend.columnWidths"] copy];
-        columnWidthsThatFit   = [coder decodeObjectForKey:@"CPTLegend.columnWidthsThatFit"];
-        columnMargin          = [coder decodeCGFloatForKey:@"CPTLegend.columnMargin"];
-        rowMargin             = [coder decodeCGFloatForKey:@"CPTLegend.rowMargin"];
-        titleOffset           = [coder decodeCGFloatForKey:@"CPTLegend.titleOffset"];
+        swatchBorderLineStyle = [[coder decodeObjectOfClass:[CPTLineStyle class]
+                                                     forKey:@"CPTLegend.swatchBorderLineStyle"] copy];
+        swatchCornerRadius = [coder decodeCGFloatForKey:@"CPTLegend.swatchCornerRadius"];
+        swatchFill         = [[coder decodeObjectOfClass:[CPTFill class]
+                                                  forKey:@"CPTLegend.swatchFill"] copy];
+        entryBorderLineStyle = [[coder decodeObjectOfClass:[CPTLineStyle class]
+                                                    forKey:@"CPTLegend.entryBorderLineStyle"] copy];
+        entryCornerRadius = [coder decodeCGFloatForKey:@"CPTLegend.entryCornerRadius"];
+        entryFill         = [[coder decodeObjectOfClass:[CPTFill class]
+                                                 forKey:@"CPTLegend.entryFill"] copy];
+        entryPaddingLeft   = [coder decodeCGFloatForKey:@"CPTLegend.entryPaddingLeft"];
+        entryPaddingTop    = [coder decodeCGFloatForKey:@"CPTLegend.entryPaddingTop"];
+        entryPaddingRight  = [coder decodeCGFloatForKey:@"CPTLegend.entryPaddingRight"];
+        entryPaddingBottom = [coder decodeCGFloatForKey:@"CPTLegend.entryPaddingBottom"];
+        numberOfRows       = (NSUInteger)[coder decodeIntegerForKey : @"CPTLegend.numberOfRows"];
+        numberOfColumns    = (NSUInteger)[coder decodeIntegerForKey : @"CPTLegend.numberOfColumns"];
+        equalRows          = [coder decodeBoolForKey:@"CPTLegend.equalRows"];
+        equalColumns       = [coder decodeBoolForKey:@"CPTLegend.equalColumns"];
+        rowHeights         = [[coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSNumber class]]]
+                                                    forKey:@"CPTLegend.rowHeights"] copy];
+        rowHeightsThatFit = [coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSNumber class]]]
+                                                  forKey:@"CPTLegend.rowHeightsThatFit"];
+        columnWidths = [[coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSNumber class]]]
+                                              forKey:@"CPTLegend.columnWidths"] copy];
+        columnWidthsThatFit = [coder decodeObjectOfClasses:[NSSet setWithArray:@[[NSArray class], [NSNumber class]]]
+                                                    forKey:@"CPTLegend.columnWidthsThatFit"];
+        columnMargin = [coder decodeCGFloatForKey:@"CPTLegend.columnMargin"];
+        rowMargin    = [coder decodeCGFloatForKey:@"CPTLegend.rowMargin"];
+        titleOffset  = [coder decodeCGFloatForKey:@"CPTLegend.titleOffset"];
 
         pointingDeviceDownEntry = nil;
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -504,10 +527,10 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
     }
 
     // calculate column positions
-    CPTNumberArray computedColumnWidths = self.columnWidthsThatFit;
-    NSUInteger columnCount              = computedColumnWidths.count;
-    CGFloat *actualColumnWidths         = malloc(sizeof(CGFloat) * columnCount);
-    CGFloat *columnPositions            = malloc(sizeof(CGFloat) * columnCount);
+    CPTNumberArray *computedColumnWidths = self.columnWidthsThatFit;
+    NSUInteger columnCount               = computedColumnWidths.count;
+    CGFloat *actualColumnWidths          = malloc(sizeof(CGFloat) * columnCount);
+    CGFloat *columnPositions             = malloc(sizeof(CGFloat) * columnCount);
     columnPositions[0] = self.paddingLeft;
     CGFloat theOffset       = self.titleOffset;
     CGSize theSwatchSize    = self.swatchSize;
@@ -528,10 +551,10 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
     }
 
     // calculate row positions
-    CPTNumberArray computedRowHeights = self.rowHeightsThatFit;
-    NSUInteger rowCount               = computedRowHeights.count;
-    CGFloat *actualRowHeights         = malloc(sizeof(CGFloat) * rowCount);
-    CGFloat *rowPositions             = malloc(sizeof(CGFloat) * rowCount);
+    CPTNumberArray *computedRowHeights = self.rowHeightsThatFit;
+    NSUInteger rowCount                = computedRowHeights.count;
+    CGFloat *actualRowHeights          = malloc(sizeof(CGFloat) * rowCount);
+    CGFloat *rowPositions              = malloc(sizeof(CGFloat) * rowCount);
     rowPositions[rowCount - 1] = self.paddingBottom;
     CGFloat theRowMargin  = self.rowMargin;
     CGFloat lastRowHeight = 0.0;
@@ -723,14 +746,14 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
     }
 
     // compute row heights and column widths
-    NSUInteger row                     = 0;
-    NSUInteger col                     = 0;
-    CGFloat *maxTitleHeight            = calloc( rowCount, sizeof(CGFloat) );
-    CGFloat *maxTitleWidth             = calloc( columnCount, sizeof(CGFloat) );
-    CGSize theSwatchSize               = self.swatchSize;
-    CPTNumberArray desiredRowHeights   = self.rowHeights;
-    CPTNumberArray desiredColumnWidths = self.columnWidths;
-    Class numberClass                  = [NSNumber class];
+    NSUInteger row                      = 0;
+    NSUInteger col                      = 0;
+    CGFloat *maxTitleHeight             = calloc( rowCount, sizeof(CGFloat) );
+    CGFloat *maxTitleWidth              = calloc( columnCount, sizeof(CGFloat) );
+    CGSize theSwatchSize                = self.swatchSize;
+    CPTNumberArray *desiredRowHeights   = self.rowHeights;
+    CPTNumberArray *desiredColumnWidths = self.columnWidths;
+    Class numberClass                   = [NSNumber class];
 
     for ( CPTLegendEntry *legendEntry in self.legendEntries ) {
         legendEntry.row    = row;
@@ -770,13 +793,13 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
     }
 
     // save row heights and column widths
-    CPTMutableNumberArray maxRowHeights = [[NSMutableArray alloc] initWithCapacity:rowCount];
+    CPTMutableNumberArray *maxRowHeights = [[NSMutableArray alloc] initWithCapacity:rowCount];
     for ( NSUInteger i = 0; i < rowCount; i++ ) {
         [maxRowHeights addObject:@(maxTitleHeight[i])];
     }
     self.rowHeightsThatFit = maxRowHeights;
 
-    CPTMutableNumberArray maxColumnWidths = [[NSMutableArray alloc] initWithCapacity:columnCount];
+    CPTMutableNumberArray *maxColumnWidths = [[NSMutableArray alloc] initWithCapacity:columnCount];
     for ( NSUInteger i = 0; i < columnCount; i++ ) {
         [maxColumnWidths addObject:@(maxTitleWidth[i])];
     }
@@ -830,7 +853,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
 /** @brief All plots associated with the legend.
  *  @return An array of all plots associated with the legend.
  **/
--(CPTPlotArray)allPlots
+-(CPTPlotArray *)allPlots
 {
     return [NSArray arrayWithArray:self.plots];
 }
@@ -856,7 +879,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
 -(CPTPlot *)plotWithIdentifier:(id<NSCopying>)identifier
 {
     for ( CPTPlot *plot in self.plots ) {
-        if ( [[plot identifier] isEqual:identifier] ) {
+        if ( [plot.identifier isEqual:identifier] ) {
             return plot;
         }
     }
@@ -875,9 +898,9 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
         [self.plots addObject:plot];
         self.layoutChanged = YES;
 
-        CPTMutableLegendEntryArray theLegendEntries = self.legendEntries;
-        CPTTextStyle *theTextStyle                  = self.textStyle;
-        NSUInteger numberOfLegendEntries            = [plot numberOfLegendEntries];
+        CPTMutableLegendEntryArray *theLegendEntries = self.legendEntries;
+        CPTTextStyle *theTextStyle                   = self.textStyle;
+        NSUInteger numberOfLegendEntries             = [plot numberOfLegendEntries];
         for ( NSUInteger i = 0; i < numberOfLegendEntries; i++ ) {
             NSString *newTitle = [plot titleForLegendEntryAtIndex:i];
             if ( newTitle ) {
@@ -901,11 +924,11 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
 -(void)insertPlot:(CPTPlot *)plot atIndex:(NSUInteger)idx
 {
     if ( [plot isKindOfClass:[CPTPlot class]] ) {
-        CPTMutablePlotArray thePlots = self.plots;
+        CPTMutablePlotArray *thePlots = self.plots;
         NSAssert(idx <= thePlots.count, @"index greater than the number of plots");
 
-        CPTMutableLegendEntryArray theLegendEntries = self.legendEntries;
-        NSUInteger legendEntryIndex                 = 0;
+        CPTMutableLegendEntryArray *theLegendEntries = self.legendEntries;
+        NSUInteger legendEntryIndex                  = 0;
         if ( idx == thePlots.count ) {
             legendEntryIndex = theLegendEntries.count;
         }
@@ -983,8 +1006,8 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
  **/
 -(void)removeLegendEntriesForPlot:(CPTPlot *)plot
 {
-    CPTMutableLegendEntryArray theLegendEntries = self.legendEntries;
-    CPTMutableLegendEntryArray entriesToRemove  = [[NSMutableArray alloc] init];
+    CPTMutableLegendEntryArray *theLegendEntries = self.legendEntries;
+    CPTMutableLegendEntryArray *entriesToRemove  = [[NSMutableArray alloc] init];
 
     for ( CPTLegendEntry *legendEntry in theLegendEntries ) {
         if ( legendEntry.plot == plot ) {
@@ -1016,7 +1039,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
 {
     CPTPlot *thePlot = (CPTPlot *)notif.object;
 
-    CPTMutableLegendEntryArray theLegendEntries = self.legendEntries;
+    CPTMutableLegendEntryArray *theLegendEntries = self.legendEntries;
 
     NSUInteger legendEntryIndex = 0;
 
@@ -1272,7 +1295,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@ for plots %@>", [super description], self.plots];
+    return [NSString stringWithFormat:@"<%@ for plots %@>", super.description, self.plots];
 }
 
 /// @endcond
@@ -1430,7 +1453,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
     }
 }
 
--(void)setRowHeights:(CPTNumberArray)newRowHeights
+-(void)setRowHeights:(CPTNumberArray *)newRowHeights
 {
     if ( newRowHeights != rowHeights ) {
         rowHeights         = [newRowHeights copy];
@@ -1438,7 +1461,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
     }
 }
 
--(void)setColumnWidths:(CPTNumberArray)newColumnWidths
+-(void)setColumnWidths:(CPTNumberArray *)newColumnWidths
 {
     if ( newColumnWidths != columnWidths ) {
         columnWidths       = [newColumnWidths copy];
@@ -1485,7 +1508,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
 -(void)setPaddingLeft:(CGFloat)newPadding
 {
     if ( newPadding != self.paddingLeft ) {
-        [super setPaddingLeft:newPadding];
+        super.paddingLeft  = newPadding;
         self.layoutChanged = YES;
     }
 }
@@ -1493,7 +1516,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
 -(void)setPaddingTop:(CGFloat)newPadding
 {
     if ( newPadding != self.paddingTop ) {
-        [super setPaddingTop:newPadding];
+        super.paddingTop   = newPadding;
         self.layoutChanged = YES;
     }
 }
@@ -1501,7 +1524,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
 -(void)setPaddingRight:(CGFloat)newPadding
 {
     if ( newPadding != self.paddingRight ) {
-        [super setPaddingRight:newPadding];
+        super.paddingRight = newPadding;
         self.layoutChanged = YES;
     }
 }
@@ -1509,8 +1532,8 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
 -(void)setPaddingBottom:(CGFloat)newPadding
 {
     if ( newPadding != self.paddingBottom ) {
-        [super setPaddingBottom:newPadding];
-        self.layoutChanged = YES;
+        super.paddingBottom = newPadding;
+        self.layoutChanged  = YES;
     }
 }
 
@@ -1519,7 +1542,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
     CPTLineStyle *oldLineStyle = self.borderLineStyle;
 
     if ( newLineStyle != oldLineStyle ) {
-        [super setBorderLineStyle:newLineStyle];
+        super.borderLineStyle = newLineStyle;
 
         if ( newLineStyle.lineWidth != oldLineStyle.lineWidth ) {
             self.layoutChanged = YES;
@@ -1527,7 +1550,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
     }
 }
 
--(CPTNumberArray)rowHeightsThatFit
+-(CPTNumberArray *)rowHeightsThatFit
 {
     if ( !rowHeightsThatFit ) {
         [self recalculateLayout];
@@ -1535,7 +1558,7 @@ NSString *const CPTLegendNeedsReloadEntriesForPlotNotification = @"CPTLegendNeed
     return rowHeightsThatFit;
 }
 
--(CPTNumberArray)columnWidthsThatFit
+-(CPTNumberArray *)columnWidthsThatFit
 {
     if ( !columnWidthsThatFit ) {
         [self recalculateLayout];

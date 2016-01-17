@@ -130,13 +130,27 @@
 -(instancetype)initWithCoder:(NSCoder *)coder
 {
     if ( (self = [super init]) ) {
-        fontName      = [[coder decodeObjectForKey:@"CPTTextStyle.fontName"] copy];
-        fontSize      = [coder decodeCGFloatForKey:@"CPTTextStyle.fontSize"];
-        color         = [[coder decodeObjectForKey:@"CPTTextStyle.color"] copy];
+        fontName = [[coder decodeObjectOfClass:[NSString class]
+                                        forKey:@"CPTTextStyle.fontName"] copy];
+        fontSize = [coder decodeCGFloatForKey:@"CPTTextStyle.fontSize"];
+        color    = [[coder decodeObjectOfClass:[CPTColor class]
+                                        forKey:@"CPTTextStyle.color"] copy];
         textAlignment = (CPTTextAlignment)[coder decodeIntegerForKey : @"CPTTextStyle.textAlignment"];
         lineBreakMode = (NSLineBreakMode)[coder decodeIntegerForKey : @"CPTTextStyle.lineBreakMode"];
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -190,7 +204,7 @@
 {
     NSString *lorem = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
-    return [[NSAttributedString alloc] initWithString:lorem attributes:[self attributes]];
+    return [[NSAttributedString alloc] initWithString:lorem attributes:self.attributes];
 }
 
 /// @endcond

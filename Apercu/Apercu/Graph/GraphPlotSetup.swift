@@ -23,8 +23,7 @@ class GraphPlotSetup {
         var plots = [CPTScatterPlot]()
         plots.append(createMainPlot())
         plots.append(createAveragePlot())
-        plots.append(createZeroPlot())
-        
+
         return plots
     }
     
@@ -71,21 +70,8 @@ class GraphPlotSetup {
         
         return mostActivePlot
     }
-    
-    func createZeroPlot() -> CPTScatterPlot {
-        let zeroLineStyle = CPTMutableLineStyle()
-        zeroLineStyle.lineColor = CPTColor.whiteColor()
-        zeroLineStyle.lineWidth = 1.0
-        zeroLineStyle.dashPattern = [5, 5]
-        
-        let zeroPlot = CPTScatterPlot()
-        zeroPlot.identifier = "Zero"
-        zeroPlot.dataLineStyle = zeroLineStyle
-        
-        return zeroPlot
-    }
 
-    func createHeatmapLimitBands(colorNumber: [Double], time: [Double], yMin: Double, yMax: Double) -> CPTLimitBandArray {
+    func createHeatmapLimitBands(colorNumber: [Double], time: [Double], yMin: Double, yMax: Double) -> [CPTLimitBand] {
         let color1 = CPTColor(componentRed: 74.0/255.0, green: 170.0/255.0, blue: 214.0/155.0, alpha: 0.8)
         let color2 = CPTColor(componentRed: 138.0/255.0, green: 188.0/255.0, blue: 209.0/255.0, alpha: 0.8)
         let color3 = CPTColor(componentRed: 148.0/255.0, green: 158.0/255.0, blue: 163.0/255.0, alpha: 0.8)

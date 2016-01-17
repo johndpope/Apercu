@@ -110,14 +110,28 @@
 -(instancetype)initWithCoder:(NSCoder *)coder
 {
     if ( (self = [super init]) ) {
-        contentLayer = [coder decodeObjectForKey:@"CPTAxisLabel.contentLayer"];
+        contentLayer = [coder decodeObjectOfClass:[CPTLayer class]
+                                           forKey:@"CPTAxisLabel.contentLayer"];
         offset       = [coder decodeCGFloatForKey:@"CPTAxisLabel.offset"];
         rotation     = [coder decodeCGFloatForKey:@"CPTAxisLabel.rotation"];
         alignment    = (CPTAlignment)[coder decodeIntegerForKey : @"CPTAxisLabel.alignment"];
-        tickLocation = [coder decodeObjectForKey:@"CPTAxisLabel.tickLocation"];
+        tickLocation = [coder decodeObjectOfClass:[NSNumber class]
+                                           forKey:@"CPTAxisLabel.tickLocation"];
     }
     return self;
 }
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+/// @endcond
 
 #pragma mark -
 #pragma mark Layout
@@ -296,7 +310,7 @@
 
 -(NSString *)description
 {
-    return [NSString stringWithFormat:@"<%@ {%@}>", [super description], self.contentLayer];
+    return [NSString stringWithFormat:@"<%@ {%@}>", super.description, self.contentLayer];
 }
 
 /// @endcond

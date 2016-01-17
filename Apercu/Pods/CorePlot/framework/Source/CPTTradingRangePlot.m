@@ -47,11 +47,11 @@ static const CPTCoordinate dependentCoord   = CPTCoordinateY;
 @property (nonatomic, readwrite, copy) CPTMutableNumericData *highValues;
 @property (nonatomic, readwrite, copy) CPTMutableNumericData *lowValues;
 @property (nonatomic, readwrite, copy) CPTMutableNumericData *closeValues;
-@property (nonatomic, readwrite, copy) CPTFillArray increaseFills;
-@property (nonatomic, readwrite, copy) CPTFillArray decreaseFills;
-@property (nonatomic, readwrite, copy) CPTLineStyleArray lineStyles;
-@property (nonatomic, readwrite, copy) CPTLineStyleArray increaseLineStyles;
-@property (nonatomic, readwrite, copy) CPTLineStyleArray decreaseLineStyles;
+@property (nonatomic, readwrite, copy) CPTFillArray *increaseFills;
+@property (nonatomic, readwrite, copy) CPTFillArray *decreaseFills;
+@property (nonatomic, readwrite, copy) CPTLineStyleArray *lineStyles;
+@property (nonatomic, readwrite, copy) CPTLineStyleArray *increaseLineStyles;
+@property (nonatomic, readwrite, copy) CPTLineStyleArray *decreaseLineStyles;
 @property (nonatomic, readwrite, assign) NSUInteger pointingDeviceDownIndex;
 
 -(void)drawCandleStickInContext:(CGContextRef)context atIndex:(NSUInteger)idx x:(CGFloat)x open:(CGFloat)openValue close:(CGFloat)closeValue high:(CGFloat)highValue low:(CGFloat)lowValue alignPoints:(BOOL)alignPoints;
@@ -158,7 +158,7 @@ static const CPTCoordinate dependentCoord   = CPTCoordinateY;
 
 /// @cond
 
-#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
+#if TARGET_OS_SIMULATOR || TARGET_OS_IPHONE
 #else
 +(void)initialize
 {
@@ -275,20 +275,37 @@ static const CPTCoordinate dependentCoord   = CPTCoordinateY;
 -(instancetype)initWithCoder:(NSCoder *)coder
 {
     if ( (self = [super initWithCoder:coder]) ) {
-        lineStyle         = [[coder decodeObjectForKey:@"CPTTradingRangePlot.lineStyle"] copy];
-        increaseLineStyle = [[coder decodeObjectForKey:@"CPTTradingRangePlot.increaseLineStyle"] copy];
-        decreaseLineStyle = [[coder decodeObjectForKey:@"CPTTradingRangePlot.decreaseLineStyle"] copy];
-        increaseFill      = [[coder decodeObjectForKey:@"CPTTradingRangePlot.increaseFill"] copy];
-        decreaseFill      = [[coder decodeObjectForKey:@"CPTTradingRangePlot.decreaseFill"] copy];
-        plotStyle         = (CPTTradingRangePlotStyle)[coder decodeIntegerForKey : @"CPTTradingRangePlot.plotStyle"];
-        barWidth          = [coder decodeCGFloatForKey:@"CPTTradingRangePlot.barWidth"];
-        stickLength       = [coder decodeCGFloatForKey:@"CPTTradingRangePlot.stickLength"];
-        barCornerRadius   = [coder decodeCGFloatForKey:@"CPTTradingRangePlot.barCornerRadius"];
-        showBarBorder     = [coder decodeBoolForKey:@"CPTTradingRangePlot.showBarBorder"];
+        lineStyle = [[coder decodeObjectOfClass:[CPTLineStyle class]
+                                         forKey:@"CPTTradingRangePlot.lineStyle"] copy];
+        increaseLineStyle = [[coder decodeObjectOfClass:[CPTLineStyle class]
+                                                 forKey:@"CPTTradingRangePlot.increaseLineStyle"] copy];
+        decreaseLineStyle = [[coder decodeObjectOfClass:[CPTLineStyle class]
+                                                 forKey:@"CPTTradingRangePlot.decreaseLineStyle"] copy];
+        increaseFill = [[coder decodeObjectOfClass:[CPTFill class]
+                                            forKey:@"CPTTradingRangePlot.increaseFill"] copy];
+        decreaseFill = [[coder decodeObjectOfClass:[CPTFill class]
+                                            forKey:@"CPTTradingRangePlot.decreaseFill"] copy];
+        plotStyle       = (CPTTradingRangePlotStyle)[coder decodeIntegerForKey : @"CPTTradingRangePlot.plotStyle"];
+        barWidth        = [coder decodeCGFloatForKey:@"CPTTradingRangePlot.barWidth"];
+        stickLength     = [coder decodeCGFloatForKey:@"CPTTradingRangePlot.stickLength"];
+        barCornerRadius = [coder decodeCGFloatForKey:@"CPTTradingRangePlot.barCornerRadius"];
+        showBarBorder   = [coder decodeBoolForKey:@"CPTTradingRangePlot.showBarBorder"];
 
         pointingDeviceDownIndex = NSNotFound;
     }
     return self;
+}
+
+/// @endcond
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
 }
 
 /// @endcond
@@ -368,9 +385,9 @@ static const CPTCoordinate dependentCoord   = CPTCoordinateY;
     else if ( [theDataSource respondsToSelector:@selector(increaseFillForTradingRangePlot:recordIndex:)] ) {
         needsLegendUpdate = YES;
 
-        id nilObject              = [CPTPlot nilData];
-        CPTMutableFillArray array = [[NSMutableArray alloc] initWithCapacity:indexRange.length];
-        NSUInteger maxIndex       = NSMaxRange(indexRange);
+        id nilObject               = [CPTPlot nilData];
+        CPTMutableFillArray *array = [[NSMutableArray alloc] initWithCapacity:indexRange.length];
+        NSUInteger maxIndex        = NSMaxRange(indexRange);
 
         for ( NSUInteger idx = indexRange.location; idx < maxIndex; idx++ ) {
             CPTFill *dataSourceFill = [theDataSource increaseFillForTradingRangePlot:self recordIndex:idx];
@@ -396,9 +413,9 @@ static const CPTCoordinate dependentCoord   = CPTCoordinateY;
     else if ( [theDataSource respondsToSelector:@selector(decreaseFillForTradingRangePlot:recordIndex:)] ) {
         needsLegendUpdate = YES;
 
-        id nilObject              = [CPTPlot nilData];
-        CPTMutableFillArray array = [[NSMutableArray alloc] initWithCapacity:indexRange.length];
-        NSUInteger maxIndex       = NSMaxRange(indexRange);
+        id nilObject               = [CPTPlot nilData];
+        CPTMutableFillArray *array = [[NSMutableArray alloc] initWithCapacity:indexRange.length];
+        NSUInteger maxIndex        = NSMaxRange(indexRange);
 
         for ( NSUInteger idx = indexRange.location; idx < maxIndex; idx++ ) {
             CPTFill *dataSourceFill = [theDataSource decreaseFillForTradingRangePlot:self recordIndex:idx];
@@ -449,9 +466,9 @@ static const CPTCoordinate dependentCoord   = CPTCoordinateY;
     else if ( [theDataSource respondsToSelector:@selector(lineStyleForTradingRangePlot:recordIndex:)] ) {
         needsLegendUpdate = YES;
 
-        id nilObject                   = [CPTPlot nilData];
-        CPTMutableLineStyleArray array = [[NSMutableArray alloc] initWithCapacity:indexRange.length];
-        NSUInteger maxIndex            = NSMaxRange(indexRange);
+        id nilObject                    = [CPTPlot nilData];
+        CPTMutableLineStyleArray *array = [[NSMutableArray alloc] initWithCapacity:indexRange.length];
+        NSUInteger maxIndex             = NSMaxRange(indexRange);
 
         for ( NSUInteger idx = indexRange.location; idx < maxIndex; idx++ ) {
             CPTLineStyle *dataSourceLineStyle = [theDataSource lineStyleForTradingRangePlot:self recordIndex:idx];
@@ -477,9 +494,9 @@ static const CPTCoordinate dependentCoord   = CPTCoordinateY;
     else if ( [theDataSource respondsToSelector:@selector(increaseLineStyleForTradingRangePlot:recordIndex:)] ) {
         needsLegendUpdate = YES;
 
-        id nilObject                   = [CPTPlot nilData];
-        CPTMutableLineStyleArray array = [[NSMutableArray alloc] initWithCapacity:indexRange.length];
-        NSUInteger maxIndex            = NSMaxRange(indexRange);
+        id nilObject                    = [CPTPlot nilData];
+        CPTMutableLineStyleArray *array = [[NSMutableArray alloc] initWithCapacity:indexRange.length];
+        NSUInteger maxIndex             = NSMaxRange(indexRange);
 
         for ( NSUInteger idx = indexRange.location; idx < maxIndex; idx++ ) {
             CPTLineStyle *dataSourceLineStyle = [theDataSource increaseLineStyleForTradingRangePlot:self recordIndex:idx];
@@ -505,9 +522,9 @@ static const CPTCoordinate dependentCoord   = CPTCoordinateY;
     else if ( [theDataSource respondsToSelector:@selector(decreaseLineStyleForTradingRangePlot:recordIndex:)] ) {
         needsLegendUpdate = YES;
 
-        id nilObject                   = [CPTPlot nilData];
-        CPTMutableLineStyleArray array = [[NSMutableArray alloc] initWithCapacity:indexRange.length];
-        NSUInteger maxIndex            = NSMaxRange(indexRange);
+        id nilObject                    = [CPTPlot nilData];
+        CPTMutableLineStyleArray *array = [[NSMutableArray alloc] initWithCapacity:indexRange.length];
+        NSUInteger maxIndex             = NSMaxRange(indexRange);
 
         for ( NSUInteger idx = indexRange.location; idx < maxIndex; idx++ ) {
             CPTLineStyle *dataSourceLineStyle = [theDataSource decreaseLineStyleForTradingRangePlot:self recordIndex:idx];
@@ -1132,7 +1149,7 @@ static const CPTCoordinate dependentCoord   = CPTCoordinateY;
     return 5;
 }
 
--(CPTNumberArray)fieldIdentifiers
+-(CPTNumberArray *)fieldIdentifiers
 {
     return @[@(CPTTradingRangePlotFieldX),
              @(CPTTradingRangePlotFieldOpen),
@@ -1141,9 +1158,9 @@ static const CPTCoordinate dependentCoord   = CPTCoordinateY;
              @(CPTTradingRangePlotFieldLow)];
 }
 
--(CPTNumberArray)fieldIdentifiersForCoordinate:(CPTCoordinate)coord
+-(CPTNumberArray *)fieldIdentifiersForCoordinate:(CPTCoordinate)coord
 {
-    CPTNumberArray result = nil;
+    CPTNumberArray *result = nil;
 
     switch ( coord ) {
         case CPTCoordinateX:
@@ -1205,13 +1222,13 @@ static const CPTCoordinate dependentCoord   = CPTCoordinateY;
 
     NSNumber *xValue = [self cachedNumberForField:CPTTradingRangePlotFieldX recordIndex:idx];
     NSNumber *yValue;
-    CPTNumberArray yValues = @[[self cachedNumberForField:CPTTradingRangePlotFieldOpen recordIndex:idx],
-                               [self cachedNumberForField:CPTTradingRangePlotFieldClose recordIndex:idx],
-                               [self cachedNumberForField:CPTTradingRangePlotFieldHigh recordIndex:idx],
-                               [self cachedNumberForField:CPTTradingRangePlotFieldLow recordIndex:idx]];
-    CPTNumberArray yValuesSorted = [yValues sortedArrayUsingSelector:@selector(compare:)];
+    CPTNumberArray *yValues = @[[self cachedNumberForField:CPTTradingRangePlotFieldOpen recordIndex:idx],
+                                [self cachedNumberForField:CPTTradingRangePlotFieldClose recordIndex:idx],
+                                [self cachedNumberForField:CPTTradingRangePlotFieldHigh recordIndex:idx],
+                                [self cachedNumberForField:CPTTradingRangePlotFieldLow recordIndex:idx]];
+    CPTNumberArray *yValuesSorted = [yValues sortedArrayUsingSelector:@selector(compare:)];
     if ( positiveDirection ) {
-        yValue = [yValuesSorted lastObject];
+        yValue = yValuesSorted.lastObject;
     }
     else {
         yValue = yValuesSorted[0];
@@ -1758,56 +1775,56 @@ static const CPTCoordinate dependentCoord   = CPTCoordinateY;
     [self cacheNumbers:newValues forField:CPTTradingRangePlotFieldClose];
 }
 
--(CPTFillArray)increaseFills
+-(CPTFillArray *)increaseFills
 {
     return [self cachedArrayForKey:CPTTradingRangePlotBindingIncreaseFills];
 }
 
--(void)setIncreaseFills:(CPTFillArray)newFills
+-(void)setIncreaseFills:(CPTFillArray *)newFills
 {
     [self cacheArray:newFills forKey:CPTTradingRangePlotBindingIncreaseFills];
     [self setNeedsDisplay];
 }
 
--(CPTFillArray)decreaseFills
+-(CPTFillArray *)decreaseFills
 {
     return [self cachedArrayForKey:CPTTradingRangePlotBindingDecreaseFills];
 }
 
--(void)setDecreaseFills:(CPTFillArray)newFills
+-(void)setDecreaseFills:(CPTFillArray *)newFills
 {
     [self cacheArray:newFills forKey:CPTTradingRangePlotBindingDecreaseFills];
     [self setNeedsDisplay];
 }
 
--(CPTLineStyleArray)lineStyles
+-(CPTLineStyleArray *)lineStyles
 {
     return [self cachedArrayForKey:CPTTradingRangePlotBindingLineStyles];
 }
 
--(void)setLineStyles:(CPTLineStyleArray)newLineStyles
+-(void)setLineStyles:(CPTLineStyleArray *)newLineStyles
 {
     [self cacheArray:newLineStyles forKey:CPTTradingRangePlotBindingLineStyles];
     [self setNeedsDisplay];
 }
 
--(CPTLineStyleArray)increaseLineStyles
+-(CPTLineStyleArray *)increaseLineStyles
 {
     return [self cachedArrayForKey:CPTTradingRangePlotBindingIncreaseLineStyles];
 }
 
--(void)setIncreaseLineStyles:(CPTLineStyleArray)newLineStyles
+-(void)setIncreaseLineStyles:(CPTLineStyleArray *)newLineStyles
 {
     [self cacheArray:newLineStyles forKey:CPTTradingRangePlotBindingIncreaseLineStyles];
     [self setNeedsDisplay];
 }
 
--(CPTLineStyleArray)decreaseLineStyles
+-(CPTLineStyleArray *)decreaseLineStyles
 {
     return [self cachedArrayForKey:CPTTradingRangePlotBindingDecreaseLineStyles];
 }
 
--(void)setDecreaseLineStyles:(CPTLineStyleArray)newLineStyles
+-(void)setDecreaseLineStyles:(CPTLineStyleArray *)newLineStyles
 {
     [self cacheArray:newLineStyles forKey:CPTTradingRangePlotBindingDecreaseLineStyles];
     [self setNeedsDisplay];

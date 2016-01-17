@@ -131,11 +131,11 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.bpm = stats["bpm"] as! [Double]
             self.time = stats["time"] as! [Double]
             
-            let scatterPlots = GraphPlotSetup().detailPlotSetup()
             let plotDataCreator = GraphDataSetup()
-            
-            self.plots["Main"] = ApercuPlot(plot: scatterPlots[0], data: plotDataCreator.createMainPlotData(self.bpm, time: self.time))
-            self.plots["Average"] = ApercuPlot(plot: scatterPlots[1], data: plotDataCreator.createAveragePlotData(self.avg, duration: self.duration))
+
+//            self.plots["Main"] = ApercuPlot(plot: scatterPlots[0], data: plotDataCreator.createMainPlotData(self.bpm, time: self.time))
+            self.updateMainPlot(self.time.first!, maxTime: self.time.last!);
+            self.plots["Average"] = ApercuPlot(plot: GraphPlotSetup().createAveragePlot(), data: plotDataCreator.createAveragePlotData(self.avg, duration: self.duration))
             
             // show plots
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -151,7 +151,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
                     GraphHeatmap().heatmapRawData(self.bpm, min: self.min, max: self.max, completion: { (colorNumber) -> Void in
                         
-                        self.limitBands = GraphPlotSetup().createHeatmapLimitBands(colorNumber, time: self.time, yMin: self.plotMin, yMax: self.plotMax) as! [CPTLimitBand]
+                        self.limitBands = GraphPlotSetup().createHeatmapLimitBands(colorNumber, time: self.time, yMin: self.plotMin, yMax: self.plotMax) 
                         
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.segment.setEnabled(true, forSegmentAtIndex: 1)
@@ -304,7 +304,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if plots["Active"] != nil {
             graph.removePlotWithIdentifier("Active")
         }
-//        plots["Active"] = nil
+    }
+
+    func updateMainPlot(minTime: Double, maxTime: Double) {
+        self.plots["Main"] = ApercuPlot(plot: GraphPlotSetup().createMainPlot(), data: GraphDataSetup().createMainPlotData(self.bpm, time: self.time, minTime: minTime, maxTime: maxTime))
     }
     
     // MARK: - Graph Delegates

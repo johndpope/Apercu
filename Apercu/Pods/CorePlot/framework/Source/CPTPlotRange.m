@@ -208,7 +208,7 @@
         locationDecimal = newLocation;
 
         if ( !self.inValueUpdate ) {
-            self.locationDouble = [[NSDecimalNumber decimalNumberWithDecimal:newLocation] doubleValue];
+            self.locationDouble = [NSDecimalNumber decimalNumberWithDecimal:newLocation].doubleValue;
         }
     }
 }
@@ -235,7 +235,7 @@
         lengthDecimal = newLength;
 
         if ( !self.inValueUpdate ) {
-            self.lengthDouble = [[NSDecimalNumber decimalNumberWithDecimal:newLength] doubleValue];
+            self.lengthDouble = [NSDecimalNumber decimalNumberWithDecimal:newLength].doubleValue;
         }
     }
 }
@@ -411,6 +411,18 @@
 
     return self;
 }
+
+#pragma mark -
+#pragma mark NSSecureCoding Methods
+
+/// @cond
+
++(BOOL)supportsSecureCoding
+{
+    return YES;
+}
+
+/// @endcond
 
 #pragma mark -
 #pragma mark Checking Containership
@@ -594,7 +606,7 @@
     NSDecimal myLength   = self.lengthDecimal;
 
     return [NSString stringWithFormat:@"<%@ {%@, %@}>",
-            [super description],
+            super.description,
             NSDecimalString(&myLocation, [NSLocale currentLocale]),
             NSDecimalString(&myLength, [NSLocale currentLocale])];
 }
