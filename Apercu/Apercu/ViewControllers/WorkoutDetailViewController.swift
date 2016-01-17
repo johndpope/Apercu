@@ -580,8 +580,13 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let info = sender.userInfo
         let keyboardDict = info![UIKeyboardFrameBeginUserInfoKey] as? NSValue
         let keyboardSize = keyboardDict?.CGRectValue()
+        
         let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize!.size.height, right: 0)
         scrollView.contentInset = edgeInsets
         scrollView.scrollIndicatorInsets = edgeInsets
+        
+        let bottomOffset = CGPointMake(0, scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom)
+        scrollView.setContentOffset(bottomOffset, animated: true)
+        
     }
 }
