@@ -570,10 +570,18 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if textView.isFirstResponder() {
             textView.resignFirstResponder()
         }
+        
+        let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        scrollView.contentInset = edgeInsets
+        scrollView.scrollIndicatorInsets = edgeInsets
     }
     
-    func showKeyboard(sender: AnyObject) {
-//        textView.becomeFirstResponder()
-//        showToolbar()
+    func showKeyboard(sender: NSNotification) {
+        let info = sender.userInfo
+        let keyboardDict = info![UIKeyboardFrameBeginUserInfoKey] as? NSValue
+        let keyboardSize = keyboardDict?.CGRectValue()
+        let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize!.size.height, right: 0)
+        scrollView.contentInset = edgeInsets
+        scrollView.scrollIndicatorInsets = edgeInsets
     }
 }
