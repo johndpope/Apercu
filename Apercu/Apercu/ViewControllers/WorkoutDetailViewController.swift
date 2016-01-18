@@ -21,14 +21,14 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private var backgroundView: UIView!
     @IBOutlet private var colorView: UIView!
     @IBOutlet private var segment: UISegmentedControl!
-    @IBOutlet private var mostActiveSwitch: UISwitch!
     @IBOutlet private var activeView: ActiveSlider!
-    @IBOutlet private var textView: UITextView!
+    @IBOutlet private var descTextView: UITextView!
+    @IBOutlet var titleTextView: UITextView!
+    
     @IBOutlet private var colorLabel: UILabel!
     
     @IBOutlet private var colorButton: UIButton!
     @IBOutlet private var categorizeButton: UIButton!
-    @IBOutlet private var optionsButton: UIButton!
     
     @IBOutlet private var tableViewHeight: NSLayoutConstraint!
     @IBOutlet private var textViewHeight: NSLayoutConstraint!
@@ -79,7 +79,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         navigationController?.navigationBar.translucent = false
         tabBarController!.tabBar.hidden = true
         categorizeButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        optionsButton.titleLabel?.adjustsFontSizeToFitWidth = true
         segment.setEnabled(false, forSegmentAtIndex: 1)
         activeView.delegate = self
         
@@ -102,8 +101,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         hostView.userInteractionEnabled = true
         hostView.allowPinchScaling = true
 
-        textView.delegate = self
-        textView.layer.cornerRadius = 6.0
+        descTextView.delegate = self
+        descTextView.layer.cornerRadius = 6.0
+        titleTextView.delegate = self
+        titleTextView.layer.cornerRadius = 6.0
         setDescriptionTextView()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideKeyboard:", name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showKeyboard:", name: UIKeyboardDidShowNotification, object: nil)
@@ -538,13 +539,13 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func setToPlaceholder() {
-        textView.text = placeHolderText
-        textView.textColor = UIColor.lightGrayColor()
+        descTextView.text = placeHolderText
+        descTextView.textColor = UIColor.lightGrayColor()
     }
     
     func setToDescription() {
-        textView.text = currentWorkout.workout?.desc
-        textView.textColor = UIColor.blackColor()
+        descTextView.text = currentWorkout.workout?.desc
+        descTextView.textColor = UIColor.blackColor()
     }
     
     // Mark: - Toolbar 
@@ -562,13 +563,13 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
         
         if sender.isKindOfClass(UITextView) {
-            textView.inputAccessoryView = toolbar
+            descTextView.inputAccessoryView = toolbar
         }
     }
     
     func hideKeyboard(sender: AnyObject) {
-        if textView.isFirstResponder() {
-            textView.resignFirstResponder()
+        if descTextView.isFirstResponder() {
+            descTextView.resignFirstResponder()
         }
         
         let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)

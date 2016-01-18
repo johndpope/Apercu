@@ -3513,7 +3513,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="956"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4th-Yp-K6t" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1014"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1105.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o5j-Bj-eMA" userLabel="Background View">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="310"/>
@@ -3537,7 +3537,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 </connections>
                                             </segmentedControl>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Add workout notes." translatesAutoresizingMaskIntoConstraints="NO" id="Wuk-7b-Qhz">
-                                                <rect key="frame" x="10" y="820" width="300" height="50"/>
+                                                <rect key="frame" x="10" y="911.5" width="300" height="50"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="5QM-hV-Bfx"/>
@@ -3546,7 +3546,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E4M-pN-yu4">
-                                                <rect key="frame" x="10" y="920" width="179" height="32"/>
+                                                <rect key="frame" x="10" y="1011.5" width="179" height="32"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <state key="normal" title="Categorize This Workout">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3556,23 +3556,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QWd-YO-3lV">
-                                                <rect key="frame" x="10" y="882" width="25" height="25"/>
+                                                <rect key="frame" x="10" y="973.5" width="25" height="25"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="25" id="OSN-Pu-eCh"/>
                                                     <constraint firstAttribute="height" constant="25" id="bkk-4s-G5e"/>
                                                 </constraints>
                                             </view>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Oi-4O-xSa">
-                                                <rect key="frame" x="10" y="967" width="106" height="32"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                <state key="normal" title="Graph Options">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="IWt-XB-ba5" kind="push" identifier="toGraphOptions" id="u6a-3n-B5r"/>
-                                                </connections>
-                                            </button>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="126" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9W9-Ce-ORB">
                                                 <rect key="frame" x="0.0" y="461" width="320" height="300"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3638,12 +3628,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notes:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NR6-hW-Dwh">
-                                                <rect key="frame" x="10" y="791" width="50" height="19.5"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GjJ-w0-X8y">
                                                 <rect key="frame" x="0.0" y="761" width="320" height="2"/>
                                                 <color key="backgroundColor" cyan="0.27000000000000002" magenta="0.0" yellow="0.63" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
@@ -3659,7 +3643,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Category Selected" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sGx-zM-aQX">
-                                                <rect key="frame" x="45" y="885" width="275" height="19.5"/>
+                                                <rect key="frame" x="45" y="976.5" width="275" height="19.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -3671,46 +3655,69 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                     <constraint firstAttribute="height" constant="88" id="sGd-Dk-u7n"/>
                                                 </constraints>
                                             </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D9q-DB-y3s">
+                                                <rect key="frame" x="10" y="783" width="38.5" height="19.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Not Title Selected" translatesAutoresizingMaskIntoConstraints="NO" id="cH7-UU-8mF">
+                                                <rect key="frame" x="10" y="812.5" width="300" height="50"/>
+                                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="aZ9-KQ-Dnf"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            </textView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Notes:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NR6-hW-Dwh">
+                                                <rect key="frame" x="10" y="884" width="50" height="19.5"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <constraints>
                                             <constraint firstItem="9W9-Ce-ORB" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" id="0Jn-dg-crD"/>
-                                            <constraint firstAttribute="bottom" secondItem="3Oi-4O-xSa" secondAttribute="bottom" constant="15" id="2tQ-hA-NOn"/>
                                             <constraint firstAttribute="trailing" secondItem="jBO-YV-GHd" secondAttribute="trailing" id="2tb-qz-R6V"/>
                                             <constraint firstItem="o5j-Bj-eMA" firstAttribute="top" secondItem="4th-Yp-K6t" secondAttribute="top" id="4GF-Vg-tqF"/>
                                             <constraint firstItem="9W9-Ce-ORB" firstAttribute="top" secondItem="jBO-YV-GHd" secondAttribute="bottom" id="4Qp-2j-Cmq"/>
                                             <constraint firstItem="aDM-Vz-sAY" firstAttribute="top" secondItem="o5j-Bj-eMA" secondAttribute="top" id="6FZ-Un-MRh"/>
-                                            <constraint firstItem="E4M-pN-yu4" firstAttribute="leading" secondItem="3Oi-4O-xSa" secondAttribute="leading" id="8b5-yL-2le"/>
                                             <constraint firstItem="GjJ-w0-X8y" firstAttribute="top" secondItem="9W9-Ce-ORB" secondAttribute="bottom" id="8k7-jr-Opi"/>
                                             <constraint firstItem="NR6-hW-Dwh" firstAttribute="leading" secondItem="QWd-YO-3lV" secondAttribute="leading" id="99H-Y0-QnP"/>
                                             <constraint firstItem="o5j-Bj-eMA" firstAttribute="centerX" secondItem="4th-Yp-K6t" secondAttribute="centerX" id="9C6-wY-5Vk"/>
+                                            <constraint firstItem="cH7-UU-8mF" firstAttribute="leading" secondItem="NR6-hW-Dwh" secondAttribute="leading" id="9aw-QL-X6c"/>
                                             <constraint firstItem="sGx-zM-aQX" firstAttribute="centerY" secondItem="QWd-YO-3lV" secondAttribute="centerY" id="CmS-Tk-fLb"/>
                                             <constraint firstAttribute="trailing" secondItem="9W9-Ce-ORB" secondAttribute="trailing" id="CnT-Q0-h4G"/>
                                             <constraint firstItem="NR6-hW-Dwh" firstAttribute="leading" secondItem="Wuk-7b-Qhz" secondAttribute="leading" id="CsO-Ng-F0u"/>
-                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3Oi-4O-xSa" secondAttribute="trailing" id="DVC-t0-blX"/>
-                                            <constraint firstItem="NR6-hW-Dwh" firstAttribute="top" secondItem="9W9-Ce-ORB" secondAttribute="bottom" constant="30" id="FUJ-Jp-TBA"/>
+                                            <constraint firstItem="D9q-DB-y3s" firstAttribute="top" secondItem="GjJ-w0-X8y" secondAttribute="bottom" constant="20" id="DIM-bQ-e3d"/>
                                             <constraint firstItem="sGx-zM-aQX" firstAttribute="leading" secondItem="QWd-YO-3lV" secondAttribute="trailing" constant="10" id="Ged-yX-6jB"/>
                                             <constraint firstAttribute="trailing" secondItem="Wuk-7b-Qhz" secondAttribute="trailing" constant="10" id="HaB-6g-tCR"/>
+                                            <constraint firstItem="D9q-DB-y3s" firstAttribute="leading" secondItem="NR6-hW-Dwh" secondAttribute="leading" id="JYd-nY-0FX"/>
                                             <constraint firstItem="XSf-ig-EW1" firstAttribute="top" secondItem="o5j-Bj-eMA" secondAttribute="bottom" constant="15" id="KUs-pD-xN9"/>
                                             <constraint firstItem="z1q-Rm-5BJ" firstAttribute="bottom" secondItem="jBO-YV-GHd" secondAttribute="bottom" constant="-10" id="KWN-c4-iqI"/>
                                             <constraint firstItem="z1q-Rm-5BJ" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" constant="10" id="Lrj-lF-eg7"/>
                                             <constraint firstItem="GjJ-w0-X8y" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" id="Ltw-78-tUG"/>
                                             <constraint firstItem="E4M-pN-yu4" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" constant="10" id="P9q-w1-aEs"/>
                                             <constraint firstAttribute="centerX" secondItem="o5j-Bj-eMA" secondAttribute="centerX" id="PCn-c8-YAE"/>
+                                            <constraint firstItem="NR6-hW-Dwh" firstAttribute="top" secondItem="cH7-UU-8mF" secondAttribute="bottom" constant="20" id="QSd-tZ-wyu"/>
                                             <constraint firstItem="o5j-Bj-eMA" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" id="S5m-Wp-Frq"/>
                                             <constraint firstAttribute="centerX" secondItem="XSf-ig-EW1" secondAttribute="centerX" id="SGQ-M9-4yn"/>
                                             <constraint firstAttribute="trailing" secondItem="GjJ-w0-X8y" secondAttribute="trailing" id="SNp-mj-fQn"/>
                                             <constraint firstAttribute="trailing" secondItem="sGx-zM-aQX" secondAttribute="trailing" id="Ueg-Ow-o4a"/>
                                             <constraint firstItem="o5j-Bj-eMA" firstAttribute="bottom" secondItem="aDM-Vz-sAY" secondAttribute="bottom" constant="10" id="Uu9-Q4-9iG"/>
+                                            <constraint firstItem="cH7-UU-8mF" firstAttribute="trailing" secondItem="Wuk-7b-Qhz" secondAttribute="trailing" id="Wtk-We-vWs"/>
                                             <constraint firstItem="z1q-Rm-5BJ" firstAttribute="top" secondItem="XSf-ig-EW1" secondAttribute="bottom" constant="10" id="ZLh-We-XFt"/>
                                             <constraint firstItem="sGx-zM-aQX" firstAttribute="top" secondItem="Wuk-7b-Qhz" secondAttribute="bottom" constant="15" id="bWx-Qx-Cft"/>
                                             <constraint firstAttribute="trailing" secondItem="z1q-Rm-5BJ" secondAttribute="trailing" constant="10" id="cao-y4-Afi"/>
                                             <constraint firstAttribute="trailing" secondItem="o5j-Bj-eMA" secondAttribute="trailing" id="coq-wC-CnB"/>
-                                            <constraint firstItem="3Oi-4O-xSa" firstAttribute="top" secondItem="E4M-pN-yu4" secondAttribute="bottom" constant="15" id="cxi-ue-oin"/>
                                             <constraint firstItem="aDM-Vz-sAY" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" constant="20" id="eho-hs-jyz"/>
                                             <constraint firstItem="Wuk-7b-Qhz" firstAttribute="top" secondItem="NR6-hW-Dwh" secondAttribute="bottom" constant="10" id="hoY-r8-dt1"/>
                                             <constraint firstItem="o5j-Bj-eMA" firstAttribute="width" secondItem="4th-Yp-K6t" secondAttribute="width" id="m6k-Ve-wGv"/>
                                             <constraint firstItem="Wuk-7b-Qhz" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" constant="10" id="mTq-f5-6J2"/>
+                                            <constraint firstItem="cH7-UU-8mF" firstAttribute="top" secondItem="D9q-DB-y3s" secondAttribute="bottom" constant="10" id="nFP-NV-hju"/>
                                             <constraint firstItem="aDM-Vz-sAY" firstAttribute="top" secondItem="4th-Yp-K6t" secondAttribute="top" id="p0q-uF-CDf"/>
+                                            <constraint firstAttribute="bottom" secondItem="E4M-pN-yu4" secondAttribute="bottom" constant="62" id="sT3-dC-tgX"/>
                                             <constraint firstAttribute="trailing" secondItem="aDM-Vz-sAY" secondAttribute="trailing" constant="20" id="snM-SX-a3K"/>
                                             <constraint firstItem="E4M-pN-yu4" firstAttribute="top" secondItem="sGx-zM-aQX" secondAttribute="bottom" constant="15" id="vWT-Tl-QMx"/>
                                             <constraint firstItem="jBO-YV-GHd" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" id="w7I-QM-eoq"/>
@@ -3753,18 +3760,18 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <outlet property="categorizeButton" destination="E4M-pN-yu4" id="XVw-0y-vca"/>
                         <outlet property="colorLabel" destination="sGx-zM-aQX" id="uu3-pk-fB0"/>
                         <outlet property="colorView" destination="QWd-YO-3lV" id="wmq-ti-ZsT"/>
+                        <outlet property="descTextView" destination="Wuk-7b-Qhz" id="pEe-xs-cYj"/>
                         <outlet property="graphConstraintBottom" destination="Uu9-Q4-9iG" id="eRC-LR-DwE"/>
                         <outlet property="graphConstraintHeight" destination="Oyc-8J-e6B" id="jH2-G5-U6n"/>
                         <outlet property="graphConstraintLeading" destination="eho-hs-jyz" id="hzi-bq-H2F"/>
                         <outlet property="graphConstraintTrailing" destination="snM-SX-a3K" id="3ly-Mt-tH9"/>
                         <outlet property="hostView" destination="aDM-Vz-sAY" id="BOJ-HV-WLa"/>
-                        <outlet property="optionsButton" destination="3Oi-4O-xSa" id="KWZ-Ci-e8F"/>
                         <outlet property="scrollView" destination="CLB-bf-Jpt" id="Mxd-Hf-rmL"/>
                         <outlet property="segment" destination="XSf-ig-EW1" id="zVr-8h-eIl"/>
                         <outlet property="tableView" destination="9W9-Ce-ORB" id="ULO-3y-lHo"/>
                         <outlet property="tableViewHeight" destination="Hvv-VU-J7d" id="4ZW-qg-1uc"/>
-                        <outlet property="textView" destination="Wuk-7b-Qhz" id="5vL-BS-hNg"/>
                         <outlet property="textViewHeight" destination="5QM-hV-Bfx" id="wyS-ee-058"/>
+                        <outlet property="titleTextView" destination="cH7-UU-8mF" id="H3l-7M-i3u"/>
                         <segue destination="Y9Y-gQ-wqf" kind="push" identifier="toFullGraph" id="BQA-YE-PQn"/>
                     </connections>
                 </viewController>
@@ -4045,23 +4052,23 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <viewControllerLayoutGuide type="bottom" id="kAn-sA-ugk"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="BjJ-yX-HzO">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="956"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LXV-kJ-h6T">
-                                <rect key="frame" x="0.0" y="64" width="320" height="892"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LXV-kJ-h6T">
+                                <rect key="frame" x="0.0" y="64" width="600" height="892"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hzN-kE-kdg">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="453"/>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hzN-kE-kdg">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="452.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Advanced options specifc to this workout:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3K-aE-6oR">
-                                                <rect key="frame" x="15" y="15" width="295" height="41"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Advanced options specifc to this workout:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3K-aE-6oR">
+                                                <rect key="frame" x="15" y="15" width="575" height="40.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="For some workouts it may be easier to visualize the data by using straight lines between points instead of a curved line." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfd-jx-Hl6">
-                                                <rect key="frame" x="15" y="105" width="290" height="62"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="For some workouts it may be easier to visualize the data by using straight lines between points instead of a curved line." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfd-jx-Hl6">
+                                                <rect key="frame" x="15" y="105" width="570" height="61.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -4072,14 +4079,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xvQ-1a-C6v">
-                                                <rect key="frame" x="251" y="64" width="51" height="31"/>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xvQ-1a-C6v">
+                                                <rect key="frame" x="531" y="64" width="51" height="31"/>
                                                 <connections>
                                                     <action selector="curveSwitchChanged:" destination="IWt-XB-ba5" eventType="valueChanged" id="IAU-hk-TLd"/>
                                                 </connections>
                                             </switch>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Showing data markers helps determine if there are large gaps between samples." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0i-F2-pjj">
-                                                <rect key="frame" x="15" y="233" width="290" height="62"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Showing data markers helps determine if there are large gaps between samples." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0i-F2-pjj">
+                                                <rect key="frame" x="15" y="233" width="570" height="61.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -4090,26 +4097,26 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Using averaged data will dampen highs and lows but may help see trends in some workouts" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTp-lg-6fB">
-                                                <rect key="frame" x="15" y="361" width="290" height="62"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Using averaged data will dampen highs and lows but may help see trends in some workouts" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTp-lg-6fB">
+                                                <rect key="frame" x="15" y="361" width="570" height="61.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use Averaged Data" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="48N-5H-nvu">
-                                                <rect key="frame" x="15" y="326" width="144" height="20"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Use Averaged Data" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="48N-5H-nvu">
+                                                <rect key="frame" x="15" y="326" width="144.5" height="19.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o9N-1w-pOc">
-                                                <rect key="frame" x="251" y="192" width="51" height="31"/>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o9N-1w-pOc">
+                                                <rect key="frame" x="531" y="192" width="51" height="31"/>
                                                 <connections>
                                                     <action selector="markerSwitchChanged:" destination="IWt-XB-ba5" eventType="valueChanged" id="D9b-jB-ypY"/>
                                                 </connections>
                                             </switch>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="aSy-t5-4ZG">
-                                                <rect key="frame" x="251" y="320" width="51" height="31"/>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="aSy-t5-4ZG">
+                                                <rect key="frame" x="531" y="320" width="51" height="31"/>
                                                 <connections>
                                                     <action selector="averageSwitchChanged:" destination="IWt-XB-ba5" eventType="valueChanged" id="pb6-xz-K5f"/>
                                                 </connections>
@@ -4145,15 +4152,15 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                             <constraint firstItem="xfd-jx-Hl6" firstAttribute="top" secondItem="lhF-d2-wSY" secondAttribute="bottom" constant="15" id="w2F-e4-VpD"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QM8-ry-RkW">
-                                        <rect key="frame" x="0.0" y="181" width="320" height="2"/>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QM8-ry-RkW">
+                                        <rect key="frame" x="0.0" y="181" width="600" height="2"/>
                                         <color key="backgroundColor" red="0.75686274509999996" green="0.85490196080000003" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="buo-A8-Bsp"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Y2-RY-w0U">
-                                        <rect key="frame" x="0.0" y="309" width="320" height="2"/>
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Y2-RY-w0U">
+                                        <rect key="frame" x="0.0" y="309" width="600" height="2"/>
                                         <color key="backgroundColor" red="0.75686274509999996" green="0.85490196080000003" blue="0.51372549020000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="2" id="sZF-v7-W29"/>

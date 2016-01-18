@@ -51,7 +51,9 @@ class CoreDataHelper {
         } catch {
             print("Unable to find workout!")
         }
-        
+    }
+    
+    func updateTitle(title: String, startDate: NSDate, endDate: NSDate) {
         
     }
 
