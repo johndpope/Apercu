@@ -14,6 +14,9 @@ import HealthKit
 class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CPTPlotSpaceDelegate, CPTPlotDataSource, ActiveSliderChanged, UITextViewDelegate {
     
     var currentWorkout: ApercuWorkout!
+    var startDate: NSDate!
+    var coreDataWorkout: Workout?
+    var healthKitWorkout: HKWorkout?
     
     @IBOutlet var hostView: CPTGraphHostingView!
     @IBOutlet var scrollView: CustomScrollView!
@@ -75,6 +78,9 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        coreDataWorkout = coreDataHelper.getCoreDataWorkout(startDate)
+        currentWorkout = ApercuWorkout(healthKitWorkout: healthKitWorkout, workout: coreDataWorkout)
         
         navigationController?.navigationBar.translucent = false
         tabBarController!.tabBar.hidden = true

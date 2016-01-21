@@ -57,5 +57,16 @@ class CoreDataHelper {
         
     }
 
+    func getCoreDataWorkout(start: NSDate) -> Workout? {
+        let fetchRequest = NSFetchRequest(entityName: "Workout")
+        fetchRequest.predicate = NSPredicate(format: "start = %@", start)
+        
+        do {
+            let fetchResults = try context.executeFetchRequest(fetchRequest)
+            return fetchResults.first as? Workout
+        } catch {
+            return nil
+        }
+    }
 }
 

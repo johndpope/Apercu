@@ -128,6 +128,8 @@ class WorkoutTableViewController: UITableViewController {
         if segue.identifier == "toDetailViewFromSingle" {
             let destinationVC = segue.destinationViewController as! WorkoutDetailViewController
             destinationVC.currentWorkout = workoutArray[selectedIndex]
+            destinationVC.startDate = workoutArray[selectedIndex].getStartDate()
+            destinationVC.healthKitWorkout = workoutArray[selectedIndex].healthKitWorkout
         }
     }
     
