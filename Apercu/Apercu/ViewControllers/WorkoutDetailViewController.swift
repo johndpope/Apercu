@@ -41,6 +41,9 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private var graphConstraintLeading: NSLayoutConstraint!
     @IBOutlet private var graphConstraintTrailing: NSLayoutConstraint!
     
+    @IBOutlet var descTextViewHeight: NSLayoutConstraint!
+    @IBOutlet var titleTextViewHeight: NSLayoutConstraint!
+    
     var plots = [String: ApercuPlot]()
     var limitBands: [CPTLimitBand]!
     var workoutStats: [String: AnyObject]!
@@ -554,6 +557,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             descTextView.text = descPlaceHolder
         }
         textView.textColor = UIColor.lightGrayColor()
+        updateTextViewHeight(textView)
     }
     
     func setToText(textView: UITextView) {
@@ -563,6 +567,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             descTextView.text = currentWorkout.workout?.desc
         }
         textView.textColor = UIColor.blackColor()
+        updateTextViewHeight(textView )
     }
     
     func isPlaceHolder(textView: UITextView) -> Bool {
@@ -570,6 +575,21 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
            return textView.text == titlePlaceHolder
         } else {
             return textView.text == descPlaceHolder
+        }
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        updateTextViewHeight(textView)
+    }
+    
+    func updateTextViewHeight(textView: UITextView) {
+        let width = textView.frame.width
+        let newSize = textView.sizeThatFits(CGSizeMake(width, CGFloat.max))
+        
+        if textView == descTextView {
+            descTextViewHeight.constant = newSize.height
+        } else {
+            titleTextViewHeight.constant = newSize.height
         }
     }
     

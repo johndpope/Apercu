@@ -3761,6 +3761,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <outlet property="colorLabel" destination="sGx-zM-aQX" id="uu3-pk-fB0"/>
                         <outlet property="colorView" destination="QWd-YO-3lV" id="wmq-ti-ZsT"/>
                         <outlet property="descTextView" destination="Wuk-7b-Qhz" id="pEe-xs-cYj"/>
+                        <outlet property="descTextViewHeight" destination="5QM-hV-Bfx" id="tN2-0A-f4X"/>
                         <outlet property="graphConstraintBottom" destination="Uu9-Q4-9iG" id="eRC-LR-DwE"/>
                         <outlet property="graphConstraintHeight" destination="Oyc-8J-e6B" id="jH2-G5-U6n"/>
                         <outlet property="graphConstraintLeading" destination="eho-hs-jyz" id="hzi-bq-H2F"/>
@@ -3772,6 +3773,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <outlet property="tableViewHeight" destination="Hvv-VU-J7d" id="4ZW-qg-1uc"/>
                         <outlet property="textViewHeight" destination="5QM-hV-Bfx" id="wyS-ee-058"/>
                         <outlet property="titleTextView" destination="cH7-UU-8mF" id="H3l-7M-i3u"/>
+                        <outlet property="titleTextViewHeight" destination="aZ9-KQ-Dnf" id="eZI-Gq-4t5"/>
                         <segue destination="Y9Y-gQ-wqf" kind="push" identifier="toFullGraph" id="BQA-YE-PQn"/>
                     </connections>
                 </viewController>
