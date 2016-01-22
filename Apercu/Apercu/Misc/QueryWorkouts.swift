@@ -14,7 +14,7 @@ import CoreData
 class QueryHealthKitWorkouts {
     var healthStore: HealthKit.HKHealthStore!
     let sampleType = HKSampleType.workoutType()
-    let descendingSort = NSSortDescriptor.init(key: HKSampleSortIdentifierStartDate, ascending: false)
+    let descendingSort = NSSortDescriptor.init(key: HKSampleSortIdentifierStartDate, ascending: true)
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
     func getAllWorkouts(completion: (result: [ApercuWorkout]?) -> Void) {
@@ -86,7 +86,7 @@ class QueryHealthKitWorkouts {
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if workoutResults != nil {
-                    completion(result: combinedWorkouts)
+                    completion(result: combinedWorkouts.reverse())
                 } else {
                     completion(result: nil)
                 }
@@ -194,7 +194,7 @@ class QueryHealthKitWorkouts {
         let managedContext = appDelegate.managedObjectContext
         
         let fetchRequest = NSFetchRequest(entityName: "Workout")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "start", ascending: false)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "start", ascending: true)]
         
         do {
             let workoutArray = try managedContext.executeFetchRequest(fetchRequest) as! [Workout]

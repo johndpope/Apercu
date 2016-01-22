@@ -74,7 +74,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var mostActiveInProgress = false
     var averagingInProgress = false
     
-    var placeHolderText = "Add workout notes..."
+    var titlePlaceHolder = "Add title.."
+    var descPlaceHolder = "Add workout notes.."
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -509,16 +510,18 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func setTitle() {
         if currentWorkout.workout?.title != nil {
             title = currentWorkout.workout?.title
+            setToText(titleTextView)
         } else {
             title = stringFromDate(currentWorkout.getStartDate()!)
+            setToPlaceholder(titleTextView)
         }
     }
     
     func setDescriptionTextView() {
-        if currentWorkout.workout?.desc != nil {
-            setToDescription()
+        if currentWorkout.workout?.desc != nil && currentWorkout.workout?.desc != "" {
+            setToText(descTextView)
         } else {
-            setToPlaceholder()
+            setToPlaceholder(descTextView)
         }
     }
     
@@ -530,7 +533,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
-        if textView.text == placeHolderText {
+        if isPlaceHolder(textView) {
             textView.text = ""
             textView.textColor = UIColor.blackColor()
         }
@@ -540,18 +543,34 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         coreDataHelper.updateTextDescription(textView.text, startDate: currentWorkout.getStartDate()!, endDate: currentWorkout.getEndDate()!)
         
         if textView.text == "" {
-            setToPlaceholder()
+            setToPlaceholder(textView)
         }
     }
     
-    func setToPlaceholder() {
-        descTextView.text = placeHolderText
-        descTextView.textColor = UIColor.lightGrayColor()
+    func setToPlaceholder(textView: UITextView) {
+        if textView == titleTextView {
+            titleTextView.text = titlePlaceHolder
+        } else {
+            descTextView.text = descPlaceHolder
+        }
+        textView.textColor = UIColor.lightGrayColor()
     }
     
-    func setToDescription() {
-        descTextView.text = currentWorkout.workout?.desc
-        descTextView.textColor = UIColor.blackColor()
+    func setToText(textView: UITextView) {
+        if textView == titleTextView {
+            titleTextView.text = currentWorkout.workout?.title
+        } else {
+            descTextView.text = currentWorkout.workout?.desc
+        }
+        textView.textColor = UIColor.blackColor()
+    }
+    
+    func isPlaceHolder(textView: UITextView) -> Bool {
+        if textView == titleTextView {
+           return textView.text == titlePlaceHolder
+        } else {
+            return textView.text == descPlaceHolder
+        }
     }
     
     // Mark: - Toolbar 
