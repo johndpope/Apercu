@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     var healthStore: HealthKit.HKHealthStore!
+    var quickAction: String? = nil;
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -23,11 +24,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             healthStore = nil
         }
+        
+        if quickAction != nil {
+            print(quickAction)
+        } else {
+            print("ACTION IS NULL")
+        }
+        
+        quickAction = nil;
 
         CategorySetup().initializeCategoryData()
         
        
         return true
+    }
+    
+    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+        
+        if shortcutItem.type == "com.apercu.apercu-new-workout" {
+            
+        } else if shortcutItem.type == "com.apercu.apercu-compare" {
+            
+        } else if shortcutItem.type == "com.apercu.apercu-most-recent" {
+            
+        }
+        quickAction = shortcutItem.type
+
     }
     
     func applicationWillResignActive(application: UIApplication) {

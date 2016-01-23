@@ -11,6 +11,7 @@
 		66D922BD695B3D5F1A6A0031 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
 		66D92F16487AF0F7322B45B4 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
 		66D92FBC1A70FD594DBD8028 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
+		8B1B56F91C530B24003C75CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B1B56F81C530B24003C75CD /* Images.xcassets */; };
 		8B1F79841C3367FF00B92116 /* GraphAxisSetUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F79831C3367FF00B92116 /* GraphAxisSetUp.swift */; };
 		8B1F79881C336E1400B92116 /* WorkoutDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F79871C336E1400B92116 /* WorkoutDetailViewController.swift */; };
 		8B2D5F511C3220A900F7A369 /* CategoriesSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D5F501C3220A900F7A369 /* CategoriesSingleton.swift */; };
@@ -91,6 +92,7 @@
 		46E0FBFC3ABBE44CC5C1E9D6 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BD13D29264AAFFE9CA3BA73 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewController.swift; sourceTree = "<group>"; };
+		8B1B56F81C530B24003C75CD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Images/Images.xcassets; sourceTree = "<group>"; };
 		8B1F79831C3367FF00B92116 /* GraphAxisSetUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphAxisSetUp.swift; path = Apercu/Graph/GraphAxisSetUp.swift; sourceTree = SOURCE_ROOT; };
 		8B1F79871C336E1400B92116 /* WorkoutDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutDetailViewController.swift; sourceTree = "<group>"; };
 		8B2D5F501C3220A900F7A369 /* CategoriesSingleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoriesSingleton.swift; path = ../Misc/CategoriesSingleton.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 				8B5C0C521C2D7346000B236A /* compareTabBar2@2x.png */,
 				8B5C0C4D1C2D7329000B236A /* singleTabBar3.png */,
 				8B5C0C4E1C2D7329000B236A /* singleTabBar3@2x.png */,
+				8B1B56F81C530B24003C75CD /* Images.xcassets */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -496,6 +499,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B1B56F91C530B24003C75CD /* Images.xcassets in Resources */,
 				8B5C0C501C2D7329000B236A /* singleTabBar3@2x.png in Resources */,
 				8B6573461C2A1F2F00B9B1E9 /* LaunchScreen.storyboard in Resources */,
 				8B5C0C4F1C2D7329000B236A /* singleTabBar3.png in Resources */,

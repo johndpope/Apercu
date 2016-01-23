@@ -2,6 +2,39 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>NewQuick</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>New Workout</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.apercu.apercu-new-workout</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>Add New Workout</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>CompareQuick</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Comparison</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.apercu.apercu-compare</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>Most Recent Comparison</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>MostRecentQuick</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Most Recent</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.apercu.apercu-most-recent</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>Most Recent Workout</string>
+		</dict>
+	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
