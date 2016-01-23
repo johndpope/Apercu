@@ -11,16 +11,21 @@ class WorkoutTableViewController: UITableViewController {
     
     @IBOutlet weak private var workoutTableView: UITableView!
     @IBOutlet weak private var workoutButton: UIBarButtonItem!
+    @IBOutlet var workoutRefreshControl: UIRefreshControl!
     
     var workoutArray: [ApercuWorkout]!
+    var selectedWorkout: ApercuWorkout!
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     let dateFormatter = NSDateFormatter()
     
     var isFirstLoad = true
     var selectedIndex: Int!
+    var appDelegate: AppDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         
         dateFormatter.dateStyle = .MediumStyle
         dateFormatter.timeStyle = .ShortStyle
@@ -32,7 +37,7 @@ class WorkoutTableViewController: UITableViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        let didGetHealthKitAuthorization = HealthKitSetup().setupAuthorization { (didSucceed) -> Void in
+        HealthKitSetup().setupAuthorization { (didSucceed) -> Void in
             
             if !didSucceed {
                 let alert = UIAlertController(title: "Error", message: "Unable to access HealthKit", preferredStyle: .Alert)
@@ -40,8 +45,13 @@ class WorkoutTableViewController: UITableViewController {
                 self.presentViewController(alert, animated: true, completion: nil)
                 return
             }
+            
+            self.loadWorkouts()
         }
         
+    }
+    
+    func loadWorkouts() {
         QueryHealthKitWorkouts().getAllWorkouts { (result) -> Void in
             self.workoutArray = result
             self.tableView.allowsMultipleSelection = true
@@ -53,12 +63,24 @@ class WorkoutTableViewController: UITableViewController {
                 self.tableView.reloadData()
                 self.isFirstLoad = false
             }
+            
+            if self.workoutRefreshControl.refreshing {
+                self.workoutRefreshControl.endRefreshing()
+            }
+            
+            if self.appDelegate.quickAction == "com.apercu.apercu-most-recent" {
+                self.selectedIndex = 0
+                self.performSegueWithIdentifier("toDetailViewFromSingle", sender: self)
+                self.appDelegate.quickAction = nil
+            }
         }
+        
     }
     
     
     @IBAction func refresh(sender: UIKit.UIRefreshControl) {
-        
+        loadWorkouts()
+        workoutRefreshControl.beginRefreshing()
     }
     
     // MARK: - TableView Stuff
@@ -124,7 +146,7 @@ class WorkoutTableViewController: UITableViewController {
     
     // Mark: - Segue & Transition
     
-   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "toDetailViewFromSingle" {
             let destinationVC = segue.destinationViewController as! WorkoutDetailViewController
             destinationVC.currentWorkout = workoutArray[selectedIndex]

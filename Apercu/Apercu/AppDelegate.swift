@@ -25,31 +25,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             healthStore = nil
         }
         
-        if quickAction != nil {
-            print(quickAction)
-        } else {
-            print("ACTION IS NULL")
-        }
-        
-        quickAction = nil;
-
         CategorySetup().initializeCategoryData()
+        
+        if let shortcut = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+            handleShortcut(shortcut)
+        } else {
+            quickAction = nil
+        }
         
        
         return true
     }
     
-    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
-        
-        if shortcutItem.type == "com.apercu.apercu-new-workout" {
+    func handleShortcut(item: UIApplicationShortcutItem) {
+        if item.type == "com.apercu.apercu-new-workout" {
             
-        } else if shortcutItem.type == "com.apercu.apercu-compare" {
+        } else if item.type == "com.apercu.apercu-compare" {
             
-        } else if shortcutItem.type == "com.apercu.apercu-most-recent" {
+        } else if item.type == "com.apercu.apercu-most-recent" {
             
         }
+        
+        if let viewController = self.window?.rootViewController {
+            let storyboard = viewController.storyboard
+            self.window?.rootViewController = storyboard?.instantiateInitialViewController()
+        }
+    }
+    
+    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+        handleShortcut(shortcutItem)
         quickAction = shortcutItem.type
-
     }
     
     func applicationWillResignActive(application: UIApplication) {

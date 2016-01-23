@@ -77,6 +77,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var mostActiveInProgress = false
     var averagingInProgress = false
     
+    var nextBarButton: UIBarButtonItem!
     var titlePlaceHolder = "Add title.."
     var descPlaceHolder = "Add workout notes.."
     
@@ -110,7 +111,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         hostView.hostedGraph = graph
         hostView.userInteractionEnabled = true
         hostView.allowPinchScaling = true
-
+        
         descTextView.delegate = self
         descTextView.layer.cornerRadius = 6.0
         titleTextView.delegate = self
@@ -543,7 +544,13 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func textViewDidEndEditing(textView: UITextView) {
-        coreDataHelper.updateTextDescription(textView.text, startDate: currentWorkout.getStartDate()!, endDate: currentWorkout.getEndDate()!)
+        if !isPlaceHolder(textView) {
+            if textView == titleTextView {
+                coreDataHelper.updateTitle(textView.text, startDate: currentWorkout.getStartDate()!, endDate: currentWorkout.getEndDate()!)
+            } else {
+                coreDataHelper.updateTextDescription(textView.text, startDate: currentWorkout.getStartDate()!, endDate: currentWorkout.getEndDate()!)
+            }
+        }
         
         if textView.text == "" {
             setToPlaceholder(textView)
@@ -572,7 +579,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func isPlaceHolder(textView: UITextView) -> Bool {
         if textView == titleTextView {
-           return textView.text == titlePlaceHolder
+            return textView.text == titlePlaceHolder
         } else {
             return textView.text == descPlaceHolder
         }
@@ -593,28 +600,43 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-    // Mark: - Toolbar 
+    // Mark: - Toolbar
     
-    func showToolbar(sender: AnyObject) {
+    func showToolbar(sender: UITextView) {
         if toolbar == nil {
             toolbar = UIToolbar()
             toolbar.sizeToFit()
+            nextBarButton = UIBarButtonItem(title: "Next", style: .Plain, target: self, action: "nextPressed:")
             let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
             let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "hideKeyboard:")
             
-            toolbar.setItems([spacer, doneButton], animated: false)
+            toolbar.setItems([nextBarButton, spacer, doneButton], animated: false)
             toolbar.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin]
             toolbar.tintColor = UIColor.redColor()
         }
         
-        if sender.isKindOfClass(UITextView) {
+        if sender == titleTextView {
+            titleTextView.inputAccessoryView = toolbar
+        } else {
             descTextView.inputAccessoryView = toolbar
+        }
+    }
+    
+    func nextPressed    (sender: UIBarButtonItem) {
+        if titleTextView.isFirstResponder() {
+            nextBarButton.title = "Prev"
+            descTextView.becomeFirstResponder()
+        } else {
+            nextBarButton.title = "Next"
+            titleTextView.becomeFirstResponder()
         }
     }
     
     func hideKeyboard(sender: AnyObject) {
         if descTextView.isFirstResponder() {
             descTextView.resignFirstResponder()
+        } else {
+            titleTextView.resignFirstResponder()
         }
         
         let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)

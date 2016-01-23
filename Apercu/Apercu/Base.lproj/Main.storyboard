@@ -355,7 +355,7 @@
                                 <rect key="frame" x="0.0" y="22" width="320" height="184"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WTa-EI-cXs" id="jYo-6r-jvq">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="183.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="184"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" placeholderIntrinsicWidth="304" placeholderIntrinsicHeight="20" text="Can I make the graph larger?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vUw-2v-dpc">
@@ -391,7 +391,7 @@
                                 <rect key="frame" x="0.0" y="206" width="320" height="184"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dt1-9Y-4MV" id="B5h-eU-kI8">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="183.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="184"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="What do the colors mean on the normal heart rate graph?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiH-10-UVR">
@@ -451,7 +451,7 @@
                                 <rect key="frame" x="0.0" y="390" width="320" height="184"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qVB-Xt-4Hy" id="8Ki-oq-EEp">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="183.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="184"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ydl-qe-XeA">
@@ -555,7 +555,7 @@
                                 <rect key="frame" x="0.0" y="574" width="320" height="184"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="o0M-pC-EJt" id="yR1-M2-oIH">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="183.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="184"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="What third party libraries does this use?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4px-Ru-Ks8">
@@ -1283,7 +1283,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                         <rect key="frame" x="0.0" y="92" width="600" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YYo-Kn-V4v" id="hJQ-VJ-nCa">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Luh-3j-Vsw" userLabel="Edit">
@@ -1861,7 +1861,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                                 <rect key="frame" x="0.0" y="28" width="600" height="44"/>
                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tdU-Qg-ET8" id="KGm-vf-QdZ">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZDK-XT-s2d">
@@ -3417,7 +3417,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                 <rect key="frame" x="0.0" y="86" width="600" height="191"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OoG-gd-dMz" id="69b-Us-iEF">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="190.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="191"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Workout Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LKh-kl-i97">
@@ -3489,8 +3489,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                     </refreshControl>
                     <connections>
                         <outlet property="workoutButton" destination="4VR-fN-k50" id="ZzP-qG-vdE"/>
+                        <outlet property="workoutRefreshControl" destination="Gyg-Db-Ydh" id="SUW-Kk-POC"/>
                         <outlet property="workoutTableView" destination="EQL-Ch-Ilx" id="dcm-el-WS5"/>
-                        <segue destination="urD-Ty-FIU" kind="show" identifier="toDetailViewFromSingle" id="k4U-7I-xmT"/>
+                        <segue destination="urD-Ty-FIU" kind="show" identifier="toDetailViewFromSingle" id="Xhu-GN-mNs"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xra-rK-AaG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3513,7 +3514,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="956"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4th-Yp-K6t" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1105.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="1069"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o5j-Bj-eMA" userLabel="Background View">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="310"/>
@@ -3537,7 +3538,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 </connections>
                                             </segmentedControl>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Add workout notes." translatesAutoresizingMaskIntoConstraints="NO" id="Wuk-7b-Qhz">
-                                                <rect key="frame" x="10" y="911.5" width="300" height="50"/>
+                                                <rect key="frame" x="10" y="912" width="300" height="50"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="5QM-hV-Bfx"/>
@@ -3546,7 +3547,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E4M-pN-yu4">
-                                                <rect key="frame" x="10" y="1011.5" width="179" height="32"/>
+                                                <rect key="frame" x="10" y="1012" width="179" height="32"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <state key="normal" title="Categorize This Workout">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3556,7 +3557,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QWd-YO-3lV">
-                                                <rect key="frame" x="10" y="973.5" width="25" height="25"/>
+                                                <rect key="frame" x="10" y="975" width="25" height="25"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="25" id="OSN-Pu-eCh"/>
@@ -3574,11 +3575,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                         <rect key="frame" x="0.0" y="22" width="320" height="126"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xjG-iu-tbW" id="y8X-Da-WKx">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="125.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="126"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bxe-8W-HE8">
-                                                                    <rect key="frame" x="8" y="52" width="42" height="20.5"/>
+                                                                    <rect key="frame" x="8" y="52" width="42" height="21"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -3643,7 +3644,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Category Selected" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sGx-zM-aQX">
-                                                <rect key="frame" x="45" y="976.5" width="275" height="19.5"/>
+                                                <rect key="frame" x="45" y="977" width="275" height="20"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -3656,13 +3657,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 </constraints>
                                             </view>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D9q-DB-y3s">
-                                                <rect key="frame" x="10" y="783" width="38.5" height="19.5"/>
+                                                <rect key="frame" x="10" y="783" width="39" height="20"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Not Title Selected" translatesAutoresizingMaskIntoConstraints="NO" id="cH7-UU-8mF">
-                                                <rect key="frame" x="10" y="812.5" width="300" height="50"/>
+                                                <rect key="frame" x="10" y="813" width="300" height="50"/>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="aZ9-KQ-Dnf"/>
@@ -3671,7 +3672,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Notes:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NR6-hW-Dwh">
-                                                <rect key="frame" x="10" y="884" width="50" height="19.5"/>
+                                                <rect key="frame" x="10" y="884" width="50" height="20"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -3717,7 +3718,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                             <constraint firstItem="Wuk-7b-Qhz" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" constant="10" id="mTq-f5-6J2"/>
                                             <constraint firstItem="cH7-UU-8mF" firstAttribute="top" secondItem="D9q-DB-y3s" secondAttribute="bottom" constant="10" id="nFP-NV-hju"/>
                                             <constraint firstItem="aDM-Vz-sAY" firstAttribute="top" secondItem="4th-Yp-K6t" secondAttribute="top" id="p0q-uF-CDf"/>
-                                            <constraint firstAttribute="bottom" secondItem="E4M-pN-yu4" secondAttribute="bottom" constant="62" id="sT3-dC-tgX"/>
+                                            <constraint firstAttribute="bottom" secondItem="E4M-pN-yu4" secondAttribute="bottom" constant="25" id="sT3-dC-tgX"/>
                                             <constraint firstAttribute="trailing" secondItem="aDM-Vz-sAY" secondAttribute="trailing" constant="20" id="snM-SX-a3K"/>
                                             <constraint firstItem="E4M-pN-yu4" firstAttribute="top" secondItem="sGx-zM-aQX" secondAttribute="bottom" constant="15" id="vWT-Tl-QMx"/>
                                             <constraint firstItem="jBO-YV-GHd" firstAttribute="leading" secondItem="4th-Yp-K6t" secondAttribute="leading" id="w7I-QM-eoq"/>
@@ -3822,7 +3823,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                         <rect key="frame" x="0.0" y="22" width="320" height="44"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ckk-h0-PXg" id="6ZZ-VH-68d">
-                                                            <rect key="frame" x="0.0" y="0.0" width="281" height="43.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="281" height="44"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qgc-vl-CLG">
@@ -4061,16 +4062,16 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                 <rect key="frame" x="0.0" y="64" width="600" height="892"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hzN-kE-kdg">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="452.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="453"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Advanced options specifc to this workout:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q3K-aE-6oR">
-                                                <rect key="frame" x="15" y="15" width="575" height="40.5"/>
+                                                <rect key="frame" x="15" y="15" width="575" height="41"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="For some workouts it may be easier to visualize the data by using straight lines between points instead of a curved line." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xfd-jx-Hl6">
-                                                <rect key="frame" x="15" y="105" width="570" height="61.5"/>
+                                                <rect key="frame" x="15" y="105" width="570" height="62"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -4088,7 +4089,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 </connections>
                                             </switch>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Showing data markers helps determine if there are large gaps between samples." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0i-F2-pjj">
-                                                <rect key="frame" x="15" y="233" width="570" height="61.5"/>
+                                                <rect key="frame" x="15" y="233" width="570" height="62"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -4100,13 +4101,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Using averaged data will dampen highs and lows but may help see trends in some workouts" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XTp-lg-6fB">
-                                                <rect key="frame" x="15" y="361" width="570" height="61.5"/>
+                                                <rect key="frame" x="15" y="361" width="570" height="62"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Use Averaged Data" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="48N-5H-nvu">
-                                                <rect key="frame" x="15" y="326" width="144.5" height="19.5"/>
+                                                <rect key="frame" x="15" y="326" width="145" height="20"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -4274,7 +4275,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                         <rect key="frame" x="0.0" y="22" width="600" height="164"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="z4z-8m-7bz" id="bS2-3g-wgK">
-                                                            <rect key="frame" x="0.0" y="0.0" width="567" height="163.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="567" height="164"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CkU-Rw-9hg">
@@ -4517,7 +4518,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                         <rect key="frame" x="0.0" y="22" width="320" height="95"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YZh-A1-wV2" id="Pmq-IH-3c2">
-                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="94.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="95"/>
                                                             <autoresizingMask key="autoresizingMask"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LUd-Qj-fuh">
@@ -4766,7 +4767,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                         <rect key="frame" x="0.0" y="22" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vOI-rf-pql" id="ueX-4A-QDy">
-                                            <rect key="frame" x="0.0" y="0.0" width="561" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="561" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xs8-Kp-Ef0">
@@ -4864,7 +4865,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                         <rect key="frame" x="0.0" y="22" width="600" height="147"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="a9c-By-s8t" id="Ec5-ot-O1y">
-                                            <rect key="frame" x="0.0" y="0.0" width="567" height="146.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="147"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" misplaced="YES" text="Workout Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dZ2-xa-buq">
@@ -5536,11 +5537,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <image name="singleTabBar3.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="f2V-th-zY7"/>
-        <segue reference="k4U-7I-xmT"/>
         <segue reference="c5j-j5-e5s"/>
-        <segue reference="lV2-Wb-bA2"/>
+        <segue reference="Xhu-GN-mNs"/>
+        <segue reference="f2V-th-zY7"/>
         <segue reference="BQA-YE-PQn"/>
+        <segue reference="lV2-Wb-bA2"/>
         <segue reference="goZ-7M-4CC"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.49019607843137253" blue="0.64313725490196072" alpha="1" colorSpace="calibratedRGB"/>

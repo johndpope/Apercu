@@ -40,7 +40,7 @@ class CoreDataHelper {
                 let newWorkout = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: context)
                 newWorkout.setValue(startDate, forKey: "start")
                 newWorkout.setValue(endDate, forKey: "end")
-                newWorkout.setValue(text, forKey: "desc")
+                newWorkout.setValue(text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()), forKey: "desc")
                 
                 do {
                     try context.save()
@@ -74,7 +74,7 @@ class CoreDataHelper {
                 let newWorkout = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: context)
                 newWorkout.setValue(startDate, forKey: "start")
                 newWorkout.setValue(endDate, forKey: "end")
-                newWorkout.setValue(title, forKey: "title")
+                newWorkout.setValue(title.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()), forKey: "title")
                 
                 do {
                     try context.save()
