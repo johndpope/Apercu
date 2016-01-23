@@ -16,7 +16,7 @@ class GraphTableStrings {
     var headerAttributedStrings: [NSAttributedString]!
     
     init() {
-        headerStrings = ["Duration:", "Moderate Activity:", "High Activity:", "High / Moderate Ratio:", "Distance:", "Calories:", "Activity Type:"]
+        headerStrings = ["Start Time:", "Duration:", "Moderate Activity:", "High Activity:", "High / Moderate Ratio:", "Distance:", "Calories:", "Activity Type:"]
         headerAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
         
         headerAttributedStrings = [NSAttributedString]()
@@ -35,28 +35,30 @@ class GraphTableStrings {
         
         var valueStrings = [NSAttributedString]()
         
-        let durationString = String(format: "%@ min", secondsToString(values[0]))
-        let moderateString = String(format: "%@ min", secondsToString(values[1]))
-        let highString = String(format: "%@ min", secondsToString(values[2]))
         
+        let dateString = stringFromDate(NSDate(timeIntervalSince1970: values[0]))
+        let durationString = String(format: "%@ min", secondsToString(values[1]))
+        let moderateString = String(format: "%@ min", secondsToString(values[2]))
+        let highString = String(format: "%@ min", secondsToString(values[3]))
         
+        valueStrings.append(NSAttributedString(string: dateString, attributes: valueAttrs))
         valueStrings.append(NSAttributedString(string: durationString, attributes: valueAttrs))
         valueStrings.append(NSAttributedString(string: moderateString, attributes: valueAttrs))
         valueStrings.append(NSAttributedString(string: highString, attributes: valueAttrs))
         
-        if values[2] > 0 {
-            valueStrings.append(NSAttributedString(string: stringWithTwoDigits(values[2] / values[1]), attributes: valueAttrs))
+        if values[3] > 0 {
+            valueStrings.append(NSAttributedString(string: stringWithTwoDigits(values[3] / values[2]), attributes: valueAttrs))
         } else {
             valueStrings.append(NSAttributedString(string: "N/A", attributes: valueAttrs))
         }
         
-        let milesString = stringWithTwoDigits(values[3])
+        let milesString = stringWithTwoDigits(values[5])
         valueStrings.append(NSAttributedString(string: milesString, attributes: valueAttrs))
         
-        let caloriesString = stringWithWholeNumber(values[4])
+        let caloriesString = stringWithWholeNumber(values[5])
         valueStrings.append(NSAttributedString(string: caloriesString, attributes: valueAttrs))
         
-        let descriptionValue = UInt(values[5])
+        let descriptionValue = UInt(values[6])
         valueStrings.append(NSAttributedString(string: WorkoutDescription().geWorkoutDescription(descriptionValue), attributes: valueAttrs))
         
         

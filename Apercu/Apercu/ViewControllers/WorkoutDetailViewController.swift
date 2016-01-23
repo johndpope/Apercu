@@ -196,7 +196,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 let description: Double = Double((self.currentWorkout.healthKitWorkout?.workoutActivityType.rawValue)!)
                 
                 //                let rawValues: [Double] = [duration, self.moderateIntensityTime, self.highIntensityTime, self.distance, self.calories, description]
-                let rawValues: [Double] = [duration, self.moderateIntensityTime, self.highIntensityTime, 0, 0, description]
+                let rawValues: [Double] = [(self.currentWorkout.getStartDate()?.timeIntervalSince1970)! , duration, self.moderateIntensityTime, self.highIntensityTime, 0, 0, description]
                 
                 self.tableValues = GraphTableStrings().allValueStrings(rawValues)
                 
