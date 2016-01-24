@@ -40,7 +40,7 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
             selectedCategories = defs?.objectForKey("selectedCategories") as! [NSNumber]
         }
         
-        categories = CategoryLookup().getAllCategories()
+        categories = CoreDataHelper().getAllCategories()
     }
     
     @IBAction func selectAllCategories(sender: UIButton) {

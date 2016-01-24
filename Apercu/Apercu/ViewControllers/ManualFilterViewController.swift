@@ -43,7 +43,7 @@ class ManualFilterViewController: UIViewController, UITableViewDataSource, UITab
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        categories = CategoryLookup().getAllCategories()
+        categories = CoreDataHelper().getAllCategories()
         
         QueryHealthKitWorkouts().getAllWorkouts({ (result) -> Void in
             self.tableView.allowsSelection = true

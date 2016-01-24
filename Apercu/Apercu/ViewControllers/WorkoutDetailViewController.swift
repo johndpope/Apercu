@@ -29,8 +29,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet var titleTextView: UITextView!
     
     @IBOutlet private var colorLabel: UILabel!
-    
-    @IBOutlet private var colorButton: UIButton!
     @IBOutlet private var categorizeButton: UIButton!
     
     @IBOutlet private var tableViewHeight: NSLayoutConstraint!
@@ -98,6 +96,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.estimatedRowHeight = 30.0
         tableView.rowHeight = UITableViewAutomaticDimension
         updateTableHeight()
+        
+        automaticallyAdjustsScrollViewInsets = false
         
         graph = CPTXYGraph(frame: self.view.bounds)
         graph.applyTheme(CPTTheme(named: kCPTPlainWhiteTheme))
@@ -463,6 +463,12 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func updateTableHeight() {
         view.layoutIfNeeded()
         tableViewHeight.constant = tableView.contentSize.height
+//        scrollView.setNeedsUpdateConstraints()
+//        scrollView.setNeedsLayout()
+//        scrollView.layoutIfNeeded()
+//        view.setNeedsUpdateConstraints()
+//        view.setNeedsLayout()
+//        view.layoutIfNeeded()
     }
     
     // MARK: - Active Duration Changed
@@ -656,5 +662,15 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let bottomOffset = CGPointMake(0, scrollView.contentSize.height - scrollView.bounds.size.height + scrollView.contentInset.bottom)
         scrollView.setContentOffset(bottomOffset, animated: true)
         
+    }
+    
+    // MARK: - Segue
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "toCategorizeView" {
+            let destination = segue.destinationViewController as? CategorizeWorkoutViewController
+            destination?.workoutStart = currentWorkout.getStartDate()
+            destination?.selectedCategory = currentWorkout.workout?.category;
+        }
     }
 }

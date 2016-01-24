@@ -86,6 +86,28 @@ class CoreDataHelper {
             print("Unable to find workout!")
         }
     }
+    
+    func updateCategory(startDate: NSDate, categoryId: NSNumber) {
+        let fetchRequest = NSFetchRequest(entityName: "Workout")
+        fetchRequest.predicate = NSPredicate(format: "start = %@", startDate)
+        
+        do {
+            let fetchedResult = try context.executeFetchRequest(fetchRequest)
+            
+            if fetchedResult.count != 0 {
+                let workoutToUpdate = fetchedResult.first as? Workout
+                
+                workoutToUpdate?.category = categoryId
+                do {
+                    try context.save()
+                } catch {
+                    print("Unable to save workout!")
+                }
+            }
+        } catch {
+            print("Unable to find workout!")
+        }
+    }
 
     func getCoreDataWorkout(start: NSDate) -> Workout? {
         let fetchRequest = NSFetchRequest(entityName: "Workout")
@@ -96,6 +118,22 @@ class CoreDataHelper {
             return fetchResults.first as? Workout
         } catch {
             return nil
+        }
+    }
+    
+    func getAllCategories() -> [Category] {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let managedContext = appDelegate.managedObjectContext
+        
+        let fetchRequest = NSFetchRequest(entityName: "Category")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "identifier", ascending: true)]
+        
+        do {
+            let fetchedCategories = try managedContext.executeFetchRequest(fetchRequest) as! [Category]
+            return fetchedCategories
+        } catch {
+            NSLog("Error loading categories")
+            return [Category]()
         }
     }
 }
