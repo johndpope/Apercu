@@ -179,7 +179,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
             
             let dateString = dateFormatter.stringFromDate(rowWorkout.getStartDate()!)
             
-            let detailBottom = workoutDescription.geWorkoutDescription(rowWorkout.healthKitWorkout!.workoutActivityType.rawValue)
+            let detailBottom = workoutDescription.getWorkoutDescription(rowWorkout.healthKitWorkout!.workoutActivityType.rawValue)
             
             // if title show title not date
             cell.mainLabel.text = dateString

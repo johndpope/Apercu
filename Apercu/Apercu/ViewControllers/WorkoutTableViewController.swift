@@ -22,6 +22,13 @@ class WorkoutTableViewController: UITableViewController {
     var selectedIndex: Int!
     var appDelegate: AppDelegate!
     
+    let categoriesSingleton = CategoriesSingleton.sharedInstance
+    let workoutDescription = WorkoutDescription()
+    
+    let cellBackgroundColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 244.0/255.0, alpha: 1.0)
+    //    let tabBackgroundColor = UIColor(red: 189.0/255.0, green: 189.0/255.0, blue: 193.0/255.0, alpha: 1.0)
+    //    let tabBackgroundColor = UIColor(red: 167.0/255.0, green: 167.0/255.0, blue: 193.0/255.0, alpha: 1.0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,6 +39,8 @@ class WorkoutTableViewController: UITableViewController {
         
         workoutTableView.estimatedRowHeight = 44.0
         workoutTableView.rowHeight = UITableViewAutomaticDimension
+        
+        //        tabBarController!.tabBar.barTintColor = tabBaockgroundColor
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -47,6 +56,10 @@ class WorkoutTableViewController: UITableViewController {
             }
             
             self.loadWorkouts()
+        }
+        
+        if self.tabBarController?.tabBar.hidden == true {
+            self.tabBarController!.tabBar.hidden = false
         }
         
     }
@@ -110,9 +123,6 @@ class WorkoutTableViewController: UITableViewController {
             
             let rowWorkout = workoutArray[indexPath.row]
             let startDate = rowWorkout.getStartDate()
-            let titleString = dateFormatter.stringFromDate(startDate!)
-            
-            cell.titleLabel.text = titleString
             
             let colorViewCenter = cell.colorView.center
             let newColorViewFrame = CGRectMake(cell.colorView.frame.origin.x, cell.colorView.frame.origin.y, 25, 25)
@@ -120,20 +130,59 @@ class WorkoutTableViewController: UITableViewController {
             cell.colorView.layer.cornerRadius = 12.5
             cell.colorView.center = colorViewCenter
             
-            if let color = CategoriesSingleton.sharedInstance.getColorForIdentifier(rowWorkout.workout?.category) {
+            if let color = categoriesSingleton.getColorForIdentifier(rowWorkout.workout?.category) {
                 cell.colorView.backgroundColor = color
             } else {
                 cell.colorView.hidden = true
             }
             
-            cell.detailLabel.text = "Detail Text"
+            var titleString: String
+            var detailString = ""
+            
+            if rowWorkout.workout?.title != nil {
+                titleString = (rowWorkout.workout?.title)!
+                detailString += dateFormatter.stringFromDate(startDate!)
+                detailString += "\n"
+            } else {
+                titleString = dateFormatter.stringFromDate(startDate!)
+            }
+            
+            if let categoryTitle = categoriesSingleton.getStringForIdentifier(rowWorkout.workout?.category) {
+                detailString += categoryTitle
+                detailString += "\n"
+            } else {
+                if let workoutTypeString = workoutDescription.getWorkoutDescription(rowWorkout.healthKitWorkout?.workoutActivityType.rawValue) {
+                    detailString += workoutTypeString
+                    detailString += "\n"
+                }
+            }
+            
+            
+            
+            cell.titleLabel.text = titleString
+            
+            cell.detailLabel.text = detailString.stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet())
+            cell.detailLabel.textColor = UIColor.darkGrayColor()
+            
             
         } else {
             cell.detailLabel.text = "";
             cell.colorView.hidden = true
             cell.accessoryType = .None
-            cell.titleLabel.text = "No workouts found!"
+            
+            if isFirstLoad {
+                cell.titleLabel.text = "Loading workouts!"
+            } else {
+                cell.titleLabel.text = "No workouts found!"
+            }
+            
             tableView.allowsSelection = false
+        }
+        
+        if indexPath.row % 2 == 0 {
+            cell.backgroundColor = UIColor.clearColor()
+        } else {
+            cell.backgroundColor = cellBackgroundColor
         }
         
         return cell

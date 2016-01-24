@@ -15,7 +15,7 @@ class GraphDataSetup {
         var plotData = [[CPTScatterPlotField: Double]]()
 
         var dataSet = averageRawData(bpm, time: time, minTime: minTime, maxTime: maxTime)
-        var modifiedBpm = dataSet[0]
+        let modifiedBpm = dataSet[0]
         var modifiedTime = dataSet[1]
         
         for (index, element) in modifiedBpm.enumerate() {

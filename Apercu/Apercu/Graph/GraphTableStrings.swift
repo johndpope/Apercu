@@ -30,36 +30,80 @@ class GraphTableStrings {
         return headerAttributedStrings
     }
     
-    func allValueStrings(values: [Double]) -> [NSAttributedString] {
+    func allValueStrings(values: [Double?]) -> [NSAttributedString] {
         let valueAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
-        
         var valueStrings = [NSAttributedString]()
         
-        
-        let dateString = stringFromDate(NSDate(timeIntervalSince1970: values[0]))
-        let durationString = String(format: "%@ min", secondsToString(values[1]))
-        let moderateString = String(format: "%@ min", secondsToString(values[2]))
-        let highString = String(format: "%@ min", secondsToString(values[3]))
-        
-        valueStrings.append(NSAttributedString(string: dateString, attributes: valueAttrs))
-        valueStrings.append(NSAttributedString(string: durationString, attributes: valueAttrs))
-        valueStrings.append(NSAttributedString(string: moderateString, attributes: valueAttrs))
-        valueStrings.append(NSAttributedString(string: highString, attributes: valueAttrs))
-        
-        if values[3] > 0 {
-            valueStrings.append(NSAttributedString(string: stringWithTwoDigits(values[3] / values[2]), attributes: valueAttrs))
+        var dateString: String
+        if let value0 = values[0] {
+            dateString = stringFromDate(NSDate(timeIntervalSince1970: value0))
         } else {
-            valueStrings.append(NSAttributedString(string: "N/A", attributes: valueAttrs))
+            dateString = "Not Specified"
         }
+        valueStrings.append(NSAttributedString(string: dateString, attributes: valueAttrs))
         
-        let milesString = stringWithTwoDigits(values[5])
+        
+        var durationString: String
+        if let value1 = values[1]  {
+            durationString = String(format: "%@ min", secondsToString(value1))
+        } else {
+            durationString = "Not specified"
+        }
+        valueStrings.append(NSAttributedString(string: durationString, attributes: valueAttrs))
+    
+        
+        var moderateString: String
+        if let value2 = values[2] {
+            moderateString = String(format: "%@ min", secondsToString(value2))
+        } else {
+            moderateString = "Not Specified"
+        }
+        valueStrings.append(NSAttributedString(string: moderateString, attributes: valueAttrs))
+        
+        
+        var highString: String
+        var ratioString: String
+        if let value3 = values[3] {
+            highString = String(format: "%@ min", secondsToString(value3))
+            
+            if value3  > 0 && values[2] != nil {
+                ratioString = String(format: "%@", stringWithTwoDigits(values[3]! / values[2]!))
+            } else {
+                ratioString = "N/A"
+            }
+            
+        } else {
+            highString = "Not Specified"
+            ratioString = "N/A"
+        }
+        valueStrings.append(NSAttributedString(string: highString, attributes: valueAttrs))
+        valueStrings.append(NSAttributedString(string: ratioString, attributes: valueAttrs))
+        
+        var milesString: String
+        if let value4 = values[4] {
+            milesString = stringWithTwoDigits(value4)
+        } else {
+            milesString = "Not Specified"
+        }
         valueStrings.append(NSAttributedString(string: milesString, attributes: valueAttrs))
         
-        let caloriesString = stringWithWholeNumber(values[5])
+        
+        var caloriesString: String
+        if let value5 = values[5] {
+            caloriesString = stringWithWholeNumber(value5)
+        } else {
+            caloriesString = "Not Specified"
+        }
         valueStrings.append(NSAttributedString(string: caloriesString, attributes: valueAttrs))
         
-        let descriptionValue = UInt(values[6])
-        valueStrings.append(NSAttributedString(string: WorkoutDescription().geWorkoutDescription(descriptionValue), attributes: valueAttrs))
+        
+        var descriptionString: String
+        if let value6 = values[6] {
+            descriptionString = String(format: "%@", WorkoutDescription().getWorkoutDescription(UInt(value6))!)
+        } else {
+            descriptionString = "Not Specified"
+        }
+        valueStrings.append(NSAttributedString(string: descriptionString, attributes: valueAttrs))
         
         
         return valueStrings
