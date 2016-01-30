@@ -66,6 +66,10 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidAppear(animated)
         
         labelSetup()
+        
+        if self.tabBarController?.tabBar.hidden == true {
+            self.tabBarController!.tabBar.hidden = false
+        }
         // Get workouts based on filter stored in NSUserDefaults
 //        filteredWorkouts = getFilteredWorkouts()
     }
@@ -132,7 +136,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         index = indexPath.row
-        performSegueWithIdentifier("toDetailView", sender: self)
+//        performSegueWithIdentifier("toDetailView", sender: self)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

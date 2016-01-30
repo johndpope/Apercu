@@ -108,6 +108,29 @@ class CoreDataHelper {
             print("Unable to find workout!")
         }
     }
+    
+    func updateCategoryDescription(identifier: NSNumber, desc: String) {
+        let fetchRequest = NSFetchRequest(entityName: "Category")
+        fetchRequest.predicate = NSPredicate(format: "identifier = %@", identifier)
+        
+        do {
+            let fetchedResult = try context.executeFetchRequest(fetchRequest)
+            
+            if fetchedResult.count != 0 {
+                let categoryToUpdate = fetchedResult.first as? Workout
+                
+                let trimmedString = desc.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+                categoryToUpdate?.title = trimmedString
+                do {
+                    try context.save()
+                } catch {
+                    print("Unable to save category!")
+                }
+            }
+        } catch {
+            print("Unable to find workout!")
+        }
+    }
 
     func getCoreDataWorkout(start: NSDate) -> Workout? {
         let fetchRequest = NSFetchRequest(entityName: "Workout")

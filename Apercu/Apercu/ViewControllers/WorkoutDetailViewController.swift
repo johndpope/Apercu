@@ -86,7 +86,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         currentWorkout = ApercuWorkout(healthKitWorkout: healthKitWorkout, workout: coreDataWorkout)
         
         navigationController?.navigationBar.translucent = false
-        tabBarController!.tabBar.hidden = true
+        
         categorizeButton.titleLabel?.adjustsFontSizeToFitWidth = true
         segment.setEnabled(false, forSegmentAtIndex: 1)
         activeView.delegate = self
@@ -119,12 +119,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         setDescriptionTextView()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideKeyboard:", name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showKeyboard:", name: UIKeyboardDidShowNotification, object: nil)
-        
-        if currentWorkout.workout?.title != nil {
-            
-        } else {
-            
-        }
         
         let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
         plotSpace.allowsUserInteraction = true
@@ -195,8 +189,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 let description: Double = Double((self.currentWorkout.healthKitWorkout?.workoutActivityType.rawValue)!)
                 
-                //                let rawValues: [Double] = [duration, self.moderateIntensityTime, self.highIntensityTime, self.distance, self.calories, description]
-                let rawValues: [Double?] = [(self.currentWorkout.getStartDate()?.timeIntervalSince1970)! , duration, self.moderateIntensityTime, self.highIntensityTime, 0, 0, description]
+                let rawValues: [Double?] = [(self.currentWorkout.getStartDate()?.timeIntervalSince1970)!, duration, self.moderateIntensityTime, self.highIntensityTime, self.distance, self.calories, description]
+//                let rawValues: [Double?] = [(self.currentWorkout.getStartDate()?.timeIntervalSince1970)! , duration, self.moderateIntensityTime, self.highIntensityTime, 0, 0, description]
                 
                 self.tableValues = GraphTableStrings().allValueStrings(rawValues)
                 
@@ -231,6 +225,9 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             //            graphConstraintHeight.constant = 0.7 * screenRect.size.height
         }
         
+        if let tabController = tabBarController {
+            tabController.tabBar.hidden = true
+        }
     }
     
     // MARK: - Graph Helpers
@@ -463,12 +460,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func updateTableHeight() {
         view.layoutIfNeeded()
         tableViewHeight.constant = tableView.contentSize.height
-//        scrollView.setNeedsUpdateConstraints()
-//        scrollView.setNeedsLayout()
-//        scrollView.layoutIfNeeded()
-//        view.setNeedsUpdateConstraints()
-//        view.setNeedsLayout()
-//        view.layoutIfNeeded()
     }
     
     // MARK: - Active Duration Changed
@@ -550,7 +541,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func textViewDidEndEditing(textView: UITextView) {
-        if !isPlaceHolder(textView) {
+        if !isPlaceHolder(textView) && textView.text != "" {
             if textView == titleTextView {
                 coreDataHelper.updateTitle(textView.text, startDate: currentWorkout.getStartDate()!, endDate: currentWorkout.getEndDate()!)
             } else {
@@ -628,7 +619,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
-    func nextPressed    (sender: UIBarButtonItem) {
+    func nextPressed(sender: UIBarButtonItem) {
         if titleTextView.isFirstResponder() {
             nextBarButton.title = "Prev"
             descTextView.becomeFirstResponder()
@@ -667,10 +658,15 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: - Segue
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        print(segue.identifier)
         if segue.identifier == "toCategorizeView" {
             let destination = segue.destinationViewController as? CategorizeWorkoutViewController
             destination?.workoutStart = currentWorkout.getStartDate()
             destination?.selectedCategory = currentWorkout.workout?.category;
         }
     }
+    
+    // MARK: - Preview Delegate 
+    
+    
 }

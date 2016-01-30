@@ -7,7 +7,7 @@ import Foundation
 import HealthKit
 import UIKit
 
-class WorkoutTableViewController: UITableViewController {
+class WorkoutTableViewController: UITableViewController, UIViewControllerPreviewingDelegate {
     
     @IBOutlet weak private var workoutTableView: UITableView!
     @IBOutlet weak private var workoutButton: UIBarButtonItem!
@@ -39,6 +39,10 @@ class WorkoutTableViewController: UITableViewController {
         
         workoutTableView.estimatedRowHeight = 44.0
         workoutTableView.rowHeight = UITableViewAutomaticDimension
+        
+        if traitCollection.forceTouchCapability == UIForceTouchCapability.Available {
+            registerForPreviewingWithDelegate(self, sourceView: view)
+        }
         
         //        tabBarController!.tabBar.barTintColor = tabBaockgroundColor
     }
@@ -83,7 +87,7 @@ class WorkoutTableViewController: UITableViewController {
             
             if self.appDelegate.quickAction == "com.apercu.apercu-most-recent" {
                 self.selectedIndex = 0
-                self.performSegueWithIdentifier("toDetailViewFromSingle", sender: self)
+                self.performSegueWithIdentifier("toDetailManual", sender: self)
                 self.appDelegate.quickAction = nil
             }
         }
@@ -190,7 +194,12 @@ class WorkoutTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         selectedIndex = indexPath.row
-        performSegueWithIdentifier("toDetailViewFromSingle", sender: self)
+        performSegueWithIdentifier("toDetailManual", sender: self)
+    }
+    
+    override func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        selectedIndex = indexPath.row
+        return indexPath;
     }
     
     // Mark: - Segue & Transition
@@ -201,8 +210,37 @@ class WorkoutTableViewController: UITableViewController {
             destinationVC.currentWorkout = workoutArray[selectedIndex]
             destinationVC.startDate = workoutArray[selectedIndex].getStartDate()
             destinationVC.healthKitWorkout = workoutArray[selectedIndex].healthKitWorkout
+        } else {
+            let destinationVC = segue.destinationViewController as! WorkoutDetailViewController
+            destinationVC.currentWorkout = workoutArray[selectedIndex]
+            destinationVC.startDate = workoutArray[selectedIndex].getStartDate()
+            destinationVC.healthKitWorkout = workoutArray[selectedIndex].healthKitWorkout
         }
     }
     
+    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        if let selectedCell = tableView.indexPathForRowAtPoint(location) {
+            selectedIndex = selectedCell.row
+            
+            previewingContext.sourceRect = (tableView.cellForRowAtIndexPath(selectedCell)?.frame)!
+            
+            let destinationVC = storyboard?.instantiateViewControllerWithIdentifier("DetailView") as! WorkoutDetailViewController
+            destinationVC.currentWorkout = workoutArray[selectedIndex]
+            destinationVC.startDate = workoutArray[selectedIndex].getStartDate()
+            destinationVC.healthKitWorkout = workoutArray[selectedIndex].healthKitWorkout
+            destinationVC.hidesBottomBarWhenPushed = true
+//            hidesBottomBarWhenPushed = true
+            return destinationVC
+        } else {
+            return nil
+        }
+    }
+    
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        navigationController?.showViewController(viewControllerToCommit, sender: self)
+//        navigationController?.hidesBottomBarWhenPushed = true
+        
+//        showViewController(viewControllerToCommit, sender: self)
+    }
     
 }
