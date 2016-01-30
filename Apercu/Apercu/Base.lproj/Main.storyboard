@@ -3760,6 +3760,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <outlet property="categorizeButton" destination="E4M-pN-yu4" id="XVw-0y-vca"/>
                         <outlet property="colorLabel" destination="sGx-zM-aQX" id="uu3-pk-fB0"/>
                         <outlet property="colorView" destination="QWd-YO-3lV" id="wmq-ti-ZsT"/>
+                        <outlet property="colorViewTrailing" destination="Ged-yX-6jB" id="f9h-iB-TXq"/>
+                        <outlet property="colorViewWidth" destination="OSN-Pu-eCh" id="Xef-dQ-wMt"/>
                         <outlet property="descTextView" destination="Wuk-7b-Qhz" id="pEe-xs-cYj"/>
                         <outlet property="descTextViewHeight" destination="5QM-hV-Bfx" id="tN2-0A-f4X"/>
                         <outlet property="graphConstraintBottom" destination="Uu9-Q4-9iG" id="eRC-LR-DwE"/>

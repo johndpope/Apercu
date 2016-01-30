@@ -44,7 +44,7 @@ class CategoriesSingleton {
     
     func getColorForIdentifier(identifier: NSNumber?) -> UIColor? {
         if identifier == nil || identifier == 0 {
-            return nil
+            return UIColor.clearColor()
         } else {
             return colorDictionary[identifier!]!
         }
@@ -52,7 +52,7 @@ class CategoriesSingleton {
     
     func getStringForIdentifier(identifier: NSNumber?) -> String? {
         if identifier == nil || identifier == 0 {
-            return nil
+            return "No Category Selected"
         } else {
             return titleDictionary[identifier!]!
         }
@@ -71,6 +71,7 @@ class CategoriesSingleton {
             colorDictionary.removeAll()
             for item in categories {
                 colorDictionary[item.identifier!] = item.color as? UIColor
+                titleDictionary[item.identifier!] = item.title
             }
             
         } catch {

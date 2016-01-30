@@ -23,6 +23,7 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
     
     var toolbar: UIToolbar!
     var workoutStart: NSDate!
+    var workoutEnd: NSDate!
     var selectedCategory: NSNumber!
     
     override func viewDidLoad() {
@@ -32,8 +33,6 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideKeyboard:", name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showKeyboard:", name: UIKeyboardDidShowNotification, object: nil)
-        
-
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -95,7 +94,7 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         selectedCategory = categories[indexPath.row].identifier
         tableView.reloadData()
-        coreDataHelper.updateCategory(workoutStart, categoryId: categories[indexPath.row].identifier!)
+        coreDataHelper.updateCategory(workoutStart, endDate: workoutEnd, categoryId: selectedCategory)
         updateTextField()
     }
     

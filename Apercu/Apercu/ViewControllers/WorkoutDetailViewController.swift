@@ -28,6 +28,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private var descTextView: UITextView!
     @IBOutlet var titleTextView: UITextView!
     
+    @IBOutlet var colorViewTrailing: NSLayoutConstraint!
+    @IBOutlet var colorViewWidth: NSLayoutConstraint!
     @IBOutlet private var colorLabel: UILabel!
     @IBOutlet private var categorizeButton: UIButton!
     
@@ -44,7 +46,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     var plots = [String: ApercuPlot]()
     var limitBands: [CPTLimitBand]!
-    var workoutStats: [String: AnyObject]!
+    var workoutStats: [String:AnyObject]!
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     var graph: CPTXYGraph!
     var axisSet: CPTXYAxisSet!
@@ -66,14 +68,16 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var tableStrings: [NSAttributedString]!
     var tableValues: [NSAttributedString]?
     
-    var backgroundColor = CPTColor(componentRed: 89.0/255.0, green: 87.0/255.0, blue: 84.0/255.0, alpha: 1.0)
-    var alternateCellColor = UIColor(red: 239.0/255.0, green: 239.0/255.0, blue: 244.0/255.0, alpha: 1.0)
+    var backgroundColor = CPTColor(componentRed: 89.0 / 255.0, green: 87.0 / 255.0, blue: 84.0 / 255.0, alpha: 1.0)
+    var alternateCellColor = UIColor(red: 239.0 / 255.0, green: 239.0 / 255.0, blue: 244.0 / 255.0, alpha: 1.0)
     var goingToNewYAxis = false
     let plotDataCreator = GraphDataSetup()
     let graphMostActive = GraphMostActive()
     let coreDataHelper = CoreDataHelper()
     var mostActiveInProgress = false
     var averagingInProgress = false
+    var showMostActive = false
+    var segmentSwitching = false
     
     var nextBarButton: UIBarButtonItem!
     var titlePlaceHolder = "Add title.."
@@ -90,6 +94,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         categorizeButton.titleLabel?.adjustsFontSizeToFitWidth = true
         segment.setEnabled(false, forSegmentAtIndex: 1)
         activeView.delegate = self
+        colorView.layer.cornerRadius = 12.5
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -143,7 +148,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.min = stats["min"] as! Double
             self.plotMin = self.min - 3.0
             self.max = stats["max"] as! Double
-            self.plotMax =  self.max + 3.0
+            self.plotMax = self.max + 3.0
             self.avg = stats["avg"] as! Double
             self.duration = stats["duration"] as! Double
             self.bpm = stats["bpm"] as! [Double]
@@ -153,7 +158,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.plots["Average"] = ApercuPlot(plot: GraphPlotSetup().createAveragePlot(), data: self.plotDataCreator.createAveragePlotData(self.avg, duration: self.duration))
             
             // show plots
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                () -> Void in
                 self.addPlotsForNormalView()
                 
                 self.graph.reloadData()
@@ -163,12 +169,15 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 self.goingToNewYAxis = false
                 GraphAxisSetUp().updateLabelingPolicy(self.duration, axisSet: self.axisSet)
                 
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-                    GraphHeatmap().heatmapRawData(self.bpm, min: self.min, max: self.max, completion: { (colorNumber) -> Void in
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                    () -> Void in
+                    GraphHeatmap().heatmapRawData(self.bpm, min: self.min, max: self.max, completion: {
+                        (colorNumber) -> Void in
                         
                         self.limitBands = GraphPlotSetup().createHeatmapLimitBands(colorNumber, time: self.time, yMin: self.plotMin, yMax: self.plotMax)
                         
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        dispatch_async(dispatch_get_main_queue(), {
+                            () -> Void in
                             self.segment.setEnabled(true, forSegmentAtIndex: 1)
                         })
                     })
@@ -176,7 +185,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             })
             
             
-            }, completion: { (results) -> Void in
+            }, completion: {
+                (results) -> Void in
                 self.moderateIntensityTime = results["mod"] as! Double
                 self.highIntensityTime = results["high"] as! Double
                 let duration = results["duration"] as! Double
@@ -190,11 +200,11 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 let description: Double = Double((self.currentWorkout.healthKitWorkout?.workoutActivityType.rawValue)!)
                 
                 let rawValues: [Double?] = [(self.currentWorkout.getStartDate()?.timeIntervalSince1970)!, duration, self.moderateIntensityTime, self.highIntensityTime, self.distance, self.calories, description]
-//                let rawValues: [Double?] = [(self.currentWorkout.getStartDate()?.timeIntervalSince1970)! , duration, self.moderateIntensityTime, self.highIntensityTime, 0, 0, description]
                 
                 self.tableValues = GraphTableStrings().allValueStrings(rawValues)
                 
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                dispatch_async(dispatch_get_main_queue(), {
+                    () -> Void in
                     self.tableView.reloadData()
                     self.view.layoutIfNeeded()
                     self.updateTableHeight()
@@ -209,26 +219,50 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        coreDataWorkout = coreDataHelper.getCoreDataWorkout(startDate)
+        currentWorkout = ApercuWorkout(healthKitWorkout: healthKitWorkout, workout: coreDataWorkout)
         setTitle()
         
-        let screenRect = UIScreen.mainScreen().bounds
-        
-        if UIApplication.sharedApplication().statusBarOrientation == .Portrait {
-            graphConstraintBottom.constant = 10
-            graphConstraintLeading.constant = 20
-            graphConstraintTrailing.constant = 20
-            graphConstraintHeight.constant = 0.5 * screenRect.size.height
+        if currentWorkout.workout != nil {
+            if let currentCategory = currentWorkout.workout!.category {
+                let categoryHelper = CategoriesSingleton.sharedInstance
+                categoryHelper.updateCategoryInfo()
+                let colorViewColor = categoryHelper.getColorForIdentifier(currentCategory)
+                
+                if colorViewColor == UIColor.clearColor() {
+                    showColorView(false)
+                } else {
+                    showColorView(true)
+                }
+                colorView.backgroundColor = colorViewColor
+                
+                colorLabel.text = categoryHelper.getStringForIdentifier(currentCategory)
+            }
         } else {
-            //            graphConstraintBottom.constant = 10
-            //            graphConstraintLeading.constant = 30
-            //            graphConstraintTrailing.constant = 30
-            //            graphConstraintHeight.constant = 0.7 * screenRect.size.height
+            showColorView(false)
         }
+        
+        let screenRect = UIScreen.mainScreen().bounds
+        graphConstraintBottom.constant = 10
+        graphConstraintLeading.constant = 20
+        graphConstraintTrailing.constant = 20
+        graphConstraintHeight.constant = 0.5 * screenRect.size.height
         
         if let tabController = tabBarController {
             tabController.tabBar.hidden = true
         }
     }
+    
+    func showColorView(show: Bool) {
+        if show {
+            colorViewWidth.constant = 25
+            colorViewTrailing.constant = 10
+        } else {
+            colorViewWidth.constant = 0
+            colorViewTrailing.constant = 0
+        }
+    }
+
     
     // MARK: - Graph Helpers
     
@@ -259,24 +293,33 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func addPlotsForNormalView() {
+        segmentSwitching = true
         addIntensityLimitBands()
         addMainPlots()
+        segmentSwitching = false
     }
     
     func addPlotsForHeatmap() {
+        segmentSwitching = true
         for band in limitBands {
             axisSet?.xAxis?.addBackgroundLimitBand(band)
         }
         addMainPlots()
+        segmentSwitching = false
     }
     
     func addMainPlots() {
         if let activePlot = plots["Active"]?.plot {
-            activePlot.dataSource = self
-            graph.addPlot(activePlot)
+            if !segmentSwitching {
+                activePlot.dataSource = self
+                graph.addPlot(activePlot)
+            } else if showMostActive {
+                activePlot.dataSource = self
+                graph.addPlot(activePlot)
+            }
         }
         
-        if let averagePlot = plots["Average"]?.plot  {
+        if let averagePlot = plots["Average"]?.plot {
             averagePlot.dataSource = self
             graph.addPlot(averagePlot)
         }
@@ -297,8 +340,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let modThresholdRange = CPTPlotRange(location: moderateIntensityTreshold, length: highIntensityThreshold - moderateIntensityTreshold)
         let highThresholdRange = CPTPlotRange(location: maxHighIntensity, length: -(maxHighIntensity - highIntensityThreshold))
         
-        let modBand = CPTLimitBand(range: modThresholdRange, fill: CPTFill(color: CPTColor(componentRed: 250.0/255.0, green: 10.0/255.0, blue: 10.0/255.0, alpha: 0.35)))
-        let highBand = CPTLimitBand(range: highThresholdRange, fill: CPTFill(color: CPTColor(componentRed: 250.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 0.6)))
+        let modBand = CPTLimitBand(range: modThresholdRange, fill: CPTFill(color: CPTColor(componentRed: 250.0 / 255.0, green: 10.0 / 255.0, blue: 10.0 / 255.0, alpha: 0.35)))
+        let highBand = CPTLimitBand(range: highThresholdRange, fill: CPTFill(color: CPTColor(componentRed: 250.0 / 255.0, green: 0.0 / 255.0, blue: 0.0 / 255.0, alpha: 0.6)))
         
         axisSet.yAxis?.addBackgroundLimitBand(modBand)
         axisSet.yAxis?.addBackgroundLimitBand(highBand)
@@ -321,6 +364,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func removeActivePlot() {
         if plots["Active"] != nil {
             graph.removePlotWithIdentifier("Active")
+//            plots["Active"] = nil
         }
     }
     
@@ -329,7 +373,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             averagingInProgress = true
             self.plots["Main"] = ApercuPlot(plot: GraphPlotSetup().createMainPlot(), data: plotDataCreator.createMainPlotData(self.bpm, time: self.time, minTime: minTime, maxTime: maxTime))
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), {
+                () -> Void in
                 if self.graph.plotWithIdentifier("Main") == nil {
                     self.plots["Main"]?.plot.dataSource = self
                     self.graph.addPlot(self.plots["Main"]?.plot)
@@ -389,7 +434,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             } else {
                 updatedRange = newRange
                 
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                    () -> Void in
                     self.updateMainPlot(newRange.location.doubleValue, maxTime: newRange.location.doubleValue + newRange.length.doubleValue)
                 })
                 
@@ -472,16 +518,20 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.plots["Active"]?.data.removeAll()
             
             mostActiveInProgress = true
+            showMostActive = true
             
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { () -> Void in
-                GraphMostActive().mostActivePeriod(self.bpm, times: self.time, duration: Double(activeDuration), completion: { (timeOne, timeTwo) -> Void in
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                () -> Void in
+                GraphMostActive().mostActivePeriod(self.bpm, times: self.time, duration: Double(activeDuration), completion: {
+                    (timeOne, timeTwo) -> Void in
                     
                     let activeData = self.plotDataCreator.createMostActivePlotData(timeOne, end: timeTwo, max: self.plotMax, min: self.plotMin)
                     let activePlot = GraphPlotSetup().createMostActivePlot(self.plotMin)
                     
                     self.plots["Active"] = ApercuPlot(plot: activePlot, data: activeData)
                     
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        () -> Void in
                         self.removeAllPlots()
                         
                         if self.segment.selectedSegmentIndex == 0 {
@@ -496,6 +546,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             })
         } else {
             removeActivePlot()
+            showMostActive = false
         }
     }
     
@@ -571,7 +622,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             descTextView.text = currentWorkout.workout?.desc
         }
         textView.textColor = UIColor.blackColor()
-        updateTextViewHeight(textView )
+        updateTextViewHeight(textView)
     }
     
     func isPlaceHolder(textView: UITextView) -> Bool {
@@ -658,15 +709,12 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: - Segue
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print(segue.identifier)
         if segue.identifier == "toCategorizeView" {
             let destination = segue.destinationViewController as? CategorizeWorkoutViewController
             destination?.workoutStart = currentWorkout.getStartDate()
+            destination?.workoutEnd = currentWorkout.getEndDate()
             destination?.selectedCategory = currentWorkout.workout?.category;
         }
     }
-    
-    // MARK: - Preview Delegate 
-    
     
 }

@@ -87,7 +87,7 @@ class CoreDataHelper {
         }
     }
     
-    func updateCategory(startDate: NSDate, categoryId: NSNumber) {
+    func updateCategory(startDate: NSDate, endDate: NSDate, categoryId: NSNumber) {
         let fetchRequest = NSFetchRequest(entityName: "Workout")
         fetchRequest.predicate = NSPredicate(format: "start = %@", startDate)
         
@@ -103,6 +103,17 @@ class CoreDataHelper {
                 } catch {
                     print("Unable to save workout!")
                 }
+            } else {
+                let entity = NSEntityDescription.entityForName("Workout", inManagedObjectContext: context)
+                let newWorkout = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: context)
+                newWorkout.setValue(startDate, forKey: "start")
+                newWorkout.setValue(endDate, forKey: "end")
+                newWorkout.setValue(categoryId, forKey: "category")
+                do {
+                    try context.save()
+                } catch {
+                    print("Unable to save new workout!")
+                }
             }
         } catch {
             print("Unable to find workout!")
@@ -117,12 +128,13 @@ class CoreDataHelper {
             let fetchedResult = try context.executeFetchRequest(fetchRequest)
             
             if fetchedResult.count != 0 {
-                let categoryToUpdate = fetchedResult.first as? Workout
+                let categoryToUpdate = fetchedResult.first as? Category
                 
                 let trimmedString = desc.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
                 categoryToUpdate?.title = trimmedString
                 do {
                     try context.save()
+                    CategoriesSingleton.sharedInstance.updateCategoryInfo()
                 } catch {
                     print("Unable to save category!")
                 }

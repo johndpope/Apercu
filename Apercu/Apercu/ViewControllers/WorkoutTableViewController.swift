@@ -134,7 +134,11 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
             cell.colorView.center = colorViewCenter
 
             if let color = categoriesSingleton.getColorForIdentifier(rowWorkout.workout?.category) {
-                cell.colorView.backgroundColor = color
+                if color == UIColor.clearColor() {
+                    cell.colorView.hidden = true
+                } else {
+                    cell.colorView.backgroundColor = color
+                }
             } else {
                 cell.colorView.hidden = true
             }
@@ -150,8 +154,8 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
                 titleString = dateFormatter.stringFromDate(startDate!)
             }
 
-            if let categoryTitle = categoriesSingleton.getStringForIdentifier(rowWorkout.workout?.category) {
-                detailString += categoryTitle
+            if categoriesSingleton.getStringForIdentifier(rowWorkout.workout?.category) != "No Category Selected" {
+                detailString += categoriesSingleton.getStringForIdentifier(rowWorkout.workout?.category)!
                 detailString += "\n"
             } else {
                 if let workoutTypeString = workoutDescription.getWorkoutDescription(rowWorkout.healthKitWorkout?.workoutActivityType.rawValue) {
