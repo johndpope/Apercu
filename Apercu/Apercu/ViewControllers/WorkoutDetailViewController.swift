@@ -146,7 +146,11 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             // Stats for graph completed (min, max, avg, duration)
             // update graph
             self.min = stats["min"] as! Double
-            self.plotMin = self.min - 3.0
+            if self.min > 60 {
+                self.plotMin = 60
+            } else {
+                self.plotMin = self.min - 3.0
+            }
             self.max = stats["max"] as! Double
             self.plotMax = self.max + 3.0
             self.avg = stats["avg"] as! Double
