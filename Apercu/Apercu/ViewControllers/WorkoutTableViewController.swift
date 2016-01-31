@@ -153,6 +153,9 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
             } else {
                 titleString = dateFormatter.stringFromDate(startDate!)
             }
+            
+            detailString += secondsToString((rowWorkout.getEndDate()?.timeIntervalSinceDate(rowWorkout.getStartDate()!))!) + " min"
+            detailString += "\n"
 
             if categoriesSingleton.getStringForIdentifier(rowWorkout.workout?.category) != "No Category Selected" {
                 detailString += categoriesSingleton.getStringForIdentifier(rowWorkout.workout?.category)!
