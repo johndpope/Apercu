@@ -16,6 +16,7 @@ class QueryHealthKitWorkouts {
     let sampleType = HKSampleType.workoutType()
     let descendingSort = NSSortDescriptor.init(key: HKSampleSortIdentifierStartDate, ascending: true)
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     
     func getAllWorkouts(completion: (result: [ApercuWorkout]?) -> Void) {
         guard let healthStore = appDelegate.healthStore else {
@@ -96,97 +97,132 @@ class QueryHealthKitWorkouts {
         healthStore.executeQuery(workoutQuery);
     }
     
-    func getCategoryFilteredWorkouts(categoryIdentifiers: [NSNumber]?, completion: (result: [ApercuWorkout]?) -> Void) {
-        guard let healthStore = appDelegate.healthStore else {
-            return
-        }
+    func getFilteredWorkouts(filter: FilteredTableViewController.FilterType, completion: (filteredResult: [ApercuWorkout]?) -> Void) {
         
-        let predicate = HKQuery.predicateForSamplesWithStartDate(nil, endDate: nil, options: .None)
+        var filteredWorkouts = [ApercuWorkout]()
         
-        let workoutQuery = HKSampleQuery.init(sampleType: sampleType, predicate: predicate, limit: 0, sortDescriptors: [descendingSort]) { (query, workoutResults, error) -> Void in
-            var combinedWorkouts: [ApercuWorkout] = [ApercuWorkout]()
-            
-            if workoutResults != nil {
+        let workoutFilter = WorkoutFilter()
+        workoutFilter.filterType = filter
+        
+        getAllWorkouts { (result) -> Void in
+            if let allWorkouts = result {
                 
-                let coreDataWorkouts: [Workout]? = self.getAllCoreDataWorkouts()
-                var coreDataIndex = 0
-                
-                if coreDataWorkouts == nil || coreDataWorkouts?.count == 0 {
-                    
-                    for healthKitWorkout in workoutResults! {
-                        combinedWorkouts.append(ApercuWorkout(healthKitWorkout: healthKitWorkout as? HKWorkout, workout: nil))
-                    }
-                    
-                } else {
-                    for var i = 0; i < workoutResults?.count; ++i {
-                        
-                        let healthKitStartDate = workoutResults![i].startDate
-                        
-                        if coreDataWorkouts?.count > 0 {
-                            while coreDataIndex < coreDataWorkouts?.count && coreDataWorkouts![coreDataIndex].start! < healthKitStartDate {
-                                let currentCoreDataWorkout = coreDataWorkouts![coreDataIndex];
-                                let currentCategoryIdentifier = currentCoreDataWorkout.category
-                                
-                                if (currentCategoryIdentifier == nil && categoryIdentifiers?.contains(0) == true) || (currentCategoryIdentifier != nil && categoryIdentifiers?.contains(currentCategoryIdentifier!) == true) {
-                                    combinedWorkouts.append(ApercuWorkout(healthKitWorkout: nil, workout: currentCoreDataWorkout))
-                                }
-                            }
+                for workout in allWorkouts {
+                    if workout.workout != nil {
+                        if workoutFilter.includeWorkout(workout.getStartDate()!, category: workout.workout?.category) {
+                            filteredWorkouts.append(workout)
                         }
-                        
-                        if coreDataIndex < coreDataWorkouts?.count {
-                            if coreDataWorkouts![coreDataIndex].start?.isEqualToDate(healthKitStartDate) == true {
-                                
-                                if (coreDataWorkouts![coreDataIndex].category == nil && categoryIdentifiers?.contains(0) == true) || (coreDataWorkouts![coreDataIndex].category != nil && categoryIdentifiers?.contains(coreDataWorkouts![coreDataIndex].category!) == true) {
-                                    
-                                    combinedWorkouts.append(ApercuWorkout(healthKitWorkout: workoutResults![i] as? HKWorkout, workout: coreDataWorkouts![coreDataIndex]))
-                                    
-                                }
-                            } else {
-                                if coreDataWorkouts![coreDataIndex].category == nil && categoryIdentifiers?.contains(0) == true {
-                                    combinedWorkouts.append(ApercuWorkout(healthKitWorkout: workoutResults![i] as? HKWorkout, workout: nil))
-                                }
-                            }
-                        } else {
-                            if categoryIdentifiers?.contains(0) == true {
-                                combinedWorkouts.append(ApercuWorkout(healthKitWorkout: workoutResults![i] as? HKWorkout, workout: nil))
-                            }
-                        }
-                        
-                        
-                        if i == ((workoutResults?.count)! - 1) {
-                            while coreDataIndex < coreDataWorkouts?.count {
-                                if  (coreDataWorkouts![coreDataIndex].category == nil && categoryIdentifiers?.contains(0) == true) || (coreDataWorkouts![coreDataIndex].category != nil && categoryIdentifiers?.contains(coreDataWorkouts![coreDataIndex].category!) == true) {
-                                    
-                                    combinedWorkouts.append(ApercuWorkout(healthKitWorkout: nil, workout: coreDataWorkouts![coreDataIndex]))
-                                    ++coreDataIndex
-                                    
-                                }
-                            }
+                    } else {
+                        if workoutFilter.includeWorkout(workout.getStartDate()!, category: nil) {
+                            filteredWorkouts.append(workout)
                         }
                     }
                 }
-            } else {
-                // No HKWorkouts Found
-                let coreDataWorkouts: [Workout]? = self.getAllCoreDataWorkouts()
                 
-                for coreDataWorkout in coreDataWorkouts! {
-                    if (coreDataWorkout.category == nil && categoryIdentifiers?.contains(0) == true) || (coreDataWorkout.category != nil && categoryIdentifiers?.contains(coreDataWorkout.category!) == true) {
-                        
-                        combinedWorkouts.append(ApercuWorkout(healthKitWorkout: nil, workout: coreDataWorkout))
-                    }
-                }
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    completion(filteredResult: filteredWorkouts)
+                })
+                
+                
             }
-            
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                if workoutResults != nil {
-                    completion(result: combinedWorkouts)
-                } else {
-                    completion(result: nil)
-                }
-            })
         }
         
-        healthStore.executeQuery(workoutQuery);
+        
+//        
+//        guard let healthStore = appDelegate.healthStore else {
+//            return
+//        }
+//        
+//
+//        
+//        let predicate = HKQuery.predicateForSamplesWithStartDate(nil, endDate: nil, options: .None)
+//        
+//        let workoutQuery = HKSampleQuery.init(sampleType: sampleType, predicate: predicate, limit: 0, sortDescriptors: [descendingSort]) { (query, workoutResults, error) -> Void in
+//            var combinedWorkouts: [ApercuWorkout] = [ApercuWorkout]()
+//            
+//            if workoutResults != nil {
+//                
+//                let coreDataWorkouts: [Workout]? = self.getAllCoreDataWorkouts()
+//                var coreDataIndex = 0
+//                
+//                if coreDataWorkouts == nil || coreDataWorkouts?.count == 0 {
+//                    
+//                    for healthKitWorkout in workoutResults! {
+//                        if workoutFilter.includeWorkout(healthKitWorkout.startDate, category: nil) {
+//                            combinedWorkouts.append(ApercuWorkout(healthKitWorkout: healthKitWorkout as? HKWorkout, workout: nil))
+//                        }
+//                    }
+//                    
+//                } else {
+//                    for var i = 0; i < workoutResults?.count; ++i {
+//                        
+//                        let healthKitStartDate = workoutResults![i].startDate
+//                        
+//                        if coreDataWorkouts?.count > 0 {
+//                            while coreDataIndex < coreDataWorkouts?.count && coreDataWorkouts![coreDataIndex].start! < healthKitStartDate {
+//                                let currentCoreDataWorkout = coreDataWorkouts![coreDataIndex];
+//                                let currentCategoryIdentifier = currentCoreDataWorkout.category
+//                                
+//                                if workoutFilter.includeWorkout(currentCoreDataWorkout.start!, category: currentCategoryIdentifier) {
+//                                    combinedWorkouts.append(ApercuWorkout(healthKitWorkout: nil, workout: currentCoreDataWorkout))
+//                                }
+//                            }
+//                        }
+//                        
+//                        if coreDataIndex < coreDataWorkouts?.count {
+//                            if coreDataWorkouts![coreDataIndex].start?.isEqualToDate(healthKitStartDate) == true {
+//                                
+//                                if workoutFilter.includeWorkout(coreDataWorkouts![coreDataIndex].start!, category: coreDataWorkouts![coreDataIndex].category) {
+//                                    
+//                                    combinedWorkouts.append(ApercuWorkout(healthKitWorkout: workoutResults![i] as? HKWorkout, workout: coreDataWorkouts![coreDataIndex]))
+//                                    
+//                                }
+//                            } else {
+//                                if workoutFilter.includeWorkout(coreDataWorkouts![coreDataIndex].start!, category: coreDataWorkouts![coreDataIndex].category) {
+//                                    combinedWorkouts.append(ApercuWorkout(healthKitWorkout: workoutResults![i] as? HKWorkout, workout: nil))
+//                                }
+//                            }
+//                        } else {
+//                            if workoutFilter.includeWorkout(workoutResults![i].startDate, category: coreDataWorkouts![coreDataIndex].category) {
+//                                combinedWorkouts.append(ApercuWorkout(healthKitWorkout: workoutResults![i] as? HKWorkout, workout: nil))
+//                            }
+//                        }
+//                        
+//                        
+//                        if i == ((workoutResults?.count)! - 1) {
+//                            while coreDataIndex < coreDataWorkouts?.count {
+//                                if workoutFilter.includeWorkout(coreDataWorkouts![coreDataIndex].start!, category: coreDataWorkouts![coreDataIndex].category){
+//                                    
+//                                    combinedWorkouts.append(ApercuWorkout(healthKitWorkout: nil, workout: coreDataWorkouts![coreDataIndex]))
+//                                    ++coreDataIndex
+//                                    
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            } else {
+//                // No HKWorkouts Found
+//                let coreDataWorkouts: [Workout]? = self.getAllCoreDataWorkouts()
+//                
+//                for coreDataWorkout in coreDataWorkouts! {
+//                    if workoutFilter.includeWorkout(coreDataWorkout.start!, category: coreDataWorkout.category){
+//                        
+//                        combinedWorkouts.append(ApercuWorkout(healthKitWorkout: nil, workout: coreDataWorkout))
+//                    }
+//                }
+//            }
+//
+//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                if workoutResults != nil {
+//                    completion(result: combinedWorkouts)
+//                } else {
+//                    completion(result: nil)
+//                }
+//            })
+//        }
+//        
+//        healthStore.executeQuery(workoutQuery);
     }
     
     

@@ -40,15 +40,24 @@ class CategoryFilterViewController: UIViewController, UITableViewDataSource, UIT
             selectedCategories = defs?.objectForKey("selectedCategories") as! [NSNumber]
         }
         
+        defs?.setObject(nil, forKey: "categoryBlacklist")
+        
         categories = CoreDataHelper().getAllCategories()
     }
     
     @IBAction func selectAllCategories(sender: UIButton) {
-        
+        selectedCategories.removeAll()
+        for category in categories {
+            selectedCategories.append(category.identifier!)
+        }
+        storeSelectedCategories()
+        tableView.reloadData()
     }
     
     @IBAction func removeAllCategories(sender: UIButton) {
-        
+        selectedCategories.removeAll()
+        storeSelectedCategories()
+        tableView.reloadData()
     }
     
     func isCategorySelected(identifier: NSNumber) -> Bool {

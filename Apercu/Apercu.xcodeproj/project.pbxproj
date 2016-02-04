@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3BEA68C2AC9E2A9BDC6C4136 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46E0FBFC3ABBE44CC5C1E9D6 /* Pods.framework */; };
 		66D922BD695B3D5F1A6A0031 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
+		66D92A0CB28292057678282A /* WorkoutFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D9206A1739ADB0CA31F472 /* WorkoutFilter.swift */; };
 		66D92F16487AF0F7322B45B4 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
 		66D92FBC1A70FD594DBD8028 /* WorkoutTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */; };
 		8B1B56F91C530B24003C75CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B1B56F81C530B24003C75CD /* Images.xcassets */; };
@@ -102,6 +103,7 @@
 		0E82362FF6F1C9F2FE1A2438 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		46E0FBFC3ABBE44CC5C1E9D6 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BD13D29264AAFFE9CA3BA73 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		66D9206A1739ADB0CA31F472 /* WorkoutFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkoutFilter.swift; path = Apercu/Misc/WorkoutFilter.swift; sourceTree = SOURCE_ROOT; };
 		66D92AEF7079A27237281D5A /* WorkoutTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutTableViewController.swift; sourceTree = "<group>"; };
 		8B1B56F81C530B24003C75CD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Images/Images.xcassets; sourceTree = "<group>"; };
 		8B1F79831C3367FF00B92116 /* GraphAxisSetUp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GraphAxisSetUp.swift; path = Apercu/Graph/GraphAxisSetUp.swift; sourceTree = SOURCE_ROOT; };
@@ -369,6 +371,7 @@
 				8B76F9611C36DF82009BE714 /* IntensityThresholdSingleton.swift */,
 				8BC314ED1C37622800F2B774 /* CustomScrollView.swift */,
 				8B33F0811C3F3FFA0011CDBE /* StringHelpers.swift */,
+				66D9206A1739ADB0CA31F472 /* WorkoutFilter.swift */,
 			);
 			name = Misc;
 			path = ViewControllers;
@@ -678,6 +681,7 @@
 				8BDA8EE91C2C9B05000D0630 /* WorkoutCell.swift in Sources */,
 				8BC314F81C381A3500F2B774 /* GraphTableStrings.swift in Sources */,
 				8BC314EA1C37187D00F2B774 /* GraphHeatmap.swift in Sources */,
+				66D92A0CB28292057678282A /* WorkoutFilter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

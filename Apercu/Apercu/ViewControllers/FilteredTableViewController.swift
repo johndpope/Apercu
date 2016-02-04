@@ -20,13 +20,14 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet private var filterLabel: UILabel!
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var filterSwitch: UISegmentedControl!
-    @IBOutlet private var scrollView: UIScrollView!
-    @IBOutlet private var tableViewHeight: NSLayoutConstraint!
     @IBOutlet private var button: UIButton!
     
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     let workoutDescription: WorkoutDescription = WorkoutDescription()
+    let categoriesSingleton = CategoriesSingleton.sharedInstance
+    let cellBackgroundColor = UIColor(red: 239.0 / 255.0, green: 239.0 / 255.0, blue: 244.0 / 255.0, alpha: 1.0)
     var dateFormatter = NSDateFormatter()
+    var categoryDateBlackList = [NSDate]()
     
     var workoutArray: [ApercuWorkout]!
     var filteredWorkoutsByColor = [ApercuWorkout]()
@@ -45,12 +46,11 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.dataSource = self
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableViewHeight.constant = tableView.contentSize.height
-        
-//        button.titleLabel?.adjustsFontSizeToFitWidth = true
         
         dateFormatter.dateStyle = .MediumStyle
         dateFormatter.timeStyle = .ShortStyle
+        
+        navigationController!.navigationBar.translucent = false
         
         if defs?.integerForKey("filterType") == nil || defs?.integerForKey("filterType") == 0 {
             filterType = .Color
@@ -70,33 +70,47 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         if self.tabBarController?.tabBar.hidden == true {
             self.tabBarController!.tabBar.hidden = false
         }
+        
+        if defs?.objectForKey("categoryBlacklist") != nil {
+            categoryDateBlackList = defs?.objectForKey("categoryBlacklist") as! [NSDate]
+        }
+        
         // Get workouts based on filter stored in NSUserDefaults
-//        filteredWorkouts = getFilteredWorkouts()
+        getFilteredWorkouts()
     }
     
-    func getFilteredWorkouts() -> [ApercuWorkout] {
-        if filterType == .Color {
-
-        } else {
-        
+    func getFilteredWorkouts() {
+        QueryHealthKitWorkouts().getFilteredWorkouts(filterType) { (result) -> Void in
+            if result != nil {
+                self.filteredWorkouts = result!
+            } else {
+                self.filteredWorkouts = [ApercuWorkout]()
+            }
+            self.tableView.reloadData()
+            self.labelSetup()
         }
-        return [ApercuWorkout]()
     }
     
     func labelSetup() {
         if filterType == FilterType.Color {
+            
+            var selectedCategories = [NSNumber]()
+            
+            if defs?.objectForKey("selectedCategories") != nil {
+                selectedCategories = defs?.objectForKey("selectedCategories") as! [NSNumber]
+            }
             // Add else if for total count of filters to show "All Colors"
             var labelString: String!
-            if filteredWorkoutsByColor.count == 0 {
+            if selectedCategories.count == 0 {
                 labelString = "Current Filter: None Selected"
-            } else if filteredWorkoutsByColor.count == 1 {
+            } else if selectedCategories.count == 1 {
                 labelString = "Current Filter: 1 Type"
             } else {
-                labelString = String(format: "Current Filter: %lu Types", filteredWorkoutsByColor.count)
+                labelString = String(format: "Current Filter: %lu Types", selectedCategories.count)
             }
             filterLabel.text = labelString
         } else {
-            let labelString = String(format: "Workouts Selected: %lu", filteredWorkoutsManual.count)
+            let labelString = String(format: "Workouts Selected: %lu", filteredWorkouts.count)
             filterLabel.text = labelString
         }
         
@@ -111,6 +125,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
             defs?.setInteger(filterType.rawValue, forKey: "filterType")
         }
         updateButtonTitle()
+        getFilteredWorkouts()
     }
     
     @IBAction func selectWorkouts(sender: AnyObject) {
@@ -124,10 +139,10 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     func updateButtonTitle() {
         if filterType == .Color {
             button.setTitle("Choose Categories", forState: .Normal)
-//            button.titleLabel?.text = "Choose Categories"
+            //            button.titleLabel?.text = "Choose Categories"
         } else {
             button.setTitle("Select Workouts", forState: .Normal)
-//           button.titleLabel?.text = "Select Workouts"
+            //           button.titleLabel?.text = "Select Workouts"
         }
         button.sizeToFit()
     }
@@ -136,7 +151,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         index = indexPath.row
-//        performSegueWithIdentifier("toDetailView", sender: self)
+        //        performSegueWithIdentifier("toDetailView", sender: self)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -155,10 +170,20 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         if editingStyle == .Delete {
             if filterType == .Color {
-                filteredWorkoutsByColor.removeAtIndex(indexPath.row)
+                categoryDateBlackList.append(filteredWorkouts[indexPath.row].getStartDate()!)
+                defs?.setObject(categoryDateBlackList, forKey: "categoryBlacklist")
             } else {
-                filteredWorkoutsManual.removeAtIndex(indexPath.row)
+                if ((defs?.valueForKey("selectedManual")) != nil) {
+                    var filterDates = defs?.valueForKey("selectedManual") as! [NSDate]
+                    
+                    if let selectedIndex = filterDates.indexOf(filteredWorkouts[indexPath.row].getStartDate()!) {
+                        filterDates.removeAtIndex(selectedIndex)
+                    }
+                    
+                    defs?.setObject(filterDates, forKey: "selectedManual")
+                }
             }
+            filteredWorkouts.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             labelSetup()
         }
@@ -166,28 +191,14 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("CompareCell", forIndexPath: indexPath) as! CompareCell
-        
-        cell.layoutIfNeeded()
-        cell.accessoryType = .None
-        cell.colorView.hidden = true
-        cell.mainLabel.text = ""
-        cell.detailLabel.text = ""
-        
-        let row = indexPath.row
+        let cell = tableView.dequeueReusableCellWithIdentifier("WorkoutCell", forIndexPath: indexPath) as! WorkoutCell
         
         if filteredWorkouts.count != 0 {
-            cell.detailLabel.hidden = false
+            cell.colorView.hidden = false
+            cell.accessoryType = .DisclosureIndicator
             
-            let rowWorkout = filteredWorkouts[row]
-            
-            let dateString = dateFormatter.stringFromDate(rowWorkout.getStartDate()!)
-            
-            let detailBottom = workoutDescription.getWorkoutDescription(rowWorkout.healthKitWorkout!.workoutActivityType.rawValue)
-            
-            // if title show title not date
-            cell.mainLabel.text = dateString
-            cell.detailLabel.text = detailBottom
+            let rowWorkout = filteredWorkouts[indexPath.row]
+            let startDate = rowWorkout.getStartDate()
             
             let colorViewCenter = cell.colorView.center
             let newColorViewFrame = CGRectMake(cell.colorView.frame.origin.x, cell.colorView.frame.origin.y, 25, 25)
@@ -195,11 +206,50 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
             cell.colorView.layer.cornerRadius = 12.5
             cell.colorView.center = colorViewCenter
             
+            if let color = categoriesSingleton.getColorForIdentifier(rowWorkout.workout?.category) {
+                if color == UIColor.clearColor() {
+                    cell.colorView.hidden = true
+                } else {
+                    cell.colorView.backgroundColor = color
+                }
+            } else {
+                cell.colorView.hidden = true
+            }
+            
+            var titleString: String
+            var detailString = ""
+            
+            if rowWorkout.workout?.title != nil {
+                titleString = (rowWorkout.workout?.title)!
+                detailString += dateFormatter.stringFromDate(startDate!)
+                detailString += "\n"
+            } else {
+                titleString = dateFormatter.stringFromDate(startDate!)
+            }
+            
+            detailString += secondsToString((rowWorkout.getEndDate()?.timeIntervalSinceDate(rowWorkout.getStartDate()!))!) + " min"
+            detailString += "\n"
+            
+            if categoriesSingleton.getStringForIdentifier(rowWorkout.workout?.category) != "No Category Selected" {
+                detailString += categoriesSingleton.getStringForIdentifier(rowWorkout.workout?.category)!
+                detailString += "\n"
+            } else {
+                if let workoutTypeString = workoutDescription.getWorkoutDescription(rowWorkout.healthKitWorkout?.workoutActivityType.rawValue) {
+                    detailString += workoutTypeString
+                    detailString += "\n"
+                }
+            }
+            
+            cell.titleLabel.text = titleString
+            
+            cell.detailLabel.text = detailString.stringByTrimmingCharactersInSet(NSCharacterSet.newlineCharacterSet())
+            cell.detailLabel.textColor = UIColor.darkGrayColor()
+            cell.accessoryType = .None
         } else {
             cell.detailLabel.text = "";
             cell.colorView.hidden = true
             cell.accessoryType = .None
-            cell.mainLabel.text = "No workouts found!"
+            cell.titleLabel.text = "No workouts found!"
             tableView.allowsSelection = false
         }
         
@@ -229,12 +279,12 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        switch segue.identifier {
-//            Need clases to cast as
-//            case "toCategoryFilter": {
-//                let destination = segue.destinationViewController as!
-//            }
-//        }
+        //        switch segue.identifier {
+        //            Need clases to cast as
+        //            case "toCategoryFilter": {
+        //                let destination = segue.destinationViewController as!
+        //            }
+        //        }
     }
 }
 
