@@ -193,7 +193,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 (results) -> Void in
                 self.moderateIntensityTime = results["mod"] as! Double
                 self.highIntensityTime = results["high"] as! Double
-                let duration = results["duration"] as! Double
                 
                 let milesUnit = HKUnit.mileUnit()
                 self.distance = self.currentWorkout.healthKitWorkout?.totalDistance?.doubleValueForUnit(milesUnit)
@@ -203,7 +202,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 let description: Double = Double((self.currentWorkout.healthKitWorkout?.workoutActivityType.rawValue)!)
                 
-                let rawValues: [Double?] = [(self.currentWorkout.getStartDate()?.timeIntervalSince1970)!, duration, self.moderateIntensityTime, self.highIntensityTime, self.distance, self.calories, description]
+                let rawValues: [Double?] = [(self.currentWorkout.getStartDate()?.timeIntervalSince1970)!, self.currentWorkout.getEndDate()?.timeIntervalSinceDate(self.currentWorkout.getStartDate()!), self.moderateIntensityTime, self.highIntensityTime, self.distance, self.calories, description]
                 
                 self.tableValues = GraphTableStrings().allValueStrings(rawValues)
                 

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import HealthKit
 
-class FilteredTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class FilteredTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIViewControllerPreviewingDelegate {
     
     enum FilterType: Int {
         case Color = 0
@@ -34,9 +34,9 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     var filteredWorkoutsManual = [ApercuWorkout]()
     var filteredWorkouts = [ApercuWorkout]()
     
-    var isFirstLoad = true
+    var isLoadingWorkouts = false
     var filterType: FilterType!
-    var index = -1
+    var selectedIndex = -1
     
     
     override func viewDidLoad() {
@@ -46,11 +46,16 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.dataSource = self
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
         
         dateFormatter.dateStyle = .MediumStyle
         dateFormatter.timeStyle = .ShortStyle
         
         navigationController!.navigationBar.translucent = false
+        
+        if traitCollection.forceTouchCapability == UIForceTouchCapability.Available {
+            registerForPreviewingWithDelegate(self, sourceView: self.tableView)
+        }
         
         if defs?.integerForKey("filterType") == nil || defs?.integerForKey("filterType") == 0 {
             filterType = .Color
@@ -62,7 +67,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         updateButtonTitle()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
         labelSetup()
@@ -80,6 +85,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func getFilteredWorkouts() {
+        isLoadingWorkouts = true
         QueryHealthKitWorkouts().getFilteredWorkouts(filterType) { (result) -> Void in
             if result != nil {
                 self.filteredWorkouts = result!
@@ -87,6 +93,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
                 self.filteredWorkouts = [ApercuWorkout]()
             }
             self.tableView.reloadData()
+            self.isLoadingWorkouts = false
             self.labelSetup()
         }
     }
@@ -150,8 +157,8 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: - TableView Stuff
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        index = indexPath.row
-        //        performSegueWithIdentifier("toDetailView", sender: self)
+        selectedIndex = indexPath.row
+        performSegueWithIdentifier("filterToSingleDetail", sender: self)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -193,7 +200,9 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("WorkoutCell", forIndexPath: indexPath) as! WorkoutCell
         
+        
         if filteredWorkouts.count != 0 {
+            tableView.allowsSelection = true
             cell.colorView.hidden = false
             cell.accessoryType = .DisclosureIndicator
             
@@ -249,7 +258,11 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
             cell.detailLabel.text = "";
             cell.colorView.hidden = true
             cell.accessoryType = .None
-            cell.titleLabel.text = "No workouts found!"
+            if isLoadingWorkouts {
+                cell.titleLabel.text = "Loading workouts.."
+            } else {
+                cell.titleLabel.text = "No workouts found!"
+            }
             tableView.allowsSelection = false
         }
         
@@ -266,7 +279,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         if identifier == "toCompareView" {
             if filteredWorkouts.count == 0 {
-                let alert = UIAlertController(title: "Error", message: "No workouts to copmare.", preferredStyle: .Alert)
+                let alert = UIAlertController(title: "Error", message: "No workouts to compare.", preferredStyle: .Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
                 presentViewController(alert, animated: true, completion: nil)
                 return false
@@ -278,13 +291,36 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    // Mark: - Segue & Transition
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        //        switch segue.identifier {
-        //            Need clases to cast as
-        //            case "toCategoryFilter": {
-        //                let destination = segue.destinationViewController as!
-        //            }
-        //        }
+        if segue.identifier == "filterToSingleDetail" || segue.identifier == "toDetailManual"     {
+            let destinationVC = segue.destinationViewController as! WorkoutDetailViewController
+            destinationVC.currentWorkout = filteredWorkouts[selectedIndex]
+            destinationVC.startDate = filteredWorkouts[selectedIndex].getStartDate()
+            destinationVC.healthKitWorkout = filteredWorkouts[selectedIndex].healthKitWorkout
+        }
+    }
+    
+    func previewingContext(previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController? {
+        if let selectedCell = tableView.indexPathForRowAtPoint(location) {
+            selectedIndex = selectedCell.row
+            
+            previewingContext.sourceRect = (tableView.cellForRowAtIndexPath(selectedCell)?.frame)!
+            
+            let destinationVC = storyboard?.instantiateViewControllerWithIdentifier("DetailView") as! WorkoutDetailViewController
+            destinationVC.currentWorkout = filteredWorkouts[selectedIndex]
+            destinationVC.startDate = filteredWorkouts[selectedIndex].getStartDate()
+            destinationVC.healthKitWorkout = filteredWorkouts[selectedIndex].healthKitWorkout
+            destinationVC.hidesBottomBarWhenPushed = true
+            return destinationVC
+        } else {
+            return nil
+        }
+    }
+    
+    func previewingContext(previewingContext: UIViewControllerPreviewing, commitViewController viewControllerToCommit: UIViewController) {
+        navigationController?.showViewController(viewControllerToCommit, sender: self)
     }
 }
 
