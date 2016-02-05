@@ -74,7 +74,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     let plotDataCreator = GraphDataSetup()
     let graphMostActive = GraphMostActive()
     let coreDataHelper = CoreDataHelper()
-    var mostActiveInProgress = false
     var averagingInProgress = false
     var showMostActive = false
     var segmentSwitching = false
@@ -251,9 +250,14 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         graphConstraintTrailing.constant = 20
         graphConstraintHeight.constant = 0.5 * screenRect.size.height
         
-        if let tabController = tabBarController {
-            tabController.tabBar.hidden = true
+//        if self.tabBarController?.tabBar.hidden == true {
+        if let tabBarCont = self.tabBarController {
+            if tabBarCont.tabBar.hidden == false {
+                tabBarCont.tabBar.hidden = true
+            }
         }
+//        }
+
     }
     
     func showColorView(show: Bool) {
@@ -265,7 +269,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             colorViewTrailing.constant = 0
         }
     }
-
+    
     
     // MARK: - Graph Helpers
     
@@ -367,7 +371,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func removeActivePlot() {
         if plots["Active"] != nil {
             graph.removePlotWithIdentifier("Active")
-//            plots["Active"] = nil
+            //            plots["Active"] = nil
         }
     }
     
@@ -515,12 +519,11 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func sliderChanged(activeDuration: Int, forced: Bool) {
         
-        if activeDuration != 0 && (self.mostActiveInProgress == false || forced == true) {
+        if activeDuration != 0 {
             plots["Active"] = nil
             self.plots["Active"]?.plot = nil
             self.plots["Active"]?.data.removeAll()
             
-            mostActiveInProgress = true
             showMostActive = true
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
@@ -543,7 +546,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             self.addPlotsForHeatmap()
                         }
                         
-                        self.mostActiveInProgress = false;
                     })
                 })
             })

@@ -84,6 +84,14 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         getFilteredWorkouts()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if self.tabBarController?.tabBar.hidden == true {
+            self.tabBarController!.tabBar.hidden = false
+        }
+    }
+    
     func getFilteredWorkouts() {
         isLoadingWorkouts = true
         QueryHealthKitWorkouts().getFilteredWorkouts(filterType) { (result) -> Void in

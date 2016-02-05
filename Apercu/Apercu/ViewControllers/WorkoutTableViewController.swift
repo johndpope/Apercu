@@ -65,6 +65,14 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
         }
 
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if self.tabBarController?.tabBar.hidden == true {
+            self.tabBarController!.tabBar.hidden = false
+        }
+    }
 
     func loadWorkouts() {
         QueryHealthKitWorkouts().getAllWorkouts {

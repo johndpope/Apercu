@@ -3500,7 +3500,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <!--Workout Detail View Controller-->
         <scene sceneID="xF5-YW-2dr">
             <objects>
-                <viewController storyboardIdentifier="DetailView" id="urD-Ty-FIU" customClass="WorkoutDetailViewController" customModule="Apercu" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailView" extendedLayoutIncludesOpaqueBars="YES" hidesBottomBarWhenPushed="YES" id="urD-Ty-FIU" customClass="WorkoutDetailViewController" customModule="Apercu" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jTW-CA-88c"/>
                         <viewControllerLayoutGuide type="bottom" id="MfS-aq-wPe"/>
@@ -5481,10 +5481,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <image name="singleTabBar3.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4yP-eh-ZVt"/>
-        <segue reference="hBj-EI-suy"/>
-        <segue reference="BQA-YE-PQn"/>
+        <segue reference="c5j-j5-e5s"/>
+        <segue reference="TVE-7W-duB"/>
         <segue reference="lV2-Wb-bA2"/>
+        <segue reference="BQA-YE-PQn"/>
         <segue reference="goZ-7M-4CC"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.49019607843137253" blue="0.64313725490196072" alpha="1" colorSpace="calibratedRGB"/>
