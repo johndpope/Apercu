@@ -60,17 +60,22 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
             self.loadWorkouts()
         }
 
-        if self.tabBarController?.tabBar.hidden == true {
-            self.tabBarController!.tabBar.hidden = false
-        }
-
+        hideBars()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
+        hideBars()
+    }
+    
+    func hideBars() {
         if self.tabBarController?.tabBar.hidden == true {
             self.tabBarController!.tabBar.hidden = false
+        }
+        
+        if navigationController?.toolbarHidden == false {
+            navigationController?.toolbarHidden = true
         }
     }
 

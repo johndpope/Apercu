@@ -76,6 +76,10 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
             self.tabBarController!.tabBar.hidden = false
         }
         
+        if navigationController?.toolbarHidden == false {
+            navigationController?.toolbarHidden = true
+        }
+        
         if defs?.objectForKey("categoryBlacklist") != nil {
             categoryDateBlackList = defs?.objectForKey("categoryBlacklist") as! [NSDate]
         }
@@ -89,6 +93,10 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         if self.tabBarController?.tabBar.hidden == true {
             self.tabBarController!.tabBar.hidden = false
+        }
+        
+        if navigationController?.toolbarHidden == false {
+            navigationController?.toolbarHidden = true
         }
     }
     

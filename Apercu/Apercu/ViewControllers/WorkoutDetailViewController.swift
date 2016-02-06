@@ -92,7 +92,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         loadWorkout()
         
         navigationController?.navigationBar.translucent = false
-        comparisonToolBarCreation()
+//        createComparisonToolbar()
         
         categorizeButton.titleLabel?.adjustsFontSizeToFitWidth = true
         segment.setEnabled(false, forSegmentAtIndex: 1)
@@ -138,6 +138,11 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         plotSpace.delegate = self
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "screenRotated:", name: UIDeviceOrientationDidChangeNotification, object: nil)
+        
+        if allWorkouts != nil {
+//            createComparisonToolbar()
+            navigationController?.toolbarHidden = false
+        }
         
         tableStrings = GraphTableStrings().allHeaderStrings()
         
@@ -712,6 +717,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func showKeyboard(sender: NSNotification) {
+        navigationController?.toolbarHidden = true
+        
         let info = sender.userInfo
         let keyboardDict = info![UIKeyboardFrameBeginUserInfoKey] as? NSValue
         let keyboardSize = keyboardDict?.CGRectValue()
@@ -738,10 +745,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     // MARK: - Comparison Functions
     
-    func comparisonToolBarCreation() {
+    func createComparisonToolbar() {
         if comparisonToolbar == nil {
             comparisonToolbar = UIToolbar()
-            comparisonToolbar.frame = CGRectMake(0, view.frame.size.height - 46, view.frame.size.width, 46)
+            comparisonToolbar.frame = CGRectMake(0, 0, view.frame.size.width, 46)
             comparisonToolbar.sizeToFit()
             view.addSubview(comparisonToolbar)
         }
