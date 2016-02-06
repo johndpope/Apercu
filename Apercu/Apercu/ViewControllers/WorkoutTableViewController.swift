@@ -41,7 +41,7 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
         if traitCollection.forceTouchCapability == UIForceTouchCapability.Available {
             registerForPreviewingWithDelegate(self, sourceView: view)
         }
-
+        
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -174,8 +174,6 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
                     detailString += "\n"
                 }
             }
-
-
 
             cell.titleLabel.text = titleString
 

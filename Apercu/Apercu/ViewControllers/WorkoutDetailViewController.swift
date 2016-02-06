@@ -17,6 +17,9 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var startDate: NSDate!
     var coreDataWorkout: Workout?
     var healthKitWorkout: HKWorkout?
+    var allWorkouts: [ApercuWorkout]!
+    
+    var currentWorkoutIndex = 0
     
     @IBOutlet var hostView: CPTGraphHostingView!
     @IBOutlet var scrollView: CustomScrollView!
@@ -50,7 +53,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     var graph: CPTXYGraph!
     var axisSet: CPTXYAxisSet!
-    var toolbar: UIToolbar!
+    var keyboardToolbar: UIToolbar!
+    var comparisonToolbar: UIToolbar!
     
     var min: Double!
     var plotMin: Double!
@@ -85,10 +89,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        coreDataWorkout = coreDataHelper.getCoreDataWorkout(startDate)
-        currentWorkout = ApercuWorkout(healthKitWorkout: healthKitWorkout, workout: coreDataWorkout)
+        loadWorkout()
         
         navigationController?.navigationBar.translucent = false
+        comparisonToolBarCreation()
         
         categorizeButton.titleLabel?.adjustsFontSizeToFitWidth = true
         segment.setEnabled(false, forSegmentAtIndex: 1)
@@ -139,6 +143,16 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         GraphAxisSetUp().initialSetup((self.graph.axisSet as? CPTXYAxisSet)!, duration: 60, min: 50)
         
+        processCurrentWorkout()
+        
+    }
+    
+    func loadWorkout() {
+        coreDataWorkout = coreDataHelper.getCoreDataWorkout(startDate)
+        currentWorkout = ApercuWorkout(healthKitWorkout: healthKitWorkout, workout: coreDataWorkout)
+    }
+    
+    func processCurrentWorkout() {
         ProcessWorkout().heartRatePlotDate(currentWorkout.getStartDate()!, end: currentWorkout.getEndDate()!, includeRaw: true, statsCompleted: {
             (stats) -> Void in
             
@@ -250,14 +264,14 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         graphConstraintTrailing.constant = 20
         graphConstraintHeight.constant = 0.5 * screenRect.size.height
         
-//        if self.tabBarController?.tabBar.hidden == true {
+        //        if self.tabBarController?.tabBar.hidden == true {
         if let tabBarCont = self.tabBarController {
             if tabBarCont.tabBar.hidden == false {
                 tabBarCont.tabBar.hidden = true
             }
         }
-//        }
-
+        //        }
+        
     }
     
     func showColorView(show: Bool) {
@@ -656,22 +670,22 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     // Mark: - Toolbar
     
     func showToolbar(sender: UITextView) {
-        if toolbar == nil {
-            toolbar = UIToolbar()
-            toolbar.sizeToFit()
+        if keyboardToolbar == nil {
+            keyboardToolbar = UIToolbar()
+            keyboardToolbar.sizeToFit()
             nextBarButton = UIBarButtonItem(title: "Next", style: .Plain, target: self, action: "nextPressed:")
             let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
             let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "hideKeyboard:")
             
-            toolbar.setItems([nextBarButton, spacer, doneButton], animated: false)
-            toolbar.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin]
-            toolbar.tintColor = UIColor.redColor()
+            keyboardToolbar.setItems([nextBarButton, spacer, doneButton], animated: false)
+            keyboardToolbar.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin]
+            keyboardToolbar.tintColor = UIColor.redColor()
         }
         
         if sender == titleTextView {
-            titleTextView.inputAccessoryView = toolbar
+            titleTextView.inputAccessoryView = keyboardToolbar
         } else {
-            descTextView.inputAccessoryView = toolbar
+            descTextView.inputAccessoryView = keyboardToolbar
         }
     }
     
@@ -722,4 +736,14 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
     }
     
+    // MARK: - Comparison Functions
+    
+    func comparisonToolBarCreation() {
+        if comparisonToolbar == nil {
+            comparisonToolbar = UIToolbar()
+            comparisonToolbar.frame = CGRectMake(0, view.frame.size.height - 46, view.frame.size.width, 46)
+            comparisonToolbar.sizeToFit()
+            view.addSubview(comparisonToolbar)
+        }
+    }
 }

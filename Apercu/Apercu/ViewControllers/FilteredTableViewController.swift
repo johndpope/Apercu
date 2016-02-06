@@ -285,7 +285,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         
-        if identifier == "toCompareView" {
+        if identifier == "filterDonePressed" {
             if filteredWorkouts.count == 0 {
                 let alert = UIAlertController(title: "Error", message: "No workouts to compare.", preferredStyle: .Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
@@ -307,6 +307,12 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
             destinationVC.currentWorkout = filteredWorkouts[selectedIndex]
             destinationVC.startDate = filteredWorkouts[selectedIndex].getStartDate()
             destinationVC.healthKitWorkout = filteredWorkouts[selectedIndex].healthKitWorkout
+        } else if segue.identifier == "filterDonePressed" {
+            let destinationVC = segue.destinationViewController as! WorkoutDetailViewController
+            destinationVC.currentWorkout = filteredWorkouts[0]
+            destinationVC.startDate = filteredWorkouts[0].getStartDate()
+            destinationVC.healthKitWorkout = filteredWorkouts[0].healthKitWorkout
+            destinationVC.allWorkouts = filteredWorkouts
         }
     }
     

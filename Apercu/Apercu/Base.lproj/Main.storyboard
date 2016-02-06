@@ -3751,6 +3751,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" id="XwB-fZ-4hZ"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="1000"/>
@@ -4351,7 +4352,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Done" id="H5B-kF-Oii">
                             <connections>
-                                <segue destination="URY-j2-4iW" kind="push" identifier="toCompareView" id="Q7x-1R-2db"/>
+                                <segue destination="urD-Ty-FIU" kind="show" identifier="filterDonePressed" id="lVA-wM-U1W"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -5481,9 +5482,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <image name="singleTabBar3.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="c5j-j5-e5s"/>
-        <segue reference="TVE-7W-duB"/>
         <segue reference="lV2-Wb-bA2"/>
+        <segue reference="hBj-EI-suy"/>
+        <segue reference="lVA-wM-U1W"/>
         <segue reference="BQA-YE-PQn"/>
         <segue reference="goZ-7M-4CC"/>
     </inferredMetricsTieBreakers>
