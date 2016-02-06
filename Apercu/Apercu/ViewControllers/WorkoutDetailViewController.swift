@@ -191,7 +191,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             // show plots
             dispatch_async(dispatch_get_main_queue(), {
                 () -> Void in
-                self.addPlotsForNormalView()
+                if self.segment.selectedSegmentIndex == 0 {
+                    self.removeAllPlots()
+                    self.addPlotsForNormalView()
+                }
                 
                 self.graph.reloadData()
                 self.setFullXRange()
@@ -210,6 +213,11 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         dispatch_async(dispatch_get_main_queue(), {
                             () -> Void in
                             self.segment.setEnabled(true, forSegmentAtIndex: 1)
+                            
+                            if self.segment.selectedSegmentIndex == 1 {
+                                self.removeAllPlots()
+                                self.addPlotsForHeatmap()   
+                            }
                         })
                     })
                 })
