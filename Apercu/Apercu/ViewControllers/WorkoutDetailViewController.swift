@@ -84,6 +84,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     let coreDataHelper = CoreDataHelper()
     var averagingInProgress = false
     var showMostActive = false
+    var activeDuration = 0
     var segmentSwitching = false
     
     var nextBarButton: UIBarButtonItem!
@@ -127,7 +128,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         descTextView.layer.cornerRadius = 6.0
         titleTextView.delegate = self
         titleTextView.layer.cornerRadius = 6.0
-        setDescriptionTextView()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideKeyboard:", name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "showKeyboard:", name: UIKeyboardDidShowNotification, object: nil)
         
@@ -164,6 +164,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         }
         coreDataWorkout = coreDataHelper.getCoreDataWorkout(startDate)
         currentWorkout = ApercuWorkout(healthKitWorkout: healthKitWorkout, workout: coreDataWorkout)
+        
+        setTitle()
+        setDescriptionTextView()
+        updateCategoryDisplay()
     }
     
     func processCurrentWorkout() {
@@ -173,18 +177,24 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             // Stats for graph completed (min, max, avg, duration)
             // update graph
             self.min = stats["min"] as! Double
+            
             if self.min > 60 {
                 self.plotMin = 60
             } else {
                 self.plotMin = self.min - 3.0
             }
             self.max = stats["max"] as! Double
-            self.plotMax = self.max + 3.0
+            
+            if self.max > IntensityThresholdSingleton.sharedInstance.maximumHeatRate {
+                self.plotMax = self.max + 3.0
+            } else {
+                self.plotMax = IntensityThresholdSingleton.sharedInstance.maximumHeatRate
+            }
+            
             self.avg = stats["avg"] as! Double
             self.duration = stats["duration"] as! Double
             self.bpm = stats["bpm"] as! [Double]
             self.time = stats["time"] as! [Double]
-            
             
             self.plots["Average"] = ApercuPlot(plot: GraphPlotSetup().createAveragePlot(), data: self.plotDataCreator.createAveragePlotData(self.avg, duration: self.duration))
             
@@ -194,6 +204,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 if self.segment.selectedSegmentIndex == 0 {
                     self.removeAllPlots()
                     self.addPlotsForNormalView()
+                    
+                    if self.showMostActive == true {
+                        self.findMostActive()
+                    }
                 }
                 
                 self.graph.reloadData()
@@ -216,7 +230,11 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             
                             if self.segment.selectedSegmentIndex == 1 {
                                 self.removeAllPlots()
-                                self.addPlotsForHeatmap()   
+                                self.addPlotsForHeatmap()
+                                
+                                if self.showMostActive == true {
+                                    self.findMostActive()
+                                }
                             }
                         })
                     })
@@ -257,10 +275,23 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        coreDataWorkout = coreDataHelper.getCoreDataWorkout(startDate)
-        currentWorkout = ApercuWorkout(healthKitWorkout: healthKitWorkout, workout: coreDataWorkout)
-        setTitle()
+//        coreDataWorkout = coreDataHelper.getCoreDataWorkout(startDate)
+//        currentWorkout = ApercuWorkout(healthKitWorkout: healthKitWorkout, workout: coreDataWorkout)
         
+        let screenRect = UIScreen.mainScreen().bounds
+        graphConstraintBottom.constant = 10
+        graphConstraintLeading.constant = 20
+        graphConstraintTrailing.constant = 20
+        graphConstraintHeight.constant = 0.5 * screenRect.size.height
+        
+        if let tabBarCont = self.tabBarController {
+            if tabBarCont.tabBar.hidden == false {
+                tabBarCont.tabBar.hidden = true
+            }
+        }
+    }
+    
+    func updateCategoryDisplay() {
         if currentWorkout.workout != nil {
             if let currentCategory = currentWorkout.workout!.category {
                 let categoryHelper = CategoriesSingleton.sharedInstance
@@ -279,21 +310,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         } else {
             showColorView(false)
         }
-        
-        let screenRect = UIScreen.mainScreen().bounds
-        graphConstraintBottom.constant = 10
-        graphConstraintLeading.constant = 20
-        graphConstraintTrailing.constant = 20
-        graphConstraintHeight.constant = 0.5 * screenRect.size.height
-        
-        //        if self.tabBarController?.tabBar.hidden == true {
-        if let tabBarCont = self.tabBarController {
-            if tabBarCont.tabBar.hidden == false {
-                tabBarCont.tabBar.hidden = true
-            }
-        }
-        //        }
-        
     }
     
     func showColorView(show: Bool) {
@@ -553,7 +569,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     // MARK: - Active Duration Changed
     
-    func sliderChanged(activeDuration: Int, forced: Bool) {
+    func sliderChanged(sliderActiveDuration: Int, forced: Bool) {
+        activeDuration = sliderActiveDuration
         
         if activeDuration != 0 {
             plots["Active"] = nil
@@ -564,31 +581,36 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                 () -> Void in
-                GraphMostActive().mostActivePeriod(self.bpm, times: self.time, duration: Double(activeDuration), completion: {
-                    (timeOne, timeTwo) -> Void in
-                    
-                    let activeData = self.plotDataCreator.createMostActivePlotData(timeOne, end: timeTwo, max: self.plotMax, min: self.plotMin)
-                    let activePlot = GraphPlotSetup().createMostActivePlot(self.plotMin)
-                    
-                    self.plots["Active"] = ApercuPlot(plot: activePlot, data: activeData)
-                    
-                    dispatch_async(dispatch_get_main_queue(), {
-                        () -> Void in
-                        self.removeAllPlots()
-                        
-                        if self.segment.selectedSegmentIndex == 0 {
-                            self.addPlotsForNormalView()
-                        } else {
-                            self.addPlotsForHeatmap()
-                        }
-                        
-                    })
-                })
+                self.findMostActive()
             })
         } else {
             removeActivePlot()
             showMostActive = false
         }
+    }
+    
+    func findMostActive() {
+        GraphMostActive().mostActivePeriod(self.bpm, times: self.time, duration: Double(activeDuration), completion: {
+            (timeOne, timeTwo) -> Void in
+            
+            let activeData = self.plotDataCreator.createMostActivePlotData(timeOne, end: timeTwo, max: self.plotMax, min: self.plotMin)
+            let activePlot = GraphPlotSetup().createMostActivePlot(self.plotMin)
+            
+            self.plots["Active"] = ApercuPlot(plot: activePlot, data: activeData)
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                () -> Void in
+                self.removeAllPlots()
+                
+                if self.segment.selectedSegmentIndex == 0 {
+                    self.addPlotsForNormalView()
+                } else {
+                    self.addPlotsForHeatmap()
+                }
+                
+            })
+        })
+        
     }
     
     // MARK: - On rotate
