@@ -3751,14 +3751,34 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <toolbarItems/>
+                    <toolbarItems>
+                        <barButtonItem title="Prev" id="3gd-MN-dCs">
+                            <color key="tintColor" red="0.0" green="0.49019607840000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="previousToolbarPressed:" destination="urD-Ty-FIU" id="QiZ-M5-an1"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="ZOY-KW-7qS"/>
+                        <barButtonItem title="1 / 5" id="rOI-qi-w9j">
+                            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Y6h-G6-6VU"/>
+                        <barButtonItem title="Next" id="14c-2E-I6j">
+                            <color key="tintColor" red="0.0" green="0.49019607840000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="nextToolbarPressed:" destination="urD-Ty-FIU" id="kMZ-Mp-hk9"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" id="XwB-fZ-4hZ"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="1000"/>
                     <connections>
                         <outlet property="activeView" destination="z1q-Rm-5BJ" id="9kj-nq-fSc"/>
                         <outlet property="backgroundView" destination="o5j-Bj-eMA" id="Erd-8O-yOM"/>
                         <outlet property="categorizeButton" destination="E4M-pN-yu4" id="XVw-0y-vca"/>
+                        <outlet property="centerToolbarButton" destination="rOI-qi-w9j" id="JAM-Ds-GZA"/>
                         <outlet property="colorLabel" destination="sGx-zM-aQX" id="uu3-pk-fB0"/>
                         <outlet property="colorView" destination="QWd-YO-3lV" id="wmq-ti-ZsT"/>
                         <outlet property="colorViewTrailing" destination="Ged-yX-6jB" id="f9h-iB-TXq"/>
@@ -3770,6 +3790,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <outlet property="graphConstraintLeading" destination="eho-hs-jyz" id="hzi-bq-H2F"/>
                         <outlet property="graphConstraintTrailing" destination="snM-SX-a3K" id="3ly-Mt-tH9"/>
                         <outlet property="hostView" destination="aDM-Vz-sAY" id="BOJ-HV-WLa"/>
+                        <outlet property="nextToolbarButton" destination="14c-2E-I6j" id="2iX-Vv-eiA"/>
+                        <outlet property="previousToolbarButton" destination="3gd-MN-dCs" id="aKX-5O-ZbY"/>
                         <outlet property="scrollView" destination="CLB-bf-Jpt" id="Mxd-Hf-rmL"/>
                         <outlet property="segment" destination="XSf-ig-EW1" id="zVr-8h-eIl"/>
                         <outlet property="tableView" destination="9W9-Ce-ORB" id="ULO-3y-lHo"/>
@@ -3802,7 +3824,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="npL-7w-E5r">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="npL-7w-E5r">
                                 <rect key="frame" x="0.0" y="228" width="320" height="727.5"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -3900,7 +3922,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <rect key="frame" x="0.0" y="0.0" width="320" height="1000"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oLn-iL-GPm" customClass="HRColorPickerView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oLn-iL-GPm" customClass="HRColorPickerView">
                                 <rect key="frame" x="0.0" y="64" width="320" height="892"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vCd-59-P0f" customClass="HRColorInfoView">
@@ -3918,7 +3940,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                             <constraint firstAttribute="height" constant="25" id="Ige-im-XSZ"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FeK-MU-tcu" customClass="HRColorMapView">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FeK-MU-tcu" customClass="HRColorMapView">
                                         <rect key="frame" x="0.0" y="150" width="330" height="727"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
@@ -3975,7 +3997,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <rect key="frame" x="0.0" y="64" width="320" height="936"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YzN-9z-gxz" customClass="CPTGraphHostingView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YzN-9z-gxz" customClass="CPTGraphHostingView">
                                 <rect key="frame" x="15" y="0.0" width="305" height="877"/>
                                 <color key="backgroundColor" cyan="0.27000000000000002" magenta="0.0" yellow="0.63" black="0.0" alpha="1" colorSpace="custom" customColorSpace="genericCMYKColorSpace"/>
                             </view>

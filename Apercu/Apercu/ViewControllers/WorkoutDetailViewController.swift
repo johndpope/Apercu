@@ -47,6 +47,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet var descTextViewHeight: NSLayoutConstraint!
     @IBOutlet var titleTextViewHeight: NSLayoutConstraint!
     
+    @IBOutlet var previousToolbarButton: UIBarButtonItem!
+    @IBOutlet var nextToolbarButton: UIBarButtonItem!
+    @IBOutlet var centerToolbarButton: UIBarButtonItem!
+    
     var plots = [String: ApercuPlot]()
     var limitBands: [CPTLimitBand]!
     var workoutStats: [String:AnyObject]!
@@ -92,7 +96,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         loadWorkout()
         
         navigationController?.navigationBar.translucent = false
-//        createComparisonToolbar()
         
         categorizeButton.titleLabel?.adjustsFontSizeToFitWidth = true
         segment.setEnabled(false, forSegmentAtIndex: 1)
@@ -140,8 +143,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "screenRotated:", name: UIDeviceOrientationDidChangeNotification, object: nil)
         
         if allWorkouts != nil {
-//            createComparisonToolbar()
+            updateComparisonLabels()
             navigationController?.toolbarHidden = false
+        } else {
+            navigationController?.toolbarHidden = true
         }
         
         tableStrings = GraphTableStrings().allHeaderStrings()
@@ -153,6 +158,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func loadWorkout() {
+        if allWorkouts != nil {
+            healthKitWorkout = allWorkouts[currentWorkoutIndex].healthKitWorkout
+            startDate = allWorkouts[currentWorkoutIndex].getStartDate()
+        }
         coreDataWorkout = coreDataHelper.getCoreDataWorkout(startDate)
         currentWorkout = ApercuWorkout(healthKitWorkout: healthKitWorkout, workout: coreDataWorkout)
     }
@@ -714,6 +723,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let edgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         scrollView.contentInset = edgeInsets
         scrollView.scrollIndicatorInsets = edgeInsets
+        
+        navigationController?.toolbarHidden = false
     }
     
     func showKeyboard(sender: NSNotification) {
@@ -745,12 +756,31 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     // MARK: - Comparison Functions
     
-    func createComparisonToolbar() {
-        if comparisonToolbar == nil {
-            comparisonToolbar = UIToolbar()
-            comparisonToolbar.frame = CGRectMake(0, 0, view.frame.size.width, 46)
-            comparisonToolbar.sizeToFit()
-            view.addSubview(comparisonToolbar)
+    @IBAction func nextToolbarPressed(sender: AnyObject) {
+        if currentWorkoutIndex == allWorkouts.count - 1 {
+            currentWorkoutIndex = 0
+        } else {
+            currentWorkoutIndex += 1
         }
+        updateComparisonLabels()
+        loadWorkout()
+        processCurrentWorkout()
+    }
+    
+    @IBAction func previousToolbarPressed(sender: AnyObject) {
+        if currentWorkoutIndex == 0 {
+            currentWorkoutIndex = allWorkouts.count - 1
+        } else {
+            currentWorkoutIndex -= 1
+        }
+        
+        updateComparisonLabels()
+        loadWorkout()
+        processCurrentWorkout()
+    }
+    
+    func updateComparisonLabels() {
+        centerToolbarButton.title = String(format: "%i / %i", currentWorkoutIndex + 1, allWorkouts.count)
+        
     }
 }
