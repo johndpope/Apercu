@@ -45,6 +45,7 @@
 		8B6573461C2A1F2F00B9B1E9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B6573441C2A1F2F00B9B1E9 /* LaunchScreen.storyboard */; };
 		8B6573511C2A1F2F00B9B1E9 /* ApercuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6573501C2A1F2F00B9B1E9 /* ApercuTests.swift */; };
 		8B65735C1C2A1F2F00B9B1E9 /* ApercuUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B65735B1C2A1F2F00B9B1E9 /* ApercuUITests.swift */; };
+		8B6D66511C66744900206865 /* ProcessArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6D66501C66744900206865 /* ProcessArray.swift */; };
 		8B76F9621C36DF82009BE714 /* IntensityThresholdSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B76F9611C36DF82009BE714 /* IntensityThresholdSingleton.swift */; };
 		8B8603881C2F789300923013 /* CategoryFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8603871C2F789300923013 /* CategoryFilterViewController.swift */; };
 		8B86038A1C2F80F000923013 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B8603891C2F80F000923013 /* CategoryCell.swift */; };
@@ -145,6 +146,7 @@
 		8B6573571C2A1F2F00B9B1E9 /* ApercuUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApercuUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B65735B1C2A1F2F00B9B1E9 /* ApercuUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApercuUITests.swift; sourceTree = "<group>"; };
 		8B65735D1C2A1F2F00B9B1E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8B6D66501C66744900206865 /* ProcessArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProcessArray.swift; sourceTree = "<group>"; };
 		8B76F9611C36DF82009BE714 /* IntensityThresholdSingleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntensityThresholdSingleton.swift; path = ../Misc/IntensityThresholdSingleton.swift; sourceTree = "<group>"; };
 		8B8603871C2F789300923013 /* CategoryFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryFilterViewController.swift; sourceTree = "<group>"; };
 		8B8603891C2F80F000923013 /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoryCell.swift; path = Cells/CategoryCell.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 				8B52700A1C2E3AB000391950 /* ApercuWorkout.swift */,
 				8BC314F31C37F2EC00F2B774 /* ProcessWorkout.swift */,
 				8BC314FD1C394BFB00F2B774 /* ApercuPlot.swift */,
+				8B6D66501C66744900206865 /* ProcessArray.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -647,6 +650,7 @@
 				8B5C0C681C2D877A000B236A /* Exercise.swift in Sources */,
 				8BC6E3051C4A9F44007F5E13 /* GraphAverageData.swift in Sources */,
 				8BC314EC1C3718D000F2B774 /* GraphMostActive.swift in Sources */,
+				8B6D66511C66744900206865 /* ProcessArray.swift in Sources */,
 				8B5C0C601C2D877A000B236A /* Template.swift in Sources */,
 				8BDA8EE71C2C4F93000D0630 /* CategorySetup.swift in Sources */,
 				8BC314EE1C37622800F2B774 /* CustomScrollView.swift in Sources */,

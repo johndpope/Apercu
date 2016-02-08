@@ -13,7 +13,15 @@ class GraphTableStrings {
     
     var headerStrings: [String]!
     var headerAttrs: [String: UIFont]!
+    var averageAttrs: [String: AnyObject]!
+    var belowAverageAttrs: [String: AnyObject]!
+    var aboveAverageAttrs: [String: AnyObject]!
+    
     var headerAttributedStrings: [NSAttributedString]!
+    let valueAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
+
+    let greenColor = UIColor(red: 148/255, green: 184/255, blue: 51/255, alpha: 1.0)
+    let redColor = UIColor(red: 160/255, green: 40/255, blue: 40/255, alpha: 1)
     
     init() {
         headerStrings = ["Start Time:", "Duration:", "Moderate Activity:", "High Activity:", "High / Moderate Ratio:", "Distance:", "Calories:", "Activity Type:"]
@@ -24,15 +32,19 @@ class GraphTableStrings {
         for headerString in headerStrings {
             headerAttributedStrings.append(NSAttributedString(string: headerString, attributes: headerAttrs))
         }
+        
+        headerAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleBody)]
+        averageAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)]
+        belowAverageAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleBody), NSForegroundColorAttributeName: greenColor]
+        aboveAverageAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleBody), NSForegroundColorAttributeName: redColor]
     }
     
     func allHeaderStrings() -> [NSAttributedString] {
         return headerAttributedStrings
     }
     
-    func allValueStrings(values: [Double?]) -> [NSAttributedString] {
-        let valueAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
-        var valueStrings = [NSAttributedString]()
+    func allValueStrings(values: [Double?]) -> [NSMutableAttributedString] {
+        var valueStrings = [NSMutableAttributedString]()
         
         var dateString: String
         if let value0 = values[0] {
@@ -40,7 +52,7 @@ class GraphTableStrings {
         } else {
             dateString = "Not Specified"
         }
-        valueStrings.append(NSAttributedString(string: dateString, attributes: valueAttrs))
+        valueStrings.append(NSMutableAttributedString(string: dateString, attributes: valueAttrs))
         
         
         var durationString: String
@@ -49,7 +61,7 @@ class GraphTableStrings {
         } else {
             durationString = "Not specified"
         }
-        valueStrings.append(NSAttributedString(string: durationString, attributes: valueAttrs))
+        valueStrings.append(NSMutableAttributedString(string: durationString, attributes: valueAttrs))
     
         
         var moderateString: String
@@ -58,7 +70,7 @@ class GraphTableStrings {
         } else {
             moderateString = "Not Specified"
         }
-        valueStrings.append(NSAttributedString(string: moderateString, attributes: valueAttrs))
+        valueStrings.append(NSMutableAttributedString(string: moderateString, attributes: valueAttrs))
         
         
         var highString: String
@@ -76,8 +88,8 @@ class GraphTableStrings {
             highString = "Not Specified"
             ratioString = "N/A"
         }
-        valueStrings.append(NSAttributedString(string: highString, attributes: valueAttrs))
-        valueStrings.append(NSAttributedString(string: ratioString, attributes: valueAttrs))
+        valueStrings.append(NSMutableAttributedString(string: highString, attributes: valueAttrs))
+        valueStrings.append(NSMutableAttributedString(string: ratioString, attributes: valueAttrs))
         
         var milesString: String
         if let value4 = values[4] {
@@ -85,7 +97,7 @@ class GraphTableStrings {
         } else {
             milesString = "Not Specified"
         }
-        valueStrings.append(NSAttributedString(string: milesString, attributes: valueAttrs))
+        valueStrings.append(NSMutableAttributedString(string: milesString, attributes: valueAttrs))
         
         
         var caloriesString: String
@@ -94,7 +106,7 @@ class GraphTableStrings {
         } else {
             caloriesString = "Not Specified"
         }
-        valueStrings.append(NSAttributedString(string: caloriesString, attributes: valueAttrs))
+        valueStrings.append(NSMutableAttributedString(string: caloriesString, attributes: valueAttrs))
         
         
         var descriptionString: String
@@ -103,10 +115,65 @@ class GraphTableStrings {
         } else {
             descriptionString = "Not Specified"
         }
-        valueStrings.append(NSAttributedString(string: descriptionString, attributes: valueAttrs))
+        valueStrings.append(NSMutableAttributedString(string: descriptionString, attributes: valueAttrs))
         
         
         return valueStrings
+    }
+    
+    func valueStringWithComparison(values: [Double?], averages: [Double?]) -> [NSAttributedString] {
+        // values
+        
+        var workoutStrings = allValueStrings(values)
+        
+        var i = 0
+        while i < averages.count {
+            
+            switch i {
+            case 0:
+                if averages[0] != nil {
+                    let avgString = String(format: "\nAvg: %@", secondsToString(averages[0]!))
+                    workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+                    
+                    if values[i + 1] > averages[i] {
+                        let diffString = String(format: " +%@", secondsToString(averages[i]! - values[i+1]!))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: aboveAverageAttrs))
+                    } else {
+                        let diffString = String(format: " -%@", secondsToString(averages[i]! - values[i+1]!))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: belowAverageAttrs))
+                    }
+                } else {
+                    let avgString = String(format: "\nN/A", secondsToString(averages[0]!))
+                    workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+                }
+            case 1:
+                break;
+            default:
+                break;
+            }
+            
+            
+//            let avgString = String(format: "\nAvg: %f", averages[i]!)
+//            workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+//
+//            
+            i += 1
+        }
+        
+        return workoutStrings
+
+//        for (index, string) in workoutStrings.enumerate() {
+//            let avgString = String(format: "\nAvg: %d", averages[index]!)
+//        
+//            workoutStrings[index].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: valueAttrs))
+//        
+//        }
+        
+//        for tableString in workoutStrings {
+//            
+//            let avg = String(format: "\nAvg: %d", values)
+//        }
+        
     }
     
 }
