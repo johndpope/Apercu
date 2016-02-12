@@ -1,6 +1,8 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
-use_frameworks!
+ use_frameworks!
 # pod 'CorePlot'
-pod 'CorePlot', :git => 'https://github.com/core-plot/core-plot.git', :branch => 'release-2.1'
-pod "Color-Picker-for-iOS", "~> 2.0"
+target 'Apercu' do
+ pod 'CorePlot', :git => 'https://github.com/core-plot/core-plot.git', :branch => 'release-2.1'
+ pod "Color-Picker-for-iOS", "~> 2.0"
+end

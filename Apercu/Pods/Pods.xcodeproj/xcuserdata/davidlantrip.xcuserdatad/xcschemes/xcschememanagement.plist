@@ -14,7 +14,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods.xcscheme</key>
+		<key>Pods-Apercu.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -22,12 +22,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>A76C8AD23D33FF061C7DA2720CB79CCF</key>
+		<key>5B47A13B6485ED2445544260AA9D4604</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D5C39A384113396D5D6A52DBD43367E5</key>
+		<key>A01DCF3DD7042226A8E0B3D83E06E9C1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -55,7 +55,7 @@ class CategorySetup {
             let stringArray: [String] = [string0, string1, string2, string3, string4, string5, string6, string7, string8, string9, string10, string11, string12, string13]
             
             
-            for var i = 0; i < colorArray.count; ++i {
+            for i in 0 ..< colorArray.count {
                 let newCategory = NSEntityDescription.insertNewObjectForEntityForName("Category", inManagedObjectContext: managedContext) as! Category
                 
                 newCategory.identifier = i

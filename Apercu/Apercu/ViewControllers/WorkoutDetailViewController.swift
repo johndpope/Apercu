@@ -18,6 +18,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var coreDataWorkout: Workout?
     var healthKitWorkout: HKWorkout?
     var allWorkouts: [ApercuWorkout]!
+    var allWorkoutAverages: [Double?]!
+    var workoutRawValues: [Double?]!
     
     var currentWorkoutIndex = 0
     
@@ -257,6 +259,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 let description: Double = Double((self.currentWorkout.healthKitWorkout?.workoutActivityType.rawValue)!)
                 
                 let rawValues: [Double?] = [(self.currentWorkout.getStartDate()?.timeIntervalSince1970)!, self.currentWorkout.getEndDate()?.timeIntervalSinceDate(self.currentWorkout.getStartDate()!), self.moderateIntensityTime, self.highIntensityTime, self.distance, self.calories, description]
+                self.workoutRawValues = rawValues
                 
                 self.tableValues = GraphTableStrings().allValueStrings(rawValues)
                 
@@ -271,19 +274,38 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                         if self.allWorkouts != nil {
-                            ProcessArray().processGroup(self.allWorkouts, completion: { (results) -> Void in
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    // make strings
-                                    self.tableValues = GraphTableStrings().valueStringWithComparison(rawValues, averages: results)
-                                    self.tableView.reloadData() 
+                            if self.allWorkoutAverages == nil {
+                                ProcessArray().processGroup(self.allWorkouts, completion: { (results) -> Void in
+                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                        // make strings
+                                        self.allWorkoutAverages = results
+                                        self.generateComparisonStats()
+                                        //                                    self.allWorkoutAverages = results
+                                        //                                    self.tableValues = GraphTableStrings().valueStringWithComparison(rawValues, averages: results)
+                                        //                                    self.tableView.reloadData()
+                                        //                                    self.updateTableHeight()
+                                    })
                                 })
-                            })
+                            } else {
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.generateComparisonStats()
+                                })
+                                
+                            }
                         }
                     })
                 })
                 
         })
         
+    }
+    
+    func generateComparisonStats() {
+        if workoutRawValues != nil && allWorkoutAverages != nil {
+            tableValues = GraphTableStrings().valueStringWithComparison(workoutRawValues, averages: allWorkoutAverages)
+            tableView.reloadData()
+            updateTableHeight()
+        }
     }
     
     override func viewWillAppear(animated: Bool) {

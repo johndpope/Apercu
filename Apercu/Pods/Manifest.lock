@@ -13,11 +13,13 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   CorePlot:
-    :commit: 0b1f36e00fff7a1aa2df6b65117a85bdbf33aafa
+    :commit: 4deb4059fff1befb66451b3e7d3180248b056af8
     :git: https://github.com/core-plot/core-plot.git
 
 SPEC CHECKSUMS:
   Color-Picker-for-iOS: 4980589b3e3cfe7198f227dd50be9adb02d8bc0b
   CorePlot: ab9898c79b94999018e9634ab0aa4c21480c8552
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: f207ce31b3c609878c2611db6f06cb80cf769423
+
+COCOAPODS: 1.0.0.beta.3

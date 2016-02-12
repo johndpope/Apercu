@@ -24,7 +24,7 @@ func averageRawData(bpm: [Double], time: [Double], minTime: Double, maxTime: Dou
     
     var countInRange = 0
     
-    for var i = 0; i < compressedVector.count; ++i {
+    for i in 0 ..< compressedVector.count {
         if compressedVector[i] == 0.0 {
             countInRange = i
             break;
@@ -39,7 +39,7 @@ func averageRawData(bpm: [Double], time: [Double], minTime: Double, maxTime: Dou
 
 //        while countInRange > 750 {
         while countInRange / Int(pow(Double(2), Double(numberOfIterations))) > 500 {
-            ++numberOfIterations
+            numberOfIterations += 1
         }
 
         var outputArray = [bpm, time]
@@ -64,10 +64,12 @@ func halfBpmData(input: [[Double]]) -> [[Double]] {
         outputTime = [Double](count: time.count / 2, repeatedValue: 0.0)
         
         var outputIndex = 0
-        for var i = 0; i < bpm.count; i += 2 {
+        var i = 0;
+        while i < bpm.count {
             outputBpm[outputIndex] = (bpm[i] + bpm[i + 1]) / 2
             outputTime[outputIndex] = (time[i] + time[i + 1]) / 2
-            ++outputIndex
+            i += 2
+            outputIndex += 1
         }
         
     } else {
@@ -75,10 +77,12 @@ func halfBpmData(input: [[Double]]) -> [[Double]] {
         outputTime = [Double](count: time.count / 2 + 1, repeatedValue: 0.0)
         
         var outputIndex = 0
-        for var i = 0; i < bpm.count - 1; i += 2 {
+        var i = 0;
+        while i < bpm.count {
             outputBpm[outputIndex] = (bpm[i] + bpm[i + 1]) / 2
             outputTime[outputIndex] = (time[i] + time[i + 1]) / 2
-            ++outputIndex
+            i += 2
+            outputIndex += 1
         }
         
         outputBpm[outputIndex] = bpm.last!

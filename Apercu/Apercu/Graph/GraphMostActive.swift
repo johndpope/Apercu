@@ -45,10 +45,10 @@ class GraphMostActive {
                     currentTotal += bpmXtime[index + subIndex]
                 }
                 timeTotal += deltaTime[index + subIndex]
-                ++subIndex
+                subIndex += 1
             }
             
-            --subIndex
+            subIndex -= 1
             
             if currentTotal > currentMax {
                 currentMax = currentTotal
@@ -56,7 +56,7 @@ class GraphMostActive {
                 maxIndexEnd = index + subIndex + 1
             }
             
-            ++index
+            index += 1
         }
             
         completion(timeOne: times[maxIndexStart], timeTwo: times[maxIndexEnd])

@@ -99,7 +99,7 @@ class ActiveSlider: UIView, UIGestureRecognizerDelegate {
         var index = 0
         var difference: CGFloat!
         
-        for var i = 0; i < intervalOriginValues.count; ++i {
+        for i in 0 ..< intervalOriginValues.count {
             let sampleDiff = fabs(value - intervalOriginValues[i])
             if difference == nil || sampleDiff < difference {
                 difference = sampleDiff

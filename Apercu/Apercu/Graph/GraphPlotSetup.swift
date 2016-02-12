@@ -83,7 +83,7 @@ class GraphPlotSetup {
         var previousColor = colorNumber[0]
         var limitBands = [CPTLimitBand]()
         
-        for var i = 1; i < colorNumber.count - 1; ++i {
+        for i in 1 ..< colorNumber.count - 1 {
             if colorNumber[i] != previousColor {
                 let length = time[i] - time[Int(startIndex)]
                 let range = CPTPlotRange(location: time[Int(startIndex)], length: length)

@@ -14,12 +14,12 @@ class GraphTableStrings {
     var headerStrings: [String]!
     var headerAttrs: [String: UIFont]!
     var averageAttrs: [String: AnyObject]!
-    var belowAverageAttrs: [String: AnyObject]!
-    var aboveAverageAttrs: [String: AnyObject]!
+    var redAttrs: [String: AnyObject]!
+    var greenAttrs: [String: AnyObject]!
     
     var headerAttributedStrings: [NSAttributedString]!
     let valueAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
-
+    
     let greenColor = UIColor(red: 148/255, green: 184/255, blue: 51/255, alpha: 1.0)
     let redColor = UIColor(red: 160/255, green: 40/255, blue: 40/255, alpha: 1)
     
@@ -35,8 +35,8 @@ class GraphTableStrings {
         
         headerAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleBody)]
         averageAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)]
-        belowAverageAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleBody), NSForegroundColorAttributeName: greenColor]
-        aboveAverageAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleBody), NSForegroundColorAttributeName: redColor]
+        redAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline), NSForegroundColorAttributeName: greenColor]
+        greenAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline), NSForegroundColorAttributeName: redColor]
     }
     
     func allHeaderStrings() -> [NSAttributedString] {
@@ -62,7 +62,7 @@ class GraphTableStrings {
             durationString = "Not specified"
         }
         valueStrings.append(NSMutableAttributedString(string: durationString, attributes: valueAttrs))
-    
+        
         
         var moderateString: String
         if let value2 = values[2] {
@@ -131,48 +131,126 @@ class GraphTableStrings {
             
             switch i {
             case 0:
-                if averages[0] != nil {
-                    let avgString = String(format: "\nAvg: %@", secondsToString(averages[0]!))
+                if averages[i] != nil {
+                    let avgString = String(format: "\nAvg: %@", secondsToString(averages[i]!))
                     workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
                     
                     if values[i + 1] > averages[i] {
-                        let diffString = String(format: " +%@", secondsToString(averages[i]! - values[i+1]!))
-                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: aboveAverageAttrs))
+                        let diffString = String(format: " +%@", secondsToString(fabs(averages[i]! - values[i+1]!)))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: greenAttrs))
                     } else {
-                        let diffString = String(format: " -%@", secondsToString(averages[i]! - values[i+1]!))
-                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: belowAverageAttrs))
+                        let diffString = String(format: " -%@", secondsToString(fabs(averages[i]! - values[i+1]!)))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: redAttrs))
                     }
                 } else {
-                    let avgString = String(format: "\nN/A", secondsToString(averages[0]!))
+                    let avgString = "\nN/A"
                     workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
                 }
             case 1:
-                break;
+                if averages[i] != nil {
+                    let avgString = String(format: "\nAvg: %@", secondsToString(averages[i]!))
+                    workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+                    
+                    if values[i + 1] > averages[i] {
+                        let diffString = String(format: " +%@",  secondsToString(fabs(averages[i]! - values[i+1]!)))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: greenAttrs))
+                    } else {
+                         let diffString = String(format: " -%@",  secondsToString(fabs(averages[i]! - values[i+1]!)))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: redAttrs))
+                    }
+                } else {
+                    let avgString = "\nN/A"
+                    workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+                }
+            case 2:
+                if averages[i] != nil {
+                    let avgString = String(format: "\nAvg: %@", secondsToString(averages[i]!))
+                    workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+                    
+                    if values[i + 1] > averages[i] {
+                        let diffString = String(format: " +%@",  secondsToString(fabs(averages[i]! - values[i+1]!)))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: greenAttrs))
+                    } else {
+                        let diffString = String(format: " -%@",  secondsToString(fabs(averages[i]! - values[i+1]!)))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: redAttrs))
+                    }
+                } else {
+                    let avgString = "\nN/A"
+                    workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+                }
+            case 3:
+                if averages[i] != nil {
+                    let avgString = String(format: "\nAvg: %.2f", averages[i]!)
+                    workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+                    
+                    if values[i + 1] > averages[i] {
+                        let diffString = String(format: " +%.2f", fabs(averages[i]! - values[i + 1]!))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: greenAttrs))
+                    } else {
+                        let diffString = String(format: " -%.2f", fabs(averages[i]! - values[i + 1]!))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: redAttrs))
+                    }
+                } else {
+                    let avgString = "\nN/A"
+                    workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+                }   
+            case 4:
+                if averages[i] != nil {
+                    let avgString = String(format: "\nAvg: %.2f", averages[i]!)
+                    workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+                    
+                    if values[i + 1] > averages[i] {
+                        let diffString = String(format: " +%.2f", fabs(averages[i]! - values[i + 1]!))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: greenAttrs))
+                    } else {
+                        let diffString = String(format: " -%.2f", fabs(averages[i]! - values[i + 1]!))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: redAttrs))
+                    }
+                } else {
+                    let avgString = "\nN/A"
+                    workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+                }
+            case 5:
+                if averages[i] != nil {
+                    let avgString = String(format: "\nAvg: %.0f", averages[i]!)
+                    workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+                    
+                    if values[i + 1] > averages[i] {
+                        let diffString = String(format: " +%.0f", fabs(averages[i]! - values[i + 1]!))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: greenAttrs))
+                    } else {
+                        let diffString = String(format: " -%.0f", fabs(averages[i]! - values[i + 1]!))
+                        workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: diffString, attributes: redAttrs))
+                    }
+                } else {
+                    let avgString = "\nN/A"
+                    workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+                }
             default:
                 break;
             }
             
             
-//            let avgString = String(format: "\nAvg: %f", averages[i]!)
-//            workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
-//
-//            
+            //            let avgString = String(format: "\nAvg: %f", averages[i]!)
+            //            workoutStrings[i + 1].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: averageAttrs))
+            //
+            //
             i += 1
         }
         
         return workoutStrings
-
-//        for (index, string) in workoutStrings.enumerate() {
-//            let avgString = String(format: "\nAvg: %d", averages[index]!)
-//        
-//            workoutStrings[index].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: valueAttrs))
-//        
-//        }
         
-//        for tableString in workoutStrings {
-//            
-//            let avg = String(format: "\nAvg: %d", values)
-//        }
+        //        for (index, string) in workoutStrings.enumerate() {
+        //            let avgString = String(format: "\nAvg: %d", averages[index]!)
+        //
+        //            workoutStrings[index].appendAttributedString(NSMutableAttributedString(string: avgString, attributes: valueAttrs))
+        //
+        //        }
+        
+        //        for tableString in workoutStrings {
+        //            
+        //            let avg = String(format: "\nAvg: %d", values)
+        //        }
         
     }
     

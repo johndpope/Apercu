@@ -15,9 +15,9 @@
             hideIssues = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A01DCF3DD7042226A8E0B3D83E06E9C1"
-               BuildableName = "Color_Picker_for_iOS.framework"
-               BlueprintName = "Color-Picker-for-iOS"
+               BlueprintIdentifier = "5B47A13B6485ED2445544260AA9D4604"
+               BuildableName = "Pods_Apercu.framework"
+               BlueprintName = "Pods-Apercu"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,9 +46,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A01DCF3DD7042226A8E0B3D83E06E9C1"
-            BuildableName = "Color_Picker_for_iOS.framework"
-            BlueprintName = "Color-Picker-for-iOS"
+            BlueprintIdentifier = "5B47A13B6485ED2445544260AA9D4604"
+            BuildableName = "Pods_Apercu.framework"
+            BlueprintName = "Pods-Apercu"
             ReferencedContainer = "container:Pods.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

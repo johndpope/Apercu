@@ -40,7 +40,7 @@ class QueryHealthKitWorkouts {
                     }
                     
                 } else {
-                    for var i = 0; i < workoutResults!.count; ++i {
+                    for i in 0 ..< workoutResults!.count {
                         
                         let healthKitStartDate = workoutResults![i].startDate
                         
@@ -48,7 +48,7 @@ class QueryHealthKitWorkouts {
                         if coreDataWorkouts?.count > 0 {
                             while coreDataIndex < coreDataWorkouts?.count && coreDataWorkouts![coreDataIndex].start! < healthKitStartDate {
                                 combinedWorkouts.append(ApercuWorkout(healthKitWorkout: nil, workout: coreDataWorkouts![coreDataIndex]))
-                                ++coreDataIndex
+                                coreDataIndex += 1
                             }
                         }
                         
@@ -56,7 +56,7 @@ class QueryHealthKitWorkouts {
                         if coreDataIndex < coreDataWorkouts?.count {
                             if coreDataWorkouts![coreDataIndex].start?.isEqualToDate(healthKitStartDate) == true {
                                 combinedWorkouts.append(ApercuWorkout(healthKitWorkout: workoutResults![i] as? HKWorkout, workout: coreDataWorkouts![coreDataIndex]))
-                                ++coreDataIndex
+                                coreDataIndex += 1
                             } else {
                                 combinedWorkouts.append(ApercuWorkout(healthKitWorkout: workoutResults![i] as? HKWorkout, workout: nil))
                             }
@@ -68,7 +68,7 @@ class QueryHealthKitWorkouts {
                         if i == ((workoutResults?.count)! - 1) {
                             while coreDataIndex < coreDataWorkouts?.count {
                                 combinedWorkouts.append(ApercuWorkout(healthKitWorkout: nil, workout: coreDataWorkouts![coreDataIndex]))
-                                ++coreDataIndex
+                                coreDataIndex += 1
                             }
                         }
                         
