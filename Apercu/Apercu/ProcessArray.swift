@@ -23,7 +23,7 @@ class ProcessArray {
     
     var averagedStats = [String: Double]()
     
-    func processGroup(workouts: [ApercuWorkout], completion: (results: [Double?]!) -> Void) {
+    func processGroup(workouts: [ApercuWorkout], completion: (results: [String: Double?]!) -> Void) {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             self.totalWorkouts = workouts.count - 1
@@ -75,41 +75,41 @@ class ProcessArray {
                         
                         if self.numberProcessed == self.totalWorkouts {
                             // return data
-                            var returnValues = [Double?]()
+                            var returnValues = [String: Double?]()
                             
                             if !self.durationArray.isEmpty {
-                                returnValues.append(self.averageArray(self.durationArray))
+                                    returnValues["duration"] = self.averageArray(self.durationArray)
                             } else {
-                                returnValues.append(0)
+                                returnValues["duration"] = nil
                             }
                             
                             if !self.moderateArray.isEmpty {
-                                returnValues.append(self.averageArray(self.moderateArray))
+                                returnValues["moderate"] = self.averageArray(self.moderateArray)
                             } else {
-                                returnValues.append(0)
+                                returnValues["moderate"] = nil
                             }
                             
                             if !self.highArray.isEmpty {
-                                returnValues.append(self.averageArray(self.highArray))
+                                returnValues["high"] = self.averageArray(self.highArray)
                             } else {
-                                returnValues.append(0)
+                                returnValues["high"] = nil
                             }
                             
                             if !self.ratioArray.isEmpty {
-                                returnValues.append(self.averageArray(self.ratioArray))
+                                returnValues["ratio"] = self.averageArray(self.ratioArray)
                             } else {
-                                returnValues.append(0)
+                                returnValues["ratio"] = nil
                             }
                             
                             if !self.distanceArray.isEmpty {
-                                returnValues.append(self.averageArray(self.distanceArray))
+                                returnValues["distance"] = self.averageArray(self.distanceArray)
                             } else {
-                                returnValues.append(0)
+                                returnValues["distance"] = nil
                             }
                             if !self.caloriesArray.isEmpty {
-                                returnValues.append(self.averageArray(self.caloriesArray))
+                                returnValues["calories"] = self.averageArray(self.caloriesArray)
                             } else {
-                                returnValues.append(0)
+                                returnValues["calories"] = nil
                             }
                             
                             completion(results: returnValues)

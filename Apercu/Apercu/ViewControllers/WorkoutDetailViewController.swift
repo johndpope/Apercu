@@ -18,8 +18,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var coreDataWorkout: Workout?
     var healthKitWorkout: HKWorkout?
     var allWorkouts: [ApercuWorkout]!
-    var allWorkoutAverages: [Double?]!
-    var workoutRawValues: [Double?]!
+    var allWorkoutAverages: [String: Double?]!
+    var workoutRawValues: [String: Double?]!
     
     var currentWorkoutIndex = 0
     
@@ -258,32 +258,30 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 let description: Double = Double((self.currentWorkout.healthKitWorkout?.workoutActivityType.rawValue)!)
                 
-                let rawValues: [Double?] = [(self.currentWorkout.getStartDate()?.timeIntervalSince1970)!, self.currentWorkout.getEndDate()?.timeIntervalSinceDate(self.currentWorkout.getStartDate()!), self.moderateIntensityTime, self.highIntensityTime, self.distance, self.calories, description]
+                let rawValues: [String: Double?] = ["start": (self.currentWorkout.getStartDate()?.timeIntervalSince1970)!,"duration": self.currentWorkout.getEndDate()?.timeIntervalSinceDate(self.currentWorkout.getStartDate()!),"moderate": self.moderateIntensityTime, "high": self.highIntensityTime, "distance": self.distance,"calories": self.calories,"desc": description]
                 self.workoutRawValues = rawValues
                 
                 self.tableValues = GraphTableStrings().allValueStrings(rawValues)
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     () -> Void in
-                    self.tableView.reloadData()
-                    self.view.layoutIfNeeded()
-                    self.updateTableHeight()
                     
-                    self.tableView.reloadData()
-                    self.updateTableHeight()
+                    if self.allWorkoutAverages == nil {
+                        self.tableView.reloadData()
+                        self.view.layoutIfNeeded()
+                        self.updateTableHeight()
+                        self.tableView.reloadData()
+                        self.updateTableHeight()
+                    }
                     
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                         if self.allWorkouts != nil {
                             if self.allWorkoutAverages == nil {
                                 ProcessArray().processGroup(self.allWorkouts, completion: { (results) -> Void in
                                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        // make strings
                                         self.allWorkoutAverages = results
                                         self.generateComparisonStats()
-                                        //                                    self.allWorkoutAverages = results
-                                        //                                    self.tableValues = GraphTableStrings().valueStringWithComparison(rawValues, averages: results)
-                                        //                                    self.tableView.reloadData()
-                                        //                                    self.updateTableHeight()
+
                                     })
                                 })
                             } else {
@@ -310,9 +308,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        //        coreDataWorkout = coreDataHelper.getCoreDataWorkout(startDate)
-        //        currentWorkout = ApercuWorkout(healthKitWorkout: healthKitWorkout, workout: coreDataWorkout)
-        
+
         let screenRect = UIScreen.mainScreen().bounds
         graphConstraintBottom.constant = 10
         graphConstraintLeading.constant = 20

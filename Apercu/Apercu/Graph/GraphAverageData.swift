@@ -78,7 +78,7 @@ func halfBpmData(input: [[Double]]) -> [[Double]] {
         
         var outputIndex = 0
         var i = 0;
-        while i < bpm.count {
+        while i < bpm.count - 1 {
             outputBpm[outputIndex] = (bpm[i] + bpm[i + 1]) / 2
             outputTime[outputIndex] = (time[i] + time[i + 1]) / 2
             i += 2
