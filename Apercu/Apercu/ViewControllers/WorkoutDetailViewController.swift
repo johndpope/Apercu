@@ -20,6 +20,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var allWorkouts: [ApercuWorkout]!
     var allWorkoutAverages: [String: Double?]!
     var workoutRawValues: [String: Double?]!
+    var allWorkoutStats = [Int: [String: AnyObject]]()
+    var allWorkoutHeatmapBands = [Int: [CPTLimitBand]]()
     
     var currentWorkoutIndex = 0
     
@@ -159,6 +161,18 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         processCurrentWorkout()
         
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            if self.allWorkouts != nil && self.allWorkouts.count > 1 {
+                for i in 0 ..< self.allWorkouts.count {
+                    let workoutForIndex = self.allWorkouts[i]
+                    ProcessWorkout().heartRatePlotDate(workoutForIndex.getStartDate()!, end: workoutForIndex.getEndDate()!, includeRaw: true, statsCompleted: { (stats) in
+                            self.allWorkoutStats[i] = stats;
+                        }, completion: { (results) in
+                            self.allWorkoutStats[i] = results;
+                    })
+                }}
+            }
+        )
     }
     
     func loadWorkout() {
@@ -174,129 +188,149 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         updateCategoryDisplay()
     }
     
-    func processCurrentWorkout() {
-        ProcessWorkout().heartRatePlotDate(currentWorkout.getStartDate()!, end: currentWorkout.getEndDate()!, includeRaw: true, statsCompleted: {
-            (stats) -> Void in
+    func setupWorkoutStats(stats: [String: AnyObject]) {
+        min = stats["min"] as! Double
+        
+        if min > 60 {
+            plotMin = 60
+        } else {
+            plotMin = self.min - 3.0
+        }
+        
+        max = stats["max"] as! Double
+        
+        if max > IntensityThresholdSingleton.sharedInstance.maximumHeatRate {
+            plotMax = self.max + 3.0
+        } else {
+            plotMax = IntensityThresholdSingleton.sharedInstance.maximumHeatRate
+        }
+        
+        avg = stats["avg"] as! Double
+        duration = stats["duration"] as! Double
+        bpm = stats["bpm"] as! [Double]
+        time = stats["time"] as! [Double]
+        plots["Average"] = ApercuPlot(plot: GraphPlotSetup().createAveragePlot(), data: self.plotDataCreator.createAveragePlotData(self.avg, duration: self.duration))
+    }
+    
+    func setupNormalPlots() {
+        if self.segment.selectedSegmentIndex == 0 {
+            self.removeAllPlots()
+            self.addPlotsForNormalView()
             
-            // Stats for graph completed (min, max, avg, duration)
-            // update graph
-            self.min = stats["min"] as! Double
-            
-            if self.min > 60 {
-                self.plotMin = 60
-            } else {
-                self.plotMin = self.min - 3.0
+            if self.showMostActive == true {
+                self.findMostActive()
             }
-            self.max = stats["max"] as! Double
+        }
+        
+        self.graph.reloadData()
+        self.setFullXRange()
+        self.goingToNewYAxis = true
+        self.setFullYRange()
+        self.goingToNewYAxis = false
+        GraphAxisSetUp().updateLabelingPolicy(self.duration, axisSet: self.axisSet)
+    }
+    
+    func calculateHeatmapGraph() {
+        GraphHeatmap().heatmapRawData(self.bpm, min: self.min, max: self.max, completion: {
+            (colorNumber) -> Void in
             
-            if self.max > IntensityThresholdSingleton.sharedInstance.maximumHeatRate {
-                self.plotMax = self.max + 3.0
-            } else {
-                self.plotMax = IntensityThresholdSingleton.sharedInstance.maximumHeatRate
-            }
+            self.limitBands = GraphPlotSetup().createHeatmapLimitBands(colorNumber, time: self.time, yMin: self.plotMin, yMax: self.plotMax)
             
-            self.avg = stats["avg"] as! Double
-            self.duration = stats["duration"] as! Double
-            self.bpm = stats["bpm"] as! [Double]
-            self.time = stats["time"] as! [Double]
-            
-            self.plots["Average"] = ApercuPlot(plot: GraphPlotSetup().createAveragePlot(), data: self.plotDataCreator.createAveragePlotData(self.avg, duration: self.duration))
-            
-            // show plots
             dispatch_async(dispatch_get_main_queue(), {
                 () -> Void in
-                if self.segment.selectedSegmentIndex == 0 {
+                self.segment.setEnabled(true, forSegmentAtIndex: 1)
+                
+                if self.segment.selectedSegmentIndex == 1 {
                     self.removeAllPlots()
-                    self.addPlotsForNormalView()
+                    self.addPlotsForHeatmap()
                     
                     if self.showMostActive == true {
                         self.findMostActive()
                     }
                 }
-                
-                self.graph.reloadData()
-                self.setFullXRange()
-                self.goingToNewYAxis = true
-                self.setFullYRange()
-                self.goingToNewYAxis = false
-                GraphAxisSetUp().updateLabelingPolicy(self.duration, axisSet: self.axisSet)
-                
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                    () -> Void in
-                    GraphHeatmap().heatmapRawData(self.bpm, min: self.min, max: self.max, completion: {
-                        (colorNumber) -> Void in
-                        
-                        self.limitBands = GraphPlotSetup().createHeatmapLimitBands(colorNumber, time: self.time, yMin: self.plotMin, yMax: self.plotMax)
-                        
-                        dispatch_async(dispatch_get_main_queue(), {
-                            () -> Void in
-                            self.segment.setEnabled(true, forSegmentAtIndex: 1)
-                            
-                            if self.segment.selectedSegmentIndex == 1 {
-                                self.removeAllPlots()
-                                self.addPlotsForHeatmap()
-                                
-                                if self.showMostActive == true {
-                                    self.findMostActive()
-                                }
-                            }
-                        })
-                    })
-                })
             })
+        })
+    }
+    
+    func setupTableStrings(stats: [String: AnyObject]) {
+        self.moderateIntensityTime = stats["mod"] as! Double
+        self.highIntensityTime = stats["high"] as! Double
+        
+        let milesUnit = HKUnit.mileUnit()
+        self.distance = self.currentWorkout.healthKitWorkout?.totalDistance?.doubleValueForUnit(milesUnit)
+        
+        let caloriesUnit = HKUnit.kilocalorieUnit()
+        self.calories = self.currentWorkout.healthKitWorkout?.totalEnergyBurned?.doubleValueForUnit(caloriesUnit)
+        
+        let description: Double = Double((self.currentWorkout.healthKitWorkout?.workoutActivityType.rawValue)!)
+        
+        let rawValues: [String: Double?] = ["start": (self.currentWorkout.getStartDate()?.timeIntervalSince1970)!,"duration": self.currentWorkout.getEndDate()?.timeIntervalSinceDate(self.currentWorkout.getStartDate()!),"moderate": self.moderateIntensityTime, "high": self.highIntensityTime, "distance": self.distance,"calories": self.calories,"desc": description]
+        self.workoutRawValues = rawValues
+        
+        self.tableValues = GraphTableStrings().allValueStrings(rawValues)
+        
+        dispatch_async(dispatch_get_main_queue(), {
+            () -> Void in
             
+            if self.allWorkoutAverages == nil {
+                self.tableView.reloadData()
+                self.view.layoutIfNeeded()
+                self.updateTableHeight()
+                self.tableView.reloadData()
+                self.updateTableHeight()
+            }
             
-            }, completion: {
-                (results) -> Void in
-                self.moderateIntensityTime = results["mod"] as! Double
-                self.highIntensityTime = results["high"] as! Double
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                if self.allWorkouts != nil {
+                    if self.allWorkoutAverages == nil {
+                        print("PROCESS ARRAY")
+                        ProcessArray().processGroup(self.allWorkouts, completion: { (results) -> Void in
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.allWorkoutAverages = results
+                                self.generateComparisonStats()
+                                
+                            })
+                        })
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.generateComparisonStats()
+                        })
+                        
+                    }
+                }
+            })
+        })
+    }
+    
+    func processCurrentWorkout() {
+        if let currentStats = allWorkoutStats[currentWorkoutIndex] {
+            setupWorkoutStats(currentStats)
+            setupNormalPlots()
+            calculateHeatmapGraph()
+            setupTableStrings(currentStats)
+        } else {
+            ProcessWorkout().heartRatePlotDate(currentWorkout.getStartDate()!, end: currentWorkout.getEndDate()!, includeRaw: true, statsCompleted: {
+                (stats) -> Void in
+                // Stats for graph completed (min, max, avg, duration)
+                // update graph
+                self.setupWorkoutStats(stats)
                 
-                let milesUnit = HKUnit.mileUnit()
-                self.distance = self.currentWorkout.healthKitWorkout?.totalDistance?.doubleValueForUnit(milesUnit)
-                
-                let caloriesUnit = HKUnit.kilocalorieUnit()
-                self.calories = self.currentWorkout.healthKitWorkout?.totalEnergyBurned?.doubleValueForUnit(caloriesUnit)
-                
-                let description: Double = Double((self.currentWorkout.healthKitWorkout?.workoutActivityType.rawValue)!)
-                
-                let rawValues: [String: Double?] = ["start": (self.currentWorkout.getStartDate()?.timeIntervalSince1970)!,"duration": self.currentWorkout.getEndDate()?.timeIntervalSinceDate(self.currentWorkout.getStartDate()!),"moderate": self.moderateIntensityTime, "high": self.highIntensityTime, "distance": self.distance,"calories": self.calories,"desc": description]
-                self.workoutRawValues = rawValues
-                
-                self.tableValues = GraphTableStrings().allValueStrings(rawValues)
-                
+                // show plots
                 dispatch_async(dispatch_get_main_queue(), {
                     () -> Void in
-                    
-                    if self.allWorkoutAverages == nil {
-                        self.tableView.reloadData()
-                        self.view.layoutIfNeeded()
-                        self.updateTableHeight()
-                        self.tableView.reloadData()
-                        self.updateTableHeight()
-                    }
+                    self.setupNormalPlots()
                     
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                        if self.allWorkouts != nil {
-                            if self.allWorkoutAverages == nil {
-                                ProcessArray().processGroup(self.allWorkouts, completion: { (results) -> Void in
-                                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                        self.allWorkoutAverages = results
-                                        self.generateComparisonStats()
-                                        
-                                    })
-                                })
-                            } else {
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    self.generateComparisonStats()
-                                })
-                                
-                            }
-                        }
+                        () -> Void in
+                        self.calculateHeatmapGraph()
                     })
                 })
                 
-        })
-        
+                }, completion: {
+                    (results) -> Void in
+                    self.setupTableStrings(results)
+            })
+        }
     }
     
     func generateComparisonStats() {

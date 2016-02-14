@@ -86,14 +86,17 @@ class ProcessWorkout {
                 
                 secondsOfModerate = secondsAboveModerate - secondsOfHigh
                 
-                var responseDict = [String: AnyObject]()
+//                var responseDict = [String: AnyObject]()
                 
-                responseDict["mod"] = secondsOfModerate
-                responseDict["high"] = secondsOfHigh
-                responseDict["duration"] = duration
+                statsDict["mod"] = secondsOfModerate
+                statsDict["high"] = secondsOfHigh
+                statsDict["duration"] = duration
+//                responseDict["mod"] = secondsOfModerate
+//                responseDict["high"] = secondsOfHigh
+//                responseDict["duration"] = duration
                 
 //                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    completion(results: responseDict)
+                    completion(results: statsDict)
 //                })
             }
         })
