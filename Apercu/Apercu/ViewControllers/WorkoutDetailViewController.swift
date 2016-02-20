@@ -106,7 +106,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         navigationController?.navigationBar.translucent = false
         
         categorizeButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        segment.setEnabled(false, forSegmentAtIndex: 1)
+//        segment.setEnabled(false, forSegmentAtIndex: 1)
         activeView.delegate = self
         colorView.layer.cornerRadius = 12.5
         
@@ -195,7 +195,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func setupWorkoutStats(stats: [String: AnyObject]) {
         min = stats["min"] as! Double
         
-        if min > 60 {
+        if min > 60 + 3.0 {
             plotMin = 60
         } else {
             plotMin = self.min - 3.0
@@ -203,7 +203,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         max = stats["max"] as! Double
         
-        if max > IntensityThresholdSingleton.sharedInstance.maximumHeatRate {
+        if max > IntensityThresholdSingleton.sharedInstance.maximumHeatRate - 3.0 {
             plotMax = self.max + 3.0
         } else {
             plotMax = IntensityThresholdSingleton.sharedInstance.maximumHeatRate
