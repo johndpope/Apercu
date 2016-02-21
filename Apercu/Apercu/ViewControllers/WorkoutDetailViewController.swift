@@ -168,7 +168,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         processCurrentWorkout(0)
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
             if self.allWorkouts != nil && self.allWorkouts.count > 1 {
                 for i in 0 ..< self.allWorkouts.count {
                     let workoutForIndex = self.allWorkouts[i]
@@ -743,14 +743,19 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             dispatch_async(dispatch_get_main_queue(), {
                 () -> Void in
-                self.removeAllPlots()
+                self.removeActivePlot()
                 
-                if self.segment.selectedSegmentIndex == 0 {
-                    self.addPlotsForNormalView()
-                } else {
-                    self.addPlotsForHeatmap(true, highPriority: true)
-                }
-                
+                self.graph.addPlot(activePlot)
+                activePlot.dataSource = self
+                self.graph.reloadData()
+//                self.removeAllPlots()
+//
+//                if self.segment.selectedSegmentIndex == 0 {
+//                    self.addPlotsForNormalView()
+//                } else {
+//                    self.addPlotsForHeatmap(true, highPriority: true)
+//                }
+//                
                 self.mostActiveInProgress = false
             })
         })
