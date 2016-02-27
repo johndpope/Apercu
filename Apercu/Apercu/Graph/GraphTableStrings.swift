@@ -193,9 +193,9 @@ class GraphTableStrings {
                 let workoutRatio = values["high"]!! / values["moderate"]!!
                 let rawValue = averageRatio! - workoutRatio
                 let value = fabs(rawValue)
-        
+                
                 let diffString = String(format: "%.2f", value)
-
+                
                 workoutStrings[4].appendAttributedString(applyColorAttributes(rawValue, diffString: diffString))
             } else {
                 workoutStrings[4].appendAttributedString(notApplicableString())
@@ -209,10 +209,14 @@ class GraphTableStrings {
             workoutStrings[5].appendAttributedString(attributedAverageString(avgString))
             
             if let workoutDistance = values["distance"] {
-                let rawValue = averageDistance! - workoutDistance!
-                let value = fabs(rawValue)
-                let diffString = String(format: "%.2f", value)
-                workoutStrings[5].appendAttributedString(applyColorAttributes(rawValue, diffString: diffString))
+                if workoutDistance != nil {
+                    let rawValue = averageDistance! - workoutDistance!
+                    let value = fabs(rawValue)
+                    let diffString = String(format: "%.2f", value)
+                    workoutStrings[5].appendAttributedString(applyColorAttributes(rawValue, diffString: diffString))
+                } else {
+                    workoutStrings[5].appendAttributedString(notApplicableString())
+                }
             } else {
                 workoutStrings[5].appendAttributedString(notApplicableString())
             }
@@ -225,10 +229,14 @@ class GraphTableStrings {
             workoutStrings[6].appendAttributedString(attributedAverageString(avgString))
             
             if let workoutCalories = values["calories"] {
-                let rawValue = averageCalories! - workoutCalories!
-                let value = fabs(rawValue)
-                let diffString = String(format: "%.0f", value)
-                workoutStrings[6].appendAttributedString(applyColorAttributes(rawValue, diffString: diffString))
+                if workoutCalories != nil {
+                    let rawValue = averageCalories! - workoutCalories!
+                    let value = fabs(rawValue)
+                    let diffString = String(format: "%.0f", value)
+                    workoutStrings[6].appendAttributedString(applyColorAttributes(rawValue, diffString: diffString))
+                } else {
+                    workoutStrings[6].appendAttributedString(notApplicableString())
+                }
             } else {
                 workoutStrings[6].appendAttributedString(notApplicableString())
             }
