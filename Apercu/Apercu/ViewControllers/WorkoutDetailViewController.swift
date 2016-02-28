@@ -97,6 +97,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var loadingNewWorkout = true
     var loadingHeatmap = true
     var loadingStrings = true
+    var allAveragesInProgress = false
     
     var nextBarButton: UIBarButtonItem!
     var titlePlaceHolder = "Add title.."
@@ -168,12 +169,42 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         GraphAxisSetUp().initialSetup((self.graph.axisSet as? CPTXYAxisSet)!, duration: 60, min: 50)
         
-        processCurrentWorkout(0)
-        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-            if self.allWorkouts != nil && self.allWorkouts.count > 1 {
-                for i in 0 ..< self.allWorkouts.count {
-                    
+            self.processCurrentWorkout(0)
+            self.backgroundLoad()
+        })
+        
+        
+        
+        //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+        //        if self.allWorkouts != nil && self.allWorkouts.count > 1 {
+        //            for i in 0 ..< self.allWorkouts.count {
+        //
+        //                dispatch_async(serialQueue, {
+        //                    let workoutForIndex = self.allWorkouts[i]
+        //                    ProcessWorkout().heartRatePlotDate(workoutForIndex.getStartDate()!, end: workoutForIndex.getEndDate()!, includeRaw: true, statsCompleted: { (stats) in
+        //                        self.allWorkoutStats[i] = stats;
+        //                        }, completion: { (results) in
+        //                            self.allWorkoutStats[i] = results;
+        //                            self.workoutMainIsFinished[i] = true
+        //                            self.calculateHeatmapGraph(i, bpm: results["bpm"] as! [Double], time: results["time"] as! [Double], min: results["min"] as! Double, max: results["max"] as! Double, yMin: results["min"] as! Double, yMax: results["max"] as! Double, addToGraph: false)
+        //                    })
+        //                })
+        //
+        //
+        //            }
+        //        }
+        //            }
+        //        )
+    }
+    
+    func backgroundLoad() {
+        let serialQueue = dispatch_queue_create("com.apercu.queue", DISPATCH_QUEUE_SERIAL)
+        
+        if self.allWorkouts != nil && self.allWorkouts.count > 1 {
+            for i in 0 ..< self.allWorkouts.count {
+                
+                dispatch_async(serialQueue, {
                     let workoutForIndex = self.allWorkouts[i]
                     ProcessWorkout().heartRatePlotDate(workoutForIndex.getStartDate()!, end: workoutForIndex.getEndDate()!, includeRaw: true, statsCompleted: { (stats) in
                         self.allWorkoutStats[i] = stats;
@@ -182,11 +213,11 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             self.workoutMainIsFinished[i] = true
                             self.calculateHeatmapGraph(i, bpm: results["bpm"] as! [Double], time: results["time"] as! [Double], min: results["min"] as! Double, max: results["max"] as! Double, yMin: results["min"] as! Double, yMax: results["max"] as! Double, addToGraph: false)
                     })
-                    
-                    
-                }}
+                })
+                
+                
             }
-        )
+        }
     }
     
     func loadWorkout() {
@@ -227,33 +258,34 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func setupNormalPlots(shouldAddPlots: Bool) {
-        if self.segment.selectedSegmentIndex == 0 && shouldAddPlots {
-            self.removeAllPlots()
-            self.addPlotsForNormalView()
-            
-            if self.showMostActive == true {
-                self.findMostActive()
+        dispatch_async(dispatch_get_main_queue(), {
+            () -> Void in
+            if self.segment.selectedSegmentIndex == 0 && shouldAddPlots {
+                self.removeAllPlots()
+                self.addPlotsForNormalView()
+                
+                if self.showMostActive == true {
+                    self.findMostActive()
+                }
             }
-        }
-        
-        self.graph.reloadData()
-        self.setFullXRange()
-        self.goingToNewYAxis = true
-        self.setFullYRange()
-        self.goingToNewYAxis = false
-        GraphAxisSetUp().updateLabelingPolicy(self.duration, axisSet: self.axisSet)
+            
+            self.graph.reloadData()
+            self.setFullXRange()
+            self.goingToNewYAxis = true
+            self.setFullYRange()
+            self.goingToNewYAxis = false
+            GraphAxisSetUp().updateLabelingPolicy(self.duration, axisSet: self.axisSet)
+        })
     }
     
     func calculateHeatmapGraph(workoutIndex: Int, bpm: [Double], time: [Double], min: Double, max: Double, yMin: Double, yMax: Double, addToGraph: Bool) {
+        
         if workoutHeatmapIsFinished[currentWorkoutIndex] && allWorkoutHeatmapBands[currentWorkoutIndex] != nil {
             self.limitBands = allWorkoutHeatmapBands[workoutIndex]
             if addToGraph {
                 self.setupHeatmapGraph()
             }
         } else {
-            if addToGraph {
-                print("START")
-            }
             GraphHeatmap().heatmapRawData(bpm, min: min, max: max, completion: {
                 (colorNumber) -> Void in
                 let workoutLimitBands = GraphPlotSetup().createHeatmapLimitBands(colorNumber, time: time, yMin: yMin, yMax: yMax)
@@ -261,7 +293,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 if addToGraph && self.currentWorkoutIndex == workoutIndex && self.segment.selectedSegmentIndex == 1 {
                     dispatch_async(dispatch_get_main_queue(), {
                         () -> Void in
-                        print("DONEONE")
                         self.removeAllPlots()
                         self.limitBands = workoutLimitBands
                         
@@ -272,6 +303,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                         if self.showMostActive == true {
                             self.findMostActive()
                         }
+                        self.loadingHeatmap = false
                     })
                 } else {
                     self.allWorkoutHeatmapBands[workoutIndex] = workoutLimitBands
@@ -282,21 +314,25 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func setupHeatmapGraph() {
-        if self.segment.selectedSegmentIndex == 1 {
-            let axisSet = graph.axisSet as? CPTXYAxisSet
-            axisSet?.yAxis?.removeAllBackgroundLimitBands()
-            axisSet?.xAxis?.removeAllBackgroundLimitBands()
-            
-            let currentBands = self.allWorkoutHeatmapBands[self.currentWorkoutIndex]
-            for band in currentBands! {
-                self.axisSet?.xAxis?.addBackgroundLimitBand(band)
+        dispatch_async(dispatch_get_main_queue(), {
+            () -> Void in
+            if self.segment.selectedSegmentIndex == 1 {
+                let axisSet = self.graph.axisSet as? CPTXYAxisSet
+                axisSet?.yAxis?.removeAllBackgroundLimitBands()
+                axisSet?.xAxis?.removeAllBackgroundLimitBands()
+                
+                let currentBands = self.allWorkoutHeatmapBands[self.currentWorkoutIndex]
+                for band in currentBands! {
+                    self.axisSet?.xAxis?.addBackgroundLimitBand(band)
+                }
+                
+                if self.showMostActive == true {
+                    self.findMostActive()
+                }
+                self.loadingHeatmap = false
             }
             
-            if self.showMostActive == true {
-                self.findMostActive()
-            }
-        }
-        
+        })
     }
     
     func setupTableStrings(stats: [String: AnyObject]) {
@@ -330,7 +366,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                 if self.allWorkouts != nil {
-                    if self.allWorkoutAverages == nil {
+                    if self.allWorkoutAverages == nil && !self.allAveragesInProgress {
+                        self.allAveragesInProgress = true
                         ProcessArray().processGroup(self.allWorkouts, completion: { (results) -> Void in
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 self.allWorkoutAverages = results
@@ -359,15 +396,17 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             setupWorkoutStats(currentStats)
             setupNormalPlots(false)
             if segment.selectedSegmentIndex == 1 {
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                    self.calculateHeatmapGraph(self.currentWorkoutIndex, bpm: self.bpm, time: self.time, min: self.min, max: self.max, yMin: self.plotMin, yMax: self.plotMax, addToGraph: true )
-                })
+                //                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                self.calculateHeatmapGraph(self.currentWorkoutIndex, bpm: self.bpm, time: self.time, min: self.min, max: self.max, yMin: self.plotMin, yMax: self.plotMax, addToGraph: true )
+                //                })
+            } else {
+                self.loadingHeatmap = false
             }
             setupTableStrings(currentStats)
             loadingNewWorkout = false
-            self.loadingHeatmap = false
+            
         } else {
-            ProcessWorkout().heartRatePlotDate(currentWorkout.getStartDate()!, end: currentWorkout.getEndDate()!, includeRaw: true, statsCompleted: {
+            ProcessWorkout().heartRatePlotDate(self.currentWorkout.getStartDate()!, end: self.currentWorkout.getEndDate()!, includeRaw: true, statsCompleted: {
                 (stats) -> Void in
                 // Stats for graph completed (min, max, avg, duration)
                 // update graph
@@ -503,14 +542,14 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             }
             
             if highPriority {
-                //                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-                //                        print("HIGH PRIORITY YO")
-                self.calculateHeatmapGraph(self.currentWorkoutIndex, bpm: self.bpm, time: self.time, min: self.min, max: self.max, yMin: self.plotMin, yMax: self.plotMax, addToGraph: true)
-                //                    })
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+                    //                        print("HIGH PRIORITY YO")
+                    self.calculateHeatmapGraph(self.currentWorkoutIndex, bpm: self.bpm, time: self.time, min: self.min, max: self.max, yMin: self.plotMin, yMax: self.plotMax, addToGraph: true)
+                })
             } else {
-                //                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-                self.calculateHeatmapGraph(self.currentWorkoutIndex, bpm: self.bpm, time: self.time, min: self.min, max: self.max, yMin: self.plotMin, yMax: self.plotMax, addToGraph: true)
-                //                    })
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+                    self.calculateHeatmapGraph(self.currentWorkoutIndex, bpm: self.bpm, time: self.time, min: self.min, max: self.max, yMin: self.plotMin, yMax: self.plotMax, addToGraph: true)
+                })
             }
             
         }
@@ -531,13 +570,16 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         if let averagePlot = plots["Average"]?.plot {
             averagePlot.dataSource = self
-            graph.addPlot(averagePlot)
+            if (graph.plotWithIdentifier("Average") == nil) {
+                graph.addPlot(averagePlot)
+            }
+            
         }
-        
-        if let mainPlot = plots["Main"]?.plot {
-            mainPlot.dataSource = self
-            graph.addPlot(mainPlot)
-        }
+        //
+        //        if let mainPlot = plots["Main"]?.plot {
+        //            mainPlot.dataSource = self
+        //            graph.addPlot(mainPlot)
+        //        }
     }
     
     func addIntensityLimitBands() {
@@ -757,7 +799,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     
     func findMostActive() {
         if !mostActiveInProgress {
-            print("FINDING MOST ACTIVE")
             mostActiveInProgress = true
             GraphMostActive().mostActivePeriod(self.bpm, times: self.time, duration: Double(activeDuration), completion: {
                 (timeOne, timeTwo) -> Void in
