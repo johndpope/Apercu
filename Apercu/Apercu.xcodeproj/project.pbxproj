@@ -20,6 +20,7 @@
 		8B2BA54A1C88FF8A00849BCD /* QuerySamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2BA5491C88FF8A00849BCD /* QuerySamples.swift */; };
 		8B2BA54C1C89037F00849BCD /* SaveWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2BA54B1C89037F00849BCD /* SaveWorkoutViewController.swift */; };
 		8B2BA54E1C8904DD00849BCD /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2BA54D1C8904DD00849BCD /* TagCell.swift */; };
+		8B2BA5521C8CC06D00849BCD /* ColorPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2BA5511C8CC06D00849BCD /* ColorPickerViewController.swift */; };
 		8B2D5F511C3220A900F7A369 /* CategoriesSingleton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B2D5F501C3220A900F7A369 /* CategoriesSingleton.swift */; };
 		8B33F0821C3F3FFA0011CDBE /* StringHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B33F0811C3F3FFA0011CDBE /* StringHelpers.swift */; };
 		8B33F0841C41790D0011CDBE /* SingleLineStatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B33F0831C41790D0011CDBE /* SingleLineStatCell.swift */; };
@@ -116,6 +117,7 @@
 		8B2BA5491C88FF8A00849BCD /* QuerySamples.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QuerySamples.swift; path = HealthKit/QuerySamples.swift; sourceTree = "<group>"; };
 		8B2BA54B1C89037F00849BCD /* SaveWorkoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaveWorkoutViewController.swift; sourceTree = "<group>"; };
 		8B2BA54D1C8904DD00849BCD /* TagCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
+		8B2BA5511C8CC06D00849BCD /* ColorPickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerViewController.swift; sourceTree = "<group>"; };
 		8B2D5F501C3220A900F7A369 /* CategoriesSingleton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoriesSingleton.swift; path = ../Misc/CategoriesSingleton.swift; sourceTree = "<group>"; };
 		8B33F0811C3F3FFA0011CDBE /* StringHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringHelpers.swift; path = Apercu/Misc/StringHelpers.swift; sourceTree = SOURCE_ROOT; };
 		8B33F0831C41790D0011CDBE /* SingleLineStatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleLineStatCell.swift; path = Cells/SingleLineStatCell.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				8B1F79871C336E1400B92116 /* WorkoutDetailViewController.swift */,
 				8BF096C91C55338E00CD6B43 /* CategorizeWorkoutViewController.swift */,
 				8B2BA54B1C89037F00849BCD /* SaveWorkoutViewController.swift */,
+				8B2BA5511C8CC06D00849BCD /* ColorPickerViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				8BFE0BE91C2D5D1500E2CF8A /* WorkoutDescription.swift in Sources */,
 				8BE5CE271C30C9A000FB7CE9 /* ManualFilterViewController.swift in Sources */,
 				8B5C0C621C2D877A000B236A /* WorkoutSet.swift in Sources */,
+				8B2BA5521C8CC06D00849BCD /* ColorPickerViewController.swift in Sources */,
 				8BFE0BE71C2D593800E2CF8A /* CompareCell.swift in Sources */,
 				8B2BA5481C88FF6200849BCD /* ProcessWorkout.swift in Sources */,
 				8BFE0BE51C2CBA1C00E2CF8A /* FilteredTableViewController.swift in Sources */,

@@ -10,24 +10,32 @@ import Foundation
 import UIKit
 import CoreData
 
-class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
+protocol PickedCategoryDelegate {
+    func didPickCategory(categoryIdentifier: NSNumber?)
+}
+
+class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, ColorPickerDelegate {
     
     @IBOutlet var colorButton: UIButton!
     @IBOutlet var descTextField: UITextField!
     @IBOutlet var tableView: UITableView!
     @IBOutlet var tableViewBottom: NSLayoutConstraint!
     
+    var pickDelegate: PickedCategoryDelegate!
+    
     var categories = [Category]()
     let coreDataHelper = CoreDataHelper()
     var loadComplete = false
     
     var toolbar: UIToolbar!
-    var workoutStart: NSDate!
-    var workoutEnd: NSDate!
+    var workoutStart: NSDate?
+    var workoutEnd: NSDate?
     var selectedCategory: NSNumber!
+    var shouldScrollToBottom = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Categories"
         
         descTextField.delegate = self
         
@@ -41,6 +49,10 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
         categories = coreDataHelper.getAllCategories()
         tableView.reloadData()
         updateTextField()
+        
+        if shouldScrollToBottom {
+            scrollToBottom()
+        }
     }
     
     func updateTextField() {
@@ -82,7 +94,7 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
             }
         }
         
-        if selectedCategory != nil && indexPath.row == selectedCategory {
+        if selectedCategory != nil && selectedCategory == indexPath.row {
             cell.accessoryType = .Checkmark
         } else {
             cell.accessoryType = .None
@@ -92,10 +104,34 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        selectedCategory = categories[indexPath.row].identifier
+        selectedCategory = indexPath.row
         tableView.reloadData()
-        coreDataHelper.updateCategory(workoutStart, endDate: workoutEnd, categoryId: selectedCategory)
+        if (workoutStart != nil && workoutEnd != nil) {
+            coreDataHelper.updateCategory(workoutStart!, endDate: workoutEnd!, categoryId: selectedCategory)
+        }
         updateTextField()
+        
+        if pickDelegate != nil {
+            pickDelegate.didPickCategory(categories[indexPath.row].identifier)
+        }
+        
+        if indexPath.row == 0 {
+            colorButton.setTitle("New Color", forState: .Normal)
+        } else {
+            colorButton.setTitle("Change Color", forState: .Normal)
+        }
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            coreDataHelper.removeCategory(categories[indexPath.row].identifier!)
+            categories.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            
+            categories = coreDataHelper.getAllCategories()
+            tableView.reloadData()
+            updateTextField()
+        }
     }
     
     // MARK: - Text View
@@ -131,10 +167,13 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
             descTextField.resignFirstResponder()
         }
         
-        tableViewBottom.constant = 0;
-        if descTextField.text != "" {
-            if let categoryToUpdate = selectedCategory {
-                coreDataHelper.updateCategoryDescription(categoryToUpdate, desc: (descTextField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))!)
+        if selectedCategory != 0 {
+            
+            tableViewBottom.constant = 0;
+            if descTextField.text != "" {
+                if let categoryToUpdate = selectedCategory {
+                    coreDataHelper.updateCategoryDescription(categoryToUpdate, desc: (descTextField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))!)
+                }
             }
         }
     }
@@ -149,5 +188,38 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
         if selectedCategory != nil {
             tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: selectedCategory.integerValue, inSection: 0), atScrollPosition: .Top, animated: true)
         }
+    }
+    
+    @IBAction func colorButtonPressed(sender: AnyObject) {
+        performSegueWithIdentifier("toColorPicker", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "toColorPicker" {
+            let destinationVC = segue.destinationViewController as! ColorPickerViewController
+            
+            if selectedCategory == nil || selectedCategory == 0 {
+                destinationVC.isNewColor = 1
+            } else {
+                destinationVC.isNewColor = 0
+                let categoryToSend: Category = categories[selectedCategory.integerValue]
+                destinationVC.color = categoryToSend.color as? UIColor
+                destinationVC.categoryNumber = categoryToSend.identifier
+            }
+            
+            destinationVC.delegate = self
+        }
+    }
+    
+    func didAddNewColor() {
+        shouldScrollToBottom = true
+    }
+    
+    func scrollToBottom() {
+        let tableCount = tableView.numberOfRowsInSection(0)
+        
+        tableView.selectRowAtIndexPath(NSIndexPath(forRow: tableCount - 1, inSection: 0), animated: true, scrollPosition: .Bottom)
+        selectedCategory = categories[tableCount - 1].identifier
+        loadDescIntoTextField()
     }
 }

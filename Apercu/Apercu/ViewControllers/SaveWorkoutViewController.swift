@@ -12,12 +12,11 @@ import UIKit
 import HealthKit
 import CoreData
 
-class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UITextViewDelegate {
+class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelegateFlowLayout, UITextViewDelegate, PickedCategoryDelegate {
     
     // Add colorview delegate
     
     @IBOutlet var descriptionTextView: UITextView!
-    
     
     @IBOutlet weak var bottomButtonViewSpacing: NSLayoutConstraint!
     @IBOutlet var distanceView: UIView!
@@ -42,7 +41,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     @IBOutlet weak var colorIcon: UIView!
     @IBOutlet weak var endDateLabel: UILabel!
     
-//    var colorViewDelegate: ColorViewDelegate?
+    //    var colorViewDelegate: ColorViewDelegate?
     
     let defs = NSUserDefaults(suiteName: "group.com.apercu.apercu")
     var toolbar: UIToolbar!
@@ -56,6 +55,9 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     var startDate: NSDate!
     var endDate: NSDate!
     var categoryColor: UIColor!
+    let dateFormatter = NSDateFormatter()
+    let dateFormatString = "hh:mm a MMM d yyyy"
+    let categoriesSingleton = CategoriesSingleton.sharedInstance
     
     var calories = 0.0
     var distance = 0.0
@@ -120,8 +122,8 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
             showTemplateViews()
         }
         
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMM dd yyyy HH:ss"
+        
+        dateFormatter.dateFormat = dateFormatString
         startDateTextField.text = dateFormatter.stringFromDate(NSDate().dateByAddingTimeInterval(-3600))
         startDate = NSDate().dateByAddingTimeInterval(-3600)
         endDateTextField.text = dateFormatter.stringFromDate(NSDate())
@@ -152,13 +154,18 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         //        collectionViewHeight.constant = collectionView.contentSize.height
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController!.tabBar.hidden = true
+    }
+    
     func showWorkoutViews() {
         UIView.performWithoutAnimation({ () -> Void in
             self.saveButton.setTitle("Save as Workout", forState: UIControlState.Normal)
             self.tagsLabelTopConstraint.active = false
             self.collectionViewBottomConstraint.active = false
-//            self.startDateTopConstraint.active = true
-//            self.caloriesBottomConstraint.active = true
+            //            self.startDateTopConstraint.active = true
+            //            self.caloriesBottomConstraint.active = true
             
             self.startDateTextField.hidden = false
             self.endDateTextField.hidden = false
@@ -214,6 +221,12 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     
     func textFieldDidBeginEditing(textField: UITextField) {
         showToolbar()
+        
+        if textField == startDateTextField {
+            datePicker.setDate(dateFormatter.dateFromString(startDateTextField.text!)!, animated: false)
+        } else if (textField == endDateTextField) {
+            datePicker.setDate(dateFormatter.dateFromString(endDateTextField.text!)!, animated: true)
+        }
     }
     
     func showToolbar() {
@@ -276,7 +289,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
                     self.view.layoutIfNeeded()
                 })
                 
-//                bottomSpaceConstraint.constant = keyboardSize.height //- 44
+                //                bottomSpaceConstraint.constant = keyboardSize.height //- 44
             }
         }
     }
@@ -404,10 +417,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         textViewHeight.constant = newFrame.size.height
     }
     
-    func datePickerChanged(sender: UIDatePicker) {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMM dd yyyy hh:ss a"
-        
+    func datePickerChanged(sender: UIDatePicker) {1
         if startDateTextField.isFirstResponder() {
             startDate = sender.date
             startDateTextField.text = dateFormatter.stringFromDate(sender.date)
@@ -431,43 +441,55 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     
     
     func updateDurationLabel() {
+        
         let timeDiff = Int(endDate.timeIntervalSinceDate(startDate) * -1)
         
         let minutes = labs(timeDiff / 60)
         let seconds = labs(timeDiff % 60)
         
-        var timeString: String!
-        if seconds < 10 {
-            timeString = String(format: "Duration:  %i:0%i min", minutes, seconds)
+        if endDate.timeIntervalSince1970 > startDate.timeIntervalSince1970 {
+            
+            var timeString: String!
+            if seconds < 10 {
+                timeString = String(format: "Duration:  %i min", minutes)
+            } else {
+                timeString = String(format: "Duration:  %i min", minutes)
+            }
+            durationLabel.text = timeString
         } else {
-            timeString = String(format: "Duration:  %i:%i min", minutes, seconds)
+            durationLabel.text = "N/A"
         }
         
-        durationLabel.text = timeString
+        
     }
-    
-//    func didPickColor(sender: ColorView) {
-//        if sender.color != nil {
-//            categoryColor = sender.color
-//            colorIcon.backgroundColor = categoryColor
-//            categoryLabel.text = sender.categoryText;
-//        } else {
-//            categoryColor = UIColor.clearColor()
-//            colorIcon.backgroundColor = UIColor.clearColor()
-//            categoryLabel.text = "No category selected"
-//        }
-//        
-//    }
-//    
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if segue.identifier == "saveToColor" {
-//            let destinationVc = segue.destinationViewController as! ColorView
-//            destinationVc.delegate = self
-//        }
-//    }
     
     @IBAction func selectCategoryPressed(sender: AnyObject) {
-        performSegueWithIdentifier("saveToColor", sender: self)
+        performSegueWithIdentifier("toCategoryFromSave", sender: self)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "toCategoryFromSave" {
+            let destinationVc = segue.destinationViewController as! CategorizeWorkoutViewController
+            destinationVc.pickDelegate = self
+        }
+    }
+    
+    func didPickCategory(categoryIdentifier: NSNumber?) {
+        if categoryIdentifier != nil {
+            if categoryIdentifier == 0 {
+                setToNoCategory()
+            } else {
+                colorIcon.backgroundColor = categoriesSingleton.getColorForIdentifier(categoryIdentifier)
+                categoryLabel.text = categoriesSingleton.getStringForIdentifier(categoryIdentifier)
+            }
+        } else {
+            setToNoCategory()
+        }
+        
+    }
+    
+    func setToNoCategory() {
+        colorIcon.backgroundColor = UIColor.lightGrayColor()
+        categoryLabel.text = "No category selected"
+    }
 }
