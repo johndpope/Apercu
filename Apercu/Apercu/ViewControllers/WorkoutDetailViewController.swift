@@ -11,7 +11,7 @@ import UIKit
 import CorePlot
 import HealthKit
 
-class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CPTPlotSpaceDelegate, CPTPlotDataSource, ActiveSliderChanged, UITextViewDelegate {
+class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CPTPlotSpaceDelegate, CPTPlotDataSource, ActiveSliderChanged, UITextViewDelegate, ProcessArrayDelegate {
     
     var currentWorkout: ApercuWorkout!
     var startDate: NSDate!
@@ -78,6 +78,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var calories: Double!
     var moderateIntensityTime: Double!
     var highIntensityTime: Double!
+    var shouldInterupt = false
     
     var tableStrings: [NSAttributedString]!
     var tableValues: [NSAttributedString]?
@@ -99,9 +100,15 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     var loadingStrings = true
     var allAveragesInProgress = false
     
+    var currentParseIndex = 0
+    var finalParseIndex: Int!
+    
     var nextBarButton: UIBarButtonItem!
     var titlePlaceHolder = "Add title.."
     var descPlaceHolder = "Add workout notes.."
+    
+    var processArray = ProcessArray()
+    var processingIsDone = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -136,6 +143,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         hostView.userInteractionEnabled = true
         hostView.allowPinchScaling = true
         
+        processArray.finishedDelegate = self
+        
         descTextView.delegate = self
         descTextView.layer.cornerRadius = 6.0
         titleTextView.delegate = self
@@ -159,6 +168,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             workoutHeatmapIsFinished = [Bool](count: allWorkouts.count, repeatedValue: false)
             updateComparisonLabels()
             navigationController?.toolbarHidden = false
+            finalParseIndex = allWorkouts.count - 1
         } else {
             workoutHeatmapIsFinished.append(false)
             workoutMainIsFinished.append(false)
@@ -171,31 +181,21 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
             self.processCurrentWorkout(0)
-            self.backgroundLoad()
+            //            self.backgroundLoad()
+            if self.allWorkouts != nil {
+                self.parseWorkoutData(self.currentParseIndex)
+            }
         })
         
-        
-        
-        //        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-        //        if self.allWorkouts != nil && self.allWorkouts.count > 1 {
-        //            for i in 0 ..< self.allWorkouts.count {
-        //
-        //                dispatch_async(serialQueue, {
-        //                    let workoutForIndex = self.allWorkouts[i]
-        //                    ProcessWorkout().heartRatePlotDate(workoutForIndex.getStartDate()!, end: workoutForIndex.getEndDate()!, includeRaw: true, statsCompleted: { (stats) in
-        //                        self.allWorkoutStats[i] = stats;
-        //                        }, completion: { (results) in
-        //                            self.allWorkoutStats[i] = results;
-        //                            self.workoutMainIsFinished[i] = true
-        //                            self.calculateHeatmapGraph(i, bpm: results["bpm"] as! [Double], time: results["time"] as! [Double], min: results["min"] as! Double, max: results["max"] as! Double, yMin: results["min"] as! Double, yMax: results["max"] as! Double, addToGraph: false)
-        //                    })
-        //                })
-        //
-        //
-        //            }
-        //        }
-        //            }
-        //        )
+    }
+    
+    func processingComplete(results: [String: Double?]) {
+        dispatch_async(dispatch_get_main_queue(), {
+            self.allWorkoutAverages = results
+            self.generateComparisonStats()
+            self.loadingStrings = false
+            self.processingIsDone = true
+        })
     }
     
     func backgroundLoad() {
@@ -218,6 +218,34 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 
             }
         }
+    }
+    
+    func parseWorkoutData(index: Int) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+            let workoutForIndex = self.allWorkouts[index]
+            ProcessWorkout().heartRatePlotDate(workoutForIndex.getStartDate()!, end: workoutForIndex.getEndDate()!, includeRaw: true, statsCompleted: { (stats) in
+                self.allWorkoutStats[index] = stats;
+                }, completion: { (results) in
+                    self.allWorkoutStats[index] = results;
+                    self.workoutMainIsFinished[index] = true
+                    self.calculateHeatmapGraph(index, bpm: results["bpm"] as! [Double], time: results["time"] as! [Double], min: results["min"] as! Double, max: results["max"] as! Double, yMin: results["min"] as! Double, yMax: results["max"] as! Double, addToGraph: false)
+                    
+                    
+                    if self.shouldInterupt {
+                        self.parseWorkoutData(self.currentWorkoutIndex)
+                        self.shouldInterupt = false
+                    } else {
+                        
+                        if self.currentParseIndex < self.finalParseIndex {
+                            self.currentParseIndex += 1
+                            self.parseWorkoutData(self.currentParseIndex)
+                        }
+                        
+                    }
+            })
+        })
+        
+        
     }
     
     func loadWorkout() {
@@ -304,6 +332,10 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             self.findMostActive()
                         }
                         self.loadingHeatmap = false
+                        
+                        if self.processArray.shouldPause {
+                            self.processArray.resumeProcessing()
+                        }
                     })
                 } else {
                     self.allWorkoutHeatmapBands[workoutIndex] = workoutLimitBands
@@ -368,13 +400,18 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 if self.allWorkouts != nil {
                     if self.allWorkoutAverages == nil && !self.allAveragesInProgress {
                         self.allAveragesInProgress = true
-                        ProcessArray().processGroup(self.allWorkouts, completion: { (results) -> Void in
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.allWorkoutAverages = results
-                                self.generateComparisonStats()
-                                self.loadingStrings = false
-                            })
+                        
+                        self.processArray.processGroup(self.allWorkouts, completion: { (results) in
+                            
                         })
+                        
+                        //                        ProcessArray().processGroup(self.allWorkouts, completion: { (results) -> Void in
+                        //                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        //                                self.allWorkoutAverages = results
+                        //                                self.generateComparisonStats()
+                        //                                self.loadingStrings = false
+                        //                            })
+                        //                        })
                     } else {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.generateComparisonStats()
@@ -727,6 +764,11 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             axisSet?.yAxis?.removeAllBackgroundLimitBands()
             axisSet?.xAxis?.removeAllBackgroundLimitBands()
             self.addPlotsForHeatmap(true, highPriority: true)
+            
+            if !workoutHeatmapIsFinished[currentWorkoutIndex] {
+                shouldInterupt = true
+                processArray.shouldPause = true
+            }
             // Heatmap
             //                        removeAllPlots()
             //                        setupHeatmapGraph()

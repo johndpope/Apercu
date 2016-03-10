@@ -176,6 +176,9 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
                 }
             }
         }
+        
+        categories = coreDataHelper.getAllCategories()
+        tableView.reloadData()
     }
     
     func showKeyboard(sender: NSNotification) {

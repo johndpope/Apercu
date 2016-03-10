@@ -41,6 +41,10 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     @IBOutlet weak var colorIcon: UIView!
     @IBOutlet weak var endDateLabel: UILabel!
     
+    @IBOutlet var distanceBackground: UIView!
+    @IBOutlet var dateBackground: UIView!
+    @IBOutlet var backgroundCategory: UIView!
+    @IBOutlet var backgroundNameAndDesc: UIView!
     //    var colorViewDelegate: ColorViewDelegate?
     
     let defs = NSUserDefaults(suiteName: "group.com.apercu.apercu")
@@ -74,6 +78,13 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = "New Workout"
+        
+        backgroundNameAndDesc.layer.cornerRadius = 10.0
+        backgroundCategory.layer.cornerRadius = 10.0
+        distanceBackground.layer.cornerRadius = 10.0
+        dateBackground.layer.cornerRadius = 10.0
         
         tabBarController!.tabBar.hidden = true
         
@@ -162,7 +173,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     func showWorkoutViews() {
         UIView.performWithoutAnimation({ () -> Void in
             self.saveButton.setTitle("Save as Workout", forState: UIControlState.Normal)
-            self.tagsLabelTopConstraint.active = false
+//            self.tagsLabelTopConstraint.active = false
             self.collectionViewBottomConstraint.active = false
             //            self.startDateTopConstraint.active = true
             //            self.caloriesBottomConstraint.active = true
