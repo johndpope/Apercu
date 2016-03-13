@@ -46,7 +46,11 @@ class CategoriesSingleton {
         if identifier == nil || identifier == 0 {
             return UIColor.clearColor()
         } else {
-            return colorDictionary[identifier!]!
+            if colorDictionary[identifier!] == nil {
+                return UIColor.clearColor()
+            } else {
+                return colorDictionary[identifier!]!
+            }
         }
     }
     
@@ -54,7 +58,11 @@ class CategoriesSingleton {
         if identifier == nil || identifier == 0 {
             return "No Category Selected"
         } else {
-            return titleDictionary[identifier!]!
+            if titleDictionary[identifier!] == nil {
+                return "No Category Selected"
+            } else {
+                return titleDictionary[identifier!]!
+            }
         }
     }
     

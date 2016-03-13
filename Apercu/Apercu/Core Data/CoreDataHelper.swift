@@ -244,6 +244,27 @@ class CoreDataHelper {
             
         }
         
+        
+        let workoutFetchRequest = NSFetchRequest(entityName: "Workout")
+        let workoutPredicate = NSPredicate(format: "caregory == %@", identifier)
+        workoutFetchRequest.predicate = workoutPredicate
+        
+        do {
+            let fetchedWorkouts = try context.executeFetchRequest(workoutFetchRequest) as! [Workout]
+            
+            for workout in fetchedWorkouts {
+                workout.category = nil
+            }
+            
+            do {
+                try context.save()
+            } catch {
+                
+            }
+        } catch {
+            
+        }
+        
     }
 }
 
