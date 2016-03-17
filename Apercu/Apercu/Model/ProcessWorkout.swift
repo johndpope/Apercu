@@ -15,7 +15,7 @@ class ProcessWorkout {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             QuerySamples().getSampleData(start, end: end) { (bpmValues, timeValues) -> Void in
                 
-                guard bpmValues != nil else {
+                guard bpmValues != nil && bpmValues?.count > 0 else {
                     completion(results: nil)
                     return
                 }

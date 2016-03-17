@@ -112,6 +112,7 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
         updateTextField()
         
         if pickDelegate != nil {
+            CategoriesSingleton.sharedInstance.updateCategoryInfo()
             pickDelegate.didPickCategory(categories[indexPath.row].identifier)
         }
         

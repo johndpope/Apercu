@@ -228,7 +228,9 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 }, completion: { (results) in
                     self.allWorkoutStats[index] = results;
                     self.workoutMainIsFinished[index] = true
-                    self.calculateHeatmapGraph(index, bpm: results["bpm"] as! [Double], time: results["time"] as! [Double], min: results["min"] as! Double, max: results["max"] as! Double, yMin: results["min"] as! Double, yMax: results["max"] as! Double, addToGraph: false)
+                    if self.bpm != nil && self.bpm.count > 0 {
+                        self.calculateHeatmapGraph(index, bpm: results["bpm"] as! [Double], time: results["time"] as! [Double], min: results["min"] as! Double, max: results["max"] as! Double, yMin: results["min"] as! Double, yMax: results["max"] as! Double, addToGraph: false)
+                    }
                     
                     
                     if self.shouldInterupt {
@@ -367,9 +369,18 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         })
     }
     
-    func setupTableStrings(stats: [String: AnyObject]) {
-        self.moderateIntensityTime = stats["mod"] as! Double
-        self.highIntensityTime = stats["high"] as! Double
+    func setupTableStrings(stats: [String: AnyObject]?) {
+        
+        if stats != nil && stats!["mod"] != nil {
+            self.moderateIntensityTime = stats!["mod"] as! Double
+        }
+        
+        if stats != nil && stats!["high"] != nil {
+            self.highIntensityTime = stats!["high"] as! Double
+        }
+        
+        
+        
         
         let milesUnit = HKUnit.mileUnit()
         self.distance = self.currentWorkout.healthKitWorkout?.totalDistance?.doubleValueForUnit(milesUnit)
@@ -840,7 +851,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func findMostActive() {
-        if !mostActiveInProgress {
+        if !mostActiveInProgress && bpm != nil && bpm.count > 0 {
             mostActiveInProgress = true
             GraphMostActive().mostActivePeriod(self.bpm, times: self.time, duration: Double(activeDuration), completion: {
                 (timeOne, timeTwo) -> Void in

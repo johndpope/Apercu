@@ -52,40 +52,42 @@ class ProcessArray {
                 }, completion: { (results) -> Void in
                     self.numberProcessed += 1
                     
-                    if let duration = results["duration"] as? Double {
-                        if duration.isNormal {
-                            self.durationArray.append(duration)
+                    if results != nil {
+                        if let duration = results["duration"] as? Double {
+                            if duration.isNormal {
+                                self.durationArray.append(duration)
+                            }
                         }
-                    }
-                    
-                    if let moderateTime = results["mod"] as? Double {
-                        if moderateTime.isNormal {
-                            self.moderateArray.append(moderateTime)
+                        
+                        if let moderateTime = results["mod"] as? Double {
+                            if moderateTime.isNormal {
+                                self.moderateArray.append(moderateTime)
+                            }
                         }
-                    }
-                    
-                    if let highTime = results["high"] as? Double {
-                        if highTime.isNormal {
-                            self.highArray.append(highTime)
-                            
-                            if let moderateTime = results["mod"] as? Double {
-                                if moderateTime.isNormal {
-                                    self.ratioArray.append(highTime / moderateTime)
+                        
+                        if let highTime = results["high"] as? Double {
+                            if highTime.isNormal {
+                                self.highArray.append(highTime)
+                                
+                                if let moderateTime = results["mod"] as? Double {
+                                    if moderateTime.isNormal {
+                                        self.ratioArray.append(highTime / moderateTime)
+                                    }
                                 }
                             }
                         }
-                    }
-                    
-                    if let distance = workout.healthKitWorkout?.totalDistance?.doubleValueForUnit(HKUnit.mileUnit()) {
-                        if distance.isNormal {
-                            self.distanceArray.append(distance)
+                        
+                        if let distance = workout.healthKitWorkout?.totalDistance?.doubleValueForUnit(HKUnit.mileUnit()) {
+                            if distance.isNormal {
+                                self.distanceArray.append(distance)
+                            }
+                            
                         }
                         
-                    }
-                    
-                    if let calories = workout.healthKitWorkout?.totalEnergyBurned?.doubleValueForUnit(HKUnit.kilocalorieUnit()) {
-                        if calories.isNormal {
-                            self.caloriesArray.append(calories)
+                        if let calories = workout.healthKitWorkout?.totalEnergyBurned?.doubleValueForUnit(HKUnit.kilocalorieUnit()) {
+                            if calories.isNormal {
+                                self.caloriesArray.append(calories)
+                            }
                         }
                     }
                     

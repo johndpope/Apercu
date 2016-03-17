@@ -86,6 +86,13 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         distanceBackground.layer.cornerRadius = 10.0
         dateBackground.layer.cornerRadius = 10.0
         
+        let fillColor = UIColor(red: 54/255, green: 149/255, blue: 179/255, alpha: 1.0)
+        backgroundNameAndDesc.backgroundColor = fillColor
+        backgroundCategory.backgroundColor = fillColor
+        distanceBackground.backgroundColor = fillColor
+        dateBackground.backgroundColor = fillColor
+        
+        
         tabBarController!.tabBar.hidden = true
         
         managedContext = appDelegate.managedObjectContext
@@ -96,6 +103,9 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         startDateTextField.delegate = self
         descriptionTextView.delegate = self
         
+        startDateLabel.adjustsFontSizeToFitWidth = true
+        endDateLabel.adjustsFontSizeToFitWidth = true
+        
         let fixedWidth = descriptionTextView.frame.size.width
         descriptionTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         let newSize = descriptionTextView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
@@ -105,6 +115,9 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         textViewHeight.constant = newFrame.size.height
         descriptionTextView.layer.cornerRadius = 6.0
         colorIcon.layer.cornerRadius = 12.5
+        
+        colorIcon.layer.borderColor = UIColor.whiteColor().CGColor
+        colorIcon.layer.borderWidth = 2.0
         
         datePicker = UIDatePicker()
         datePicker.datePickerMode = UIDatePickerMode.DateAndTime
@@ -300,7 +313,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
                     self.view.layoutIfNeeded()
                 })
                 
-                //                bottomSpaceConstraint.constant = keyboardSize.height //- 44
+//                                bottomSpaceConstraint.constant = keyboardSize.height //- 44
             }
         }
     }
@@ -319,6 +332,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         if nameTextField.isFirstResponder() {
             nameTextField.resignFirstResponder()
             descriptionTextView.becomeFirstResponder()
+            scrollToTextView(descriptionTextView)
         } else if descriptionTextView.isFirstResponder() {
             if isShowingWorkoutView {
                 descriptionTextView.resignFirstResponder()
@@ -326,20 +340,30 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
             } else {
                 descriptionTextView.resignFirstResponder()
             }
+            scrollToTextView(startDateTextField)
         } else if startDateTextField.isFirstResponder() {
             startDateTextField.resignFirstResponder()
             endDateTextField.becomeFirstResponder()
+            scrollToTextView(endDateTextField)
         } else if endDateTextField.isFirstResponder() {
             endDateTextField.resignFirstResponder()
             distanceTextField.becomeFirstResponder()
+            scrollToTextView(distanceTextField)
         } else if distanceTextField.isFirstResponder() {
             distanceTextField.resignFirstResponder()
             calorieTextField.becomeFirstResponder()
+            scrollToTextView(calorieTextField)
         } else if calorieTextField.isFirstResponder() {
             calorieTextField.resignFirstResponder()
         }
-        
-        
+    }
+    
+    func scrollToTextView(inputView: UIView) {
+//        UIView.animateWithDuration(NSTimeInterval(0.2), delay: 0.0, options: .TransitionNone, animations: {
+            self.scrollView.contentOffset = CGPointMake(inputView.frame.origin.x, inputView.frame.origin.y)
+//            }) { (Bool) in
+//            self.scrollView.contentOffset = CGPointMake(inputView.frame.origin.x, inputView.frame.origin.y)
+//        }
     }
     
     @IBAction func typeSegmentChanged(sender: AnyObject) {
@@ -503,4 +527,45 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         colorIcon.backgroundColor = UIColor.lightGrayColor()
         categoryLabel.text = "No category selected"
     }
+    
+    @IBAction func savePressed(sender: AnyObject) {
+        if startDate != nil && endDate != nil {
+            
+            if endDate.timeIntervalSince1970 > startDate.timeIntervalSince1970 {
+                let caloriesValue = HKQuantity(unit: HKUnit.kilocalorieUnit(), doubleValue: calories)
+                let distanceValue = HKQuantity(unit: HKUnit.mileUnit(), doubleValue: distance)
+                var healthKitWorkout: HKWorkout!
+                
+                if calories != 0 && distance != 0 {
+                    healthKitWorkout = HKWorkout(activityType: .Other, startDate: startDate, endDate: endDate, duration: abs(endDate.timeIntervalSinceDate(startDate)), totalEnergyBurned: caloriesValue, totalDistance: distanceValue, device: nil, metadata: nil)
+                } else if calories != 0 {
+                    healthKitWorkout = HKWorkout(activityType: .Other, startDate: startDate, endDate: endDate, duration: abs(endDate.timeIntervalSinceDate(startDate)), totalEnergyBurned: caloriesValue, totalDistance: nil, device: nil, metadata: nil)
+                } else if distance != 0 {
+                    healthKitWorkout = HKWorkout(activityType: .Other, startDate: startDate, endDate: endDate, duration: abs(endDate.timeIntervalSinceDate(startDate)), totalEnergyBurned: nil, totalDistance: distanceValue, device: nil, metadata: nil)
+                } else {
+                    healthKitWorkout = HKWorkout(activityType: .Other, startDate: startDate, endDate: endDate, duration: abs(endDate.timeIntervalSinceDate(startDate)), totalEnergyBurned: nil, totalDistance: nil, device: nil, metadata: nil)
+                }
+                
+                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                let hkStore = appDelegate.healthStore
+                
+                hkStore.saveObject(healthKitWorkout, withCompletion: { (success, error) in
+                    if success {
+                        print("success")
+                    } else {
+                        print(error)
+                    }
+                })
+                
+                
+            } else {
+                let alert = UIAlertController(title: "Error", message: "End date can not be before start date.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            
+            
+        }
+    }
+    
 }

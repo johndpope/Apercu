@@ -64,7 +64,11 @@ class GraphTableStrings {
         
         var moderateString: String
         if let moderateTime = values["moderate"] {
-            moderateString = String(format: "%@ min", secondsToString(moderateTime!))
+            if moderateTime != nil {
+                moderateString = String(format: "%@ min", secondsToString(moderateTime!))
+            } else {
+                moderateString = "Not Specified"
+            }
         } else {
             moderateString = "Not Specified"
         }
@@ -73,15 +77,20 @@ class GraphTableStrings {
         var highString: String
         var ratioString: String
         if let highTime = values["high"] {
-            highString = String(format: "%@ min", secondsToString(highTime!))
-            
-            if highTime!  > 0 && values["moderate"] != nil {
-                ratioString = String(format: "%@", stringWithTwoDigits(values["high"]!! / values["moderate"]!!))
+            if highTime != nil {
+                highString = String(format: "%@ min", secondsToString(highTime!))
+                
+                if highTime!  > 0 && values["moderate"] != nil {
+                    ratioString = String(format: "%@", stringWithTwoDigits(values["high"]!! / values["moderate"]!!))
+                } else {
+                    ratioString = "N/A"
+                }
             } else {
+                highString = "Not Specified"
                 ratioString = "N/A"
             }
             
-        } else {
+        } else {    
             highString = "Not Specified"
             ratioString = "N/A"
         }
@@ -160,10 +169,14 @@ class GraphTableStrings {
             workoutStrings[2].appendAttributedString(attributedAverageString(avgString))
             
             if let workoutModerateTime = values["moderate"] {
+                if workoutModerateTime != nil && averageModerate != nil {
                 let rawValue = averageModerate! - workoutModerateTime!
                 let value = fabs(rawValue)
                 let diffString = secondsToString(value)
                 workoutStrings[2].appendAttributedString(applyColorAttributes(rawValue, diffString: diffString))
+                } else {
+                    workoutStrings[2].appendAttributedString(notApplicableString())
+                }
             } else {
                 workoutStrings[2].appendAttributedString(notApplicableString())
             }
@@ -176,10 +189,14 @@ class GraphTableStrings {
             workoutStrings[3].appendAttributedString(attributedAverageString(avgString))
             
             if let workoutHigh = values["high"] {
+                if averageHigh != nil && workoutHigh != nil {
                 let rawValue = averageHigh! - workoutHigh!
                 let value = fabs(rawValue)
                 let diffString = secondsToString(value)
                 workoutStrings[3].appendAttributedString(applyColorAttributes(rawValue, diffString: diffString))
+                } else {
+                  workoutStrings[3].appendAttributedString(notApplicableString())  
+                }
             } else {
                 workoutStrings[3].appendAttributedString(notApplicableString())
             }
@@ -189,13 +206,13 @@ class GraphTableStrings {
             let avgString = String(format: "%.2f", averageRatio!)
             workoutStrings[4].appendAttributedString(attributedAverageString(avgString))
             
-            if values["high"] != nil && values["moderate"] != nil {
+            if values["high"]! != nil && values["moderate"]! != nil {
                 let workoutRatio = values["high"]!! / values["moderate"]!!
                 let rawValue = averageRatio! - workoutRatio
                 let value = fabs(rawValue)
-                
+
                 let diffString = String(format: "%.2f", value)
-                
+
                 workoutStrings[4].appendAttributedString(applyColorAttributes(rawValue, diffString: diffString))
             } else {
                 workoutStrings[4].appendAttributedString(notApplicableString())
