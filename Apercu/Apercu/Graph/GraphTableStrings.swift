@@ -89,7 +89,6 @@ class GraphTableStrings {
                 highString = "Not Specified"
                 ratioString = "N/A"
             }
-            
         } else {    
             highString = "Not Specified"
             ratioString = "N/A"
@@ -146,7 +145,7 @@ class GraphTableStrings {
     
     func valueStringWithComparison(values: [String: Double?], averages: [String: Double?]) -> [NSAttributedString] {
         var workoutStrings = allValueStrings(values)
-        
+
         if let averageDuration = averages["duration"] {
             let avgString = secondsToString(averageDuration!)
             workoutStrings[1].appendAttributedString(attributedAverageString(avgString))

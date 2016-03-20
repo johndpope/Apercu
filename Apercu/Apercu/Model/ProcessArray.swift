@@ -31,7 +31,7 @@ class ProcessArray {
     var workoutArray: [ApercuWorkout]!
     
     func processGroup(workouts: [ApercuWorkout], completion: (results: [String: Double?]!) -> Void) {
-        totalWorkouts = workouts.count - 1
+        totalWorkouts = workouts.count
         workoutArray = workouts
         
         resumeProcessing()
@@ -51,6 +51,7 @@ class ProcessArray {
                 
                 }, completion: { (results) -> Void in
                     self.numberProcessed += 1
+
                     
                     if results != nil {
                         if let duration = results["duration"] as? Double {
@@ -90,7 +91,7 @@ class ProcessArray {
                             }
                         }
                     }
-                    
+
                     if self.numberProcessed == self.totalWorkouts {
                         // return data
                         var returnValues = [String: Double?]()

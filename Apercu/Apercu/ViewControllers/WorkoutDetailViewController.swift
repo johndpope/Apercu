@@ -149,8 +149,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         descTextView.layer.cornerRadius = 6.0
         titleTextView.delegate = self
         titleTextView.layer.cornerRadius = 6.0
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideKeyboard:", name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showKeyboard:", name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WorkoutDetailViewController.hideKeyboard(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WorkoutDetailViewController.showKeyboard(_:)), name: UIKeyboardDidShowNotification, object: nil)
         
         let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
         plotSpace.allowsUserInteraction = true
@@ -161,7 +161,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         plotSpace.globalXRange = initialXrange
         plotSpace.delegate = self
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "screenRotated:", name: UIDeviceOrientationDidChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WorkoutDetailViewController.screenRotated(_:)), name: UIDeviceOrientationDidChangeNotification, object: nil)
         
         if allWorkouts != nil {
             workoutMainIsFinished = [Bool](count: allWorkouts.count, repeatedValue: false)
@@ -181,7 +181,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
             self.processCurrentWorkout(0)
-            //            self.backgroundLoad()
             if self.allWorkouts != nil {
                 self.parseWorkoutData(self.currentParseIndex)
             }
@@ -197,29 +196,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.processingIsDone = true
         })
     }
-    
-    func backgroundLoad() {
-        let serialQueue = dispatch_queue_create("com.apercu.queue", DISPATCH_QUEUE_SERIAL)
-        
-        if self.allWorkouts != nil && self.allWorkouts.count > 1 {
-            for i in 0 ..< self.allWorkouts.count {
-                
-                dispatch_async(serialQueue, {
-                    let workoutForIndex = self.allWorkouts[i]
-                    ProcessWorkout().heartRatePlotDate(workoutForIndex.getStartDate()!, end: workoutForIndex.getEndDate()!, includeRaw: true, statsCompleted: { (stats) in
-                        self.allWorkoutStats[i] = stats;
-                        }, completion: { (results) in
-                            self.allWorkoutStats[i] = results;
-                            self.workoutMainIsFinished[i] = true
-                            self.calculateHeatmapGraph(i, bpm: results["bpm"] as! [Double], time: results["time"] as! [Double], min: results["min"] as! Double, max: results["max"] as! Double, yMin: results["min"] as! Double, yMax: results["max"] as! Double, addToGraph: false)
-                    })
-                })
-                
-                
-            }
-        }
-    }
-    
+
     func parseWorkoutData(index: Int) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             let workoutForIndex = self.allWorkouts[index]
@@ -228,8 +205,13 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 }, completion: { (results) in
                     self.allWorkoutStats[index] = results;
                     self.workoutMainIsFinished[index] = true
+                    
                     if self.bpm != nil && self.bpm.count > 0 {
                         self.calculateHeatmapGraph(index, bpm: results["bpm"] as! [Double], time: results["time"] as! [Double], min: results["min"] as! Double, max: results["max"] as! Double, yMin: results["min"] as! Double, yMax: results["max"] as! Double, addToGraph: false)
+                    } else {
+//                        self.setupTableStrings(self.allWorkoutStats[index])
+                        self.loadingHeatmap = false
+                        self.loadingStrings = false
                     }
                     
                     
@@ -290,12 +272,18 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func setupNormalPlots(shouldAddPlots: Bool) {
         dispatch_async(dispatch_get_main_queue(), {
             () -> Void in
-            if self.segment.selectedSegmentIndex == 0 && shouldAddPlots {
-                self.removeAllPlots()
-                self.addPlotsForNormalView()
+            if self.segment.selectedSegmentIndex == 0 {
+                if shouldAddPlots {
+                    self.removeAllPlots()
+                    self.addPlotsForNormalView()
+                    
+                    if self.showMostActive == true {
+                        self.findMostActive()
+                    }
+                }
                 
-                if self.showMostActive == true {
-                    self.findMostActive()
+                if self.axisSet.yAxis?.backgroundLimitBands == nil {
+                    self.addIntensityLimitBands()
                 }
             }
             
@@ -373,14 +361,19 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         
         if stats != nil && stats!["mod"] != nil {
             self.moderateIntensityTime = stats!["mod"] as! Double
+        } else {
+            self.moderateIntensityTime = 0.0
         }
         
-        if stats != nil && stats!["high"] != nil {
+        if stats != nil && stats!["high"] as? Double != nil {
             self.highIntensityTime = stats!["high"] as! Double
+            
+            if self.highIntensityTime == nil {
+                self.highIntensityTime = 0.0
+            }
+        } else {
+            self.highIntensityTime = 0.0
         }
-        
-        
-        
         
         let milesUnit = HKUnit.mileUnit()
         self.distance = self.currentWorkout.healthKitWorkout?.totalDistance?.doubleValueForUnit(milesUnit)
@@ -416,13 +409,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                             
                         })
                         
-                        //                        ProcessArray().processGroup(self.allWorkouts, completion: { (results) -> Void in
-                        //                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        //                                self.allWorkoutAverages = results
-                        //                                self.generateComparisonStats()
-                        //                                self.loadingStrings = false
-                        //                            })
-                        //                        })
                     } else {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.generateComparisonStats()
@@ -591,7 +577,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             
             if highPriority {
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-                    //                        print("HIGH PRIORITY YO")
                     self.calculateHeatmapGraph(self.currentWorkoutIndex, bpm: self.bpm, time: self.time, min: self.min, max: self.max, yMin: self.plotMin, yMax: self.plotMax, addToGraph: true)
                 })
             } else {
@@ -986,9 +971,9 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         if keyboardToolbar == nil {
             keyboardToolbar = UIToolbar()
             keyboardToolbar.sizeToFit()
-            nextBarButton = UIBarButtonItem(title: "Next", style: .Plain, target: self, action: "nextPressed:")
+            nextBarButton = UIBarButtonItem(title: "Next", style: .Plain, target: self, action: #selector(WorkoutDetailViewController.nextPressed(_:)))
             let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-            let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "hideKeyboard:")
+            let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(WorkoutDetailViewController.hideKeyboard(_:)))
             
             keyboardToolbar.setItems([nextBarButton, spacer, doneButton], animated: false)
             keyboardToolbar.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin]
@@ -1056,32 +1041,32 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     // MARK: - Comparison Functions
     
     @IBAction func nextToolbarPressed(sender: AnyObject) {
-        if !loadingHeatmap && !loadingStrings {
-            mostActiveInProgress = false
-            if currentWorkoutIndex == allWorkouts.count - 1 {
-                currentWorkoutIndex = 0
-            } else {
-                currentWorkoutIndex += 1
-            }
-            updateComparisonLabels()
-            loadWorkout()
-            processCurrentWorkout(currentWorkoutIndex)
+        //        if !loadingHeatmap && !loadingStrings {
+        mostActiveInProgress = false
+        if currentWorkoutIndex == allWorkouts.count - 1 {
+            currentWorkoutIndex = 0
+        } else {
+            currentWorkoutIndex += 1
         }
+        updateComparisonLabels()
+        loadWorkout()
+        processCurrentWorkout(currentWorkoutIndex)
+        //        }
     }
     
     @IBAction func previousToolbarPressed(sender: AnyObject) {
-        if !loadingHeatmap && !loadingStrings {
-            mostActiveInProgress = false
-            if currentWorkoutIndex == 0 {
-                currentWorkoutIndex = allWorkouts.count - 1
-            } else {
-                currentWorkoutIndex -= 1
-            }
-            
-            updateComparisonLabels()
-            loadWorkout()
-            processCurrentWorkout(currentWorkoutIndex)
+        //        if !loadingHeatmap && !loadingStrings {
+        mostActiveInProgress = false
+        if currentWorkoutIndex == 0 {
+            currentWorkoutIndex = allWorkouts.count - 1
+        } else {
+            currentWorkoutIndex -= 1
         }
+        
+        updateComparisonLabels()
+        loadWorkout()
+        processCurrentWorkout(currentWorkoutIndex)
+        //        }
     }
     
     func updateComparisonLabels() {
