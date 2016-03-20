@@ -16,6 +16,7 @@ class GraphTableStrings {
     var averageAttrs: [String: AnyObject]!
     var redAttrs: [String: AnyObject]!
     var greenAttrs: [String: AnyObject]!
+    var blackAttrs: [String: AnyObject]!
     
     var headerAttributedStrings: [NSAttributedString]!
     let valueAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)]
@@ -37,6 +38,7 @@ class GraphTableStrings {
         averageAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)]
         redAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline), NSForegroundColorAttributeName: greenColor]
         greenAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline), NSForegroundColorAttributeName: redColor]
+        blackAttrs = [NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline), NSForegroundColorAttributeName: UIColor.darkGrayColor()]
     }
     
     func allHeaderStrings() -> [NSAttributedString] {
@@ -89,7 +91,7 @@ class GraphTableStrings {
                 highString = "Not Specified"
                 ratioString = "N/A"
             }
-        } else {    
+        } else {
             highString = "Not Specified"
             ratioString = "N/A"
         }
@@ -124,12 +126,16 @@ class GraphTableStrings {
     }
     
     func applyColorAttributes(value: Double, diffString: String) -> NSMutableAttributedString {
-        if value < 0 {
-            let returnString = "+" + diffString
-            return NSMutableAttributedString(string: returnString, attributes: redAttrs);
+        if !value.isNormal {
+            return NSMutableAttributedString(string: "N/A", attributes: blackAttrs);
         } else {
-            let returnString = "-" + diffString
-            return NSMutableAttributedString(string: returnString, attributes: greenAttrs);
+            if value < 0 {
+                let returnString = "+" + diffString
+                return NSMutableAttributedString(string: returnString, attributes: redAttrs);
+            } else {
+                let returnString = "-" + diffString
+                return NSMutableAttributedString(string: returnString, attributes: greenAttrs);
+            }
         }
     }
     
@@ -145,7 +151,7 @@ class GraphTableStrings {
     
     func valueStringWithComparison(values: [String: Double?], averages: [String: Double?]) -> [NSAttributedString] {
         var workoutStrings = allValueStrings(values)
-
+        
         if let averageDuration = averages["duration"] {
             let avgString = secondsToString(averageDuration!)
             workoutStrings[1].appendAttributedString(attributedAverageString(avgString))
@@ -169,10 +175,10 @@ class GraphTableStrings {
             
             if let workoutModerateTime = values["moderate"] {
                 if workoutModerateTime != nil && averageModerate != nil {
-                let rawValue = averageModerate! - workoutModerateTime!
-                let value = fabs(rawValue)
-                let diffString = secondsToString(value)
-                workoutStrings[2].appendAttributedString(applyColorAttributes(rawValue, diffString: diffString))
+                    let rawValue = averageModerate! - workoutModerateTime!
+                    let value = fabs(rawValue)
+                    let diffString = secondsToString(value)
+                    workoutStrings[2].appendAttributedString(applyColorAttributes(rawValue, diffString: diffString))
                 } else {
                     workoutStrings[2].appendAttributedString(notApplicableString())
                 }
@@ -189,12 +195,12 @@ class GraphTableStrings {
             
             if let workoutHigh = values["high"] {
                 if averageHigh != nil && workoutHigh != nil {
-                let rawValue = averageHigh! - workoutHigh!
-                let value = fabs(rawValue)
-                let diffString = secondsToString(value)
-                workoutStrings[3].appendAttributedString(applyColorAttributes(rawValue, diffString: diffString))
+                    let rawValue = averageHigh! - workoutHigh!
+                    let value = fabs(rawValue)
+                    let diffString = secondsToString(value)
+                    workoutStrings[3].appendAttributedString(applyColorAttributes(rawValue, diffString: diffString))
                 } else {
-                  workoutStrings[3].appendAttributedString(notApplicableString())  
+                    workoutStrings[3].appendAttributedString(notApplicableString())
                 }
             } else {
                 workoutStrings[3].appendAttributedString(notApplicableString())
@@ -209,9 +215,9 @@ class GraphTableStrings {
                 let workoutRatio = values["high"]!! / values["moderate"]!!
                 let rawValue = averageRatio! - workoutRatio
                 let value = fabs(rawValue)
-
+                
                 let diffString = String(format: "%.2f", value)
-
+                
                 workoutStrings[4].appendAttributedString(applyColorAttributes(rawValue, diffString: diffString))
             } else {
                 workoutStrings[4].appendAttributedString(notApplicableString())
