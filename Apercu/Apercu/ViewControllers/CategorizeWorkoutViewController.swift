@@ -39,8 +39,8 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
         
         descTextField.delegate = self
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideKeyboard:", name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showKeyboard:", name: UIKeyboardDidShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CategorizeWorkoutViewController.hideKeyboard(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(CategorizeWorkoutViewController.showKeyboard(_:)), name: UIKeyboardDidShowNotification, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -142,7 +142,7 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
             toolbar = UIToolbar()
             toolbar.sizeToFit()
             let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-            let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: "hideKeyboard:")
+            let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(CategorizeWorkoutViewController.hideKeyboard(_:)))
             
             toolbar.setItems([spacer, doneButton], animated: false)
             toolbar.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin]

@@ -127,104 +127,7 @@ class QueryHealthKitWorkouts {
             }
         }
         
-        
-//        
-//        guard let healthStore = appDelegate.healthStore else {
-//            return
-//        }
-//        
-//
-//        
-//        let predicate = HKQuery.predicateForSamplesWithStartDate(nil, endDate: nil, options: .None)
-//        
-//        let workoutQuery = HKSampleQuery.init(sampleType: sampleType, predicate: predicate, limit: 0, sortDescriptors: [descendingSort]) { (query, workoutResults, error) -> Void in
-//            var combinedWorkouts: [ApercuWorkout] = [ApercuWorkout]()
-//            
-//            if workoutResults != nil {
-//                
-//                let coreDataWorkouts: [Workout]? = self.getAllCoreDataWorkouts()
-//                var coreDataIndex = 0
-//                
-//                if coreDataWorkouts == nil || coreDataWorkouts?.count == 0 {
-//                    
-//                    for healthKitWorkout in workoutResults! {
-//                        if workoutFilter.includeWorkout(healthKitWorkout.startDate, category: nil) {
-//                            combinedWorkouts.append(ApercuWorkout(healthKitWorkout: healthKitWorkout as? HKWorkout, workout: nil))
-//                        }
-//                    }
-//                    
-//                } else {
-//                    for var i = 0; i < workoutResults?.count; ++i {
-//                        
-//                        let healthKitStartDate = workoutResults![i].startDate
-//                        
-//                        if coreDataWorkouts?.count > 0 {
-//                            while coreDataIndex < coreDataWorkouts?.count && coreDataWorkouts![coreDataIndex].start! < healthKitStartDate {
-//                                let currentCoreDataWorkout = coreDataWorkouts![coreDataIndex];
-//                                let currentCategoryIdentifier = currentCoreDataWorkout.category
-//                                
-//                                if workoutFilter.includeWorkout(currentCoreDataWorkout.start!, category: currentCategoryIdentifier) {
-//                                    combinedWorkouts.append(ApercuWorkout(healthKitWorkout: nil, workout: currentCoreDataWorkout))
-//                                }
-//                            }
-//                        }
-//                        
-//                        if coreDataIndex < coreDataWorkouts?.count {
-//                            if coreDataWorkouts![coreDataIndex].start?.isEqualToDate(healthKitStartDate) == true {
-//                                
-//                                if workoutFilter.includeWorkout(coreDataWorkouts![coreDataIndex].start!, category: coreDataWorkouts![coreDataIndex].category) {
-//                                    
-//                                    combinedWorkouts.append(ApercuWorkout(healthKitWorkout: workoutResults![i] as? HKWorkout, workout: coreDataWorkouts![coreDataIndex]))
-//                                    
-//                                }
-//                            } else {
-//                                if workoutFilter.includeWorkout(coreDataWorkouts![coreDataIndex].start!, category: coreDataWorkouts![coreDataIndex].category) {
-//                                    combinedWorkouts.append(ApercuWorkout(healthKitWorkout: workoutResults![i] as? HKWorkout, workout: nil))
-//                                }
-//                            }
-//                        } else {
-//                            if workoutFilter.includeWorkout(workoutResults![i].startDate, category: coreDataWorkouts![coreDataIndex].category) {
-//                                combinedWorkouts.append(ApercuWorkout(healthKitWorkout: workoutResults![i] as? HKWorkout, workout: nil))
-//                            }
-//                        }
-//                        
-//                        
-//                        if i == ((workoutResults?.count)! - 1) {
-//                            while coreDataIndex < coreDataWorkouts?.count {
-//                                if workoutFilter.includeWorkout(coreDataWorkouts![coreDataIndex].start!, category: coreDataWorkouts![coreDataIndex].category){
-//                                    
-//                                    combinedWorkouts.append(ApercuWorkout(healthKitWorkout: nil, workout: coreDataWorkouts![coreDataIndex]))
-//                                    ++coreDataIndex
-//                                    
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            } else {
-//                // No HKWorkouts Found
-//                let coreDataWorkouts: [Workout]? = self.getAllCoreDataWorkouts()
-//                
-//                for coreDataWorkout in coreDataWorkouts! {
-//                    if workoutFilter.includeWorkout(coreDataWorkout.start!, category: coreDataWorkout.category){
-//                        
-//                        combinedWorkouts.append(ApercuWorkout(healthKitWorkout: nil, workout: coreDataWorkout))
-//                    }
-//                }
-//            }
-//
-//            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                if workoutResults != nil {
-//                    completion(result: combinedWorkouts)
-//                } else {
-//                    completion(result: nil)
-//                }
-//            })
-//        }
-//        
-//        healthStore.executeQuery(workoutQuery);
     }
-    
     
     func getAllCoreDataWorkouts() -> [Workout]? {
         let managedContext = appDelegate.managedObjectContext
@@ -238,6 +141,43 @@ class QueryHealthKitWorkouts {
         } catch {
             return nil
         }
+    }
+    
+    func workoutForTime(startDate: NSDate, completion: (result: [HKWorkout]?) -> Void) {
+        guard let healthStore = appDelegate.healthStore else {
+            return
+        }
+        
+        let predicate = HKQuery.predicateForSamplesWithStartDate(startDate, endDate: nil, options: .None)
+        
+        let workoutQuery = HKSampleQuery.init(sampleType: sampleType, predicate: predicate, limit: 1, sortDescriptors:[descendingSort]) { (query, workoutResults, error) -> Void in
+            completion(result: workoutResults as? [HKWorkout])
+        }
+        
+        healthStore.executeQuery(workoutQuery)
+    }
+    
+    func deleteHealthKitWorkout(startDate: NSDate, endDate: NSDate, completion: (result: [HKWorkout]?) -> Void) {
+        guard let healthStore = appDelegate.healthStore else {
+            return
+        }
+        
+        let predicate = HKQuery.predicateForSamplesWithStartDate(startDate, endDate: endDate, options: .None)
+        
+        let workoutQuery = HKSampleQuery.init(sampleType: sampleType, predicate: predicate, limit: 1, sortDescriptors:[descendingSort]) { (query, workoutResults, error) -> Void in
+            
+            if workoutResults != nil && workoutResults?.count > 0 {
+                for workout in (workoutResults as? [HKWorkout])! {
+                    healthStore.deleteObject(workout, withCompletion: { (success, error) in
+                        
+                    })
+                }
+            }
+            
+            completion(result: workoutResults as? [HKWorkout])
+        }
+        
+        healthStore.executeQuery(workoutQuery)
     }
     
 }

@@ -13,6 +13,7 @@ import HealthKit
 
 class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, CPTPlotSpaceDelegate, CPTPlotDataSource, ActiveSliderChanged, UITextViewDelegate, ProcessArrayDelegate {
     
+    @IBOutlet var noDataFoundLabel: UILabel!
     var currentWorkout: ApercuWorkout!
     var startDate: NSDate!
     var coreDataWorkout: Workout?
@@ -202,6 +203,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             let workoutForIndex = self.allWorkouts[index]
             ProcessWorkout().heartRatePlotDate(workoutForIndex.getStartDate()!, end: workoutForIndex.getEndDate()!, includeRaw: true, statsCompleted: { (stats) in
                 self.allWorkoutStats[index] = stats;
+                
                 }, completion: { (results) in
                     self.allWorkoutStats[index] = results;
                     self.workoutMainIsFinished[index] = true
@@ -272,6 +274,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     func setupNormalPlots(shouldAddPlots: Bool) {
         dispatch_async(dispatch_get_main_queue(), {
             () -> Void in
+            
             if self.segment.selectedSegmentIndex == 0 {
                 if shouldAddPlots {
                     self.removeAllPlots()
@@ -426,9 +429,20 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         loadingHeatmap = true
         loadingStrings = true
         
+        
         if let currentStats = allWorkoutStats[workoutId] {
             setupWorkoutStats(currentStats)
             setupNormalPlots(false)
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                if currentStats["bpm"] == nil || (currentStats["bpm"] as! [Double]).count == 0 {
+                    self.noDataFoundLabel.hidden = false
+                } else {
+                    self.noDataFoundLabel.hidden = true
+                }
+            })
+            
+            
             if segment.selectedSegmentIndex == 1 {
                 //                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
                 self.calculateHeatmapGraph(self.currentWorkoutIndex, bpm: self.bpm, time: self.time, min: self.min, max: self.max, yMin: self.plotMin, yMax: self.plotMax, addToGraph: true )
@@ -444,6 +458,14 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 (stats) -> Void in
                 // Stats for graph completed (min, max, avg, duration)
                 // update graph
+                dispatch_async(dispatch_get_main_queue(), {
+                    if stats["bpm"] == nil || (stats["bpm"] as! [Double]).count == 0 {
+                        self.noDataFoundLabel.hidden = false
+                    } else {
+                        self.noDataFoundLabel.hidden = true
+                    }
+                })
+                
                 self.setupWorkoutStats(stats)
                 
                 // show plots
@@ -464,6 +486,14 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 }, completion: {
                     (results) -> Void in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if results == nil || results["bpm"] == nil || (results["bpm"] as! [Double]).count == 0 {
+                            self.noDataFoundLabel.hidden = false
+                        } else {
+                            self.noDataFoundLabel.hidden = true
+                        }
+                    })
+                    
                     self.setupTableStrings(results)
                     //                    self.loadingNewWorkout = false
             })
@@ -492,6 +522,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 tabBarCont.tabBar.hidden = true
             }
         }
+        
+        loadWorkout()
     }
     
     func updateCategoryDisplay() {

@@ -213,6 +213,21 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
         selectedIndex = indexPath.row
         performSegueWithIdentifier("toDetailManual", sender: self)
     }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            QueryHealthKitWorkouts().deleteHealthKitWorkout(workoutArray[indexPath.row].getStartDate()!, endDate: workoutArray[indexPath.row].getEndDate()!, completion: { (result) in
+                
+                dispatch_async(dispatch_get_main_queue(), { 
+                    CoreDataHelper().deleteWorkout(self.workoutArray[indexPath.row].getStartDate()!, endTime: self.workoutArray[indexPath.row].getEndDate()!)
+                    
+                    self.workoutArray.removeAtIndex(indexPath.row)
+                    self.tableView.reloadData()
+                })
+            })
+            
+        }
+    }
 
     // Mark: - Segue & Transition
 

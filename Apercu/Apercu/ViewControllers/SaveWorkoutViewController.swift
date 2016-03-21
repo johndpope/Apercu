@@ -62,6 +62,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     let dateFormatter = NSDateFormatter()
     let dateFormatString = "hh:mm a MMM d yyyy"
     let categoriesSingleton = CategoriesSingleton.sharedInstance
+    var selectedCategory: NSNumber?
     
     var calories = 0.0
     var distance = 0.0
@@ -186,7 +187,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     func showWorkoutViews() {
         UIView.performWithoutAnimation({ () -> Void in
             self.saveButton.setTitle("Save as Workout", forState: UIControlState.Normal)
-//            self.tagsLabelTopConstraint.active = false
+            //            self.tagsLabelTopConstraint.active = false
             self.collectionViewBottomConstraint.active = false
             //            self.startDateTopConstraint.active = true
             //            self.caloriesBottomConstraint.active = true
@@ -313,7 +314,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
                     self.view.layoutIfNeeded()
                 })
                 
-//                                bottomSpaceConstraint.constant = keyboardSize.height //- 44
+                //                                bottomSpaceConstraint.constant = keyboardSize.height //- 44
             }
         }
     }
@@ -359,11 +360,11 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     }
     
     func scrollToTextView(inputView: UIView) {
-//        UIView.animateWithDuration(NSTimeInterval(0.2), delay: 0.0, options: .TransitionNone, animations: {
-            self.scrollView.contentOffset = CGPointMake(inputView.frame.origin.x, inputView.frame.origin.y)
-//            }) { (Bool) in
-//            self.scrollView.contentOffset = CGPointMake(inputView.frame.origin.x, inputView.frame.origin.y)
-//        }
+        //        UIView.animateWithDuration(NSTimeInterval(0.2), delay: 0.0, options: .TransitionNone, animations: {
+        self.scrollView.contentOffset = CGPointMake(inputView.frame.origin.x, inputView.frame.origin.y)
+        //            }) { (Bool) in
+        //            self.scrollView.contentOffset = CGPointMake(inputView.frame.origin.x, inputView.frame.origin.y)
+        //        }
     }
     
     @IBAction func typeSegmentChanged(sender: AnyObject) {
@@ -513,11 +514,14 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         if categoryIdentifier != nil {
             if categoryIdentifier == 0 {
                 setToNoCategory()
+                selectedCategory = nil
             } else {
+                selectedCategory = categoryIdentifier
                 colorIcon.backgroundColor = categoriesSingleton.getColorForIdentifier(categoryIdentifier)
                 categoryLabel.text = categoriesSingleton.getStringForIdentifier(categoryIdentifier)
             }
         } else {
+            selectedCategory = nil
             setToNoCategory()
         }
         
@@ -532,39 +536,59 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         if startDate != nil && endDate != nil {
             
             if endDate.timeIntervalSince1970 > startDate.timeIntervalSince1970 {
-                let caloriesValue = HKQuantity(unit: HKUnit.kilocalorieUnit(), doubleValue: calories)
-                let distanceValue = HKQuantity(unit: HKUnit.mileUnit(), doubleValue: distance)
-                var healthKitWorkout: HKWorkout!
                 
-                if calories != 0 && distance != 0 {
-                    healthKitWorkout = HKWorkout(activityType: .Other, startDate: startDate, endDate: endDate, duration: abs(endDate.timeIntervalSinceDate(startDate)), totalEnergyBurned: caloriesValue, totalDistance: distanceValue, device: nil, metadata: nil)
-                } else if calories != 0 {
-                    healthKitWorkout = HKWorkout(activityType: .Other, startDate: startDate, endDate: endDate, duration: abs(endDate.timeIntervalSinceDate(startDate)), totalEnergyBurned: caloriesValue, totalDistance: nil, device: nil, metadata: nil)
-                } else if distance != 0 {
-                    healthKitWorkout = HKWorkout(activityType: .Other, startDate: startDate, endDate: endDate, duration: abs(endDate.timeIntervalSinceDate(startDate)), totalEnergyBurned: nil, totalDistance: distanceValue, device: nil, metadata: nil)
-                } else {
-                    healthKitWorkout = HKWorkout(activityType: .Other, startDate: startDate, endDate: endDate, duration: abs(endDate.timeIntervalSinceDate(startDate)), totalEnergyBurned: nil, totalDistance: nil, device: nil, metadata: nil)
-                }
-                
-                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-                let hkStore = appDelegate.healthStore
-                
-                hkStore.saveObject(healthKitWorkout, withCompletion: { (success, error) in
-                    if success {
-                        print("success")
+                QueryHealthKitWorkouts().workoutForTime(startDate, completion: { (result) in
+                    
+                    if result == nil || result?.count == 0 {
+                        if !CoreDataHelper().doesWorkoutExist(self.startDate) {
+                            if CoreDataHelper().storeNewWorkout(self.startDate, endTime: self.endDate, description: self.descriptionTextView.text, category: self.selectedCategory) {
+                                
+                                let caloriesValue = HKQuantity(unit: HKUnit.kilocalorieUnit(), doubleValue: self.calories)
+                                let distanceValue = HKQuantity(unit: HKUnit.mileUnit(), doubleValue: self.distance)
+                                var healthKitWorkout: HKWorkout!
+                                
+                                if self.calories != 0 && self.distance != 0 {
+                                    healthKitWorkout = HKWorkout(activityType: .Other, startDate: self.startDate, endDate: self.endDate, duration: abs(self.endDate.timeIntervalSinceDate(self.startDate)), totalEnergyBurned: caloriesValue, totalDistance: distanceValue, device: nil, metadata: nil)
+                                } else if self.calories != 0 {
+                                    healthKitWorkout = HKWorkout(activityType: .Other, startDate: self.startDate, endDate: self.endDate, duration: abs(self.endDate.timeIntervalSinceDate(self.startDate)), totalEnergyBurned: caloriesValue, totalDistance: nil, device: nil, metadata: nil)
+                                } else if self.distance != 0 {
+                                    healthKitWorkout = HKWorkout(activityType: .Other, startDate: self.startDate, endDate: self.endDate, duration: abs(self.endDate.timeIntervalSinceDate(self.startDate)), totalEnergyBurned: nil, totalDistance: distanceValue, device: nil, metadata: nil)
+                                } else {
+                                    healthKitWorkout = HKWorkout(activityType: .Other, startDate: self.startDate, endDate: self.endDate, duration: abs(self.endDate.timeIntervalSinceDate(self.startDate)), totalEnergyBurned: nil, totalDistance: nil, device: nil, metadata: nil)
+                                }
+                                
+                                let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+                                let hkStore = appDelegate.healthStore
+                                
+                                hkStore.saveObject(healthKitWorkout, withCompletion: { (success, error) in
+                                    if success {
+                                        self.navigationController?.popViewControllerAnimated(true)
+                                    } else {
+                                    }
+                                })
+                                
+                            } else {
+                                self.showAlert("Error storing workout.")
+                            }
+                        } else {
+                            self.showAlert("Workout with that start time already exists.")
+                        }
+                        
                     } else {
-                        print(error)
+                        self.showAlert("End date can not be before start date.")
                     }
                 })
-                
-                
             } else {
-                let alert = UIAlertController(title: "Error", message: "End date can not be before start date.", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.self.showAlert("Workout with that start time already exists.")
             }
-            
-            
+        }
+    }
+    
+    func showAlert(message: String) {
+        dispatch_async(dispatch_get_main_queue()) { 
+            let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
     

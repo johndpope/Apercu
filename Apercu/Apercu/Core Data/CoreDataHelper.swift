@@ -167,7 +167,6 @@ class CoreDataHelper {
         }
     }
     
-    
     func getCoreDataWorkout(start: NSDate) -> Workout? {
         let fetchRequest = NSFetchRequest(entityName: "Workout")
         fetchRequest.predicate = NSPredicate(format: "start = %@", start)
@@ -266,5 +265,75 @@ class CoreDataHelper {
         }
         
     }
+    
+    func doesWorkoutExist(startTime: NSDate) -> Bool {
+        let fetchRequest = NSFetchRequest(entityName: "Workout")
+        let predicate = NSPredicate(format: "start == %@", startTime)
+        fetchRequest.predicate = predicate
+        fetchRequest.fetchLimit = 1
+
+        
+        do {
+            let fetchedWorkouts = try context.executeFetchRequest(fetchRequest) as! [Workout]
+            
+            if fetchedWorkouts.count > 0 {
+                return true
+            } else {
+                return false
+            }
+        } catch {
+            print("Error determining if workout exists at that time")
+        }
+        
+        return true
+    }
+    
+    func storeNewWorkout(startTime: NSDate, endTime: NSDate, description: String?, category: NSNumber?) -> Bool {
+        let newWorkout = NSEntityDescription.insertNewObjectForEntityForName("Workout", inManagedObjectContext: context) as! Workout
+        newWorkout.start = startTime
+        newWorkout.end = endTime
+        
+        if description != nil && description != "" {
+            newWorkout.desc = description!
+        }
+        
+        if category != nil {
+            newWorkout.category = category!
+        }
+        
+        do {
+            try context.save()
+            return true
+        } catch {
+            NSLog("Error saving new category")
+            return false
+        }
+    }
+    
+    func deleteWorkout(startTime: NSDate, endTime: NSDate) {
+        let fetchRequest = NSFetchRequest(entityName: "Workout")
+        let predicateStart = NSPredicate(format: "start == %@", startTime)
+        let predicateEnd = NSPredicate(format: "end == %@", endTime)
+        let compoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicateStart, predicateEnd])
+        fetchRequest.predicate = compoundPredicate
+        fetchRequest.fetchLimit = 1
+        
+        do {
+            let fetchedWorkout = try context.executeFetchRequest(fetchRequest) as! [Workout]
+            
+            for workout in fetchedWorkout {
+                context.deleteObject(workout)
+            }
+            
+            do {
+                try context.save()
+            } catch {
+                NSLog("Error removing workout.")
+            }
+        } catch {
+            
+        }
+    }
+    
 }
 
