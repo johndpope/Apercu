@@ -288,10 +288,14 @@ class CoreDataHelper {
         return true
     }
     
-    func storeNewWorkout(startTime: NSDate, endTime: NSDate, description: String?, category: NSNumber?) -> Bool {
+    func storeNewWorkout(startTime: NSDate, endTime: NSDate, title: String?, description: String?, category: NSNumber?) -> Bool {
         let newWorkout = NSEntityDescription.insertNewObjectForEntityForName("Workout", inManagedObjectContext: context) as! Workout
         newWorkout.start = startTime
         newWorkout.end = endTime
+        
+        if title != nil && title != "" {
+            newWorkout.title = title
+        }
         
         if description != nil && description != "" {
             newWorkout.desc = description!

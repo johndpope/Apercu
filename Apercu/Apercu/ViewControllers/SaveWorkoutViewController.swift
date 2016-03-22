@@ -52,8 +52,10 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var managedContext: NSManagedObjectContext!
     var allTags: [String]!
+    
     let bgColor = UIColor(red: 189/255, green: 212/255, blue: 222/255, alpha: 1)
-    let globalTintColor = UIColor(red: 0/255, green: 125/255, blue: 164/255, alpha: 1)
+    let globalTintColor = UIColor(red: 0/255, green: 125/255, blue: 164/255, alpha: 0.7)
+    
     var selectedTags: [String]!
     var datePicker: UIDatePicker!
     var startDate: NSDate!
@@ -82,17 +84,16 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         
         title = "New Workout"
         
-        backgroundNameAndDesc.layer.cornerRadius = 10.0
-        backgroundCategory.layer.cornerRadius = 10.0
-        distanceBackground.layer.cornerRadius = 10.0
-        dateBackground.layer.cornerRadius = 10.0
+        let radius: CGFloat = 4.0
+        backgroundNameAndDesc.layer.cornerRadius = radius
+        backgroundCategory.layer.cornerRadius = radius
+        distanceBackground.layer.cornerRadius = radius
+        dateBackground.layer.cornerRadius = radius
         
-        let fillColor = UIColor(red: 54/255, green: 149/255, blue: 179/255, alpha: 1.0)
-        backgroundNameAndDesc.backgroundColor = fillColor
-        backgroundCategory.backgroundColor = fillColor
-        distanceBackground.backgroundColor = fillColor
-        dateBackground.backgroundColor = fillColor
-        
+        setBorder(backgroundNameAndDesc)
+        setBorder(backgroundCategory)
+        setBorder(distanceBackground)
+        setBorder(dateBackground)
         
         tabBarController!.tabBar.hidden = true
         
@@ -118,7 +119,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         colorIcon.layer.cornerRadius = 12.5
         
         colorIcon.layer.borderColor = UIColor.whiteColor().CGColor
-        colorIcon.layer.borderWidth = 2.0
+        colorIcon.layer.borderWidth = 1.0
         
         datePicker = UIDatePicker()
         datePicker.datePickerMode = UIDatePickerMode.DateAndTime
@@ -126,7 +127,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         datePicker.backgroundColor = UIColor.whiteColor()
         startDateTextField.inputView = datePicker
         endDateTextField.inputView = datePicker
-        datePicker.addTarget(self, action: "datePickerChanged:", forControlEvents: UIControlEvents.ValueChanged)
+        datePicker.addTarget(self, action: #selector(SaveWorkout.datePickerChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
         
         selectedTags = [String]()
         
@@ -138,8 +139,8 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
             allTags = [String]()
         }
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "showKeyboard:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideKeyboard:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SaveWorkout.showKeyboard(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(SaveWorkout.hideKeyboard(_:)), name: UIKeyboardWillHideNotification, object: nil)
         
         if typeSegment.selectedSegmentIndex == 0 {
             showWorkoutViews()
@@ -148,12 +149,12 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         }
         
         
-        dateFormatter.dateFormat = dateFormatString
-        startDateTextField.text = dateFormatter.stringFromDate(NSDate().dateByAddingTimeInterval(-3600))
-        startDate = NSDate().dateByAddingTimeInterval(-3600)
-        endDateTextField.text = dateFormatter.stringFromDate(NSDate())
-        endDate = NSDate()
-        updateDurationLabel()
+//        dateFormatter.dateFormat = dateFormatString
+//        startDateTextField.text = dateFormatter.stringFromDate(NSDate().dateByAddingTimeInterval(-3600))
+//        startDate = NSDate().dateByAddingTimeInterval(-3600)
+//        endDateTextField.text = dateFormatter.stringFromDate(NSDate())
+//        endDate = NSDate()
+//        updateDurationLabel()
         
         collectionViewHeight.constant = collectionView.collectionViewLayout.collectionViewContentSize().height
         
@@ -179,9 +180,29 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         //        collectionViewHeight.constant = collectionView.contentSize.height
     }
     
+    func setBorder(view: UIView) {
+        let fillColor = UIColor(red: 239/255, green: 239/255, blue: 244/255, alpha: 1.0)
+        let borderColor = UIColor(red: 199/255, green: 205/255, blue: 221/255, alpha: 1.0)
+        view.layer.borderWidth = 1.0
+        view.layer.borderColor = borderColor.CGColor
+        view.backgroundColor = fillColor
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        tabBarController!.tabBar.hidden = true
+        
+        if let tabBarCont = self.tabBarController {
+            if tabBarCont.tabBar.hidden == false {
+                tabBarCont.tabBar.hidden = true
+            }
+        }
+        
+        dateFormatter.dateFormat = dateFormatString
+        startDateTextField.text = dateFormatter.stringFromDate(NSDate().dateByAddingTimeInterval(-3600))
+        startDate = NSDate().dateByAddingTimeInterval(-3600)
+        endDateTextField.text = dateFormatter.stringFromDate(NSDate())
+        endDate = NSDate()
+        updateDurationLabel()
     }
     
     func showWorkoutViews() {
@@ -257,8 +278,8 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     func showToolbar() {
         toolbar = UIToolbar()
         let spacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
-        let doneButton: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "hideKeyboard")
-        let nextButton: UIBarButtonItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: "nextTextField")
+        let doneButton: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SaveWorkout.hideKeyboard as (SaveWorkout) -> () -> ()))
+        let nextButton: UIBarButtonItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SaveWorkout.nextTextField))
         toolbar.setItems([nextButton, spacer, doneButton], animated: true)
         toolbar.sizeToFit()
         toolbar.backgroundColor = UIColor.whiteColor()
@@ -333,37 +354,40 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         if nameTextField.isFirstResponder() {
             nameTextField.resignFirstResponder()
             descriptionTextView.becomeFirstResponder()
-            scrollToTextView(descriptionTextView)
+            scrollToTextView(scrollView.convertRect(descriptionTextView.frame, fromView: descriptionTextView))
         } else if descriptionTextView.isFirstResponder() {
             if isShowingWorkoutView {
                 descriptionTextView.resignFirstResponder()
                 startDateTextField.becomeFirstResponder()
+                scrollToTextView(scrollView.convertRect(startDateTextField.frame, fromView: startDateTextField))
             } else {
                 descriptionTextView.resignFirstResponder()
             }
-            scrollToTextView(startDateTextField)
+            //            scrollToTextView(startDateTextField)
         } else if startDateTextField.isFirstResponder() {
             startDateTextField.resignFirstResponder()
             endDateTextField.becomeFirstResponder()
-            scrollToTextView(endDateTextField)
+            scrollToTextView(scrollView.convertRect(endDateTextField.frame, fromView: endDateTextField))
         } else if endDateTextField.isFirstResponder() {
             endDateTextField.resignFirstResponder()
             distanceTextField.becomeFirstResponder()
-            scrollToTextView(distanceTextField)
+            scrollToTextView(scrollView.convertRect(distanceTextField.frame, fromView: distanceTextField))
         } else if distanceTextField.isFirstResponder() {
             distanceTextField.resignFirstResponder()
             calorieTextField.becomeFirstResponder()
-            scrollToTextView(calorieTextField)
+            scrollToTextView(scrollView.convertRect(calorieTextField.frame, fromView: calorieTextField))
         } else if calorieTextField.isFirstResponder() {
             calorieTextField.resignFirstResponder()
         }
     }
     
-    func scrollToTextView(inputView: UIView) {
+    func scrollToTextView(frame: CGRect) {
+        print(frame)
+        self.scrollView.scrollRectToVisible(frame, animated: true)
         //        UIView.animateWithDuration(NSTimeInterval(0.2), delay: 0.0, options: .TransitionNone, animations: {
-        self.scrollView.contentOffset = CGPointMake(inputView.frame.origin.x, inputView.frame.origin.y)
+        //        self.scrollView.contentOffset = CGPointMake(inputView.frame.origin.x + (inputView.superview?.frame.origin.x)!, inputView.frame.origin.y + (inputView.superview?.frame.origin.y)!)
         //            }) { (Bool) in
-        //            self.scrollView.contentOffset = CGPointMake(inputView.frame.origin.x, inputView.frame.origin.y)
+        //                    self.scrollView.contentOffset = CGPointMake(inputView.frame.origin.x, inputView.frame.origin.y)
         //        }
     }
     
@@ -432,8 +456,8 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
         toolbar = UIToolbar()
         let spacer: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: self, action: nil)
-        let doneButton: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: "hideKeyboard")
-        let nextButton: UIBarButtonItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: "nextTextField")
+        let doneButton: UIBarButtonItem = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SaveWorkout.hideKeyboard as (SaveWorkout) -> () -> ()))
+        let nextButton: UIBarButtonItem = UIBarButtonItem(title: "Next", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(SaveWorkout.nextTextField))
         toolbar.setItems([nextButton, spacer, doneButton], animated: true)
         toolbar.sizeToFit()
         toolbar.backgroundColor = UIColor.whiteColor()
@@ -534,14 +558,12 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     
     @IBAction func savePressed(sender: AnyObject) {
         if startDate != nil && endDate != nil {
-            
+
             if endDate.timeIntervalSince1970 > startDate.timeIntervalSince1970 {
-                
-                QueryHealthKitWorkouts().workoutForTime(startDate, completion: { (result) in
-                    
-                    if result == nil || result?.count == 0 {
+                QueryHealthKitWorkouts().workoutForTime(startDate, endDate: endDate, completion: { (result) in
+                    if result == false {
                         if !CoreDataHelper().doesWorkoutExist(self.startDate) {
-                            if CoreDataHelper().storeNewWorkout(self.startDate, endTime: self.endDate, description: self.descriptionTextView.text, category: self.selectedCategory) {
+                            if CoreDataHelper().storeNewWorkout(self.startDate, endTime: self.endDate, title: self.nameTextField.text, description: self.descriptionTextView.text, category: self.selectedCategory) {
                                 
                                 let caloriesValue = HKQuantity(unit: HKUnit.kilocalorieUnit(), doubleValue: self.calories)
                                 let distanceValue = HKQuantity(unit: HKUnit.mileUnit(), doubleValue: self.distance)
@@ -562,8 +584,11 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
                                 
                                 hkStore.saveObject(healthKitWorkout, withCompletion: { (success, error) in
                                     if success {
-                                        self.navigationController?.popViewControllerAnimated(true)
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            self.navigationController?.popViewControllerAnimated(true)
+                                        })
                                     } else {
+                                        self.showAlert("Unable to store workout in HealthKit.")
                                     }
                                 })
                                 
@@ -585,9 +610,9 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     }
     
     func showAlert(message: String) {
-        dispatch_async(dispatch_get_main_queue()) { 
+        dispatch_async(dispatch_get_main_queue()) {
             let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
         }
     }

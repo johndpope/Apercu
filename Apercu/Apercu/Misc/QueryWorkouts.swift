@@ -143,15 +143,28 @@ class QueryHealthKitWorkouts {
         }
     }
     
-    func workoutForTime(startDate: NSDate, completion: (result: [HKWorkout]?) -> Void) {
+    func workoutForTime(startDate: NSDate, endDate: NSDate, completion: (result: Bool) -> Void) {
         guard let healthStore = appDelegate.healthStore else {
             return
         }
+        print(startDate)
         
-        let predicate = HKQuery.predicateForSamplesWithStartDate(startDate, endDate: nil, options: .None)
+        let predicate = HKQuery.predicateForSamplesWithStartDate(startDate, endDate: endDate, options: .None)
         
         let workoutQuery = HKSampleQuery.init(sampleType: sampleType, predicate: predicate, limit: 1, sortDescriptors:[descendingSort]) { (query, workoutResults, error) -> Void in
-            completion(result: workoutResults as? [HKWorkout])
+            
+            var foundWorkoutForDate = false
+            
+            if workoutResults != nil {
+            
+            for workout in workoutResults as! [HKWorkout] {
+                if workout.startDate == startDate && workout.endDate == endDate {
+                    foundWorkoutForDate = true
+                }
+            }
+            }
+            
+            completion(result: foundWorkoutForDate)
         }
         
         healthStore.executeQuery(workoutQuery)
