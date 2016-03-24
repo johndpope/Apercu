@@ -2014,54 +2014,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                             <constraint firstAttribute="height" constant="1" id="ipr-oA-Qx6"/>
                                         </constraints>
                                     </view>
-                                    <view hidden="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ytP-Lp-ynp" userLabel="Bottom Button">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xYy-Lj-DbD">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="587"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d8U-0y-kPp">
-                                                <rect key="frame" x="0.0" y="-64" width="0.0" height="1"/>
-                                                <color key="backgroundColor" red="0.0" green="0.49019607840000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="1" id="CjG-E4-ucs"/>
-                                                </constraints>
-                                            </view>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NKl-u2-5S5">
-                                                <rect key="frame" x="0.0" y="-64" width="175" height="36"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" constant="175" id="mM2-Ic-HPQ"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <state key="normal" title="Save Workout"/>
-                                            </button>
-                                        </subviews>
-                                        <constraints>
-                                            <constraint firstItem="NKl-u2-5S5" firstAttribute="centerX" secondItem="ytP-Lp-ynp" secondAttribute="centerX" id="Dqx-eh-9jZ"/>
-                                            <constraint firstAttribute="height" id="G1m-Ch-hOR"/>
-                                            <constraint firstAttribute="trailing" secondItem="d8U-0y-kPp" secondAttribute="trailing" id="Gb6-wE-pmF"/>
-                                            <constraint firstItem="NKl-u2-5S5" firstAttribute="top" secondItem="ytP-Lp-ynp" secondAttribute="top" constant="4" id="V0T-Ai-8n8"/>
-                                            <constraint firstItem="d8U-0y-kPp" firstAttribute="top" secondItem="ytP-Lp-ynp" secondAttribute="top" id="Yhi-uT-ldL"/>
-                                            <constraint firstItem="d8U-0y-kPp" firstAttribute="leading" secondItem="ytP-Lp-ynp" secondAttribute="leading" id="oaH-LQ-GGz"/>
-                                            <constraint firstAttribute="bottom" secondItem="NKl-u2-5S5" secondAttribute="bottom" constant="4" id="xhn-xD-EcR"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="G1m-Ch-hOR"/>
-                                                <exclude reference="Dqx-eh-9jZ"/>
-                                                <exclude reference="V0T-Ai-8n8"/>
-                                                <exclude reference="xhn-xD-EcR"/>
-                                                <exclude reference="Gb6-wE-pmF"/>
-                                                <exclude reference="Yhi-uT-ldL"/>
-                                                <exclude reference="oaH-LQ-GGz"/>
-                                            </mask>
-                                        </variation>
-                                    </view>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" bounces="NO" showsHorizontalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xYy-Lj-DbD">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="0.0"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o2K-bX-gf4" userLabel="Name And Desc">
-                                                <rect key="frame" x="20" y="20" width="280" height="259"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o2K-bX-gf4" userLabel="Name And Desc">
+                                                <rect key="frame" x="20" y="20" width="280" height="256"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUn-tM-Ufp">
-                                                        <rect key="frame" x="15" y="20" width="53" height="22"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AUn-tM-Ufp">
+                                                        <rect key="frame" x="15" y="20" width="53" height="20.5"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="52.5" id="q0u-lj-Lan"/>
                                                         </constraints>
@@ -2069,19 +2029,19 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sd1-ie-X5q">
-                                                        <rect key="frame" x="20" y="57" width="240" height="30"/>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Sd1-ie-X5q">
+                                                        <rect key="frame" x="20" y="55.5" width="240" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                     </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bmv-sz-OoF" userLabel="Description">
-                                                        <rect key="frame" x="15" y="102" width="98" height="22"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bmv-sz-OoF" userLabel="Description">
+                                                        <rect key="frame" x="15" y="100.5" width="92.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6oA-yK-isy">
-                                                        <rect key="frame" x="20" y="139" width="240" height="100"/>
+                                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="6oA-yK-isy">
+                                                        <rect key="frame" x="20" y="136" width="240" height="100"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="100" id="pmZ-uw-Xgg"/>
@@ -2105,19 +2065,19 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                     <constraint firstItem="AUn-tM-Ufp" firstAttribute="top" secondItem="o2K-bX-gf4" secondAttribute="top" constant="20" id="qQ6-pT-S48"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ytR-76-raV" userLabel="Category Background">
-                                                <rect key="frame" x="20" y="304" width="280" height="113.5"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ytR-76-raV" userLabel="Category Background">
+                                                <rect key="frame" x="20" y="301" width="280" height="120.5"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YYt-di-Ua2" userLabel="Color Icon">
-                                                        <rect key="frame" x="20" y="68" width="25" height="25"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YYt-di-Ua2" userLabel="Color Icon">
+                                                        <rect key="frame" x="20" y="75" width="25" height="25"/>
                                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="25" id="59g-Yv-8aw"/>
                                                             <constraint firstAttribute="height" constant="25" id="kmk-Zd-Ezm"/>
                                                         </constraints>
                                                     </view>
-                                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kvk-ZY-mdD" userLabel="Category Button">
-                                                        <rect key="frame" x="20" y="15" width="123" height="33"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kvk-ZY-mdD" userLabel="Category Button">
+                                                        <rect key="frame" x="20" y="20" width="143" height="35"/>
                                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
                                                         <state key="normal" title="Select Category">
                                                             <color key="titleColor" red="0.0" green="0.49019607840000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -2126,8 +2086,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                             <action selector="selectCategoryPressed:" destination="O9J-Ut-EpP" eventType="touchUpInside" id="wpW-g9-fqu"/>
                                                         </connections>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="No category selected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCB-cP-qPX">
-                                                        <rect key="frame" x="60" y="67" width="164" height="26.5"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No category selected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCB-cP-qPX">
+                                                        <rect key="frame" x="60" y="74" width="164" height="26.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <nil key="highlightedColor"/>
@@ -2153,11 +2113,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                     </mask>
                                                 </variation>
                                             </view>
-                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7uQ-po-b7F" userLabel="Date Background">
-                                                <rect key="frame" x="20" y="437" width="319" height="144"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7uQ-po-b7F" userLabel="Date Background">
+                                                <rect key="frame" x="20" y="446.5" width="280" height="158.5"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Start:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xa8-Y2-cER">
-                                                        <rect key="frame" x="15" y="20" width="88" height="22"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xa8-Y2-cER">
+                                                        <rect key="frame" x="15" y="30" width="40.5" height="19.5"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="88" id="xfj-8J-hXv"/>
                                                         </constraints>
@@ -2170,24 +2130,24 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                             </mask>
                                                         </variation>
                                                     </label>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ltP-A8-2li">
-                                                        <rect key="frame" x="118" y="16" width="26" height="30"/>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ltP-A8-2li">
+                                                        <rect key="frame" x="70.5" y="25" width="194.5" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
-                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4HS-48-ckl">
-                                                        <rect key="frame" x="118" y="57" width="26" height="30"/>
+                                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4HS-48-ckl">
+                                                        <rect key="frame" x="70.5" y="69" width="194.5" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="End:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMI-II-ZgG">
-                                                        <rect key="frame" x="15" y="62" width="88" height="21"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="End:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMI-II-ZgG">
+                                                        <rect key="frame" x="15" y="74.5" width="32.5" height="19.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Duration (min):" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR8-YN-WuA">
-                                                        <rect key="frame" x="15" y="113" width="120" height="21"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duration (min):" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CR8-YN-WuA">
+                                                        <rect key="frame" x="15" y="119" width="108" height="19.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                         <nil key="highlightedColor"/>
@@ -2216,14 +2176,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                     </mask>
                                                 </variation>
                                             </view>
-                                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aQ7-Qq-5OD" userLabel="Dist Cal Background">
-                                                <rect key="frame" x="20" y="601" width="319" height="119"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aQ7-Qq-5OD" userLabel="Dist Cal Background">
+                                                <rect key="frame" x="20" y="630" width="280" height="114"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KSC-0X-Ac2" userLabel="Distance View">
-                                                        <rect key="frame" x="16" y="10" width="287" height="42"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KSC-0X-Ac2" userLabel="Distance View">
+                                                        <rect key="frame" x="16" y="10" width="248" height="39.5"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Distance (mi):" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNi-MU-SBM">
-                                                                <rect key="frame" x="5" y="15" width="111.5" height="22"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance (mi):" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pNi-MU-SBM">
+                                                                <rect key="frame" x="0.0" y="15" width="100.5" height="19.5"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" constant="111.5" id="et0-fz-7dR"/>
                                                                 </constraints>
@@ -2236,8 +2196,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                                     </mask>
                                                                 </variation>
                                                             </label>
-                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="3" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="RFd-Rp-TUT">
-                                                                <rect key="frame" x="122" y="11" width="50" height="30"/>
+                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="3" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="RFd-Rp-TUT">
+                                                                <rect key="frame" x="106" y="10" width="42" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="qny-Et-cO2"/>
                                                                 </constraints>
@@ -2249,8 +2209,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                                     </mask>
                                                                 </variation>
                                                             </textField>
-                                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="10000" translatesAutoresizingMaskIntoConstraints="NO" id="qaW-tT-YWv">
-                                                                <rect key="frame" x="178" y="12" width="94" height="29"/>
+                                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="10000" translatesAutoresizingMaskIntoConstraints="NO" id="qaW-tT-YWv">
+                                                                <rect key="frame" x="154" y="11" width="94" height="29"/>
                                                                 <color key="tintColor" red="0.0" green="0.49019607840000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <connections>
                                                                     <action selector="distanceStepperChanged:" destination="O9J-Ut-EpP" eventType="valueChanged" id="T1T-RZ-j0A"/>
@@ -2274,17 +2234,17 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                             </mask>
                                                         </variation>
                                                     </view>
-                                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F74-99-Ysq" userLabel="Calories View">
-                                                        <rect key="frame" x="16" y="52" width="287" height="57"/>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F74-99-Ysq" userLabel="Calories View">
+                                                        <rect key="frame" x="16" y="49.5" width="248" height="54.5"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Calories:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMB-tj-W44">
-                                                                <rect key="frame" x="20" y="20" width="71" height="22"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calories:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fMB-tj-W44">
+                                                                <rect key="frame" x="0.0" y="20" width="63.5" height="19.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="200" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="Wql-yp-pU2">
-                                                                <rect key="frame" x="97" y="16" width="73" height="30"/>
+                                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="200" borderStyle="roundedRect" textAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="Wql-yp-pU2">
+                                                                <rect key="frame" x="69.5" y="15" width="76.5" height="30"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="Cgd-24-cPL"/>
                                                                 </constraints>
@@ -2296,8 +2256,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                                     </mask>
                                                                 </variation>
                                                             </textField>
-                                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100000" translatesAutoresizingMaskIntoConstraints="NO" id="Asb-M6-x4H">
-                                                                <rect key="frame" x="178" y="17" width="94" height="29"/>
+                                                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100000" translatesAutoresizingMaskIntoConstraints="NO" id="Asb-M6-x4H">
+                                                                <rect key="frame" x="154" y="16" width="94" height="29"/>
                                                                 <color key="tintColor" red="0.0" green="0.49019607840000001" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <connections>
                                                                     <action selector="calorieStepperChanged:" destination="O9J-Ut-EpP" eventType="valueChanged" id="lRT-vW-oIj"/>
@@ -2333,14 +2293,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                                     <constraint firstItem="KSC-0X-Ac2" firstAttribute="top" secondItem="aQ7-Qq-5OD" secondAttribute="top" constant="10" id="r9A-uP-FAU"/>
                                                 </constraints>
                                             </view>
-                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tags:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5EX-Cy-TQR">
-                                                <rect key="frame" x="0.0" y="566" width="44" height="21.5"/>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tags:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5EX-Cy-TQR">
+                                                <rect key="frame" x="138" y="590" width="44" height="21.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="k5w-wN-tJy">
-                                                <rect key="frame" x="32" y="612" width="256" height="128"/>
+                                            <collectionView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="k5w-wN-tJy">
+                                                <rect key="frame" x="32" y="636" width="256" height="128"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="128" id="fpz-d1-o7f"/>
@@ -2397,6 +2357,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                             <constraint firstItem="o2K-bX-gf4" firstAttribute="top" secondItem="xYy-Lj-DbD" secondAttribute="top" constant="20" id="K5G-mn-7uG"/>
                                             <constraint firstItem="7uQ-po-b7F" firstAttribute="leading" secondItem="o2K-bX-gf4" secondAttribute="leading" id="Lld-HW-wVr"/>
                                             <constraint firstAttribute="trailing" secondItem="o2K-bX-gf4" secondAttribute="trailing" constant="20" id="LrK-jj-LeL"/>
+                                            <constraint firstItem="o2K-bX-gf4" firstAttribute="leading" secondItem="xYy-Lj-DbD" secondAttribute="leading" constant="20" id="Qfg-I5-y4Z"/>
                                             <constraint firstAttribute="bottom" secondItem="aQ7-Qq-5OD" secondAttribute="bottom" constant="20" id="R73-DG-mg7"/>
                                             <constraint firstItem="o2K-bX-gf4" firstAttribute="leading" secondItem="xYy-Lj-DbD" secondAttribute="leading" constant="20" id="VuA-rF-tBI"/>
                                             <constraint firstItem="ytR-76-raV" firstAttribute="leading" secondItem="o2K-bX-gf4" secondAttribute="leading" id="YXm-NB-mle"/>
@@ -2406,6 +2367,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                             <constraint firstItem="ytR-76-raV" firstAttribute="trailing" secondItem="o2K-bX-gf4" secondAttribute="trailing" id="llR-p0-iaL"/>
                                             <constraint firstAttribute="bottom" secondItem="k5w-wN-tJy" secondAttribute="bottom" id="nKl-Vd-Shh"/>
                                             <constraint firstItem="5EX-Cy-TQR" firstAttribute="centerX" secondItem="xYy-Lj-DbD" secondAttribute="centerX" id="yDS-vP-WN1"/>
+                                            <constraint firstAttribute="trailing" secondItem="o2K-bX-gf4" secondAttribute="trailing" constant="20" id="zvX-6r-JQr"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
@@ -2417,23 +2379,21 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="ytP-Lp-ynp" secondAttribute="bottom" id="3RD-MB-3ji"/>
                                     <constraint firstItem="xYy-Lj-DbD" firstAttribute="width" secondItem="7FR-wT-6MJ" secondAttribute="width" id="5xR-f9-WMZ"/>
                                     <constraint firstAttribute="trailing" secondItem="o2K-bX-gf4" secondAttribute="trailing" constant="20" id="6Hk-XQ-DfY"/>
                                     <constraint firstAttribute="trailing" secondItem="xYy-Lj-DbD" secondAttribute="trailing" id="6lK-s9-c5n"/>
                                     <constraint firstItem="o2K-bX-gf4" firstAttribute="leading" secondItem="7FR-wT-6MJ" secondAttribute="leading" constant="20" id="76Q-vE-XgA"/>
                                     <constraint firstItem="f82-0H-8e3" firstAttribute="leading" secondItem="7FR-wT-6MJ" secondAttribute="leading" constant="1" id="79T-tz-wQi"/>
+                                    <constraint firstAttribute="bottom" secondItem="xYy-Lj-DbD" secondAttribute="bottom" id="8UR-W2-7Cl"/>
                                     <constraint firstItem="xYy-Lj-DbD" firstAttribute="top" secondItem="f82-0H-8e3" secondAttribute="bottom" constant="10" id="8pe-i6-Or0"/>
                                     <constraint firstItem="xYy-Lj-DbD" firstAttribute="leading" secondItem="7FR-wT-6MJ" secondAttribute="leading" id="Ciy-Jw-aLo"/>
                                     <constraint firstItem="xYy-Lj-DbD" firstAttribute="top" secondItem="7FR-wT-6MJ" secondAttribute="top" id="IpP-lg-S4e"/>
                                     <constraint firstItem="zWs-vY-xfb" firstAttribute="centerX" secondItem="7FR-wT-6MJ" secondAttribute="centerX" id="PAB-jC-kqU"/>
-                                    <constraint firstAttribute="trailing" secondItem="ytP-Lp-ynp" secondAttribute="trailing" id="R77-hK-mH4"/>
-                                    <constraint firstItem="ytP-Lp-ynp" firstAttribute="top" secondItem="xYy-Lj-DbD" secondAttribute="bottom" id="SBl-ji-qiz"/>
                                     <constraint firstItem="k5w-wN-tJy" firstAttribute="width" secondItem="7FR-wT-6MJ" secondAttribute="width" multiplier="4/5" id="TbT-xA-D5b"/>
-                                    <constraint firstItem="ytP-Lp-ynp" firstAttribute="leading" secondItem="7FR-wT-6MJ" secondAttribute="leading" id="YJ1-nt-dtd"/>
                                     <constraint firstItem="ytR-76-raV" firstAttribute="width" secondItem="7FR-wT-6MJ" secondAttribute="width" id="eMK-RP-ewE"/>
                                     <constraint firstItem="HNT-NY-iKb" firstAttribute="centerX" secondItem="7FR-wT-6MJ" secondAttribute="centerX" id="hLK-fb-iQG"/>
                                     <constraint firstItem="zWs-vY-xfb" firstAttribute="top" secondItem="HNT-NY-iKb" secondAttribute="bottom" constant="15" id="kyq-R3-0EC"/>
+                                    <constraint firstItem="xYy-Lj-DbD" firstAttribute="height" secondItem="7FR-wT-6MJ" secondAttribute="height" priority="750" id="q64-sB-FCd"/>
                                     <constraint firstItem="f82-0H-8e3" firstAttribute="top" secondItem="zWs-vY-xfb" secondAttribute="bottom" constant="15" id="ryV-at-aAh"/>
                                     <constraint firstItem="xYy-Lj-DbD" firstAttribute="centerX" secondItem="7FR-wT-6MJ" secondAttribute="centerX" id="t9a-49-KzZ"/>
                                     <constraint firstAttribute="trailing" secondItem="f82-0H-8e3" secondAttribute="trailing" constant="1" id="upe-58-pzM"/>
@@ -2468,7 +2428,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                     <connections>
                         <outlet property="backgroundCategory" destination="ytR-76-raV" id="Zr3-sQ-Bs0"/>
                         <outlet property="backgroundNameAndDesc" destination="o2K-bX-gf4" id="gJX-yE-6ey"/>
-                        <outlet property="bottomButtonViewSpacing" destination="3RD-MB-3ji" id="TVX-1x-Cgl"/>
                         <outlet property="bottomSpaceConstraint" destination="yJl-Ub-o6d" id="sFF-de-Afa"/>
                         <outlet property="calorieStepper" destination="Asb-M6-x4H" id="sD1-7D-tLK"/>
                         <outlet property="calorieTextField" destination="Wql-yp-pU2" id="L5g-Tb-FTd"/>
@@ -2489,9 +2448,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         <outlet property="endDateLabel" destination="yMI-II-ZgG" id="Umo-4R-WHA"/>
                         <outlet property="endDateTextField" destination="4HS-48-ckl" id="B1U-kK-PHt"/>
                         <outlet property="nameTextField" destination="Sd1-ie-X5q" id="SCm-Sf-I12"/>
-                        <outlet property="saveButton" destination="NKl-u2-5S5" id="mgT-NQ-zyN"/>
                         <outlet property="scrollView" destination="xYy-Lj-DbD" id="efz-2G-Oor"/>
-                        <outlet property="scrollViewBottomSpace" destination="SBl-ji-qiz" id="HpE-SE-TUW"/>
+                        <outlet property="scrollViewBottomSpacing" destination="8UR-W2-7Cl" id="DtD-XA-bPa"/>
                         <outlet property="startDateLabel" destination="Xa8-Y2-cER" id="6hq-LK-wOM"/>
                         <outlet property="startDateTextField" destination="ltP-A8-2li" id="aiJ-PC-kAX"/>
                         <outlet property="tagsLabel" destination="5EX-Cy-TQR" id="DaZ-I0-v3w"/>

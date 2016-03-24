@@ -147,7 +147,6 @@ class QueryHealthKitWorkouts {
         guard let healthStore = appDelegate.healthStore else {
             return
         }
-        print(startDate)
         
         let predicate = HKQuery.predicateForSamplesWithStartDate(startDate, endDate: endDate, options: .None)
         

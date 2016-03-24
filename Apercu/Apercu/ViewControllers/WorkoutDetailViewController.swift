@@ -690,7 +690,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func updateMainPlot(minTime: Double, maxTime: Double) {
-        if !averagingInProgress {
+        if !averagingInProgress && bpm != nil && bpm.count > 0 {
             averagingInProgress = true
             self.plots["Main"] = ApercuPlot(plot: GraphPlotSetup().createMainPlot(), data: plotDataCreator.createMainPlotData(self.bpm, time: self.time, minTime: minTime, maxTime: maxTime))
             

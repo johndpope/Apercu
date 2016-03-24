@@ -18,6 +18,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     
     @IBOutlet var descriptionTextView: UITextView!
     
+    @IBOutlet var scrollViewBottomSpacing: NSLayoutConstraint!
     @IBOutlet weak var bottomButtonViewSpacing: NSLayoutConstraint!
     @IBOutlet var distanceView: UIView!
     @IBOutlet var caloriesView: UIView!
@@ -207,7 +208,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     
     func showWorkoutViews() {
         UIView.performWithoutAnimation({ () -> Void in
-            self.saveButton.setTitle("Save as Workout", forState: UIControlState.Normal)
+//            self.saveButton.setTitle("Save as Workout", forState: UIControlState.Normal)
             //            self.tagsLabelTopConstraint.active = false
             self.collectionViewBottomConstraint.active = false
             //            self.startDateTopConstraint.active = true
@@ -327,39 +328,23 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     func showKeyboard(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             if let keyboardSize: CGSize = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue.size {
-                
-                self.bottomButtonViewSpacing.constant = keyboardSize.height
-                self.view.setNeedsUpdateConstraints()
-                
-                UIView.animateWithDuration(0.2, animations: { () -> Void in
-                    self.view.layoutIfNeeded()
-                })
-                
-                //                                bottomSpaceConstraint.constant = keyboardSize.height //- 44
+                scrollViewBottomSpacing.constant = keyboardSize.height
             }
         }
     }
     
     func hideKeyboard(notification: NSNotification) {
-        let contentInset = UIEdgeInsetsZero;
-        scrollView.contentInset = contentInset
-        bottomSpaceConstraint.constant = 0
-        //        scrollViewBottomSpace.constant = 0
-        UIView.animateWithDuration(0.2, animations: { () -> Void in
-            self.bottomButtonViewSpacing.constant = 0
-        })
+        scrollViewBottomSpacing.constant = 0
     }
     
     func nextTextField() {
         if nameTextField.isFirstResponder() {
             nameTextField.resignFirstResponder()
             descriptionTextView.becomeFirstResponder()
-            scrollToTextView(scrollView.convertRect(descriptionTextView.frame, fromView: descriptionTextView))
         } else if descriptionTextView.isFirstResponder() {
             if isShowingWorkoutView {
                 descriptionTextView.resignFirstResponder()
                 startDateTextField.becomeFirstResponder()
-                scrollToTextView(scrollView.convertRect(startDateTextField.frame, fromView: startDateTextField))
             } else {
                 descriptionTextView.resignFirstResponder()
             }
@@ -367,28 +352,15 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         } else if startDateTextField.isFirstResponder() {
             startDateTextField.resignFirstResponder()
             endDateTextField.becomeFirstResponder()
-            scrollToTextView(scrollView.convertRect(endDateTextField.frame, fromView: endDateTextField))
         } else if endDateTextField.isFirstResponder() {
             endDateTextField.resignFirstResponder()
             distanceTextField.becomeFirstResponder()
-            scrollToTextView(scrollView.convertRect(distanceTextField.frame, fromView: distanceTextField))
         } else if distanceTextField.isFirstResponder() {
             distanceTextField.resignFirstResponder()
             calorieTextField.becomeFirstResponder()
-            scrollToTextView(scrollView.convertRect(calorieTextField.frame, fromView: calorieTextField))
         } else if calorieTextField.isFirstResponder() {
             calorieTextField.resignFirstResponder()
         }
-    }
-    
-    func scrollToTextView(frame: CGRect) {
-        print(frame)
-        self.scrollView.scrollRectToVisible(frame, animated: true)
-        //        UIView.animateWithDuration(NSTimeInterval(0.2), delay: 0.0, options: .TransitionNone, animations: {
-        //        self.scrollView.contentOffset = CGPointMake(inputView.frame.origin.x + (inputView.superview?.frame.origin.x)!, inputView.frame.origin.y + (inputView.superview?.frame.origin.y)!)
-        //            }) { (Bool) in
-        //                    self.scrollView.contentOffset = CGPointMake(inputView.frame.origin.x, inputView.frame.origin.y)
-        //        }
     }
     
     @IBAction func typeSegmentChanged(sender: AnyObject) {
@@ -591,12 +563,11 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
                                         self.showAlert("Unable to store workout in HealthKit.")
                                     }
                                 })
-                                
                             } else {
                                 self.showAlert("Error storing workout.")
                             }
                         } else {
-                            self.showAlert("Workout with that start time already exists.")
+                            self.showAlert("Workout with that start time already exists bb.")
                         }
                         
                     } else {
@@ -604,7 +575,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
                     }
                 })
             } else {
-                self.self.showAlert("Workout with that start time already exists.")
+                self.self.showAlert("End date can not be before start date.")
             }
         }
     }
