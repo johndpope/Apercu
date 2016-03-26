@@ -143,7 +143,7 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
             let colorViewCenter = cell.colorView.center
             let newColorViewFrame = CGRectMake(cell.colorView.frame.origin.x, cell.colorView.frame.origin.y, 25, 25)
             cell.colorView.frame = newColorViewFrame
-            cell.colorView.layer.cornerRadius = 12.5
+            cell.colorView.layer.cornerRadius = 13
             cell.colorView.center = colorViewCenter
 
             if let color = categoriesSingleton.getColorForIdentifier(rowWorkout.workout?.category) {

@@ -30,10 +30,18 @@ class FaqViewController: UIViewController {
     
     
     @IBAction func resetCategories(sender: AnyObject) {
-        let actionSheet = UIAlertController(title: "Confirm Reset", message: "Reset categories", preferredStyle: .ActionSheet)
+        let actionSheet = UIAlertController(title: "Confirm Category Reset", message: nil, preferredStyle: .ActionSheet)
         
         let removeAction = UIAlertAction(title: "Reset", style: .Destructive) { (action) in
-            
+            if CoreDataHelper().removeAllCategories() {
+                let alertView = UIAlertController(title: "Data Reset", message: "Categories have been reset.", preferredStyle: .Alert)
+                alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                self.presentViewController(alertView, animated: true, completion: nil)
+            } else {
+                let alertView = UIAlertController(title: "Data Reset", message: "Unable to reset categories.", preferredStyle: .Alert)
+                alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                self.presentViewController(alertView, animated: true, completion: nil)
+            }
         }
         
         let defaultAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
@@ -48,7 +56,17 @@ class FaqViewController: UIViewController {
         let actionSheet = UIAlertController(title: "Confirm Reset", message: "Reset categories", preferredStyle: .ActionSheet)
         
         let removeAction = UIAlertAction(title: "Reset", style: .Destructive) { (action) in
-            
+            CoreDataHelper().deleteApercuWorkouts({ (success) in
+                if success {
+                    let alertView = UIAlertController(title: "Workouts Removed", message: "Workout data removed.", preferredStyle: .Alert)
+                    alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    self.presentViewController(alertView, animated: true, completion: nil)
+                } else {
+                    let alertView = UIAlertController(title: "Data Reset", message: "Categories have been reset.", preferredStyle: .Alert)
+                    alertView.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+                    self.presentViewController(alertView, animated: true, completion: nil)
+                }
+            })
         }
         
         let defaultAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)

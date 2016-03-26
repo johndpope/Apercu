@@ -245,7 +245,7 @@ class CoreDataHelper {
         
         
         let workoutFetchRequest = NSFetchRequest(entityName: "Workout")
-        let workoutPredicate = NSPredicate(format: "caregory == %@", identifier)
+        let workoutPredicate = NSPredicate(format: "category == %@", identifier)
         workoutFetchRequest.predicate = workoutPredicate
         
         do {
@@ -271,7 +271,7 @@ class CoreDataHelper {
         let predicate = NSPredicate(format: "start == %@", startTime)
         fetchRequest.predicate = predicate
         fetchRequest.fetchLimit = 1
-
+        
         
         do {
             let fetchedWorkouts = try context.executeFetchRequest(fetchRequest) as! [Workout]
@@ -339,7 +339,10 @@ class CoreDataHelper {
         }
     }
     
-    func removeAllCategories() {
+    func removeAllCategories() -> Bool {
+        var workoutsSuccess = false
+        var categorySucces = false
+        
         let workoutFetchRequest = NSFetchRequest(entityName: "Workout")
         
         do {
@@ -350,6 +353,7 @@ class CoreDataHelper {
             }
             
             do {
+                workoutsSuccess = true
                 try context.save()
             } catch {
                 NSLog("Error removing workout category")
@@ -359,19 +363,19 @@ class CoreDataHelper {
         }
         
         let categoryFetchRequest = NSFetchRequest(entityName: "Category")
-        categoryFetchRequest.fetchLimit = 1
+        categoryFetchRequest.fetchLimit = 0
         
         do {
             let fetchedCategories = try context.executeFetchRequest(categoryFetchRequest) as! [Category]
-
+            
             for fetchedCategory in fetchedCategories {
-                if fetchedCategory.identifier != 0 {
-                    context.deleteObject(fetchedCategory)
-                }
+                context.deleteObject(fetchedCategory)
             }
             
             do {
                 try context.save()
+                CategorySetup().initializeCategoryData()
+                categorySucces = true
             } catch {
                 NSLog("Error removing category")
             }
@@ -379,9 +383,40 @@ class CoreDataHelper {
             
         }
         
-        
+        return workoutsSuccess && categorySucces
         
     }
     
+    func deleteApercuWorkouts(completion: (success: Bool) -> Void) {
+        var count = 0
+        
+        let workoutFetchRequest = NSFetchRequest(entityName: "Workout")
+        
+        do {
+            let fetchedWorkouts = try context.executeFetchRequest(workoutFetchRequest) as! [Workout]
+            
+            if fetchedWorkouts.count == 0 {
+                completion(success: true)
+            }
+            
+            for workout in fetchedWorkouts {
+                let total = fetchedWorkouts.count
+                QueryHealthKitWorkouts().deleteHealthKitWorkout(workout.start!, endDate: workout.end!, completion: { (result) in
+                    CoreDataHelper().deleteWorkout(workout.start!, endTime: workout.end!)
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        count += 1
+                        
+                        if count == total {
+                            completion(success: true)
+                        }
+                    })
+                })
+            
+            }
+        } catch {
+            completion(success: false)
+        }
+    }
 }
 

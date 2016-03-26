@@ -45,9 +45,6 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if selectedCategory != nil {
-            print(String(format: "LOL %@", selectedCategory))
-        }
         
         categories = coreDataHelper.getAllCategories()
         tableView.reloadData()
@@ -60,7 +57,7 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
     
     func updateTextField() {
         if selectedCategory != nil && categories.count > 0 {
-            if let desc = categories[selectedCategory.integerValue].title {
+            if let desc = CategoriesSingleton.sharedInstance.getStringForIdentifier(selectedCategory) {
                 descTextField.text = desc
             }
         }
@@ -82,7 +79,7 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("CategoryReuse", forIndexPath: indexPath) as! CategoryCell
-        cell.colorView.layer.cornerRadius = 12.5
+        cell.colorView.layer.cornerRadius = 13
         
         if categories.count > 0 {
             cell.colorView.hidden = false
@@ -107,7 +104,6 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(categories[indexPath.row])
         selectedCategory = categories[indexPath.row].identifier
         tableView.reloadData()
         if (workoutStart != nil && workoutEnd != nil) {

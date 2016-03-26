@@ -121,7 +121,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         categorizeButton.titleLabel?.adjustsFontSizeToFitWidth = true
         //        segment.setEnabled(false, forSegmentAtIndex: 1)
         activeView.delegate = self
-        colorView.layer.cornerRadius = 12.5
+        colorView.layer.cornerRadius = 13
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -1078,7 +1078,6 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             destination?.workoutStart = currentWorkout.getStartDate()
             destination?.workoutEnd = currentWorkout.getEndDate()
             destination?.selectedCategory = currentWorkout.workout?.category
-            print(currentWorkout.workout?.category)
         }
     }
     

@@ -96,6 +96,14 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         setBorder(distanceBackground)
         setBorder(dateBackground)
         
+        descriptionTextView.layer.borderWidth = 1.0
+        descriptionTextView.layer.cornerRadius = 2.0
+        descriptionTextView.layer.borderColor = UIColor(red: 204/255, green: 204/255, blue: 204/255, alpha: 1.0).CGColor
+        
+        descriptionTextView.layer.cornerRadius = 5
+        descriptionTextView.layer.borderColor = UIColor.grayColor().colorWithAlphaComponent(0.5).CGColor
+        descriptionTextView.layer.borderWidth = 0.5
+        
         tabBarController!.tabBar.hidden = true
         
         managedContext = appDelegate.managedObjectContext
@@ -117,7 +125,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
         //        descriptionTextView.frame = newFrame;
         textViewHeight.constant = newFrame.size.height
         descriptionTextView.layer.cornerRadius = 6.0
-        colorIcon.layer.cornerRadius = 12.5
+        colorIcon.layer.cornerRadius = 13
         
         colorIcon.layer.borderColor = UIColor.whiteColor().CGColor
         colorIcon.layer.borderWidth = 1.0
@@ -513,6 +521,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
                 selectedCategory = nil
             } else {
                 selectedCategory = categoryIdentifier
+                categoriesSingleton.updateCategoryInfo()
                 colorIcon.backgroundColor = categoriesSingleton.getColorForIdentifier(categoryIdentifier)
                 categoryLabel.text = categoriesSingleton.getStringForIdentifier(categoryIdentifier)
             }
