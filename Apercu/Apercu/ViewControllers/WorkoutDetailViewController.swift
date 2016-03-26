@@ -197,7 +197,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             self.processingIsDone = true
         })
     }
-
+    
     func parseWorkoutData(index: Int) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             let workoutForIndex = self.allWorkouts[index]
@@ -211,7 +211,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     if self.bpm != nil && self.bpm.count > 0 {
                         self.calculateHeatmapGraph(index, bpm: results["bpm"] as! [Double], time: results["time"] as! [Double], min: results["min"] as! Double, max: results["max"] as! Double, yMin: results["min"] as! Double, yMax: results["max"] as! Double, addToGraph: false)
                     } else {
-//                        self.setupTableStrings(self.allWorkoutStats[index])
+                        //                        self.setupTableStrings(self.allWorkoutStats[index])
                         self.loadingHeatmap = false
                         self.loadingStrings = false
                     }
@@ -384,7 +384,14 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         let caloriesUnit = HKUnit.kilocalorieUnit()
         self.calories = self.currentWorkout.healthKitWorkout?.totalEnergyBurned?.doubleValueForUnit(caloriesUnit)
         
-        let description: Double = Double((self.currentWorkout.healthKitWorkout?.workoutActivityType.rawValue)!)
+        let description: Double!
+        
+        if self.currentWorkout.healthKitWorkout?.workoutActivityType != nil {
+            description = Double(( self.currentWorkout.healthKitWorkout?.workoutActivityType.rawValue)!)
+        } else {
+            description = nil
+        }
+        
         
         let rawValues: [String: Double?] = ["start": (self.currentWorkout.getStartDate()?.timeIntervalSince1970)!,"duration": self.currentWorkout.getEndDate()?.timeIntervalSinceDate(self.currentWorkout.getStartDate()!),"moderate": self.moderateIntensityTime, "high": self.highIntensityTime, "distance": self.distance,"calories": self.calories,"desc": description]
         self.workoutRawValues = rawValues
@@ -1000,23 +1007,25 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
     // Mark: - Toolbar
     
     func showToolbar(sender: UITextView) {
-        if keyboardToolbar == nil {
-            keyboardToolbar = UIToolbar()
-            keyboardToolbar.sizeToFit()
-            nextBarButton = UIBarButtonItem(title: "Next", style: .Plain, target: self, action: #selector(WorkoutDetailViewController.nextPressed(_:)))
-            let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-            let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(WorkoutDetailViewController.hideKeyboard(_:)))
+
+            if keyboardToolbar == nil {
+                keyboardToolbar = UIToolbar()
+                keyboardToolbar.sizeToFit()
+                nextBarButton = UIBarButtonItem(title: "Next", style: .Plain, target: self, action: #selector(WorkoutDetailViewController.nextPressed(_:)))
+                let spacer = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+                let doneButton = UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(WorkoutDetailViewController.hideKeyboard(_:)))
+                
+                keyboardToolbar.setItems([nextBarButton, spacer, doneButton], animated: false)
+                keyboardToolbar.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin]
+                keyboardToolbar.tintColor = UIColor.redColor()
+            }
             
-            keyboardToolbar.setItems([nextBarButton, spacer, doneButton], animated: false)
-            keyboardToolbar.autoresizingMask = [.FlexibleWidth, .FlexibleTopMargin]
-            keyboardToolbar.tintColor = UIColor.redColor()
-        }
-        
-        if sender == titleTextView {
-            titleTextView.inputAccessoryView = keyboardToolbar
-        } else {
-            descTextView.inputAccessoryView = keyboardToolbar
-        }
+            if sender == titleTextView {
+                titleTextView.inputAccessoryView = keyboardToolbar
+            } else {
+                descTextView.inputAccessoryView = keyboardToolbar
+            }
+    
     }
     
     func nextPressed(sender: UIBarButtonItem) {
@@ -1040,7 +1049,9 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
         scrollView.contentInset = edgeInsets
         scrollView.scrollIndicatorInsets = edgeInsets
         
+                if allWorkouts != nil && allWorkouts.count > 1 {
         navigationController?.toolbarHidden = false
+        }
     }
     
     func showKeyboard(sender: NSNotification) {
@@ -1066,7 +1077,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
             let destination = segue.destinationViewController as? CategorizeWorkoutViewController
             destination?.workoutStart = currentWorkout.getStartDate()
             destination?.workoutEnd = currentWorkout.getEndDate()
-            destination?.selectedCategory = currentWorkout.workout?.category;
+            destination?.selectedCategory = currentWorkout.workout?.category
+            print(currentWorkout.workout?.category)
         }
     }
     

@@ -89,7 +89,7 @@ class CoreDataHelper {
     
     func updateCategory(startDate: NSDate, endDate: NSDate, categoryId: NSNumber) {
         let fetchRequest = NSFetchRequest(entityName: "Workout")
-        fetchRequest.predicate = NSPredicate(format: "start = %@", startDate)
+        fetchRequest.predicate = NSPredicate(format: "start == %@", startDate)
         
         do {
             let fetchedResult = try context.executeFetchRequest(fetchRequest)
@@ -337,6 +337,50 @@ class CoreDataHelper {
         } catch {
             
         }
+    }
+    
+    func removeAllCategories() {
+        let workoutFetchRequest = NSFetchRequest(entityName: "Workout")
+        
+        do {
+            let fetchedWorkouts = try context.executeFetchRequest(workoutFetchRequest) as! [Workout]
+            
+            for workout in fetchedWorkouts {
+                workout.category = nil
+            }
+            
+            do {
+                try context.save()
+            } catch {
+                NSLog("Error removing workout category")
+            }
+        } catch {
+            
+        }
+        
+        let categoryFetchRequest = NSFetchRequest(entityName: "Category")
+        categoryFetchRequest.fetchLimit = 1
+        
+        do {
+            let fetchedCategories = try context.executeFetchRequest(categoryFetchRequest) as! [Category]
+
+            for fetchedCategory in fetchedCategories {
+                if fetchedCategory.identifier != 0 {
+                    context.deleteObject(fetchedCategory)
+                }
+            }
+            
+            do {
+                try context.save()
+            } catch {
+                NSLog("Error removing category")
+            }
+        } catch {
+            
+        }
+        
+        
+        
     }
     
 }

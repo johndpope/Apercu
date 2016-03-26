@@ -45,6 +45,9 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if selectedCategory != nil {
+            print(String(format: "LOL %@", selectedCategory))
+        }
         
         categories = coreDataHelper.getAllCategories()
         tableView.reloadData()
@@ -94,7 +97,7 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
             }
         }
         
-        if selectedCategory != nil && selectedCategory == indexPath.row {
+        if selectedCategory != nil && selectedCategory == categories[indexPath.row].identifier {
             cell.accessoryType = .Checkmark
         } else {
             cell.accessoryType = .None
@@ -104,7 +107,8 @@ class CategorizeWorkoutViewController: UIViewController, UITableViewDelegate, UI
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        selectedCategory = indexPath.row
+        print(categories[indexPath.row])
+        selectedCategory = categories[indexPath.row].identifier
         tableView.reloadData()
         if (workoutStart != nil && workoutEnd != nil) {
             coreDataHelper.updateCategory(workoutStart!, endDate: workoutEnd!, categoryId: selectedCategory)

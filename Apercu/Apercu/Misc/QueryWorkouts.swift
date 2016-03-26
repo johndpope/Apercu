@@ -180,8 +180,20 @@ class QueryHealthKitWorkouts {
             
             if workoutResults != nil && workoutResults?.count > 0 {
                 for workout in (workoutResults as? [HKWorkout])! {
+//                    if workoutResults != nil {
+//                    healthStore.deleteObjects(workoutResults!, withCompletion: { (success, error) in
+//                        print(success)
+//                        if error != nil {
+//                            print(error)
+//                        }
+//                    })
+//                    }
                     healthStore.deleteObject(workout, withCompletion: { (success, error) in
-                        
+                        print(success)
+                        if error != nil {
+                            print(error)
+                        }
+
                     })
                 }
             }
