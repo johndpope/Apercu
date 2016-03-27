@@ -17,7 +17,8 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
     var selectedWorkout: ApercuWorkout!
     let defs = NSUserDefaults.init(suiteName: "group.com.apercu.apercu")
     let dateFormatter = NSDateFormatter()
-
+    
+    var backgroundImage: TableBackgroundView!
     var isFirstLoad = true
     var selectedIndex: Int!
     var appDelegate: AppDelegate!
@@ -31,7 +32,8 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
         super.viewDidLoad()
 
         appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
-
+        navigationController?.navigationBar.translucent = false
+        
         dateFormatter.dateStyle = .MediumStyle
         dateFormatter.timeStyle = .ShortStyle
 
@@ -41,6 +43,8 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
         if traitCollection.forceTouchCapability == UIForceTouchCapability.Available {
             registerForPreviewingWithDelegate(self, sourceView: view)
         }
+        
+        tableView.separatorColor = UIColor.clearColor()
         
     }
 
@@ -84,7 +88,7 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
             (result) -> Void in
             self.workoutArray = result
             self.tableView.allowsMultipleSelection = true
-            self.tableView.reloadData()
+            self.tableView.reloadData() 
 
             if self.isFirstLoad {
                 self.tableView.setNeedsLayout()
@@ -101,6 +105,15 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
                 self.selectedIndex = 0
                 self.performSegueWithIdentifier("toDetailManual", sender: self)
                 self.appDelegate.quickAction = nil
+            }
+            
+            if self.workoutArray.count == 0 {
+                if self.backgroundImage == nil {
+                    self.backgroundImage = TableBackgroundView(frame: self.tableView.frame, labelText: "No workouts found. Add workouts through the Health app or through the New button above.")
+                }
+                self.tableView.backgroundView = self.backgroundImage
+            } else {
+                self.tableView.backgroundView = nil
             }
         }
 
@@ -121,7 +134,7 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         if workoutArray == nil || workoutArray.count == 0 {
-            return 1
+            return 0
         } else {
             return workoutArray.count
         }

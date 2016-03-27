@@ -80,6 +80,7 @@
 		8BD961CF1C3C9189004B7F72 /* StatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BD961CE1C3C9189004B7F72 /* StatCell.swift */; };
 		8BDA8EE71C2C4F93000D0630 /* CategorySetup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDA8EE61C2C4F93000D0630 /* CategorySetup.swift */; };
 		8BDA8EE91C2C9B05000D0630 /* WorkoutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDA8EE81C2C9B05000D0630 /* WorkoutCell.swift */; };
+		8BE59AF91CA76DB90083D0F1 /* TableBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE59AF81CA76DB90083D0F1 /* TableBackgroundView.swift */; };
 		8BE5CE271C30C9A000FB7CE9 /* ManualFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE5CE261C30C9A000FB7CE9 /* ManualFilterViewController.swift */; };
 		8BE81CB51C36C58200CD79BC /* HealthKit in Sources */ = {isa = PBXBuildFile; fileRef = 8BE81CB41C36C58200CD79BC /* HealthKit */; };
 		8BF096CA1C55338E00CD6B43 /* CategorizeWorkoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BF096C91C55338E00CD6B43 /* CategorizeWorkoutViewController.swift */; };
@@ -185,6 +186,7 @@
 		8BD961CE1C3C9189004B7F72 /* StatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StatCell.swift; path = Cells/StatCell.swift; sourceTree = "<group>"; };
 		8BDA8EE61C2C4F93000D0630 /* CategorySetup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategorySetup.swift; path = ../Misc/CategorySetup.swift; sourceTree = "<group>"; };
 		8BDA8EE81C2C9B05000D0630 /* WorkoutCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WorkoutCell.swift; path = Cells/WorkoutCell.swift; sourceTree = "<group>"; };
+		8BE59AF81CA76DB90083D0F1 /* TableBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TableBackgroundView.swift; path = Apercu/Misc/TableBackgroundView.swift; sourceTree = SOURCE_ROOT; };
 		8BE5CE261C30C9A000FB7CE9 /* ManualFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManualFilterViewController.swift; sourceTree = "<group>"; };
 		8BE81CB41C36C58200CD79BC /* HealthKit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = folder; path = HealthKit; sourceTree = "<group>"; };
 		8BF096C91C55338E00CD6B43 /* CategorizeWorkoutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategorizeWorkoutViewController.swift; sourceTree = "<group>"; };
@@ -391,6 +393,7 @@
 				8BC314ED1C37622800F2B774 /* CustomScrollView.swift */,
 				8B33F0811C3F3FFA0011CDBE /* StringHelpers.swift */,
 				66D9206A1739ADB0CA31F472 /* WorkoutFilter.swift */,
+				8BE59AF81CA76DB90083D0F1 /* TableBackgroundView.swift */,
 			);
 			name = Misc;
 			path = ViewControllers;
@@ -686,6 +689,7 @@
 				8B2BA54E1C8904DD00849BCD /* TagCell.swift in Sources */,
 				8B2BA5441C88FF4100849BCD /* ProcessArray.swift in Sources */,
 				8BD54DE01C2C2F2D0013B35A /* QueryWorkouts.swift in Sources */,
+				8BE59AF91CA76DB90083D0F1 /* TableBackgroundView.swift in Sources */,
 				8BD54DDE1C2C189A0013B35A /* HealthKitSetup.swift in Sources */,
 				66D92FBC1A70FD594DBD8028 /* WorkoutTableViewController.swift in Sources */,
 				8B8603881C2F789300923013 /* CategoryFilterViewController.swift in Sources */,
