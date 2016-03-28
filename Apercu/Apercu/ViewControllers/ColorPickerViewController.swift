@@ -37,14 +37,16 @@ class ColorPickerViewController: UIViewController {
             colorPicker.color = color
         }
         
-        colorMap.tileSize = 10
+        colorMap.tileSize = 5
         colorMap.saturationUpperLimit = 1
         
         colorPicker.colorMapView = colorMap
         colorPicker.brightnessSlider = colorSlider
         colorSlider.brightnessLowerLimit = 0
         
-        colorPicker.addTarget(self, action: "colorUpdate:", forControlEvents: UIControlEvents.ValueChanged)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WorkoutDetailViewController.screenRotated(_:)), name: UIDeviceOrientationDidChangeNotification, object: nil)
+        
+        colorPicker.addTarget(self, action: #selector(ColorPickerViewController.colorUpdate(_:)), forControlEvents: UIControlEvents.ValueChanged)
     }
     
     func colorUpdate(sender: AnyObject!) {
@@ -65,6 +67,12 @@ class ColorPickerViewController: UIViewController {
 //            delegate.didUseColorPicker(self)
         }
         
+    }
+    
+    
+    func screenRotated(sender: AnyObject) {
+        colorMap.setNeedsDisplay()
+        view.setNeedsDisplay()
     }
     
 }

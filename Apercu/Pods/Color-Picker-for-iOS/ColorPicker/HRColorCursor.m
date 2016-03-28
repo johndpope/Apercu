@@ -1,3 +1,4 @@
+
 /*-
  * Copyright (c) 2011 Ryota Hayashi
  * All rights reserved.
@@ -30,7 +31,6 @@
 @interface HRColorCursor ()
 - (id)initWithPoint:(CGPoint)point;
 
-@property (nonatomic) BOOL editing;
 @property (nonatomic, getter=isGrayCursor) BOOL grayCursor;
 
 @end
@@ -60,7 +60,7 @@
         [self setBackgroundColor:[UIColor clearColor]];
         [self setUserInteractionEnabled:FALSE];
         self.color = [UIColor whiteColor];
-
+        
         CGRect backFrame = (CGRect) {.origin = CGPointZero, .size = self.frame.size};
         _backLayer = [[CALayer alloc] init];
         _backLayer.frame = backFrame;
@@ -69,7 +69,7 @@
         _backLayer.borderWidth = 1.0 / [[UIScreen mainScreen] scale];
         _backLayer.backgroundColor = [[UIColor colorWithWhite:1. alpha:.7] CGColor];
         [self.layer addSublayer:_backLayer];
-
+        
         _colorLayer = [[CALayer alloc] init];
         _colorLayer.frame = CGRectInset(backFrame, 5.5, 5.5);
         _colorLayer.cornerRadius = CGRectGetHeight(_colorLayer.frame) / 2;
@@ -83,8 +83,8 @@
     HRHSVColor hsvColor;
     HSVColorFromUIColor(_color, &hsvColor);
     BOOL shouldBeGrayCursor = hsvColor.v > 0.7 && hsvColor.s < 0.4;
-
-
+    
+    
     [CATransaction begin];
     [CATransaction setValue:(id) kCFBooleanTrue
                      forKey:kCATransactionDisableActions];
@@ -99,7 +99,7 @@
         }
         self.grayCursor = shouldBeGrayCursor;
     }
-
+    
     [CATransaction commit];
     [self setNeedsDisplay];
 }
@@ -127,4 +127,3 @@
 }
 
 @end
-

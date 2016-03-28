@@ -38,6 +38,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     var filterType: FilterType!
     var selectedIndex = -1
     
+    var backgroundImage: TableBackgroundView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +53,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         dateFormatter.timeStyle = .ShortStyle
         
         navigationController!.navigationBar.translucent = false
+        tableView.separatorColor = UIColor.clearColor()
         
         if traitCollection.forceTouchCapability == UIForceTouchCapability.Available {
             registerForPreviewingWithDelegate(self, sourceView: self.tableView)
@@ -103,9 +105,15 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     func getFilteredWorkouts() {
         isLoadingWorkouts = true
         QueryHealthKitWorkouts().getFilteredWorkouts(filterType) { (result) -> Void in
-            if result != nil {
+            if result?.count == 0 {
+                if self.backgroundImage == nil {
+                    self.backgroundImage = TableBackgroundView(frame: self.tableView.frame, labelText: "No workouts selected.")
+                }
+                self.tableView.backgroundView = self.backgroundImage
                 self.filteredWorkouts = result!
-            } else {
+            }
+            else {
+                self.tableView.backgroundView = nil
                 self.filteredWorkouts = [ApercuWorkout]()
             }
             self.tableView.reloadData()
@@ -181,7 +189,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         if filteredWorkouts.count != 0 {
             return filteredWorkouts.count
         } else  {
-            return 1
+            return 0
         }
     }
     

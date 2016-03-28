@@ -43,6 +43,10 @@
 @property (atomic, strong) CALayer *colorMapLayer; // brightness 1.0
 @property (atomic, strong) CALayer *colorMapBackgroundLayer; // brightness 0 (= black)
 
+@property (nonatomic, strong) UIImage *colorMapImage;
+@property (nonatomic, strong) UIImage *backgroundImage;
+@property (nonatomic, strong) UIImage *landscapeColorMapImage;
+@property (nonatomic, strong) UIImage *landscapeBackgroundImage;
 @end
 
 @implementation HRColorMapView {
@@ -56,20 +60,46 @@
 + (UIImage *)colorMapImageWithSize:(CGSize)size
                           tileSize:(CGFloat)tileSize
               saturationUpperLimit:(CGFloat)saturationUpperLimit {
-
+    
+    NSLog(@"%f", size.width);
+    if (size.width == 320) {
+        tileSize = 10.0;
+    } else if (size.width == 375) {
+        tileSize = 15.0;
+    } else if (size.width == 414) {
+        tileSize = 18.0;
+    } else if (size.width == 568) {
+        tileSize = 8.0;
+    } else if (size.width == 667) {
+        tileSize = 23.0;
+    } else if (size.width == 736) {
+        tileSize = 16.0;
+    } else if (size.width == 665) {
+        tileSize = 19.0;
+    } else if (size.width == 410) {
+        tileSize = 10.0;
+    } else if (size.width == 735) {
+        tileSize = 15.0;
+    } else if (size.width == 565) {
+        tileSize = 5.0;
+    } else {
+        tileSize = 10.0;
+    }
+    NSLog(@"TILE SIZE = %f", tileSize);
+    
     int pixelCountX = (int) (size.width / tileSize);
     int pixelCountY = (int) (size.height / tileSize);
     CGSize colorMapSize = CGSizeMake(pixelCountX * tileSize, pixelCountY * tileSize);
-
+    
     void(^renderToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
-
+        
         CGFloat margin = 0;
-
+        
         HRHSVColor pixelHsv;
         pixelHsv.s = pixelHsv.v = 1;
         for (int i = 0; i < pixelCountX; ++i) {
             CGFloat pixelX = (CGFloat) i / pixelCountX;
-
+            
             pixelHsv.h = pixelX;
             UIColor *color;
             color = [UIColor colorWithHue:pixelHsv.h
@@ -79,7 +109,7 @@
             CGContextSetFillColorWithColor(context, color.CGColor);
             CGContextFillRect(context, CGRectMake(tileSize * i + rect.origin.x, rect.origin.y, tileSize - margin, CGRectGetHeight(rect)));
         }
-
+        
         CGFloat top;
         for (int j = 0; j < pixelCountY; ++j) {
             top = tileSize * j + rect.origin.y;
@@ -89,24 +119,24 @@
             CGContextFillRect(context, CGRectMake(rect.origin.x, top, CGRectGetWidth(rect), tileSize - margin));
         }
     };
-
+    
     return [UIImage hr_imageWithSize:colorMapSize renderer:renderToContext];
 }
 
 + (UIImage *)backgroundImageWithSize:(CGSize)size
                             tileSize:(CGFloat)tileSize {
-
+    
     int pixelCountX = (int) (size.width / tileSize);
     int pixelCountY = (int) (size.height / tileSize);
     CGSize colorMapSize = CGSizeMake(pixelCountX * tileSize, pixelCountY * tileSize);
     void(^renderBackgroundToContext)(CGContextRef, CGRect) = ^(CGContextRef context, CGRect rect) {
         CGFloat margin = 0;
-
+        
         CGContextSetFillColorWithColor(context, [[UIColor whiteColor] CGColor]);
         CGContextFillRect(context, rect);
-
+        
         CGFloat height;
-
+        
         CGContextSetGrayFillColor(context, 0, 1.0);
         for (int j = 0; j < pixelCountY; ++j) {
             height = tileSize * j + rect.origin.y;
@@ -115,7 +145,7 @@
             }
         }
     };
-
+    
     return [UIImage hr_imageWithSize:colorMapSize
                             renderer:renderBackgroundToContext];
 }
@@ -157,39 +187,51 @@
     _didLayoutSubview = NO;
     self.brightness = 0.5;
     self.backgroundColor = [UIColor whiteColor];
-
+    
     CGFloat lineWidth = 1.f / [[UIScreen mainScreen] scale];
     _lineLayer = [[CALayer alloc] init];
     _lineLayer.backgroundColor = [[UIColor colorWithWhite:0.7 alpha:1] CGColor];
     _lineLayer.frame = CGRectMake(0, -lineWidth, CGRectGetWidth(self.frame), lineWidth);
     [self.layer addSublayer:_lineLayer];
-
+    
     // タイルの中心にくるようにずらす
     CGPoint cursorOrigin = CGPointMake(
-            -([HRColorCursor cursorSize].width - _tileSize.floatValue) / 2.0f,
-            -([HRColorCursor cursorSize].height - _tileSize.floatValue) / 2.0f);
+                                       -([HRColorCursor cursorSize].width - _tileSize.floatValue) / 2.0f,
+                                       -([HRColorCursor cursorSize].height - _tileSize.floatValue) / 2.0f);
     _colorCursor = [HRColorCursor colorCursorWithPoint:cursorOrigin];
     [self addSubview:_colorCursor];
-
+    
     UITapGestureRecognizer *tapGestureRecognizer;
     tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self addGestureRecognizer:tapGestureRecognizer];
-
+    
     UIPanGestureRecognizer *panGestureRecognizer;
     panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     [self addGestureRecognizer:panGestureRecognizer];
-
+    
     _initializeQueue = [[NSOperationQueue alloc] init];
     [_initializeQueue setSuspended:YES];
     [_initializeQueue addOperationWithBlock:^{
         [self createColorMapLayer];
         dispatch_async(dispatch_get_main_queue(), ^{
-
+            [CATransaction begin];
+            [CATransaction setValue:(id) kCFBooleanTrue
+                             forKey:kCATransactionDisableActions];
+            
+            self.colorMapLayer = [[CALayer alloc] initWithLayer:self.layer];
+            self.colorMapLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.colorMapImage.size};
+            self.colorMapLayer.contents = (id) self.colorMapImage.CGImage;
+            self.colorMapBackgroundLayer = [[CALayer alloc] initWithLayer:self.layer];
+            self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = self.backgroundImage.size};
+            self.colorMapBackgroundLayer.contents = (id) self.backgroundImage.CGImage;
+            
+            [CATransaction commit];
+            
             [self.layer insertSublayer:self.colorMapBackgroundLayer atIndex:0];
             [self.layer insertSublayer:self.colorMapLayer atIndex:1];
             self.colorMapLayer.opacity = self.brightness;
             [self invalidateIntrinsicContentSize];
-
+            
             [UIView animateWithDuration:0.2
                              animations:^{
                                  self.alpha = 1;
@@ -203,9 +245,35 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    [self createColorMapLayer];
+    [self updateColorMapLayer];
     [self updateColorCursor];
     _didLayoutSubview = YES;
     [_initializeQueue setSuspended:!self.isAbleToCreateColorMap];
+}
+
+- (void)updateColorMapLayer
+{
+    // NOTE: these CGRect calc code assumes that colorMapImage and backgroundImage are same size.
+    if (self.frame.size.height > self.frame.size.width) {
+        // portrait.
+        CGFloat originX = (self.frame.size.width - self.colorMapImage.size.width) / 2.0;
+        CGRect rect = (CGRect) {.origin = CGPointZero, .size = self.colorMapImage.size};
+        rect.origin.x = originX;
+        self.colorMapLayer.frame = rect;
+        self.colorMapLayer.contents = (id) self.colorMapImage.CGImage;
+        self.colorMapBackgroundLayer.frame = rect;
+        self.colorMapBackgroundLayer.contents = (id) self.backgroundImage.CGImage;
+    } else {
+        // landscape
+        CGFloat originX = (self.frame.size.width - self.landscapeColorMapImage.size.width) / 2.0;
+        CGRect rect = (CGRect) {.origin = CGPointZero, .size = self.landscapeColorMapImage.size};
+        rect.origin.x = originX;
+        self.colorMapLayer.frame = rect;
+        self.colorMapLayer.contents = (id) self.landscapeColorMapImage.CGImage;
+        self.colorMapBackgroundLayer.frame = rect;
+        self.colorMapBackgroundLayer.contents = (id) self.landscapeBackgroundImage.CGImage;
+    }
 }
 
 - (CGSize)intrinsicContentSize {
@@ -243,39 +311,32 @@
     _tileSize = tileSize;
     [_initializeQueue setSuspended:!self.isAbleToCreateColorMap];
     CGRect cursorFrame = _colorCursor.frame;
-
+    
     cursorFrame.origin = CGPointMake(
-            -([HRColorCursor cursorSize].width - _tileSize.floatValue) / 2.0f,
-            -([HRColorCursor cursorSize].height - _tileSize.floatValue) / 2.0f);
+                                     -([HRColorCursor cursorSize].width - _tileSize.floatValue) / 2.0f,
+                                     -([HRColorCursor cursorSize].height - _tileSize.floatValue) / 2.0f);
     _colorCursor.frame = cursorFrame;
 }
 
 - (void)createColorMapLayer {
-    if (self.colorMapLayer) {
-        return;
+    // portraint.
+    if (self.frame.size.height > self.frame.size.width && !self.colorMapImage) {
+        self.colorMapImage = [HRColorMapView colorMapImageWithSize:self.frame.size
+                                                          tileSize:self.tileSize.floatValue
+                                              saturationUpperLimit:self.saturationUpperLimit.floatValue];
+        
+        self.backgroundImage = [HRColorMapView backgroundImageWithSize:self.frame.size
+                                                              tileSize:self.tileSize.floatValue];
     }
-
-    UIImage *colorMapImage;
-    colorMapImage = [HRColorMapView colorMapImageWithSize:self.frame.size
-                                                 tileSize:self.tileSize.floatValue
-                                     saturationUpperLimit:self.saturationUpperLimit.floatValue];
-
-    UIImage *backgroundImage;
-    backgroundImage = [HRColorMapView backgroundImageWithSize:self.frame.size
-                                                     tileSize:self.tileSize.floatValue];
-
-    [CATransaction begin];
-    [CATransaction setValue:(id) kCFBooleanTrue
-                     forKey:kCATransactionDisableActions];
-
-    self.colorMapLayer = [[CALayer alloc] initWithLayer:self.layer];
-    self.colorMapLayer.frame = (CGRect) {.origin = CGPointZero, .size = colorMapImage.size};
-    self.colorMapLayer.contents = (id) colorMapImage.CGImage;
-    self.colorMapBackgroundLayer = [[CALayer alloc] initWithLayer:self.layer];
-    self.colorMapBackgroundLayer.frame = (CGRect) {.origin = CGPointZero, .size = backgroundImage.size};
-    self.colorMapBackgroundLayer.contents = (id) backgroundImage.CGImage;
-
-    [CATransaction commit];
+    // landscape.
+    if (self.frame.size.width > self.frame.size.height && !self.landscapeColorMapImage) {
+        self.landscapeColorMapImage = [HRColorMapView colorMapImageWithSize:self.frame.size
+                                                                   tileSize:self.tileSize.floatValue
+                                                       saturationUpperLimit:self.saturationUpperLimit.floatValue];
+        
+        self.landscapeBackgroundImage = [HRColorMapView backgroundImageWithSize:self.frame.size
+                                                                       tileSize:self.tileSize.floatValue];
+    }
 }
 
 - (void)setColor:(UIColor *)color {
@@ -312,13 +373,14 @@
             if ([_colorCursor respondsToSelector:@selector(setEditing:)]) {
                 [_colorCursor setEditing:NO];
             }
+            [self updateColorCursor];
             return;
         }
         CGPoint tapPoint = [sender locationOfTouch:0 inView:self];
-        [self update:tapPoint];
         if ([_colorCursor respondsToSelector:@selector(setEditing:)]) {
             [_colorCursor setEditing:YES];
         }
+        [self update:tapPoint];
     }
 }
 
@@ -328,15 +390,15 @@
     }
     int pixelCountX = (int) (self.frame.size.width / _tileSize.floatValue);
     int pixelCountY = (int) (self.frame.size.height / _tileSize.floatValue);
-
+    
     CGFloat pixelX = (int) ((tapPoint.x) / _tileSize.floatValue) / (CGFloat) pixelCountX; // X(色相)
     CGFloat pixelY = (int) ((tapPoint.y) / _tileSize.floatValue) / (CGFloat) (pixelCountY - 1); // Y(彩度)
-
+    
     HRHSVColor selectedHSVColor;
     selectedHSVColor.h = pixelX;
     selectedHSVColor.s = 1.0f - (pixelY * self.saturationUpperLimit.floatValue);
     selectedHSVColor.v = self.brightness;
-
+    
     UIColor *selectedColor;
     selectedColor = [UIColor colorWithHue:selectedHSVColor.h
                                saturation:selectedHSVColor.s
@@ -352,7 +414,7 @@
     CGPoint colorCursorPosition = CGPointZero;
     HRHSVColor hsvColor;
     HSVColorFromUIColor(self.color, &hsvColor);
-
+    
     int pixelCountX = (int) (self.frame.size.width / _tileSize.floatValue);
     int pixelCountY = (int) (self.frame.size.height / _tileSize.floatValue);
     CGPoint newPosition;
@@ -360,13 +422,17 @@
     if (hue == 1) {
         hue = 0;
     }
-
+    
     newPosition.x = hue * (CGFloat) pixelCountX * _tileSize.floatValue + _tileSize.floatValue / 2.0f;
     newPosition.y = (1.0f - hsvColor.s) * (1.0f / self.saturationUpperLimit.floatValue) * (CGFloat) (pixelCountY - 1) * _tileSize.floatValue + _tileSize.floatValue / 2.0f;
     colorCursorPosition.x = (int) (newPosition.x / _tileSize.floatValue) * _tileSize.floatValue;
     colorCursorPosition.y = (int) (newPosition.y / _tileSize.floatValue) * _tileSize.floatValue;
+    colorCursorPosition.x += self.colorMapLayer.frame.origin.x;
+    if (_colorCursor.isEditing)
+        colorCursorPosition.y -= 50;
     _colorCursor.color = self.color;
     _colorCursor.transform = CGAffineTransformMakeTranslation(colorCursorPosition.x, colorCursorPosition.y);
 }
+
 
 @end

@@ -7,7 +7,7 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Dosis-Regular-Modified.ttf">
+        <mutableArray key="Dosis-Regular.otf">
             <string>Dosis-Regular</string>
         </mutableArray>
     </customFonts>
@@ -1019,7 +1019,7 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zsh-fb-mOX">
                                         <rect key="frame" x="15" y="0.0" width="570" height="791.5"/>
-                                        <mutableString key="text">Copyright (c) 2014, Drew McCormack, Brad Larson, Eric Skroch, Barry Wark, Dirkjan Krijnders, Rick Maddy, Vijay Kalusani, Caleb Cannon, Jeff Buck, Thomas Elstner, Jeroen Leenarts, Craig Hockenberry, Hartwig Wiesmann, Koen van der Drift, Nino Ag, Mike Lischke, Trevor Harmon, Travis Fischer, Graham Mueller, Rafał Wójcik, Mike Rossetti, Michael Merickel, Ingmar Stein, and Victor Martin Garcia.
+                                        <string key="text">Copyright (c) 2014, Drew McCormack, Brad Larson, Eric Skroch, Barry Wark, Dirkjan Krijnders, Rick Maddy, Vijay Kalusani, Caleb Cannon, Jeff Buck, Thomas Elstner, Jeroen Leenarts, Craig Hockenberry, Hartwig Wiesmann, Koen van der Drift, Nino Ag, Mike Lischke, Trevor Harmon, Travis Fischer, Graham Mueller, Rafał Wójcik, Mike Rossetti, Michael Merickel, Ingmar Stein, and Victor Martin Garcia.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met: 
@@ -1031,7 +1031,7 @@ Redistributions in binary form must reproduce the above copyright notice, this l
 Neither the name of the Core Plot Project nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-</mutableString>
+</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -4523,7 +4523,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FeK-MU-tcu" customClass="HRColorMapView">
-                                        <rect key="frame" x="0.0" y="150" width="330" height="727"/>
+                                        <rect key="frame" x="0.0" y="150" width="320" height="727"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
@@ -4531,7 +4531,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                 <constraints>
                                     <constraint firstItem="ZCb-IK-IcC" firstAttribute="leading" secondItem="vCd-59-P0f" secondAttribute="trailing" constant="15" id="0GA-Kh-Wb5"/>
                                     <constraint firstAttribute="bottom" secondItem="FeK-MU-tcu" secondAttribute="bottom" constant="15" id="BDk-ZH-s6R"/>
-                                    <constraint firstAttribute="trailing" secondItem="FeK-MU-tcu" secondAttribute="trailing" constant="-10" id="BTv-7E-vlf"/>
+                                    <constraint firstAttribute="trailing" secondItem="FeK-MU-tcu" secondAttribute="trailing" id="BTv-7E-vlf"/>
                                     <constraint firstItem="FeK-MU-tcu" firstAttribute="leading" secondItem="oLn-iL-GPm" secondAttribute="leading" id="Byj-yN-D0M"/>
                                     <constraint firstItem="vCd-59-P0f" firstAttribute="leading" secondItem="oLn-iL-GPm" secondAttribute="leading" constant="25" id="CVd-cz-Jsn"/>
                                     <constraint firstItem="vCd-59-P0f" firstAttribute="top" secondItem="oLn-iL-GPm" secondAttribute="top" constant="25" id="d2f-m6-9Ej"/>
@@ -4556,6 +4556,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <keyCommands/>
                     <connections>
                         <outlet property="colorInfo" destination="vCd-59-P0f" id="AI3-eO-eY7"/>
                         <outlet property="colorMap" destination="FeK-MU-tcu" id="g4c-Xo-5x1"/>
@@ -5729,7 +5730,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
         <!--Color Picker License-->
         <scene sceneID="7gA-Wg-Z06">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NGL-g7-dZE" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController title="Color Picker License" id="eUV-q5-vin" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Ibs-id-T50"/>
@@ -5744,7 +5744,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQ8-YT-pyM">
                                         <rect key="frame" x="15" y="10" width="570" height="690"/>
-                                        <mutableString key="text">Copyright (c) 2011 Ryota Hayashi  
+                                        <string key="text">Copyright (c) 2011 Ryota Hayashi  
 All rights reserved.  
   
 Redistribution and use in source and binary forms, with or without  
@@ -5767,7 +5767,7 @@ THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF  
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.  
   
-$FreeBSD$ </mutableString>
+$FreeBSD$ </string>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -5800,6 +5800,7 @@ $FreeBSD$ </mutableString>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" title="Color Picker" id="X5I-lx-WSd"/>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NGL-g7-dZE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4310" y="-14"/>
         </scene>
