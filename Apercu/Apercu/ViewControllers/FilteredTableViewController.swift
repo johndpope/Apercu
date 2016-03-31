@@ -47,7 +47,9 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.dataSource = self
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        automaticallyAdjustsScrollViewInsets = false
+//        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        
         
         dateFormatter.dateStyle = .MediumStyle
         dateFormatter.timeStyle = .ShortStyle
@@ -67,6 +69,24 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
             filterSwitch.selectedSegmentIndex = 1
         }
         updateButtonTitle()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WorkoutDetailViewController.screenRotated(_:)), name: UIDeviceOrientationDidChangeNotification, object: nil)
+        
+        setTableBackground()
+    }
+    
+    
+    func screenRotated(sender: AnyObject) {
+        setTableBackground()
+    }
+    
+    func setTableBackground() {
+        if self.filteredWorkouts.count == 0 {
+            self.backgroundImage = TableBackgroundView(frame: self.tableView.frame, labelText: "No workouts selected.")
+            self.tableView.backgroundView = self.backgroundImage
+        } else {
+            self.tableView.backgroundView = nil
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -105,20 +125,14 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     func getFilteredWorkouts() {
         isLoadingWorkouts = true
         QueryHealthKitWorkouts().getFilteredWorkouts(filterType) { (result) -> Void in
-            if result?.count == 0 {
-                if self.backgroundImage == nil {
-                    self.backgroundImage = TableBackgroundView(frame: self.tableView.frame, labelText: "No workouts selected.")
-                }
-                self.tableView.backgroundView = self.backgroundImage
-                self.filteredWorkouts = result!
-            }
-            else {
-                self.tableView.backgroundView = nil
-                self.filteredWorkouts = [ApercuWorkout]()
-            }
+
+            self.tableView.backgroundView = self.backgroundImage
+            self.filteredWorkouts = result!
+
             self.tableView.reloadData()
             self.isLoadingWorkouts = false
             self.labelSetup()
+            self.setTableBackground()
         }
     }
     
@@ -288,6 +302,12 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
                 cell.titleLabel.text = "No workouts found!"
             }
             tableView.allowsSelection = false
+        }
+        
+        if indexPath.row % 2 == 0 {
+            cell.backgroundColor = UIColor.clearColor()
+        } else {
+            cell.backgroundColor = cellBackgroundColor
         }
         
         return cell

@@ -548,6 +548,8 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                 colorView.backgroundColor = colorViewColor
                 
                 colorLabel.text = categoryHelper.getStringForIdentifier(currentCategory)
+            } else {
+                colorLabel.text = "No category selected"
             }
         } else {
             showColorView(false)

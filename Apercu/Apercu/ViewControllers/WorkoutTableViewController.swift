@@ -46,7 +46,16 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
         
         tableView.separatorColor = UIColor.clearColor()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WorkoutDetailViewController.screenRotated(_:)), name: UIDeviceOrientationDidChangeNotification, object: nil)
+        
+        self.setTableBackground()
+        
     }
+    
+    func screenRotated(sender: AnyObject) {
+        self.setTableBackground()
+    }
+    
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -107,18 +116,23 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
                 self.appDelegate.quickAction = nil
             }
             
-            if self.workoutArray.count == 0 {
-                if self.backgroundImage == nil {
-                    self.backgroundImage = TableBackgroundView(frame: self.tableView.frame, labelText: "No workouts found. Add workouts through the Health app or through the New button above.")
-                }
-                self.tableView.backgroundView = self.backgroundImage
-            } else {
-                self.tableView.backgroundView = nil
-            }
+           self.setTableBackground()
         }
 
     }
 
+    func setTableBackground() {
+        if self.workoutArray == nil || self.workoutArray.count == 0 {
+            if isFirstLoad {
+                self.backgroundImage = TableBackgroundView(frame: self.tableView.frame, labelText: "Loading workouts.")
+            } else {
+                self.backgroundImage = TableBackgroundView(frame: self.tableView.frame, labelText: "No workouts found. Add workouts through the Health app or through the New button above.")
+            }
+            self.tableView.backgroundView = self.backgroundImage
+        } else {
+            self.tableView.backgroundView = nil
+        }
+    }
 
     @IBAction func refresh(sender: UIKit.UIRefreshControl) {
         loadWorkouts()

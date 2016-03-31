@@ -60,6 +60,7 @@ class ManualFilterViewController: UIViewController, UITableViewDataSource, UITab
         })
     }
     
+    
     @IBAction func removeAllWorkouts(sender: UIButton) {
         manualSelectionArray.removeAll()
         storeSelectedManual()
