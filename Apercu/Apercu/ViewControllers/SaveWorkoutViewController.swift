@@ -520,7 +520,6 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
                 setToNoCategory()
                 selectedCategory = nil
             } else {
-                print("HERERERERE")
                 selectedCategory = categoryIdentifier
                 categoriesSingleton.updateCategoryInfo()
                 colorIcon.backgroundColor = categoriesSingleton.getColorForIdentifier(categoryIdentifier)

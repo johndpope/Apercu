@@ -208,7 +208,7 @@ class WorkoutDetailViewController: UIViewController, UITableViewDelegate, UITabl
                     self.allWorkoutStats[index] = results;
                     self.workoutMainIsFinished[index] = true
                     
-                    if self.bpm != nil && self.bpm.count > 0 {
+                    if results != nil && self.bpm != nil && self.bpm.count > 0 {
                         self.calculateHeatmapGraph(index, bpm: results["bpm"] as! [Double], time: results["time"] as! [Double], min: results["min"] as! Double, max: results["max"] as! Double, yMin: results["min"] as! Double, yMax: results["max"] as! Double, addToGraph: false)
                     } else {
                         //                        self.setupTableStrings(self.allWorkoutStats[index])

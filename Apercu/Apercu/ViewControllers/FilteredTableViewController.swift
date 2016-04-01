@@ -49,7 +49,9 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         tableView.rowHeight = UITableViewAutomaticDimension
         automaticallyAdjustsScrollViewInsets = false
 //        tableView.tableFooterView = UIView(frame: CGRect.zero)
-        
+        let navigationBar = self.navigationController?.navigationBar
+        navigationBar?.setBackgroundImage(UIImage(), forBarPosition: UIBarPosition.Any, barMetrics: UIBarMetrics.Default)
+        navigationBar?.shadowImage = UIImage()
         
         dateFormatter.dateStyle = .MediumStyle
         dateFormatter.timeStyle = .ShortStyle
@@ -133,6 +135,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
             self.isLoadingWorkouts = false
             self.labelSetup()
             self.setTableBackground()
+            self.updateButtonTitle()
         }
     }
     
@@ -183,10 +186,18 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
     
     func updateButtonTitle() {
         if filterType == .Color {
-            button.setTitle("Choose Categories", forState: .Normal)
+            var labelString = "Choose Categories"
+            var selectedCategories = [NSNumber]()
+            
+            if defs?.objectForKey("selectedCategories") != nil {
+                selectedCategories = defs?.objectForKey("selectedCategories") as! [NSNumber]
+            }
+            labelString = String(format: "Choose Categories (%lu)", selectedCategories.count)
+            button.setTitle(labelString, forState: .Normal)
             //            button.titleLabel?.text = "Choose Categories"
         } else {
-            button.setTitle("Select Workouts", forState: .Normal)
+            let labelString = String(format: "Select Workouts (%lu)", filteredWorkouts.count)
+            button.setTitle(labelString, forState: .Normal)
             //           button.titleLabel?.text = "Select Workouts"
         }
         button.sizeToFit()

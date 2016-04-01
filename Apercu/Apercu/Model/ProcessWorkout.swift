@@ -40,7 +40,8 @@ class ProcessWorkout {
                 var timeSinceStart = [Double](count: (timeValues?.count)!, repeatedValue: 0.0)
                 var negatedStart = -1.0 * (timeValues?.first!)!
                 vDSP_vsaddD(timeValues!, 1, &negatedStart, &timeSinceStart, 1, length)
-                let duration: Double = timeSinceStart.last!
+//                let duration: Double = timeSinceStart.last!
+                let duration = end.timeIntervalSince1970 - start.timeIntervalSince1970
                 
                 var statsDict: [String: AnyObject] = ["max": maximum, "min": minimum, "duration": duration, "avg": average]
                 if includeRaw {
