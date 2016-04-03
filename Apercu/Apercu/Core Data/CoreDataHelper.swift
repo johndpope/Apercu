@@ -33,7 +33,7 @@ class CoreDataHelper {
                 do {
                     try context.save()
                 } catch {
-                    print("Unable to save workout!")
+//                    print("Unable to save workout!")
                 }
             } else {
                 let entity = NSEntityDescription.entityForName("Workout", inManagedObjectContext: context)
@@ -45,11 +45,11 @@ class CoreDataHelper {
                 do {
                     try context.save()
                 } catch {
-                    print("Unable to save new workout!")
+//                    print("Unable to save new workout!")
                 }
             }
         } catch {
-            print("Unable to find workout!")
+//            print("Unable to find workout!")
         }
     }
     
@@ -67,7 +67,7 @@ class CoreDataHelper {
                 do {
                     try context.save()
                 } catch {
-                    print("Unable to save workout!")
+//                    print("Unable to save workout!")
                 }
             } else {
                 let entity = NSEntityDescription.entityForName("Workout", inManagedObjectContext: context)
@@ -79,11 +79,11 @@ class CoreDataHelper {
                 do {
                     try context.save()
                 } catch {
-                    print("Unable to save new workout!")
+//                    print("Unable to save new workout!")
                 }
             }
         } catch {
-            print("Unable to find workout!")
+//            print("Unable to find workout!")
         }
     }
     
@@ -101,7 +101,7 @@ class CoreDataHelper {
                 do {
                     try context.save()
                 } catch {
-                    print("Unable to save workout!")
+//                    print("Unable to save workout!")
                 }
             } else {
                 let entity = NSEntityDescription.entityForName("Workout", inManagedObjectContext: context)
@@ -112,11 +112,11 @@ class CoreDataHelper {
                 do {
                     try context.save()
                 } catch {
-                    print("Unable to save new workout!")
+//                    print("Unable to save new workout!")
                 }
             }
         } catch {
-            print("Unable to find workout!")
+//            print("Unable to find workout!")
         }
     }
     
@@ -136,11 +136,11 @@ class CoreDataHelper {
                     try context.save()
                     CategoriesSingleton.sharedInstance.updateCategoryInfo()
                 } catch {
-                    print("Unable to save category!")
+//                    print("Unable to save category!")
                 }
             }
         } catch {
-            print("Unable to find category")
+//            print("Unable to find category")
         }
     }
     
@@ -159,11 +159,11 @@ class CoreDataHelper {
                     try context.save()
                     CategoriesSingleton.sharedInstance.updateCategoryInfo()
                 } catch {
-                    print("Unable to save category!")
+//                    print("Unable to save category!")
                 }
             }
         } catch {
-            print("Unable to find workout!")
+//            print("Unable to find workout!")
         }
     }
     
@@ -282,7 +282,7 @@ class CoreDataHelper {
                 return false
             }
         } catch {
-            print("Error determining if workout exists at that time")
+//            print("Error determining if workout exists at that time")
         }
         
         return true

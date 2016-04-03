@@ -2,39 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIApplicationShortcutItems</key>
-	<array>
-		<dict>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>NewQuick</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>New Workout</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>com.apercu.apercu-new-workout</string>
-			<key>UIApplicationShortcutItemSubtitle</key>
-			<string>Add New Workout</string>
-		</dict>
-		<dict>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>CompareQuick</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>Comparison</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>com.apercu.apercu-compare</string>
-			<key>UIApplicationShortcutItemSubtitle</key>
-			<string>Most Recent Comparison</string>
-		</dict>
-		<dict>
-			<key>UIApplicationShortcutItemIconFile</key>
-			<string>MostRecentQuick</string>
-			<key>UIApplicationShortcutItemTitle</key>
-			<string>Most Recent</string>
-			<key>UIApplicationShortcutItemType</key>
-			<string>com.apercu.apercu-most-recent</string>
-			<key>UIApplicationShortcutItemSubtitle</key>
-			<string>Most Recent Workout</string>
-		</dict>
-	</array>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -52,18 +19,51 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>50</string>
+	<string>52</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Dosis-SemiBold-Modified.ttf</string>
 		<string>Dosis-Regular-Modified.ttf</string>
 	</array>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>NewQuick</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>Add New Workout</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>New Workout</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.apercu.apercu-new-workout</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>CompareQuick</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>Most Recent Comparison</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Comparison</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.apercu.apercu-compare</string>
+		</dict>
+		<dict>
+			<key>UIApplicationShortcutItemIconFile</key>
+			<string>MostRecentQuick</string>
+			<key>UIApplicationShortcutItemSubtitle</key>
+			<string>Most Recent Workout</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Most Recent</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>com.apercu.apercu-most-recent</string>
+		</dict>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
