@@ -342,6 +342,7 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
     }
     
     func hideKeyboard(notification: NSNotification) {
+        updateDurationLabel()
         scrollViewBottomSpacing.constant = 0
     }
     
@@ -367,8 +368,10 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
             distanceTextField.resignFirstResponder()
             calorieTextField.becomeFirstResponder()
         } else if calorieTextField.isFirstResponder() {
+            calorieTextField.text = String(format: "%g", calories)
             calorieTextField.resignFirstResponder()
         }
+        updateDurationLabel()
     }
     
     @IBAction func typeSegmentChanged(sender: AnyObject) {
@@ -545,6 +548,23 @@ class SaveWorkout: UIViewController, UITextFieldDelegate, UICollectionViewDelega
                     if result == false {
                         if !CoreDataHelper().doesWorkoutExist(self.startDate) {
                             if CoreDataHelper().storeNewWorkout(self.startDate, endTime: self.endDate, title: self.nameTextField.text, description: self.descriptionTextView.text, category: self.selectedCategory) {
+                                
+                                if let calorieString = self.calorieTextField.text {
+                                    let calorieNs = NSString(string: calorieString)
+                                    
+                                    if calorieNs.doubleValue.isNormal {
+                                        self.calories = calorieNs.doubleValue
+                                    }
+                                }
+                                
+                                if let distanceString = self.distanceTextField.text {
+                                    let distanceNs = NSString(string: distanceString)
+                                    
+                                    if distanceNs.doubleValue.isNormal {
+                                        self.distance = distanceNs.doubleValue
+                                    }
+                                }
+
                                 
                                 let caloriesValue = HKQuantity(unit: HKUnit.kilocalorieUnit(), doubleValue: self.calories)
                                 let distanceValue = HKQuantity(unit: HKUnit.mileUnit(), doubleValue: self.distance)

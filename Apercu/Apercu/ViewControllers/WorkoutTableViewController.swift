@@ -30,7 +30,6 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
         navigationController?.navigationBar.translucent = false
         
@@ -60,14 +59,15 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
+        
         HealthKitSetup().setupAuthorization {
             (didSucceed) -> Void in
 
             if !didSucceed {
-                let alert = UIAlertController(title: "Error", message: "Unable to access HealthKit", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
-                return
+//                let alert = UIAlertController(title: "Error", message: "Unable to access HealthKit", preferredStyle: .Alert)
+//                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+//                self.presentViewController(alert, animated: true, completion: nil)
+//                return
             }
 
             self.loadWorkouts()
@@ -247,9 +247,10 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
                 
                 dispatch_async(dispatch_get_main_queue(), { 
                     CoreDataHelper().deleteWorkout(self.workoutArray[indexPath.row].getStartDate()!, endTime: self.workoutArray[indexPath.row].getEndDate()!)
+                    self.loadWorkouts()
                     
-                    self.workoutArray.removeAtIndex(indexPath.row)
-                    self.tableView.reloadData()
+//                    self.workoutArray.removeAtIndex(indexPath.row)
+//                    self.tableView.reloadData()
                 })
             })
             

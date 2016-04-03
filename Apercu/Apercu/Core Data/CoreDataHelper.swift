@@ -332,7 +332,7 @@ class CoreDataHelper {
             do {
                 try context.save()
             } catch {
-                NSLog("Error removing workout.")
+
             }
         } catch {
             

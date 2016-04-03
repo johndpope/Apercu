@@ -55,7 +55,7 @@ class HealthKitSetup {
         let biologicalSexType: HKObjectType = HKObjectType.characteristicTypeForIdentifier(HKCharacteristicTypeIdentifierBiologicalSex)!
         let weightType: HKObjectType = HKObjectType.quantityTypeForIdentifier(HKQuantityTypeIdentifierBodyMass)!
         
-        return Set([heartRateType, workoutType, birthdayType, biologicalSexType, weightType])
+        return Set([heartRateType, workoutType, birthdayType])
     }
     
     func healthKitTypesToShare() -> Set <HKSampleType> {
