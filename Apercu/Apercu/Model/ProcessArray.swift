@@ -51,7 +51,6 @@ class ProcessArray {
                 
                 }, completion: { (results) -> Void in
                     self.numberProcessed += 1
-
                     
                     if results != nil {
                         if let duration = results["duration"] as? Double {
@@ -77,18 +76,18 @@ class ProcessArray {
                                 }
                             }
                         }
-                        
-                        if let distance = workout.healthKitWorkout?.totalDistance?.doubleValueForUnit(HKUnit.mileUnit()) {
-                            if distance.isNormal {
-                                self.distanceArray.append(distance)
-                            }
-                            
+                    }
+                    
+                    if let distance = workout.healthKitWorkout?.totalDistance?.doubleValueForUnit(HKUnit.mileUnit()) {
+                        if distance.isNormal {
+                            self.distanceArray.append(distance)
                         }
                         
-                        if let calories = workout.healthKitWorkout?.totalEnergyBurned?.doubleValueForUnit(HKUnit.kilocalorieUnit()) {
-                            if calories.isNormal {
-                                self.caloriesArray.append(calories)
-                            }
+                    }
+                    
+                    if let calories = workout.healthKitWorkout?.totalEnergyBurned?.doubleValueForUnit(HKUnit.kilocalorieUnit()) {
+                        if calories.isNormal {
+                            self.caloriesArray.append(calories)
                         }
                     }
 
