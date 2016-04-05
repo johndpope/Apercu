@@ -74,7 +74,7 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(WorkoutDetailViewController.screenRotated(_:)), name: UIDeviceOrientationDidChangeNotification, object: nil)
         
-        setTableBackground()
+//        setTableBackground()
     }
     
     
@@ -136,6 +136,14 @@ class FilteredTableViewController: UIViewController, UITableViewDelegate, UITabl
             self.labelSetup()
             self.setTableBackground()
             self.updateButtonTitle()
+            
+
+            let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+            if appDelegate!.quickAction == "com.apercu.apercu-compare" {
+                appDelegate!.quickAction = nil
+                self.performSegueWithIdentifier("filterDonePressed", sender: self)
+            }
+
         }
     }
     

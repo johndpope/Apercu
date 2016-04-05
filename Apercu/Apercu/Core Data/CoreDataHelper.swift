@@ -190,7 +190,7 @@ class CoreDataHelper {
             let fetchedCategories = try managedContext.executeFetchRequest(fetchRequest) as! [Category]
             return fetchedCategories
         } catch {
-            NSLog("Error loading categories")
+//            NSLog("Error loading categories")
             return [Category]()
         }
     }
@@ -212,10 +212,10 @@ class CoreDataHelper {
             do {
                 try context.save()
             } catch {
-                NSLog("Error saving new category")
+//                NSLog("Error saving new category")
             }
         } catch {
-            NSLog("Error loading categories")
+//            NSLog("Error loading categories")
         }
     }
     
@@ -237,7 +237,7 @@ class CoreDataHelper {
             do {
                 try context.save()
             } catch {
-                NSLog("Error removing category")
+//                NSLog("Error removing category")
             }
         } catch {
             
@@ -309,7 +309,7 @@ class CoreDataHelper {
             try context.save()
             return true
         } catch {
-            NSLog("Error saving new category")
+//            NSLog("Error saving new category")
             return false
         }
     }
@@ -356,7 +356,7 @@ class CoreDataHelper {
                 workoutsSuccess = true
                 try context.save()
             } catch {
-                NSLog("Error removing workout category")
+//                NSLog("Error removing workout category")
             }
         } catch {
             
@@ -377,7 +377,7 @@ class CoreDataHelper {
                 CategorySetup().initializeCategoryData()
                 categorySucces = true
             } catch {
-                NSLog("Error removing category")
+//                NSLog("Error removing category")
             }
         } catch {
             

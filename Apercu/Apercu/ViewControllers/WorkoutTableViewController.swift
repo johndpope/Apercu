@@ -114,6 +114,13 @@ class WorkoutTableViewController: UITableViewController, UIViewControllerPreview
                 self.selectedIndex = 0
                 self.performSegueWithIdentifier("toDetailManual", sender: self)
                 self.appDelegate.quickAction = nil
+            } else if self.appDelegate.quickAction == "com.apercu.apercu-compare" {
+                if let tabBar = self.tabBarController {
+                    tabBar.selectedIndex = 1
+                }
+            } else if self.appDelegate.quickAction == "com.apercu.apercu-new-workout" {
+                self.performSegueWithIdentifier("toSaveWorkout", sender: self)
+                self.appDelegate.quickAction = nil
             }
             
            self.setTableBackground()

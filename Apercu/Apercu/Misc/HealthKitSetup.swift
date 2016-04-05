@@ -39,7 +39,7 @@ class HealthKitSetup {
                 } else {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         completion(didSucceed: false)
-                        NSLog("Apercu unable to reach HealthKit")
+//                        NSLog("Apercu unable to reach HealthKit")
                     })
                 }
             })

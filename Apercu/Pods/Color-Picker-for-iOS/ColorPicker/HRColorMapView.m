@@ -61,7 +61,6 @@
                           tileSize:(CGFloat)tileSize
               saturationUpperLimit:(CGFloat)saturationUpperLimit {
     
-    NSLog(@"%f", size.width);
     if (size.width == 320) {
         tileSize = 10.0;
     } else if (size.width == 375) {
@@ -85,7 +84,6 @@
     } else {
         tileSize = 10.0;
     }
-    NSLog(@"TILE SIZE = %f", tileSize);
     
     int pixelCountX = (int) (size.width / tileSize);
     int pixelCountY = (int) (size.height / tileSize);

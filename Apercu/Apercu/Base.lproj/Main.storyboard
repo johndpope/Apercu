@@ -7,7 +7,7 @@
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Dosis-Regular-Modified.ttf">
+        <mutableArray key="Dosis-Regular.otf">
             <string>Dosis-Regular</string>
         </mutableArray>
     </customFonts>
@@ -4057,7 +4057,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="New" id="4VR-fN-k50">
                             <connections>
-                                <segue destination="O9J-Ut-EpP" kind="show" id="nqv-H6-hGc"/>
+                                <segue destination="O9J-Ut-EpP" kind="show" identifier="toSaveWorkout" id="nqv-H6-hGc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -5876,11 +5876,11 @@ $FreeBSD$ </string>
         <image name="singleTabBar3.png" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="cNj-1Y-Klj"/>
         <segue reference="aRB-Xr-wa0"/>
-        <segue reference="qvD-uY-O5S"/>
+        <segue reference="4yP-eh-ZVt"/>
         <segue reference="lfU-q4-Wp5"/>
         <segue reference="O6c-Hl-7xu"/>
-        <segue reference="cNj-1Y-Klj"/>
         <segue reference="goZ-7M-4CC"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.0" green="0.49019607843137253" blue="0.64313725490196072" alpha="1" colorSpace="calibratedRGB"/>

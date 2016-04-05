@@ -66,7 +66,7 @@ class CategorySetup {
             do {
                 try self.managedContext.save()
             } catch {
-                NSLog("Error saving categories")
+//                NSLog("Error saving categories")
             }
         }
 
@@ -86,7 +86,7 @@ class CategorySetup {
                 return false
             }
         } catch {
-            NSLog("Error checking category existence")
+//            NSLog("Error checking category existence")
             return false
         }
     }

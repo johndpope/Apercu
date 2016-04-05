@@ -37,7 +37,6 @@ class CategoriesSingleton {
             
             
         } catch {
-            NSLog("Error loading categories")
             categories =  [Category]()
         }
     }
@@ -83,7 +82,6 @@ class CategoriesSingleton {
             }
             
         } catch {
-            NSLog("Error loading categories")
             categories =  [Category]()
         }
     }
