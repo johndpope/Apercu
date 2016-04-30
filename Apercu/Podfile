@@ -5,4 +5,5 @@ platform :ios, '8.0'
 target 'Apercu' do
  pod 'CorePlot', :git => 'https://github.com/core-plot/core-plot.git', :branch => 'release-2.1'
  pod "Color-Picker-for-iOS", "~> 2.0"
+ pod 'FSCalendar'
 end
