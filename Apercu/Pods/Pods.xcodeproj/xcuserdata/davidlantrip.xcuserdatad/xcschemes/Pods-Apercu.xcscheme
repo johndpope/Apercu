@@ -11,10 +11,11 @@
             buildForRunning = "YES"
             buildForProfiling = "YES"
             buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
+            buildForAnalyzing = "YES"
+            hideIssues = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CFAAD07238EAE15D9654A3984AB63807"
+               BlueprintIdentifier = "5B47A13B6485ED2445544260AA9D4604"
                BuildableName = "Pods_Apercu.framework"
                BlueprintName = "Pods-Apercu"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +46,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CFAAD07238EAE15D9654A3984AB63807"
+            BlueprintIdentifier = "5B47A13B6485ED2445544260AA9D4604"
             BuildableName = "Pods_Apercu.framework"
             BlueprintName = "Pods-Apercu"
             ReferencedContainer = "container:Pods.xcodeproj">

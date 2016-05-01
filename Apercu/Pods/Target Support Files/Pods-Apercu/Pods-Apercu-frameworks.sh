@@ -86,10 +86,8 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-Apercu/Color_Picker_for_iOS.framework"
   install_framework "Pods-Apercu/CorePlot.framework"
-  install_framework "Pods-Apercu/FSCalendar.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-Apercu/Color_Picker_for_iOS.framework"
   install_framework "Pods-Apercu/CorePlot.framework"
-  install_framework "Pods-Apercu/FSCalendar.framework"
 fi
